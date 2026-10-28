@@ -446,11 +446,7 @@ public sealed class MapCanvas : Control
         }
     }
 
-    /// <summary>
-    /// Map an API mob id (bossKilla) to its portrait file name (killa). A few
-    /// bosses do not use the in-game codename, so they are listed explicitly.
-    /// </summary>
-        private static readonly IBrush CanvasBackground = new SolidColorBrush(Color.Parse("#0A0F15"));
+    private static readonly IBrush CanvasBackground = new SolidColorBrush(Color.Parse("#0A0F15"));
     private static readonly IBrush CompactBackground = new SolidColorBrush(Color.Parse("#080B10"));
 
     private static readonly IBrush MinefieldFill = new SolidColorBrush(Color.Parse("#33E0523D"));
