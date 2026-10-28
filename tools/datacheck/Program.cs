@@ -196,6 +196,9 @@ internal static class DataChecks
                 }
                 foreach (var layer in layers)
                 {
+                    // An empty image is the map's own artwork: the ground/base
+                    // level needs no extra PNG, so nothing to verify on disk.
+                    if (string.IsNullOrWhiteSpace(layer.Image)) continue;
                     var path = Path.Combine(assets, "Maps", layer.Image.Replace('/', Path.DirectorySeparatorChar));
                     if (!File.Exists(path)) { missingLayerImages.Add(layer.Image); continue; }
                     var size = ReadPngSize(path);
@@ -267,6 +270,129 @@ internal static class DataChecks
                 .ToList();
             Check("no unexpected full-map hazards", unexpected.Count == 0,
                 string.Join("; ", unexpected.Concat(areaLevel).Take(5)));
+        }
+
+        // ---- floor coverage regressions -----------------------------------
+        // The Lab and Interchange are the two maps users reported as missing
+        // levels. Both need a base-artwork entry plus their overlays.
+        foreach (var key in new[] { "the-lab", "interchange" })
+        {
+            var ok = layerIndex is not null
+                     && layerIndex.TryGetValue(key, out var floors)
+                     && floors.Count >= 3
+                     && floors.Any(l => string.IsNullOrWhiteSpace(l.Image));
+            Check($"{key} has >=3 floors incl. base artwork", ok,
+                layerIndex is not null && layerIndex.TryGetValue(key, out var listed)
+                    ? $"{listed.Count} floors"
+                    : "no layer entry");
+        }
+
+        // ---- boss data regressions ----------------------------------------
+        foreach (var map in manifest.Maps)
+        {
+            var dupes = map.Bosses.GroupBy(b => b.Mob, StringComparer.OrdinalIgnoreCase)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key)
+                .ToList();
+            Check($"bosses deduped {map.Key}", dupes.Count == 0, string.Join(",", dupes));
+
+            var badName = map.Bosses.Where(b =>
+                b.Name.Equals("PMC", StringComparison.OrdinalIgnoreCase)
+                || b.Name.Equals("Boss", StringComparison.OrdinalIgnoreCase)
+                || TraderInfo.IsRawId(b.Name)
+                || string.IsNullOrWhiteSpace(b.Name)).ToList();
+            Check($"boss names resolved {map.Key}", badName.Count == 0,
+                string.Join(",", badName.Select(b => b.Mob + "=" + b.Name)));
+
+            // Every boss point must sit in the map it is attached to.
+            var stray = map.Bosses.SelectMany(b => b.Points.Select(p => (b.Mob, p)))
+                .Count(x => !map.Contains(x.p.X, x.p.Z, 200));
+            Check($"boss points inside {map.Key}", stray == 0, stray.ToString());
+        }
+
+        // Lighthouse: the mansion guards are rogues (exUsecFree), never a
+        // "USEC" boss. The old aggregation emitted a boss literally called
+        // USEC from five duplicate exUsecFree rows.
+        var lighthouse = manifest.Maps.FirstOrDefault(m => m.Key == "lighthouse");
+        if (lighthouse is not null)
+        {
+            var rogue = lighthouse.Bosses.FirstOrDefault(b =>
+                b.Mob.Equals("exUsecFree", StringComparison.OrdinalIgnoreCase));
+            Check("lighthouse rogue boss present", rogue is not null && rogue.Name == "流氓",
+                rogue?.Name ?? "missing");
+            var usecBoss = lighthouse.Bosses.Any(b =>
+                b.Name.Equals("USEC", StringComparison.OrdinalIgnoreCase)
+                || b.Mob.Equals("ExUsec", StringComparison.OrdinalIgnoreCase));
+            Check("lighthouse has no USEC boss", !usecBoss,
+                string.Join(",", lighthouse.Bosses.Select(b => b.Mob + "/" + b.Name)));
+        }
+
+        // Shturman spawns on Woods are all in the Sawmill, not at USEC Camp or
+        // Scav Town (upstream mixes ZoneWoodCutter entries from those areas).
+        var woods = manifest.Maps.FirstOrDefault(m => m.Key == "woods");
+        var shturman = woods?.Bosses.FirstOrDefault(b =>
+            b.Mob.Equals("bossKojaniy", StringComparison.OrdinalIgnoreCase));
+        Check("woods Shturman present", shturman is not null);
+        if (shturman is not null)
+        {
+            var far = shturman.Points
+                .Where(p => Math.Sqrt(Math.Pow(p.X - 10, 2) + Math.Pow(p.Z + 3, 2)) > 260)
+                .ToList();
+            Check("Shturman points at Sawmill", far.Count == 0 && shturman.Points.Count > 0,
+                $"{far.Count} far of {shturman.Points.Count}");
+        }
+
+        // ---- story data regressions ---------------------------------------
+        var storyPath = Path.Combine(assets, "story.json");
+        Check("story.json exists", File.Exists(storyPath));
+        StoryDatabase? story = null;
+        try
+        {
+            if (File.Exists(storyPath))
+                story = JsonSerializer.Deserialize(File.ReadAllText(storyPath),
+                    AppJsonContext.Default.StoryDatabase);
+        }
+        catch (Exception ex)
+        {
+            Check("story.json parses", false, ex.Message);
+        }
+        Check("story.json parsed", story is not null);
+        if (story is not null)
+        {
+            Check("story has 10 chapters", story.Chapters.Count == 10, story.Chapters.Count.ToString());
+            Check("story chapter ids unique",
+                story.Chapters.Select(c => c.Id).Distinct().Count() == story.Chapters.Count);
+            Check("story chapter titles localized",
+                story.Chapters.All(c => !string.IsNullOrWhiteSpace(c.NameZh)
+                                        && !TraderInfo.IsRawId(c.NameZh)));
+
+            var objectives = story.Chapters.SelectMany(c => c.Objectives).ToList();
+            Check("story objectives populated", objectives.Count > 200, objectives.Count.ToString());
+            var cjk = objectives.Count(o => o.Text.Any(ch => ch >= 0x4E00 && ch <= 0x9FFF));
+            Check("story objective text is Chinese", cjk >= objectives.Count * 0.9,
+                $"{cjk}/{objectives.Count}");
+
+            var unknownStoryMap = objectives
+                .Where(o => o.HasLocation && !byKey.ContainsKey(o.Map))
+                .Select(o => o.Map)
+                .Distinct()
+                .ToList();
+            Check("story maps resolve", unknownStoryMap.Count == 0, string.Join(",", unknownStoryMap));
+            Check("story map names present",
+                objectives.Where(o => o.HasLocation).All(o => !string.IsNullOrWhiteSpace(o.MapName)));
+
+            var badStoryCoords = objectives
+                .Where(o => o.HasCoordinates
+                            && (!byKey.TryGetValue(o.Map, out var owner)
+                                || !owner.Contains(o.X, o.Z, 200)))
+                .Select(o => $"{o.Map}@{o.X:0},{o.Z:0}")
+                .Take(5)
+                .ToList();
+            Check("story coordinates inside their maps", badStoryCoords.Count == 0,
+                string.Join("; ", badStoryCoords));
+            Check("story calibrated markers exist",
+                objectives.Count(o => o.HasCoordinates) > 20,
+                objectives.Count(o => o.HasCoordinates).ToString());
         }
 
         if (_known > 0)

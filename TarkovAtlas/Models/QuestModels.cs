@@ -32,12 +32,36 @@ public sealed class StoryChapter
     /// <summary>Map keys this chapter sends you to.</summary>
     public List<string> Maps { get; set; } = new();
     public List<string> MapNames { get; set; } = new();
-    public List<string> Objectives { get; set; } = new();
+    /// <summary>Localized (Chinese) objectives, each with an optional map location.</summary>
+    public List<StoryObjective> Objectives { get; set; } = new();
     public int ObjectiveCount { get; set; }
 
     [JsonIgnore] public string Title => string.IsNullOrWhiteSpace(NameZh) ? Name : NameZh;
     [JsonIgnore] public string MapsText => MapNames.Count == 0 ? "任意地图" : string.Join(" / ", MapNames);
-    [JsonIgnore] public string ObjectiveText => ObjectiveCount == 0 ? "无目标" : $"{ObjectiveCount} 个目标";
+    [JsonIgnore] public string ObjectiveText =>
+        Objectives.Count == 0 ? "无目标" : $"{Objectives.Count} 个目标";
+}
+
+/// <summary>
+/// One step of a main-story chapter. <see cref="Map"/> is the map the step
+/// happens on; <see cref="X"/>/<see cref="Z"/> are only filled when the
+/// upstream marker position could be calibrated against this app's artwork.
+/// </summary>
+public sealed class StoryObjective
+{
+    public string Text { get; set; } = "";
+    public string Map { get; set; } = "";
+    public string MapName { get; set; } = "";
+    public double X { get; set; }
+    public double Z { get; set; }
+    public bool HasCoordinates { get; set; }
+
+    [JsonIgnore] public bool HasLocation => !string.IsNullOrWhiteSpace(Map);
+    [JsonIgnore] public string LocationText => HasLocation ? MapName : "任意地图";
+    [JsonIgnore]
+    public string Tooltip => HasCoordinates
+        ? $"{Text}\n跳转到 {MapName} 的目标位置"
+        : $"跳转到 {MapName}";
 }
 
 /// <summary>
@@ -61,7 +85,7 @@ public sealed class StoryRow : INotifyPropertyChanged
     public string Title => Chapter.Title;
     public string MapsText => Chapter.MapsText;
     public string ObjectiveText => Chapter.ObjectiveText;
-    public IReadOnlyList<string> Objectives => Chapter.Objectives;
+    public IReadOnlyList<StoryObjective> Objectives => Chapter.Objectives;
     public bool HasObjectives => Chapter.Objectives.Count > 0;
 
     public bool IsDone
@@ -94,6 +118,8 @@ public sealed class Quest
     public string Trader { get; set; } = "";
     /// <summary>Human readable trader name resolved at load time (never an id).</summary>
     [JsonIgnore] public string TraderDisplay { get; set; } = "";
+    /// <summary>Avatar file stem for the giver (never an id).</summary>
+    [JsonIgnore] public string TraderSlug { get; set; } = "";
     public int Level { get; set; }
     public string Wiki { get; set; } = "";
     public List<string> Prerequisites { get; set; } = new();
@@ -130,6 +156,9 @@ public sealed class Quest
 
     /// <summary>True when the objective list carries at least one coordinate.</summary>
     [JsonIgnore] public bool HasAnyZones => Objectives.Any(o => o.Zones.Count > 0);
+
+    /// <summary>The jump button is useful whenever the task names a map.</summary>
+    [JsonIgnore] public bool CanJump => Maps.Count > 0 || HasAnyZones;
 
     [JsonIgnore] public IEnumerable<string> ZoneMaps =>
         Objectives.SelectMany(o => o.Zones).Select(z => z.Map)

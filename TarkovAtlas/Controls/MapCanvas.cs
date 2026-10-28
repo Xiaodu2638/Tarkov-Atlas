@@ -51,7 +51,47 @@ public sealed class MapCanvas : Control
     private static readonly IBrush SpawnScavBrush = new SolidColorBrush(Color.Parse("#D08A5A"));
     private static readonly IBrush TransitBrush = new SolidColorBrush(Color.Parse("#B07FD8"));
 
+    // Per-frame brushes/pens used to be allocated for every marker; on Streets
+    // that was hundreds of allocations per mouse-move. All of these are frozen
+    // by convention and safe to share.
+    private static readonly IBrush MarkerShadow = new SolidColorBrush(Color.Parse("#8805080B"));
+    private static readonly IBrush QuestMarkerFill = new SolidColorBrush(Color.Parse("#F2D6A84B"));
+    private static readonly IBrush QuestMarkerStroke = new SolidColorBrush(Color.Parse("#FFF6E7C4"));
+    private static readonly IBrush ExtractFill = new SolidColorBrush(Color.Parse("#CC0A0F15"));
+    private static readonly IBrush SpawnFill = new SolidColorBrush(Color.Parse("#66222830"));
+    private static readonly IBrush TransitFill = new SolidColorBrush(Color.Parse("#CC0A0F15"));
+    private static readonly IBrush BossEmptyStroke = new SolidColorBrush(Color.Parse("#FFE8DF"));
+    private static readonly IBrush BossInitial = new SolidColorBrush(Color.Parse("#171207"));
+    private static readonly IBrush PinShadow = new SolidColorBrush(Color.Parse("#33000000"));
+    private static readonly IBrush PlayerHalo = new SolidColorBrush(Color.Parse("#55FFD166"));
+    private static readonly IBrush PlayerCone = new SolidColorBrush(Color.Parse("#B3FFD166"));
+    private static readonly IBrush PlayerPanelBorder = new SolidColorBrush(Color.Parse("#66D6A84B"));
+    private static readonly IBrush QuestLabelBrush = new SolidColorBrush(Color.Parse("#F0E4C4"));
+    private static readonly IBrush FocusHalo = new SolidColorBrush(Color.Parse("#44D6A84B"));
+    private static readonly IBrush DotBrush = new SolidColorBrush(Color.Parse("#D6A84B"));
+
+    private static readonly Pen ExtractPmcPen = new(ExtractPmc, 2);
+    private static readonly Pen ExtractScavPen = new(ExtractScav, 2);
+    private static readonly Pen ExtractSharedPen = new(ExtractShared, 2);
+    private static readonly Pen BossRingPen = new(BossBrush, 1.4);
+    private static readonly Pen BossEmptyPen = new(BossEmptyStroke, 1.2);
+    private static readonly Pen SpawnPmcPen = new(SpawnPmcBrush, 1);
+    private static readonly Pen SpawnScavPen = new(SpawnScavBrush, 1);
+    private static readonly Pen TransitPen = new(TransitBrush, 1.6);
+    private static readonly Pen QuestMarkerPen = new(QuestMarkerStroke, 1.6);
+    private static readonly Pen PlayerPen = new(PinStroke, 1.5);
+    private static readonly Pen ActivePinPen = new(PinStroke, 2);
+    private static readonly Pen PinPen = new(PinStroke, 1.2);
+    private static readonly Pen PlayerConePen = new(PlayerBrush, 1.2);
+    private static readonly Pen PlayerPanelPen = new(PlayerPanelBorder, 1);
+    private static readonly Pen BorderPen = new(BorderBrush, 1);
+    private static readonly Pen AccentPen = new(AccentBrush, 2);
+
     private readonly Dictionary<string, Bitmap?> _avatarCache = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<(string Folder, string Slug, int Size), Bitmap?> _circleCache = new();
+    private readonly Dictionary<(string Text, double Size, IBrush Brush), FormattedText> _textCache = new();
+    private readonly Dictionary<(IBrush Brush, double Width), Pen> _penCache = new();
+    private readonly Dictionary<int, Geometry> _diamondCache = new();
 
     private Bitmap? _bitmap;
     private MapDefinition? _map;
@@ -88,6 +128,7 @@ public sealed class MapCanvas : Control
     public event EventHandler<QuestMarker>? MarkerClicked;
 
     private readonly List<(QuestMarker Marker, Rect Box)> _markerHits = new();
+    private (double X, double Z, string Label)? _focusPin;
     public event EventHandler<(double X, double Z)>? CursorGameMoved;
 
     public void SetMap(MapDefinition? map, Bitmap? bitmap)
@@ -100,6 +141,9 @@ public sealed class MapCanvas : Control
             _zoom = 1;
             _pan = default;
             _avatarCache.Clear();
+            _circleCache.Clear();
+            _markerHits.Clear();
+            _focusPin = null;
             Hazards = map?.Hazards ?? new List<HazardZone>();
             _hazardCache = null;
             _hazardCacheMap = null;
@@ -118,6 +162,18 @@ public sealed class MapCanvas : Control
     public void ZoomOut() => ZoomAt(new Point(Bounds.Width / 2, Bounds.Height / 2), 1 / 1.3);
     public void SetZoom(double zoom) => ZoomAt(new Point(Bounds.Width / 2, Bounds.Height / 2), zoom / Math.Max(0.0001, _zoom));
 
+    /// <summary>Zoom around an explicit screen point (used by the floating map).</summary>
+    public void ZoomAtScreen(Point screen, double factor) => ZoomAt(screen, factor);
+
+    /// <summary>
+    /// While dragging, bilinear sampling is indistinguishable from HighQuality
+    /// but much cheaper for a 6-30 MP base image; restore the sharp filter when
+    /// the gesture ends.
+    /// </summary>
+    private void SetInteractiveQuality(bool interactive) =>
+        RenderOptions.SetBitmapInterpolationMode(this,
+            interactive ? BitmapInterpolationMode.LowQuality : BitmapInterpolationMode.HighQuality);
+
     /// <summary>Center the view on a game position at the given zoom.</summary>
     public void FocusOn(double gameX, double gameZ, double zoom = 3.2)
     {
@@ -129,6 +185,20 @@ public sealed class MapCanvas : Control
         var drawW = _map.Width * scale;
         var drawH = _map.Height * scale;
         _pan = new Vector(drawW / 2 - p.X * scale, drawH / 2 - p.Y * scale);
+        InvalidateVisual();
+    }
+
+    /// <summary>Drop a labelled pin at a game position (task/story jump target).</summary>
+    public void SetFocusPin(double gameX, double gameZ, string label)
+    {
+        _focusPin = (gameX, gameZ, label ?? "");
+        InvalidateVisual();
+    }
+
+    public void ClearFocusPin()
+    {
+        if (_focusPin is null) return;
+        _focusPin = null;
         InvalidateVisual();
     }
 
@@ -152,6 +222,85 @@ public sealed class MapCanvas : Control
 
     private Point ScreenToImage(Point s) => new((s.X - _origin.X) / Scale, (s.Y - _origin.Y) / Scale);
 
+    /// <summary>
+    /// Draw only the part of <paramref name="bitmap"/> that lands inside the
+    /// control. Avalonia still uploads the full texture, but the rasteriser no
+    /// longer resamples 15-30 megapixels on every pan frame.
+    /// </summary>
+    private void DrawBitmapCropped(DrawingContext context, Bitmap bitmap, Rect dest, double opacity)
+    {
+        var pixel = bitmap.PixelSize;
+        if (pixel.Width <= 0 || pixel.Height <= 0 || dest.Width <= 0 || dest.Height <= 0) return;
+
+        var visible = dest.Intersect(new Rect(Bounds.Size));
+        if (visible.Width <= 0 || visible.Height <= 0) return;
+
+        var sx = (visible.X - dest.X) / dest.Width * pixel.Width;
+        var sy = (visible.Y - dest.Y) / dest.Height * pixel.Height;
+        var sw = visible.Width / dest.Width * pixel.Width;
+        var sh = visible.Height / dest.Height * pixel.Height;
+
+        // Guard against sub-pixel rounding pushing the source rect past the edge.
+        if (sx < 0) { sw += sx; sx = 0; }
+        if (sy < 0) { sh += sy; sy = 0; }
+        if (sx + sw > pixel.Width) sw = pixel.Width - sx;
+        if (sy + sh > pixel.Height) sh = pixel.Height - sy;
+        if (sw <= 0 || sh <= 0) return;
+
+        var source = new Rect(sx, sy, sw, sh);
+        if (opacity >= 0.999)
+        {
+            context.DrawImage(bitmap, source, visible);
+            return;
+        }
+        using (context.PushOpacity(opacity))
+            context.DrawImage(bitmap, source, visible);
+    }
+
+    /// <summary>Memoised FormattedText: labels and marker captions were rebuilt
+    /// (including glyph shaping) on every single frame.</summary>
+    private FormattedText Text(string text, double size, IBrush brush)
+    {
+        var key = (text, Math.Round(size, 1), brush);
+        if (_textCache.TryGetValue(key, out var cached)) return cached;
+        var created = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
+            LabelTypeface, key.Item2, brush);
+        // Keep the cache bounded; maps rarely have more than a few hundred
+        // distinct labels, but zooming changes sizes constantly.
+        if (_textCache.Count > 2048) _textCache.Clear();
+        _textCache[key] = created;
+        return created;
+    }
+
+    private Pen CachedPen(IBrush brush, double width)
+    {
+        var key = (brush, Math.Round(width, 2));
+        if (_penCache.TryGetValue(key, out var pen)) return pen;
+        if (_penCache.Count > 64) _penCache.Clear();
+        pen = new Pen(brush, key.Item2);
+        _penCache[key] = pen;
+        return pen;
+    }
+
+    /// <summary>Diamond geometry of a given half-size, reused for every extract.</summary>
+    private Geometry Diamond(double size)
+    {
+        var bucket = (int)Math.Round(size * 4);
+        if (_diamondCache.TryGetValue(bucket, out var cached)) return cached;
+        var s = bucket / 4.0;
+        var geometry = new StreamGeometry();
+        using (var g = geometry.Open())
+        {
+            g.BeginFigure(new Point(0, -s), true);
+            g.LineTo(new Point(s, 0));
+            g.LineTo(new Point(0, s));
+            g.LineTo(new Point(-s, 0));
+            g.EndFigure(true);
+        }
+        _diamondCache[bucket] = geometry;
+        return geometry;
+    }
+
     public override void Render(DrawingContext context)
     {
         context.FillRectangle(Compact ? CompactBackground : CanvasBackground, new Rect(Bounds.Size));
@@ -168,21 +317,22 @@ public sealed class MapCanvas : Control
         }
 
         EnsureLayout();
+        _markerHits.Clear();
         var dest = new Rect(_origin.X, _origin.Y, _map.Width * Scale, _map.Height * Scale);
-        context.DrawImage(_bitmap, new Rect(0, 0, _bitmap.PixelSize.Width, _bitmap.PixelSize.Height), dest);
+        DrawBitmapCropped(context, _bitmap, dest, 1.0);
 
         // Floor artwork is baked into the base image's pixel grid, so it can be
-        // stretched over exactly the same destination rectangle.
+        // stretched over exactly the same destination rectangle. Only the part
+        // intersecting the viewport is sampled: a full 8k Streets image draw is
+        // what made panning drag even when no marker was visible.
         foreach (var layer in Layers)
         {
             if (layer.Bitmap is null) continue;
-            using (context.PushOpacity(Compact ? 0.85 : 0.75))
-                context.DrawImage(layer.Bitmap,
-                    new Rect(0, 0, layer.Bitmap.PixelSize.Width, layer.Bitmap.PixelSize.Height), dest);
+            DrawBitmapCropped(context, layer.Bitmap, dest, Compact ? 0.85 : 0.75);
         }
 
         if (!Compact)
-            context.DrawRectangle(null, new Pen(BorderBrush, 1), dest);
+            context.DrawRectangle(null, BorderPen, dest);
 
         if (Options.ShowHazards) DrawHazards(context);
         if (Options.ShowSpawns) DrawSpawns(context);
@@ -192,6 +342,7 @@ public sealed class MapCanvas : Control
         if (Options.ShowQuestMarkers) DrawQuestMarkers(context);
         if (Options.ShowLabels && !Compact) DrawLabels(context);
 
+        DrawFocusPin(context);
         DrawPins(context);
         DrawActivePlayer(context, large: !Compact);
 
@@ -216,6 +367,8 @@ public sealed class MapCanvas : Control
     private void DrawExtracts(DrawingContext context)
     {
         if (_map is null || _zoom < 0.55) return;
+        var size = Math.Clamp(6.5 * Math.Sqrt(_zoom), 5.5, 11);
+        var diamond = Diamond(size);
         foreach (var e in _map.Extracts)
         {
             if (!ExtractVisible(e)) continue;
@@ -223,26 +376,15 @@ public sealed class MapCanvas : Control
             if (!OnScreen(s, 40)) continue;
 
             var brush = e.Faction == "scav" ? ExtractScav : e.Faction == "shared" ? ExtractShared : ExtractPmc;
-            var size = Math.Clamp(6.5 * Math.Sqrt(_zoom), 5.5, 11);
-            // Diamond marker so extracts never collide with round quest dots.
-            var geo = new StreamGeometry();
-            using (var g = geo.Open())
-            {
-                g.BeginFigure(new Point(s.X, s.Y - size), true);
-                g.LineTo(new Point(s.X + size, s.Y));
-                g.LineTo(new Point(s.X, s.Y + size));
-                g.LineTo(new Point(s.X - size, s.Y));
-                g.EndFigure(true);
-            }
-            context.DrawGeometry(new SolidColorBrush(Color.Parse("#CC0A0F15")), new Pen(brush, 2), geo);
+            var pen = e.Faction == "scav" ? ExtractScavPen : e.Faction == "shared" ? ExtractSharedPen : ExtractPmcPen;
+            using (context.PushTransform(Matrix.CreateTranslation(s.X, s.Y)))
+                context.DrawGeometry(ExtractFill, pen, diamond);
 
             if (_zoom >= 1.15 && !Compact)
             {
-                var label = new FormattedText(e.Name, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                    MarkerTypeface, 10.5, brush);
+                var label = Text(e.Name, 10.5, brush);
                 var pos = new Point(s.X - label.Width / 2, s.Y + size + 3);
-                context.DrawText(new FormattedText(e.Name, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                    MarkerTypeface, 10.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+                context.DrawText(Text(e.Name, 10.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
                 context.DrawText(label, pos);
             }
         }
@@ -251,8 +393,12 @@ public sealed class MapCanvas : Control
     private void DrawBosses(DrawingContext context)
     {
         if (_map is null || _zoom < 0.7) return;
+        // One caption per boss, not per spawn point: Lighthouse has 18 rogue
+        // points, and 18 overlapping "流氓" labels buried the map.
+        var labelled = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var boss in _map.Bosses)
         {
+            var showLabel = !Compact && _zoom >= 0.85 && labelled.Add(boss.Mob);
             foreach (var point in boss.Points)
             {
                 var s = Project(point.X, point.Z);
@@ -260,35 +406,32 @@ public sealed class MapCanvas : Control
 
                 // A coloured dot gave no clue which boss was which; draw the portrait.
                 var r = Math.Clamp(9.0 * Math.Sqrt(_zoom), 9, 20);
-                var avatar = LoadCached("bosses", SlugForMob(boss.Mob));
+                var avatar = LoadCircle("bosses", SlugForMob(boss.Mob), (int)Math.Round(r * 2));
                 if (avatar is not null)
                 {
                     context.DrawEllipse(BossHalo, null, s, r + 2, r + 2);
-                    using (context.PushGeometryClip(new EllipseGeometry(new Rect(s.X - r, s.Y - r, r * 2, r * 2))))
-                        context.DrawImage(avatar,
-                            new Rect(0, 0, avatar.PixelSize.Width, avatar.PixelSize.Height),
-                            new Rect(s.X - r, s.Y - r, r * 2, r * 2));
-                    context.DrawEllipse(null, new Pen(BossBrush, 1.4), s, r, r);
+                    var side = (int)Math.Round(r * 2);
+                    context.DrawImage(avatar, new Rect(0, 0, side, side),
+                        new Rect(s.X - r, s.Y - r, r * 2, r * 2));
+                    context.DrawEllipse(null, BossRingPen, s, r, r);
                 }
                 else
                 {
                     context.DrawEllipse(BossHalo, null, s, r + 7, r + 7);
-                    context.DrawEllipse(BossBrush, new Pen(new SolidColorBrush(Color.Parse("#FFE8DF")), 1.2), s, r, r);
+                    context.DrawEllipse(BossBrush, BossEmptyPen, s, r, r);
                     var initial = string.IsNullOrEmpty(boss.Name) ? "?" : boss.Name[..1].ToUpperInvariant();
-                    var itxt = new FormattedText(initial, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                        MarkerTypeface, r, new SolidColorBrush(Color.Parse("#171207")));
+                    var itxt = Text(initial, r, BossInitial);
                     context.DrawText(itxt, new Point(s.X - itxt.Width / 2, s.Y - itxt.Height / 2));
                 }
 
-                if (!Compact)
+                if (showLabel)
                 {
                     var size = _zoom >= 1.7 ? 10.5 : 9;
-                    var txt = new FormattedText(boss.Name, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                        MarkerTypeface, size, BossBrush);
+                    var txt = Text(boss.Name, size, BossBrush);
                     var pos = new Point(s.X + r + 4, s.Y - txt.Height / 2);
-                    context.DrawText(new FormattedText(boss.Name, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                        MarkerTypeface, size, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+                    context.DrawText(Text(boss.Name, size, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
                     context.DrawText(txt, pos);
+                    showLabel = false;
                 }
             }
         }
@@ -369,7 +512,7 @@ public sealed class MapCanvas : Control
                                      Matrix.CreateTranslation(_origin.X, _origin.Y)))
         {
             foreach (var (geometry, fill, stroke) in _hazardCache)
-                context.DrawGeometry(fill, new Pen(stroke, 1.4 / Math.Max(0.0001, Scale)), geometry);
+                context.DrawGeometry(fill, CachedPen(stroke, 1.4 / Math.Max(0.0001, Scale)), geometry);
         }
 
         if (_hazardMarkers is null) return;
@@ -384,18 +527,15 @@ public sealed class MapCanvas : Control
     private void DrawHazardWarning(DrawingContext context, Point s)
     {
         var r = Math.Clamp(6.5 * Math.Sqrt(_zoom), 5.5, 9.5);
-        context.DrawEllipse(HazardStroke, new Pen(HazardGlyph, 1.2), s, r, r);
+        context.DrawEllipse(HazardStroke, CachedPen(HazardGlyph, 1.2), s, r, r);
 
-        var bang = new FormattedText("!", CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-            MarkerTypeface, r * 1.7, HazardGlyph);
+        var bang = Text("!", r * 1.7, HazardGlyph);
         context.DrawText(bang, new Point(s.X - bang.Width / 2, s.Y - bang.Height / 2));
 
         if (_zoom < 1.15 || Compact) return;
-        var label = new FormattedText("危险区", CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-            MarkerTypeface, 10.5, HazardStroke);
+        var label = Text("危险区", 10.5, HazardStroke);
         var pos = new Point(s.X - label.Width / 2, s.Y + r + 3);
-        context.DrawText(new FormattedText("危险区", CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-            MarkerTypeface, 10.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+        context.DrawText(Text("危险区", 10.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
         context.DrawText(label, pos);
     }
 
@@ -406,8 +546,8 @@ public sealed class MapCanvas : Control
         {
             var s = Project(sp.X, sp.Z);
             if (!OnScreen(s, 20)) continue;
-            var brush = sp.Side == "scav" ? SpawnScavBrush : SpawnPmcBrush;
-            context.DrawEllipse(new SolidColorBrush(Color.Parse("#66222830")), new Pen(brush, 1), s, 4, 4);
+            var pen = sp.Side == "scav" ? SpawnScavPen : SpawnPmcPen;
+            context.DrawEllipse(SpawnFill, pen, s, 4, 4);
         }
     }
 
@@ -418,48 +558,58 @@ public sealed class MapCanvas : Control
         {
             var s = Project(t.X, t.Z);
             if (!OnScreen(s, 30)) continue;
-            context.DrawRectangle(new SolidColorBrush(Color.Parse("#CC0A0F15")), new Pen(TransitBrush, 1.6),
-                new Rect(s.X - 5, s.Y - 5, 10, 10));
+            context.DrawRectangle(TransitFill, TransitPen, new Rect(s.X - 5, s.Y - 5, 10, 10));
         }
     }
 
     private void DrawQuestMarkers(DrawingContext context)
     {
         if (_map is null || QuestMarkers.Count == 0) return;
-        var radius = Compact ? 11.0 : Math.Clamp(11 * Math.Sqrt(_zoom), 10, 16);
-        _markerHits.Clear();
+
+        // Below this zoom hundreds of avatars overlap into an unreadable carpet
+        // and each one costs a texture draw. Show small dots instead; the hit
+        // targets and tooltips still work.
+        var detailed = _zoom >= 0.55;
+        var radius = detailed ? (Compact ? 11.0 : Math.Clamp(11 * Math.Sqrt(_zoom), 10, 16)) : 4.5;
+        var seen = new HashSet<(string Quest, int X, int Y)>();
         foreach (var marker in QuestMarkers)
         {
             var s = Project(marker.X, marker.Z);
             if (!OnScreen(s, 70)) continue;
+
+            // The same quest often has several objectives at the same spot.
+            if (!seen.Add((marker.QuestId, (int)Math.Round(s.X / 4), (int)Math.Round(s.Y / 4))))
+                continue;
+
             _markerHits.Add((marker, new Rect(s.X - radius, s.Y - radius, radius * 2, radius * 2)));
+            if (!detailed)
+            {
+                context.DrawEllipse(DotBrush, null, s, radius, radius);
+                continue;
+            }
 
-            context.DrawEllipse(new SolidColorBrush(Color.Parse("#8805080B")), null,
-                new Point(s.X + 1, s.Y + 2), radius + 1, radius + 1);
-            context.DrawEllipse(new SolidColorBrush(Color.Parse("#F2D6A84B")), new Pen(new SolidColorBrush(Color.Parse("#FFF6E7C4")), 1.6),
-                s, radius, radius);
+            context.DrawEllipse(MarkerShadow, null, new Point(s.X + 1, s.Y + 2), radius + 1, radius + 1);
+            context.DrawEllipse(QuestMarkerFill, QuestMarkerPen, s, radius, radius);
 
-            var avatar = LoadAvatar(marker.TraderSlug);
+            var avatar = LoadCircle("traders", marker.TraderSlug, (int)Math.Round((radius - 2) * 2));
             if (avatar is not null)
             {
+                var side = (int)Math.Round((radius - 2) * 2);
                 var rect = new Rect(s.X - radius + 2, s.Y - radius + 2, radius * 2 - 4, radius * 2 - 4);
-                context.DrawImage(avatar, new Rect(0, 0, avatar.PixelSize.Width, avatar.PixelSize.Height), rect);
+                context.DrawImage(avatar, new Rect(0, 0, side, side), rect);
             }
             else
             {
                 var initial = string.IsNullOrEmpty(marker.TraderName) ? "?" : marker.TraderName[..1].ToUpperInvariant();
-                var txt = new FormattedText(initial, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                    MarkerTypeface, radius, new SolidColorBrush(Color.Parse("#171207")));
+                var txt = Text(initial, radius, BossInitial);
                 context.DrawText(txt, new Point(s.X - txt.Width / 2, s.Y - txt.Height / 2));
             }
 
             if (_zoom >= 1.6 && !Compact)
             {
-                var txt = new FormattedText(marker.QuestName, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                    MarkerTypeface, 10, new SolidColorBrush(Color.Parse("#F0E4C4")));
+                var txt = Text(marker.QuestName, 10, QuestLabelBrush);
                 var pos = new Point(s.X - txt.Width / 2, s.Y + radius + 2);
-                context.DrawText(new FormattedText(marker.QuestName, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                    MarkerTypeface, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+                context.DrawText(Text(marker.QuestName, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
                 context.DrawText(txt, pos);
             }
         }
@@ -492,6 +642,48 @@ public sealed class MapCanvas : Control
     }
 
     /// <summary>
+    /// Circular avatar thumbnail, rasterised once per (slug, pixel size). This
+    /// replaces a geometry clip layer per boss/marker per frame.
+    /// </summary>
+    private Bitmap? LoadCircle(string folder, string slug, int pixelSize)
+    {
+        if (string.IsNullOrWhiteSpace(slug) || pixelSize <= 0) return null;
+        pixelSize = Math.Clamp(pixelSize, 8, 96);
+        var key = (folder, slug, pixelSize);
+        if (_circleCache.TryGetValue(key, out var cached)) return cached;
+
+        var source = LoadCached(folder, slug);
+        if (source is null)
+        {
+            _circleCache[key] = null;
+            return null;
+        }
+
+        Bitmap circle;
+        try
+        {
+            var target = new RenderTargetBitmap(new PixelSize(pixelSize, pixelSize), new Vector(96, 96));
+            using (var ctx = target.CreateDrawingContext())
+            {
+                using (ctx.PushGeometryClip(new EllipseGeometry(new Rect(0, 0, pixelSize, pixelSize))))
+                {
+                    ctx.DrawImage(source,
+                        new Rect(0, 0, source.PixelSize.Width, source.PixelSize.Height),
+                        new Rect(0, 0, pixelSize, pixelSize));
+                }
+            }
+            circle = target;
+        }
+        catch
+        {
+            circle = source;
+        }
+
+        _circleCache[key] = circle;
+        return circle;
+    }
+
+    /// <summary>
     /// Map an API mob id (bossKilla) to its portrait file name (killa). A few
     /// bosses do not use the in-game codename, so they are listed explicitly.
     /// </summary>
@@ -500,9 +692,13 @@ public sealed class MapCanvas : Control
         if (string.IsNullOrWhiteSpace(mob)) return "";
         return mob.ToLowerInvariant() switch
         {
-            "bossbully" or "bossbullyblackdiv" => "reshala",
+            "bossbully" => "reshala",
             "bosskojaniy" => "shturman",
             "bossboar" => "kaban",
+            "sectantpriest" => "sectant-priest",
+            "pmcbot" => "raider",
+            "blackdivision" or "pmcbotblackdiv" => "black-division",
+            "bossbullyblackdiv" => "black-division-icebreaker",
             _ when mob.StartsWith("boss", StringComparison.OrdinalIgnoreCase) =>
                 mob[4..].Replace("_", "-").ToLowerInvariant(),
             _ => mob.Replace("_", "-").ToLowerInvariant(),
@@ -533,13 +729,33 @@ public sealed class MapCanvas : Control
             if (s.X < -140 || s.Y < -40 || s.X > Bounds.Width + 140 || s.Y > Bounds.Height + 40) continue;
 
             var fontSize = Math.Clamp(11 + label.Size / 100.0 * 2.4, 10.5, 16);
-            var text = new FormattedText(label.Text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                LabelTypeface, fontSize, LabelBrush);
+            var text = Text(label.Text, fontSize, LabelBrush);
             var pos = new Point(s.X - text.Width / 2, s.Y - text.Height / 2);
-            context.DrawText(new FormattedText(label.Text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-                LabelTypeface, fontSize, LabelShadow), new Point(pos.X + 1.4, pos.Y + 1.4));
+            context.DrawText(Text(label.Text, fontSize, LabelShadow), new Point(pos.X + 1.4, pos.Y + 1.4));
             context.DrawText(text, pos);
         }
+    }
+
+    private void DrawFocusPin(DrawingContext context)
+    {
+        if (_map is null || _focusPin is not { } pin) return;
+        var s = Project(pin.X, pin.Z);
+        if (!OnScreen(s, 80)) return;
+
+        // Pulsing-looking target: a hollow ring plus crosshair, so a jumped-to
+        // objective is obvious even when several quest markers overlap it.
+        context.DrawEllipse(FocusHalo, null, s, 17, 17);
+        context.DrawEllipse(null, AccentPen, s, 11, 11);
+        context.DrawLine(AccentPen, new Point(s.X - 18, s.Y), new Point(s.X - 5, s.Y));
+        context.DrawLine(AccentPen, new Point(s.X + 5, s.Y), new Point(s.X + 18, s.Y));
+        context.DrawLine(AccentPen, new Point(s.X, s.Y - 18), new Point(s.X, s.Y - 5));
+        context.DrawLine(AccentPen, new Point(s.X, s.Y + 5), new Point(s.X, s.Y + 18));
+
+        if (Compact || _zoom < 0.8 || string.IsNullOrWhiteSpace(pin.Label)) return;
+        var txt = Text(pin.Label, 11, QuestLabelBrush);
+        var box = new Rect(s.X + 16, s.Y - txt.Height / 2 - 4, txt.Width + 12, txt.Height + 8);
+        context.DrawRectangle(PanelBrush, BorderPen, box, 4, 4);
+        context.DrawText(txt, new Point(box.X + 6, box.Y + 4));
     }
 
     private void DrawPins(DrawingContext context)
@@ -553,13 +769,11 @@ public sealed class MapCanvas : Control
             if (!OnScreen(s, 30)) continue;
             var active = ReferenceEquals(pin, ActivePin);
             var r = active ? 7.0 : 5.2;
-            context.DrawEllipse(new SolidColorBrush(Color.Parse("#33000000")), null,
-                new Point(s.X + 1, s.Y + 2), r + 2, r + 2);
-            context.DrawEllipse(PinBrush, new Pen(PinStroke, active ? 2 : 1.2), s, r, r);
+            context.DrawEllipse(PinShadow, null, new Point(s.X + 1, s.Y + 2), r + 2, r + 2);
+            context.DrawEllipse(PinBrush, active ? ActivePinPen : PinPen, s, r, r);
             if (active || _zoom >= 1.8)
             {
-                var txt = new FormattedText(index.ToString(CultureInfo.InvariantCulture), CultureInfo.CurrentCulture,
-                    FlowDirection.LeftToRight, LabelTypeface, 9, Brushes.White);
+                var txt = Text(index.ToString(CultureInfo.InvariantCulture), 9, Brushes.White);
                 context.DrawText(txt, new Point(s.X - txt.Width / 2, s.Y - txt.Height / 2));
             }
         }
@@ -593,20 +807,18 @@ public sealed class MapCanvas : Control
                 g.LineTo(right);
                 g.EndFigure(true);
             }
-            context.DrawGeometry(new SolidColorBrush(Color.Parse("#B3FFD166")), new Pen(PlayerBrush, 1.2), geo);
+            context.DrawGeometry(PlayerCone, PlayerConePen, geo);
         }
 
-        context.DrawEllipse(new SolidColorBrush(Color.Parse("#55FFD166")), null, s, radius + 8, radius + 8);
-        context.DrawEllipse(PlayerDark, new Pen(PinStroke, 1.5), s, radius, radius);
+        context.DrawEllipse(PlayerHalo, null, s, radius + 8, radius + 8);
+        context.DrawEllipse(PlayerDark, PlayerPen, s, radius, radius);
         context.DrawEllipse(PlayerBrush, null, s, radius - 3, radius - 3);
 
         if (large)
         {
-            var txt = new FormattedText($"你  {pin.X:0}, {pin.Z:0}", CultureInfo.CurrentCulture,
-                FlowDirection.LeftToRight, LabelTypeface, 11, PlayerBrush);
+            var txt = Text($"你  {pin.X:0}, {pin.Z:0}", 11, PlayerBrush);
             var box = new Rect(s.X + 14, s.Y - 30, txt.Width + 14, txt.Height + 8);
-            context.DrawRectangle(PanelBrush, new Pen(new SolidColorBrush(Color.Parse("#66D6A84B")), 1),
-                new RoundedRect(box, 5));
+            context.DrawRectangle(PanelBrush, PlayerPanelPen, new RoundedRect(box, 5));
             context.DrawText(txt, new Point(box.X + 7, box.Y + 4));
         }
     }
@@ -626,12 +838,11 @@ public sealed class MapCanvas : Control
 
         var x = 22.0;
         var y = Bounds.Height - 28;
-        var label = new FormattedText($"{nice:0} m", CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-            LabelTypeface, 11, MutedBrush);
+        var label = Text($"{nice:0} m", 11, MutedBrush);
         context.DrawRectangle(PanelBrush, null, new RoundedRect(new Rect(x - 8, y - 22, barWidth + 42, 40), 6));
-        context.DrawLine(new Pen(AccentBrush, 2), new Point(x, y), new Point(x + barWidth, y));
-        context.DrawLine(new Pen(AccentBrush, 2), new Point(x, y - 4), new Point(x, y + 4));
-        context.DrawLine(new Pen(AccentBrush, 2), new Point(x + barWidth, y - 4), new Point(x + barWidth, y + 4));
+        context.DrawLine(AccentPen, new Point(x, y), new Point(x + barWidth, y));
+        context.DrawLine(AccentPen, new Point(x, y - 4), new Point(x, y + 4));
+        context.DrawLine(AccentPen, new Point(x + barWidth, y - 4), new Point(x + barWidth, y + 4));
         context.DrawText(label, new Point(x + barWidth + 8, y - label.Height / 2));
     }
 
@@ -646,7 +857,7 @@ public sealed class MapCanvas : Control
     private void DrawCompass(DrawingContext context)
     {
         var center = new Point(Bounds.Width - 36, 36);
-        context.DrawEllipse(PanelBrush, new Pen(BorderBrush, 1), center, 19, 19);
+        context.DrawEllipse(PanelBrush, BorderPen, center, 19, 19);
         var geo = new StreamGeometry();
         using (var g = geo.Open())
         {
@@ -657,8 +868,7 @@ public sealed class MapCanvas : Control
             g.EndFigure(true);
         }
         context.DrawGeometry(AccentBrush, null, geo);
-        var n = new FormattedText("N", CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-            LabelTypeface, 9, MutedBrush);
+        var n = Text("N", 9, MutedBrush);
         context.DrawText(n, new Point(center.X - n.Width / 2, center.Y + 4));
     }
 
@@ -724,6 +934,7 @@ public sealed class MapCanvas : Control
         _panning = true;
         _dragStart = pos;
         _panStart = _pan;
+        SetInteractiveQuality(true);
         e.Pointer.Capture(this);
         Cursor = new Cursor(StandardCursorType.SizeAll);
         e.Handled = true;
@@ -779,6 +990,7 @@ public sealed class MapCanvas : Control
         if (_panning)
         {
             _panning = false;
+            SetInteractiveQuality(false);
             Cursor = new Cursor(StandardCursorType.Hand);
             e.Pointer.Capture(null);
             e.Handled = true;

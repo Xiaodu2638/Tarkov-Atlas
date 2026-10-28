@@ -114,16 +114,23 @@
   ],
   "the-lab": [
     {
+      "name": "First Level",
+      "image": "",
+      "order": 0,
+      "minHeight": -0.9,
+      "maxHeight": 3
+    },
+    {
       "name": "Second Level",
       "image": "layers/the-lab/0_second-level.png",
-      "order": 0,
+      "order": 1,
       "minHeight": 3,
       "maxHeight": 10000
     },
     {
       "name": "Technical",
       "image": "layers/the-lab/1_technical.png",
-      "order": 1,
+      "order": 2,
       "minHeight": -10000,
       "maxHeight": -0.9
     }
@@ -244,14 +251,25 @@
   ],
   "interchange": [
     {
+      "name": "Ground Floor",
+      "image": "",
+      "order": 0,
+      "minHeight": -1000,
+      "maxHeight": 25
+    },
+    {
       "name": "2nd Floor",
       "image": "layers/interchange/x_2nd-floor.png",
-      "order": 0
+      "order": 1,
+      "minHeight": 25,
+      "maxHeight": 34
     },
     {
       "name": "3rd Floor",
       "image": "layers/interchange/x_3rd-floor.png",
-      "order": 1
+      "order": 2,
+      "minHeight": 34,
+      "maxHeight": 1000
     }
   ],
   "shoreline": [

@@ -15,7 +15,7 @@
   <!-- Borderless square cut-out centred on the player position. The window
        follows the newest screenshot automatically; the bottom-right grip
        resizes it and Ctrl+Alt+L toggles click-through. -->
-  <Grid x:Name="Root">
+  <Grid x:Name="Root" Background="Transparent">
     <controls:MapCanvas x:Name="OverlayMap" Compact="True" IsHitTestVisible="False" />
     <Border x:Name="ResizeGrip" Width="18" Height="18"
             HorizontalAlignment="Right" VerticalAlignment="Bottom"

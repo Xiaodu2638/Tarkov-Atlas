@@ -18,6 +18,8 @@
     <Compile Include="..\..\TarkovAtlas\Models\AppSettings.cs" Link="Models\AppSettings.cs" />
     <Compile Include="..\..\TarkovAtlas\Models\MapNames.cs" Link="Models\MapNames.cs" />
     <Compile Include="..\..\TarkovAtlas\AppJsonContext.cs" Link="AppJsonContext.cs" />
+    <Compile Include="..\..\TarkovAtlas\Services\SettingsService.cs" Link="Services\SettingsService.cs" />
+    <Compile Include="..\..\TarkovAtlas\Services\QuestService.cs" Link="Services\QuestService.cs" />
   </ItemGroup>
 
   <ItemGroup>

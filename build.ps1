@@ -41,7 +41,14 @@ function Invoke-Publish([bool]$aot) {
     if (-not $aot) { $publishArgs += @("-p:PublishAot=false", "-p:PublishTrimmed=false") }
     Write-Host "  publishing (AOT=$aot) ..." -ForegroundColor DarkGray
     & dotnet @publishArgs | Out-Null
-    return @{ Ok = ($LASTEXITCODE -eq 0); Dir = $staging }
+    $ok = ($LASTEXITCODE -eq 0)
+    # A successful AOT publish has no CoreCLR runtime beside the exe. If it is
+    # there, MSBuild quietly produced a self-contained build; treat it as a
+    # failed AOT attempt instead of shipping it as "native".
+    if ($aot -and $ok -and (Test-Path (Join-Path $staging "coreclr.dll"))) {
+        $ok = $false
+    }
+    return @{ Ok = $ok; Dir = $staging; Aot = $aot }
 }
 
 Write-Host "Tarkov Atlas publish" -ForegroundColor Cyan
@@ -86,4 +93,5 @@ Compress-Archive -Path (Join-Path $target "*") -DestinationPath $zip -Compressio
 Write-Host ""
 Write-Host "Done." -ForegroundColor Green
 Write-Host "  folder: $target ($sizeMb MB)"
+Write-Host "  mode:   $(if ($result.Aot) { 'NativeAOT (no coreclr.dll)' } else { 'self-contained (no AOT)' })"
 Write-Host "  EXE:    $exe" -ForegroundColor Green

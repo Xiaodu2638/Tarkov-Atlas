@@ -18,7 +18,7 @@
   {
    "id": "5979f8bb86f7743ec214c7a6",
    "name": "Polikhim流浪汉",
-   "nameEn": "Polikhim流浪汉",
+   "nameEn": "Polikhim Hobo",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Polikhim_Hobo",
@@ -29,7 +29,7 @@
   {
    "id": "5edac63b930f5454f51e128b",
    "name": "TerraGroup 雇员",
-   "nameEn": "TerraGroup 雇员",
+   "nameEn": "TerraGroup Employee",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/TerraGroup_Employee",
@@ -54,7 +54,7 @@
   {
    "id": "5979ed3886f77431307dc512",
    "name": "U盘里有什么？",
-   "nameEn": "U盘里有什么？",
+   "nameEn": "What’s on the Flash Drive?",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/What%E2%80%99s_on_the_Flash_Drive%3F",
@@ -65,7 +65,7 @@
   {
    "id": "6391359b9444fb141f4e6ee6",
    "name": "一信之缘",
-   "nameEn": "一信之缘",
+   "nameEn": "You've Got Mail",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/You've_Got_Mail",
@@ -78,7 +78,7 @@
   {
    "id": "5d6fb2c086f77449da599c24",
    "name": "一天一个苹果 - 医生远离我",
-   "nameEn": "一天一个苹果 - 医生远离我",
+   "nameEn": "An Apple a Day Keeps the Doctor Away",
    "trader": "54cb57776803fa99248b456e",
    "level": 18,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/An_Apple_a_Day_Keeps_the_Doctor_Away",
@@ -89,7 +89,7 @@
   {
    "id": "666314c3acf8442f8b0531a3",
    "name": "一报还一报",
-   "nameEn": "一报还一报",
+   "nameEn": "Proper Comeback",
    "trader": "58330581ace78e27b8b10cee",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Proper_Comeback",
@@ -138,7 +138,7 @@
   {
    "id": "5c0bbaa886f7746941031d82",
    "name": "一派胡言",
-   "nameEn": "一派胡言",
+   "nameEn": "Bullshit",
    "trader": "58330581ace78e27b8b10cee",
    "level": 38,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Bullshit",
@@ -185,7 +185,7 @@
   {
    "id": "6752f6d83038f7df520c83e8",
    "name": "一臂之力",
-   "nameEn": "一臂之力",
+   "nameEn": "A Helping Hand",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Helping_Hand",
@@ -198,7 +198,7 @@
   {
    "id": "596a1e6c86f7741ddc2d3206",
    "name": "一般储备",
-   "nameEn": "一般储备",
+   "nameEn": "General Wares",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/General_Wares",
@@ -209,7 +209,7 @@
   {
    "id": "5ac3475486f7741d6224abd3",
    "name": "不良嗜好",
-   "nameEn": "不良嗜好",
+   "nameEn": "Bad Habit",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Bad_Habit",
@@ -220,7 +220,7 @@
   {
    "id": "69788c2bac719606e40b4e77",
    "name": "专业热身 - 1（PVP）",
-   "nameEn": "专业热身 - 1（PVP）",
+   "nameEn": "Professional Fitness - Part 1",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Professional_Fitness_-_Part_1",
@@ -231,7 +231,7 @@
   {
    "id": "69788db3878a4385d10c0718",
    "name": "专业热身 - 2（PVP）",
-   "nameEn": "专业热身 - 2（PVP）",
+   "nameEn": "Professional Fitness - Part 2",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Professional_Fitness_-_Part_2",
@@ -242,7 +242,7 @@
   {
    "id": "66058ccf06ef1d50a60c1f48",
    "name": "两害相权（PVP）",
-   "nameEn": "两害相权（PVP）",
+   "nameEn": "Between Two Fires",
    "trader": "579dc571d53a0658a154fbec",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Between_Two_Fires",
@@ -272,7 +272,7 @@
   {
    "id": "66058cd19f59e625462acc90",
    "name": "两难抉择（PVP）",
-   "nameEn": "两难抉择（PVP）",
+   "nameEn": "Decisions, Decisions",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Decisions%2C_Decisions",
@@ -283,7 +283,7 @@
   {
    "id": "666314bf1cd52e3d040a2e78",
    "name": "严词指控",
-   "nameEn": "严词指控",
+   "nameEn": "Serious Allegations",
    "trader": "58330581ace78e27b8b10cee",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Serious_Allegations",
@@ -296,7 +296,7 @@
   {
    "id": "5ae4495086f77443c122bc40",
    "name": "临行密密缝 - 1",
-   "nameEn": "临行密密缝 - 1",
+   "nameEn": "Sew it Good - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sew_it_Good_-_Part_1",
@@ -307,7 +307,7 @@
   {
    "id": "5ae4497b86f7744cf402ed00",
    "name": "临行密密缝 - 2",
-   "nameEn": "临行密密缝 - 2",
+   "nameEn": "Sew it Good - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sew_it_Good_-_Part_2",
@@ -318,7 +318,7 @@
   {
    "id": "5ae4495c86f7744e87761355",
    "name": "临行密密缝 - 3",
-   "nameEn": "临行密密缝 - 3",
+   "nameEn": "Sew it Good - Part 3",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sew_it_Good_-_Part_3",
@@ -329,7 +329,7 @@
   {
    "id": "5ae4496986f774459e77beb6",
    "name": "临行密密缝 - 4",
-   "nameEn": "临行密密缝 - 4",
+   "nameEn": "Sew it Good - Part 4",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sew_it_Good_-_Part_4",
@@ -340,7 +340,7 @@
   {
    "id": "5a0449d586f77474e66227b7",
    "name": "主钥匙",
-   "nameEn": "主钥匙",
+   "nameEn": "Master Key",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Master_Key",
@@ -353,7 +353,7 @@
   {
    "id": "675c1cf4a757ddd00404f0a3",
    "name": "事倍功半",
-   "nameEn": "事倍功半",
+   "nameEn": "Work Smarter",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Work_Smarter",
@@ -394,7 +394,7 @@
   {
    "id": "61e6e60c5ca3b3783662be27",
    "name": "亡羊补牢 - Wergild",
-   "nameEn": "亡羊补牢 - Wergild",
+   "nameEn": "Compensation for Damage - Wergild",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Compensation_for_Damage_-_Wergild",
@@ -405,7 +405,7 @@
   {
    "id": "61e6e5e0f5b9633f6719ed95",
    "name": "亡羊补牢 - 信任",
-   "nameEn": "亡羊补牢 - 信任",
+   "nameEn": "Compensation for Damage - Trust",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Compensation_for_Damage_-_Trust",
@@ -416,7 +416,7 @@
   {
    "id": "61e6e621bfeab00251576265",
    "name": "亡羊补牢 - 收藏",
-   "nameEn": "亡羊补牢 - 收藏",
+   "nameEn": "Compensation for Damage - Collection",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Compensation_for_Damage_-_Collection",
@@ -427,7 +427,7 @@
   {
    "id": "61e6e60223374d168a4576a6",
    "name": "亡羊补牢 - 赌注",
-   "nameEn": "亡羊补牢 - 赌注",
+   "nameEn": "Compensation for Damage - Wager",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Compensation_for_Damage_-_Wager",
@@ -438,7 +438,7 @@
   {
    "id": "61e6e615eea2935bc018a2c5",
    "name": "亡羊补牢 - 酒保",
-   "nameEn": "亡羊补牢 - 酒保",
+   "nameEn": "Compensation for Damage - Barkeep",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Compensation_for_Damage_-_Barkeep",
@@ -449,7 +449,7 @@
   {
    "id": "639135d89444fb141f4e6eea",
    "name": "人口普查",
-   "nameEn": "人口普查",
+   "nameEn": "Population Census",
    "trader": "54cb57776803fa99248b456e",
    "level": 5,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Population_Census",
@@ -462,7 +462,7 @@
   {
    "id": "6179aff8f57fb279792c60a1",
    "name": "人口过剩",
-   "nameEn": "人口过剩",
+   "nameEn": "Overpopulation",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Overpopulation",
@@ -487,7 +487,7 @@
   {
    "id": "6745fae369a58fceba10343d",
    "name": "人往高处走",
-   "nameEn": "人往高处走",
+   "nameEn": "The Higher They Fly",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Higher_They_Fly",
@@ -500,7 +500,7 @@
   {
    "id": "67af4c1cc0e59d55e2010b97",
    "name": "人生之课",
-   "nameEn": "人生之课",
+   "nameEn": "A Life Lesson",
    "trader": "58330581ace78e27b8b10cee",
    "level": 50,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Life_Lesson",
@@ -511,7 +511,7 @@
   {
    "id": "5a27b87686f77460de0252a8",
    "name": "人道主义援助",
-   "nameEn": "人道主义援助",
+   "nameEn": "Humanitarian Supplies",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Humanitarian_Supplies",
@@ -557,7 +557,7 @@
   {
    "id": "666314b0acf8442f8b0531a1",
    "name": "人间地狱 - 1",
-   "nameEn": "人间地狱 - 1",
+   "nameEn": "Hell on Earth - Part 1",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hell_on_Earth_-_Part_1",
@@ -568,7 +568,7 @@
   {
    "id": "666314b2a9290f9e0806cca3",
    "name": "人间地狱 - 2",
-   "nameEn": "人间地狱 - 2",
+   "nameEn": "Hell on Earth - Part 2",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 21,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hell_on_Earth_-_Part_2",
@@ -579,7 +579,7 @@
   {
    "id": "6613f3007f6666d56807c929",
    "name": "人靠衣装 - 1",
-   "nameEn": "人靠衣装 - 1",
+   "nameEn": "Drip-Out - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 27,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Drip-Out_-_Part_1",
@@ -590,7 +590,7 @@
   {
    "id": "66151401efb0539ae10875ae",
    "name": "人靠衣装 - 1",
-   "nameEn": "人靠衣装 - 1",
+   "nameEn": "Drip-Out - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 27,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Drip-Out_-_Part_1",
@@ -601,7 +601,7 @@
   {
    "id": "6613f307fca4f2f386029409",
    "name": "人靠衣装 - 2",
-   "nameEn": "人靠衣装 - 2",
+   "nameEn": "Drip-Out - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Drip-Out_-_Part_2",
@@ -612,7 +612,7 @@
   {
    "id": "6615141bfda04449120269a7",
    "name": "人靠衣装 - 2",
-   "nameEn": "人靠衣装 - 2",
+   "nameEn": "Drip-Out - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Drip-Out_-_Part_2",
@@ -623,7 +623,7 @@
   {
    "id": "5d2495a886f77425cd51e403",
    "name": "介绍",
-   "nameEn": "介绍",
+   "nameEn": "Introduction",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Introduction",
@@ -648,7 +648,7 @@
   {
    "id": "63966fd9ea19ac7ed845db30",
    "name": "以牙还牙",
-   "nameEn": "以牙还牙",
+   "nameEn": "Payback",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Payback",
@@ -673,7 +673,7 @@
   {
    "id": "675c1ff1a757ddd00404f0aa",
    "name": "体验独一份",
-   "nameEn": "体验独一份",
+   "nameEn": "Unique Experience",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 35,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Unique_Experience",
@@ -684,7 +684,7 @@
   {
    "id": "5a03296886f774569778596a",
    "name": "你渴望电力吗",
-   "nameEn": "你渴望电力吗",
+   "nameEn": "I Need More Power",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/I_Need_More_Power",
@@ -720,7 +720,7 @@
   {
    "id": "639135534b15ca31f76bc317",
    "name": "你的车该洗了",
-   "nameEn": "你的车该洗了",
+   "nameEn": "Your Car Needs a Service",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Your_Car_Needs_a_Service",
@@ -733,7 +733,7 @@
   {
    "id": "639136fa9444fb141f4e6eee",
    "name": "你被盯上了",
-   "nameEn": "你被盯上了",
+   "nameEn": "Watching You",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Watching_You",
@@ -758,7 +758,7 @@
   {
    "id": "596b36c586f77450d6045ad2",
    "name": "供应商",
-   "nameEn": "供应商",
+   "nameEn": "Supplier",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Supplier",
@@ -769,7 +769,7 @@
   {
    "id": "596a0e1686f7741ddf17dbee",
    "name": "供给计划",
-   "nameEn": "供给计划",
+   "nameEn": "Supply Plans",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Supply_Plans",
@@ -782,7 +782,7 @@
   {
    "id": "5b478ff486f7744d184ecbbf",
    "name": "供货",
-   "nameEn": "供货",
+   "nameEn": "Supplements",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Supplements",
@@ -793,7 +793,7 @@
   {
    "id": "5ac3477486f7741d651d6885",
    "name": "侦查",
-   "nameEn": "侦查",
+   "nameEn": "Scout",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Scout",
@@ -851,7 +851,7 @@
   {
    "id": "6a7ae35b2dbf91eb050af95a",
    "name": "侵入性疗法",
-   "nameEn": "侵入性疗法",
+   "nameEn": "Invasive Therapy",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Invasive_Therapy",
@@ -898,7 +898,7 @@
   {
    "id": "697895b6c639962b2e0cf268",
    "name": "保持领先（PVP）",
-   "nameEn": "保持领先（PVP）",
+   "nameEn": "Hold the Lead",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hold_the_Lead",
@@ -909,7 +909,7 @@
   {
    "id": "5ac346cf86f7741d63233a02",
    "name": "信号 - 3",
-   "nameEn": "信号 - 3",
+   "nameEn": "Signal - Part 3",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 15,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Signal_-_Part_3",
@@ -956,7 +956,7 @@
   {
    "id": "5ac346e886f7741d6118b99b",
    "name": "信号 - 4",
-   "nameEn": "信号 - 4",
+   "nameEn": "Signal - Part 4",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 15,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Signal_-_Part_4",
@@ -967,7 +967,7 @@
   {
    "id": "5c1234c286f77406fa13baeb",
    "name": "借刀杀人",
-   "nameEn": "借刀杀人",
+   "nameEn": "Setup",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Setup",
@@ -980,7 +980,7 @@
   {
    "id": "674600a366e6a521aa05eb66",
    "name": "偏离路线",
-   "nameEn": "偏离路线",
+   "nameEn": "Route Deviation",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Route_Deviation",
@@ -1060,7 +1060,7 @@
   {
    "id": "669fa3910c828825de06d69f",
    "name": "健全替代",
-   "nameEn": "健全替代",
+   "nameEn": "A Healthy Alternative",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Healthy_Alternative",
@@ -1071,7 +1071,7 @@
   {
    "id": "5d25e4d586f77443e625e388",
    "name": "储备",
-   "nameEn": "储备",
+   "nameEn": "Reserve (quest)",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Reserve_(quest)",
@@ -1096,7 +1096,7 @@
   {
    "id": "608974af4b05530f55550c21",
    "name": "储备专家",
-   "nameEn": "储备专家",
+   "nameEn": "Reserve Expert",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Reserve_Expert",
@@ -1165,7 +1165,7 @@
   {
    "id": "675c1d6d59b0575973008fc7",
    "name": "先声夺人",
-   "nameEn": "先声夺人",
+   "nameEn": "Seizing the Initiative",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Seizing_the_Initiative",
@@ -1176,7 +1176,7 @@
   {
    "id": "6663148ca9290f9e0806cca1",
    "name": "免疫力",
-   "nameEn": "免疫力",
+   "nameEn": "Immunity",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Immunity",
@@ -1187,7 +1187,7 @@
   {
    "id": "65733403eefc2c312a759ddb",
    "name": "公司福报",
-   "nameEn": "公司福报",
+   "nameEn": "Corporate Perks",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Corporate_Perks",
@@ -1223,7 +1223,7 @@
   {
    "id": "68400926706e0a55e90b0007",
    "name": "公道价 - 1",
-   "nameEn": "公道价 - 1",
+   "nameEn": "Fair Price - Part 1",
    "trader": "58330581ace78e27b8b10cee",
    "level": 45,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fair_Price_-_Part_1",
@@ -1234,7 +1234,7 @@
   {
    "id": "68400953506db3b4db0700e7",
    "name": "公道价 - 2",
-   "nameEn": "公道价 - 2",
+   "nameEn": "Fair Price - Part 2",
    "trader": "58330581ace78e27b8b10cee",
    "level": 45,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fair_Price_-_Part_2",
@@ -1247,7 +1247,7 @@
   {
    "id": "6746053b5b555b53460d9896",
    "name": "关键伙伴",
-   "nameEn": "关键伙伴",
+   "nameEn": "Key Partner",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Key_Partner",
@@ -1258,7 +1258,7 @@
   {
    "id": "64f731ab83cfca080a361e42",
    "name": "兽医也是医",
-   "nameEn": "兽医也是医",
+   "nameEn": "Pets Won't Need It",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Pets_Won't_Need_It",
@@ -1327,7 +1327,7 @@
   {
    "id": "6573387d0b26ed4fde798de3",
    "name": "兽医也是医 - 2",
-   "nameEn": "兽医也是医 - 2",
+   "nameEn": "Pets Won't Need It - Part 2",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Pets_Won't_Need_It_-_Part_2",
@@ -1374,7 +1374,7 @@
   {
    "id": "66058cc1da30b620a34e6e86",
    "name": "再创新高！- 1（PVP）",
-   "nameEn": "再创新高！- 1（PVP）",
+   "nameEn": "To Great Heights! - Part 1",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/To_Great_Heights!_-_Part_1",
@@ -1385,7 +1385,7 @@
   {
    "id": "66058cc208308761cf390993",
    "name": "再创新高！- 2（PVP）",
-   "nameEn": "再创新高！- 2（PVP）",
+   "nameEn": "To Great Heights! - Part 2",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/To_Great_Heights!_-_Part_2",
@@ -1396,7 +1396,7 @@
   {
    "id": "66058cc5bb83da7ba474aba9",
    "name": "再创新高！- 3（PVP）",
-   "nameEn": "再创新高！- 3（PVP）",
+   "nameEn": "To Great Heights! - Part 3",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/To_Great_Heights!_-_Part_3",
@@ -1407,7 +1407,7 @@
   {
    "id": "66058cc72cee99303f1ba069",
    "name": "再创新高！- 4（PVP）",
-   "nameEn": "再创新高！- 4（PVP）",
+   "nameEn": "To Great Heights! - Part 4",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/To_Great_Heights!_-_Part_4",
@@ -1418,7 +1418,7 @@
   {
    "id": "66058cc9ae4719735349b9ea",
    "name": "再创新高！- 5（PVP）",
-   "nameEn": "再创新高！- 5（PVP）",
+   "nameEn": "To Great Heights! - Part 5",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/To_Great_Heights!_-_Part_5",
@@ -1429,7 +1429,7 @@
   {
    "id": "69789418b2187365e70bb947",
    "name": "再创新高！- 6（PVP）",
-   "nameEn": "再创新高！- 6（PVP）",
+   "nameEn": "To Great Heights! - Part 6",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/To_Great_Heights!_-_Part_6",
@@ -1440,7 +1440,7 @@
   {
    "id": "6740b60c60a98cad1b0e0aa0",
    "name": "再次延误",
-   "nameEn": "再次延误",
+   "nameEn": "Another Shipping Delay",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Another_Shipping_Delay",
@@ -1465,7 +1465,7 @@
   {
    "id": "597a160786f77477531d39d2",
    "name": "出于好奇",
-   "nameEn": "出于好奇",
+   "nameEn": "Out of Curiosity",
    "trader": "54cb57776803fa99248b456e",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Out_of_Curiosity",
@@ -1511,7 +1511,7 @@
   {
    "id": "669fa395c4c5c04798002497",
    "name": "出口在此",
-   "nameEn": "出口在此",
+   "nameEn": "Exit Here",
    "trader": "58330581ace78e27b8b10cee",
    "level": 7,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Exit_Here",
@@ -1524,7 +1524,7 @@
   {
    "id": "64e7b99017ab941a6f7bf9d7",
    "name": "出警 - 商场",
-   "nameEn": "出警 - 商场",
+   "nameEn": "Gendarmerie - Mall Cop",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gendarmerie_-_Mall_Cop",
@@ -1549,7 +1549,7 @@
   {
    "id": "64e7b9a4aac4cd0a726562cb",
    "name": "出警 - 检票",
-   "nameEn": "出警 - 检票",
+   "nameEn": "Gendarmerie - Tickets, Please",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gendarmerie_-_Tickets%2C_Please",
@@ -1574,7 +1574,7 @@
   {
    "id": "669fa39ee749756c920d02c8",
    "name": "刨根问底",
-   "nameEn": "刨根问底",
+   "nameEn": "All Is Revealed",
    "trader": "54cb57776803fa99248b456e",
    "level": 5,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/All_Is_Revealed",
@@ -1587,7 +1587,7 @@
   {
    "id": "67af4c1a6c3ebfd8e6034916",
    "name": "利润保留",
-   "nameEn": "利润保留",
+   "nameEn": "Profit Retention",
    "trader": "58330581ace78e27b8b10cee",
    "level": 50,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Profit_Retention",
@@ -1598,7 +1598,7 @@
   {
    "id": "639136e84ed9512be67647db",
    "name": "别开枪！",
-   "nameEn": "别开枪！",
+   "nameEn": "Cease Fire!",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Cease_Fire!",
@@ -1611,7 +1611,7 @@
   {
    "id": "6a7aef2360157cb5e3029a5f",
    "name": "刺激需求",
-   "nameEn": "刺激需求",
+   "nameEn": "Stimulating Demand",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Stimulating_Demand",
@@ -1624,7 +1624,7 @@
   {
    "id": "5979f9ba86f7740f6c3fe9f2",
    "name": "化学品 - 1",
-   "nameEn": "化学品 - 1",
+   "nameEn": "Chemical - Part 1",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Chemical_-_Part_1",
@@ -1637,7 +1637,7 @@
   {
    "id": "597a0b2986f77426d66c0633",
    "name": "化学品 - 2",
-   "nameEn": "化学品 - 2",
+   "nameEn": "Chemical - Part 2",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Chemical_-_Part_2",
@@ -1650,7 +1650,7 @@
   {
    "id": "597a0e5786f77426d66c0636",
    "name": "化学品 - 3",
-   "nameEn": "化学品 - 3",
+   "nameEn": "Chemical - Part 3",
    "trader": "58330581ace78e27b8b10cee",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Chemical_-_Part_3",
@@ -1663,7 +1663,7 @@
   {
    "id": "597a0f5686f774273b74f676",
    "name": "化学品 - 4",
-   "nameEn": "化学品 - 4",
+   "nameEn": "Chemical - Part 4",
    "trader": "58330581ace78e27b8b10cee",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Chemical_-_Part_4",
@@ -1709,7 +1709,7 @@
   {
    "id": "5a27bafb86f7741c73584017",
    "name": "化学实验",
-   "nameEn": "化学实验",
+   "nameEn": "Chemical Experiments",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Chemical_Experiments",
@@ -1739,7 +1739,7 @@
   {
    "id": "5f04886a3937dc337a6b8238",
    "name": "化学橱柜",
-   "nameEn": "化学橱柜",
+   "nameEn": "Chemistry Closet",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Chemistry_Closet",
@@ -1764,7 +1764,7 @@
   {
    "id": "66aa74571e5e199ecd094f18",
    "name": "化工厂的秘密",
-   "nameEn": "化工厂的秘密",
+   "nameEn": "Secrets of Polikhim",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Secrets_of_Polikhim",
@@ -1789,7 +1789,7 @@
   {
    "id": "6764174c86addd02bc033d68",
    "name": "北国新秀",
-   "nameEn": "北国新秀",
+   "nameEn": "Connections Up North",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Connections_Up_North",
@@ -1800,7 +1800,7 @@
   {
    "id": "5a68661a86f774500f48afb0",
    "name": "医疗隐私 - 1",
-   "nameEn": "医疗隐私 - 1",
+   "nameEn": "Health Care Privacy - Part 1",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Health_Care_Privacy_-_Part_1",
@@ -1878,7 +1878,7 @@
   {
    "id": "5a68663e86f774501078f78a",
    "name": "医疗隐私 - 2",
-   "nameEn": "医疗隐私 - 2",
+   "nameEn": "Health Care Privacy - Part 2",
    "trader": "54cb57776803fa99248b456e",
    "level": 5,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Health_Care_Privacy_-_Part_2",
@@ -1891,7 +1891,7 @@
   {
    "id": "5a68665c86f774255929b4c7",
    "name": "医疗隐私 - 3",
-   "nameEn": "医疗隐私 - 3",
+   "nameEn": "Health Care Privacy - Part 3",
    "trader": "54cb57776803fa99248b456e",
    "level": 5,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Health_Care_Privacy_-_Part_3",
@@ -1916,7 +1916,7 @@
   {
    "id": "5a68667486f7742607157d28",
    "name": "医疗隐私 - 4",
-   "nameEn": "医疗隐私 - 4",
+   "nameEn": "Health Care Privacy - Part 4",
    "trader": "54cb57776803fa99248b456e",
    "level": 18,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Health_Care_Privacy_-_Part_4",
@@ -1927,7 +1927,7 @@
   {
    "id": "5a68669a86f774255929b4d4",
    "name": "医疗隐私 - 5",
-   "nameEn": "医疗隐私 - 5",
+   "nameEn": "Health Care Privacy - Part 5",
    "trader": "54cb57776803fa99248b456e",
    "level": 18,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Health_Care_Privacy_-_Part_5",
@@ -1973,7 +1973,7 @@
   {
    "id": "669fa3a3ad7f1eac2607ed48",
    "name": "医疗隐私 - 6",
-   "nameEn": "医疗隐私 - 6",
+   "nameEn": "Health Care Privacy - Part 6",
    "trader": "54cb57776803fa99248b456e",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Health_Care_Privacy_-_Part_6",
@@ -2003,7 +2003,7 @@
   {
    "id": "5ac3464c86f7741d651d6877",
    "name": "半导体危机",
-   "nameEn": "半导体危机",
+   "nameEn": "Semiconductor Crisis",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Semiconductor_Crisis",
@@ -2014,7 +2014,7 @@
   {
    "id": "6740a2c17e3818d5bb0648b6",
    "name": "半满半空",
-   "nameEn": "半满半空",
+   "nameEn": "Half-Empty",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Half-Empty",
@@ -2025,7 +2025,7 @@
   {
    "id": "66ab9da7eb102b9bcd08591c",
    "name": "卑鄙的外乡人",
-   "nameEn": "卑鄙的外乡人",
+   "nameEn": "Forester's Duty",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Forester's_Duty",
@@ -2036,7 +2036,7 @@
   {
    "id": "5a03153686f77442d90e2171",
    "name": "单程票",
-   "nameEn": "单程票",
+   "nameEn": "One-Way Ticket",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 8,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/One-Way_Ticket",
@@ -2049,7 +2049,7 @@
   {
    "id": "669fa399033a3ce9870338a8",
    "name": "占有者",
-   "nameEn": "占有者",
+   "nameEn": "Possessor",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Possessor",
@@ -2062,7 +2062,7 @@
   {
    "id": "59689ee586f7740d1570bbd5",
    "name": "卫生标准",
-   "nameEn": "卫生标准",
+   "nameEn": "Sanitary Standards",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sanitary_Standards",
@@ -2087,7 +2087,7 @@
   {
    "id": "596a204686f774576d4c95de",
    "name": "卫生标准 - 2",
-   "nameEn": "卫生标准 - 2",
+   "nameEn": "Sanitary Standards - Part 2",
    "trader": "54cb57776803fa99248b456e",
    "level": 8,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sanitary_Standards_-_Part_2",
@@ -2098,7 +2098,7 @@
   {
    "id": "66b38c7bf85b8bf7250f9cb6",
    "name": "危机四伏塔科夫",
-   "nameEn": "危机四伏塔科夫",
+   "nameEn": "Rough Tarkov",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Rough_Tarkov",
@@ -2135,7 +2135,7 @@
   {
    "id": "63ab180c87413d64ae0ac20a",
    "name": "危险之路",
-   "nameEn": "危险之路",
+   "nameEn": "Dangerous Road",
    "trader": "54cb57776803fa99248b456e",
    "level": 15,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Dangerous_Road",
@@ -2148,7 +2148,7 @@
   {
    "id": "6a7af2e48fddc3979d0510b8",
    "name": "双手插袋",
-   "nameEn": "双手插袋",
+   "nameEn": "Akimbo",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Akimbo",
@@ -2161,7 +2161,7 @@
   {
    "id": "6744aca8d3346c216702c583",
    "name": "反将一军",
-   "nameEn": "反将一军",
+   "nameEn": "Discombobulate",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Discombobulate",
@@ -2208,7 +2208,7 @@
   {
    "id": "6179b5eabca27a099552e052",
    "name": "反抗",
-   "nameEn": "反抗",
+   "nameEn": "Counteraction",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Counteraction",
@@ -2221,7 +2221,7 @@
   {
    "id": "6572e876dc0d635f633a5714",
    "name": "发财计划",
-   "nameEn": "发财计划",
+   "nameEn": "Pyramid Scheme",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Pyramid_Scheme",
@@ -2251,7 +2251,7 @@
   {
    "id": "60896bca6ee58f38c417d4f2",
    "name": "叛无所依",
-   "nameEn": "叛无所依",
+   "nameEn": "No Place for Renegades",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 21,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/No_Place_for_Renegades",
@@ -2276,7 +2276,7 @@
   {
    "id": "665eec1f5e47a79f8605565a",
    "name": "口干舌燥 - 养家糊口",
-   "nameEn": "口干舌燥 - 养家糊口",
+   "nameEn": "Thirsty - Breadwinner",
    "trader": "58330581ace78e27b8b10cee",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Thirsty_-_Breadwinner",
@@ -2287,7 +2287,7 @@
   {
    "id": "665eeca45d86b6c8aa03c79d",
    "name": "口干舌燥 - 往日回响",
-   "nameEn": "口干舌燥 - 往日回响",
+   "nameEn": "Thirsty - Echo",
    "trader": "54cb57776803fa99248b456e",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Thirsty_-_Echo",
@@ -2312,7 +2312,7 @@
   {
    "id": "665eeacf5d86b6c8aa03c79b",
    "name": "口干舌燥 - 猎犬行动",
-   "nameEn": "口干舌燥 - 猎犬行动",
+   "nameEn": "Thirsty - Hounds",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Thirsty_-_Hounds",
@@ -2325,7 +2325,7 @@
   {
    "id": "665eeca92f7aedcc900b0437",
    "name": "口干舌燥 - 秘密配方",
-   "nameEn": "口干舌燥 - 秘密配方",
+   "nameEn": "Thirsty - Secrets",
    "trader": "54cb57776803fa99248b456e",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Thirsty_-_Secrets",
@@ -2336,7 +2336,7 @@
   {
    "id": "665eec4a4dfc83b0ed0a9dca",
    "name": "口干舌燥 - 送货服务",
-   "nameEn": "口干舌燥 - 送货服务",
+   "nameEn": "Thirsty - Delivery",
    "trader": "58330581ace78e27b8b10cee",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Thirsty_-_Delivery",
@@ -2415,7 +2415,7 @@
   {
    "id": "5c1141f386f77430ff393792",
    "name": "古董爱好者",
-   "nameEn": "古董爱好者",
+   "nameEn": "Antique Enthusiast",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Antique_Enthusiast",
@@ -2426,7 +2426,7 @@
   {
    "id": "5edab736cc183c769d778bc2",
    "name": "同事",
-   "nameEn": "同事",
+   "nameEn": "Colleagues",
    "trader": "54cb57776803fa99248b456e",
    "level": 18,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Colleagues",
@@ -2473,7 +2473,7 @@
   {
    "id": "684009026ceedc792c09b2a7",
    "name": "同好俱乐部",
-   "nameEn": "同好俱乐部",
+   "nameEn": "Hobby Club",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 45,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hobby_Club",
@@ -2531,7 +2531,7 @@
   {
    "id": "674602307e3818d5bb069489",
    "name": "后知后觉",
-   "nameEn": "后知后觉",
+   "nameEn": "Hindsight 20/20",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hindsight_20%2F20",
@@ -2589,7 +2589,7 @@
   {
    "id": "6089736efa70fc097863b8f6",
    "name": "后门",
-   "nameEn": "后门",
+   "nameEn": "Back Door",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Back_Door",
@@ -2614,7 +2614,7 @@
   {
    "id": "5c0d4e61d09282029f53920e",
    "name": "向导",
-   "nameEn": "向导",
+   "nameEn": "The Guide",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 32,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Guide",
@@ -2625,7 +2625,7 @@
   {
    "id": "69ce1f84ebbdbf36a200627c",
    "name": "和平原子",
-   "nameEn": "和平原子",
+   "nameEn": "Peaceful Atom",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Peaceful_Atom",
@@ -2638,7 +2638,7 @@
   {
    "id": "6179b3bdc7560e13d23eeb8d",
    "name": "商业机密",
-   "nameEn": "商业机密",
+   "nameEn": "Corporate Secrets",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Corporate_Secrets",
@@ -2651,7 +2651,7 @@
   {
    "id": "5969f90786f77420d2328015",
    "name": "善良之针",
-   "nameEn": "善良之针",
+   "nameEn": "Charity",
    "trader": "54cb57776803fa99248b456e",
    "level": 18,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Charity",
@@ -2662,7 +2662,7 @@
   {
    "id": "5ac3479086f7742880308199",
    "name": "圈内人",
-   "nameEn": "圈内人",
+   "nameEn": "Insider",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Insider",
@@ -2673,7 +2673,7 @@
   {
    "id": "64e7b9bffd30422ed03dad38",
    "name": "地区巡逻",
-   "nameEn": "地区巡逻",
+   "nameEn": "District Patrol",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/District_Patrol",
@@ -2686,7 +2686,7 @@
   {
    "id": "5ede55112c95834b583f052a",
    "name": "地堡",
-   "nameEn": "地堡",
+   "nameEn": "The Bunker",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 21,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Bunker",
@@ -2777,7 +2777,7 @@
   {
    "id": "5ede567cfa6dc072ce15d6e3",
    "name": "地堡 - 2",
-   "nameEn": "地堡 - 2",
+   "nameEn": "The Bunker - Part 2",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 21,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Bunker_-_Part_2",
@@ -2846,7 +2846,7 @@
   {
    "id": "5c0bdb5286f774166e38eed4",
    "name": "坚如燧石",
-   "nameEn": "坚如燧石",
+   "nameEn": "Flint",
    "trader": "58330581ace78e27b8b10cee",
    "level": 35,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Flint",
@@ -2857,7 +2857,7 @@
   {
    "id": "69c26c07683c9831020018c7",
    "name": "坚持到底",
-   "nameEn": "坚持到底",
+   "nameEn": "Stick to It",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Stick_to_It",
@@ -2868,7 +2868,7 @@
   {
    "id": "5c112d7e86f7740d6f647486",
    "name": "垃圾佬",
-   "nameEn": "垃圾佬",
+   "nameEn": "Scavenger",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Scavenger",
@@ -2879,7 +2879,7 @@
   {
    "id": "666314c5a9290f9e0806cca5",
    "name": "城市之匙",
-   "nameEn": "城市之匙",
+   "nameEn": "Key to the City",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Key_to_the_City",
@@ -2892,7 +2892,7 @@
   {
    "id": "639135e0fa894f0a866afde6",
    "name": "城市的解药",
-   "nameEn": "城市的解药",
+   "nameEn": "Urban Medicine",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Urban_Medicine",
@@ -2917,7 +2917,7 @@
   {
    "id": "5c0bd94186f7747a727f09b2",
    "name": "塔市进口货",
-   "nameEn": "塔市进口货",
+   "nameEn": "The Tarkov Import",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Import",
@@ -2928,7 +2928,7 @@
   {
    "id": "67a09673972c11a3f507731d",
    "name": "塔科夫屠夫",
-   "nameEn": "塔科夫屠夫",
+   "nameEn": "The Tarkov Butcher",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Butcher",
@@ -2953,7 +2953,7 @@
   {
    "id": "5edaba7c0c502106f869bc02",
    "name": "塔科夫式手腕",
-   "nameEn": "塔科夫式手腕",
+   "nameEn": "Tarkov-Style Diplomacy",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Tarkov-Style_Diplomacy",
@@ -2966,7 +2966,7 @@
   {
    "id": "5bc4776586f774512d07cf05",
    "name": "塔科夫神射手 - 1",
-   "nameEn": "塔科夫神射手 - 1",
+   "nameEn": "The Tarkov Shooter - Part 1",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_1",
@@ -2977,7 +2977,7 @@
   {
    "id": "5bc479e586f7747f376c7da3",
    "name": "塔科夫神射手 - 2",
-   "nameEn": "塔科夫神射手 - 2",
+   "nameEn": "The Tarkov Shooter - Part 2",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_2",
@@ -2988,7 +2988,7 @@
   {
    "id": "5bc47dbf86f7741ee74e93b9",
    "name": "塔科夫神射手 - 3",
-   "nameEn": "塔科夫神射手 - 3",
+   "nameEn": "The Tarkov Shooter - Part 3",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_3",
@@ -2999,7 +2999,7 @@
   {
    "id": "5bc480a686f7741af0342e29",
    "name": "塔科夫神射手 - 4",
-   "nameEn": "塔科夫神射手 - 4",
+   "nameEn": "The Tarkov Shooter - Part 4",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_4",
@@ -3010,7 +3010,7 @@
   {
    "id": "5bc4826c86f774106d22d88b",
    "name": "塔科夫神射手 - 5",
-   "nameEn": "塔科夫神射手 - 5",
+   "nameEn": "The Tarkov Shooter - Part 5",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_5",
@@ -3023,7 +3023,7 @@
   {
    "id": "5bc4836986f7740c0152911c",
    "name": "塔科夫神射手 - 5",
-   "nameEn": "塔科夫神射手 - 5",
+   "nameEn": "The Tarkov Shooter - Part 5",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_5",
@@ -3034,7 +3034,7 @@
   {
    "id": "5bc4856986f77454c317bea7",
    "name": "塔科夫神射手 - 6",
-   "nameEn": "塔科夫神射手 - 6",
+   "nameEn": "The Tarkov Shooter - Part 6",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 33,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_6",
@@ -3045,7 +3045,7 @@
   {
    "id": "5bc4893c86f774626f5ebf3e",
    "name": "塔科夫神射手 - 7",
-   "nameEn": "塔科夫神射手 - 7",
+   "nameEn": "The Tarkov Shooter - Part 7",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 33,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_7",
@@ -3056,7 +3056,7 @@
   {
    "id": "66058cbd9f59e625462acc8e",
    "name": "声东击西 - 1（PVP）",
-   "nameEn": "声东击西 - 1（PVP）",
+   "nameEn": "Create a Distraction - Part 1",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Create_a_Distraction_-_Part_1",
@@ -3081,7 +3081,7 @@
   {
    "id": "66058cbf2f19c31a5a1337ec",
    "name": "声东击西 - 2（PVP）",
-   "nameEn": "声东击西 - 2（PVP）",
+   "nameEn": "Create a Distraction - Part 2",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Create_a_Distraction_-_Part_2",
@@ -3094,7 +3094,7 @@
   {
    "id": "673f61a066e6a521aa04b62b",
    "name": "外部订单",
-   "nameEn": "外部订单",
+   "nameEn": "Order From Outside",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Order_From_Outside",
@@ -3119,7 +3119,7 @@
   {
    "id": "60896b7bfa70fc097863b8f5",
    "name": "多鱼之漏",
-   "nameEn": "多鱼之漏",
+   "nameEn": "Documents",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Documents",
@@ -3132,7 +3132,7 @@
   {
    "id": "60e71c11d54b755a3b53eb65",
    "name": "夜间扫荡",
-   "nameEn": "夜间扫荡",
+   "nameEn": "Night Sweep",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Night_Sweep",
@@ -3143,7 +3143,7 @@
   {
    "id": "597a171586f77405ba6887d3",
    "name": "大客户",
-   "nameEn": "大客户",
+   "nameEn": "Big Customer",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Big_Customer",
@@ -3189,7 +3189,7 @@
   {
    "id": "6396701b9113f06a7c3b2379",
    "name": "大显身手",
-   "nameEn": "大显身手",
+   "nameEn": "Make an Impression",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Make_an_Impression",
@@ -3200,7 +3200,7 @@
   {
    "id": "67a0964e972c11a3f507731b",
    "name": "大海捞针",
-   "nameEn": "大海捞针",
+   "nameEn": "Needle in a Haystack",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Needle_in_a_Haystack",
@@ -3283,7 +3283,7 @@
   {
    "id": "5ae448e586f7744dcf0c2a67",
    "name": "大甩卖",
-   "nameEn": "大甩卖",
+   "nameEn": "Big Sale",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Big_Sale",
@@ -3352,7 +3352,7 @@
   {
    "id": "63967028c4a91c5cb76abd81",
    "name": "大都会之谜",
-   "nameEn": "大都会之谜",
+   "nameEn": "Trouble in the Big City",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Trouble_in_the_Big_City",
@@ -3399,7 +3399,7 @@
   {
    "id": "5c0bc91486f7746ab41857a2",
    "name": "大音希声",
-   "nameEn": "大音希声",
+   "nameEn": "Silent Caliber",
    "trader": "58330581ace78e27b8b10cee",
    "level": 38,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Silent_Caliber",
@@ -3410,7 +3410,7 @@
   {
    "id": "5c0bde0986f77479cf22c2f8",
    "name": "天神射手",
-   "nameEn": "天神射手",
+   "nameEn": "Shooter Born in Heaven",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shooter_Born_in_Heaven",
@@ -3421,7 +3421,7 @@
   {
    "id": "67e993b1ac26bf29380a320b",
    "name": "天降大礼 [PVP ZONE]",
-   "nameEn": "天降大礼 [PVP ZONE]",
+   "nameEn": "Surprise Gift",
    "trader": "638f541a29ffd1183d187f57",
    "level": 35,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Surprise_Gift",
@@ -3451,7 +3451,7 @@
   {
    "id": "63966fbeea19ac7ed845db2e",
    "name": "失踪的线人",
-   "nameEn": "失踪的线人",
+   "nameEn": "Missing Informant",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Missing_Informant",
@@ -3476,7 +3476,7 @@
   {
    "id": "6179b4f16e9dd54ac275e407",
    "name": "失踪货物",
-   "nameEn": "失踪货物",
+   "nameEn": "Missing Cargo",
    "trader": "58330581ace78e27b8b10cee",
    "level": 22,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Missing_Cargo",
@@ -3501,7 +3501,7 @@
   {
    "id": "626bd75d5bef5d7d590bd415",
    "name": "头号机密",
-   "nameEn": "头号机密",
+   "nameEn": "Top Secret",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Top_Secret",
@@ -3526,7 +3526,7 @@
   {
    "id": "673f629c5b555b53460cf827",
    "name": "奠定基石",
-   "nameEn": "奠定基石",
+   "nameEn": "Building Foundations",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Building_Foundations",
@@ -3537,7 +3537,7 @@
   {
    "id": "5b47891f86f7744d1b23c571",
    "name": "奢侈无罪",
-   "nameEn": "奢侈无罪",
+   "nameEn": "Living High is Not a Crime",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Living_High_is_Not_a_Crime",
@@ -3548,7 +3548,7 @@
   {
    "id": "657315e1dccd301f1301416a",
    "name": "奢靡人生",
-   "nameEn": "奢靡人生",
+   "nameEn": "Luxurious Life",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Luxurious_Life",
@@ -3573,7 +3573,7 @@
   {
    "id": "64f5e20652fc01298e2c61e3",
    "name": "好吃到上瘾",
-   "nameEn": "好吃到上瘾",
+   "nameEn": "Beyond the Red Meat",
    "trader": "58330581ace78e27b8b10cee",
    "level": 7,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Beyond_the_Red_Meat",
@@ -3586,7 +3586,7 @@
   {
    "id": "69ce1cfb298a6529b30d712b",
    "name": "如楔在侧",
-   "nameEn": "如楔在侧",
+   "nameEn": "A Wedge Between Us",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Wedge_Between_Us",
@@ -3599,7 +3599,7 @@
   {
    "id": "669fa3a08b4a64b332041ff7",
    "name": "妥善保管",
-   "nameEn": "妥善保管",
+   "nameEn": "Dragnet",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Dragnet",
@@ -3612,7 +3612,7 @@
   {
    "id": "67af4c17f4f1fb58a907f8f6",
    "name": "学无止境",
-   "nameEn": "学无止境",
+   "nameEn": "Never Too Late To Learn",
    "trader": "58330581ace78e27b8b10cee",
    "level": 50,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Never_Too_Late_To_Learn",
@@ -3623,7 +3623,7 @@
   {
    "id": "67a09761e720611a6a01f288",
    "name": "守望者箴言",
-   "nameEn": "守望者箴言",
+   "nameEn": "Keeper's Word",
    "trader": "638f541a29ffd1183d187f57",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Keeper's_Word",
@@ -3670,7 +3670,7 @@
   {
    "id": "67af4c169d95ad16e004fd86",
    "name": "安全保障",
-   "nameEn": "安全保障",
+   "nameEn": "Safety Guarantee",
    "trader": "58330581ace78e27b8b10cee",
    "level": 50,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Safety_Guarantee",
@@ -3681,7 +3681,7 @@
   {
    "id": "6089743983426423753cd58a",
    "name": "安全通道",
-   "nameEn": "安全通道",
+   "nameEn": "Safe Corridor",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Safe_Corridor",
@@ -3706,7 +3706,7 @@
   {
    "id": "67af4c1d8c9482eca103e477",
    "name": "安慰奖",
-   "nameEn": "安慰奖",
+   "nameEn": "Consolation Prize",
    "trader": "58330581ace78e27b8b10cee",
    "level": 46,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Consolation_Prize",
@@ -3719,7 +3719,7 @@
   {
    "id": "5a27bb3d86f77411ea361a21",
    "name": "定向追踪",
-   "nameEn": "定向追踪",
+   "nameEn": "Tracker",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 19,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Tracker",
@@ -3755,7 +3755,7 @@
   {
    "id": "666314a31cd52e3d040a2e76",
    "name": "实战考验",
-   "nameEn": "实战考验",
+   "nameEn": "Combat Proven",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Combat_Proven",
@@ -3766,7 +3766,7 @@
   {
    "id": "638fcd23dc65553116701d33",
    "name": "审计",
-   "nameEn": "审计",
+   "nameEn": "Audit",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Audit",
@@ -3779,7 +3779,7 @@
   {
    "id": "608a768d82e40b3c727fd17d",
    "name": "害虫防治",
-   "nameEn": "害虫防治",
+   "nameEn": "Pest Control",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Pest_Control",
@@ -3804,7 +3804,7 @@
   {
    "id": "69c2a2d004de49c8f0055a3d",
    "name": "宿醉",
-   "nameEn": "宿醉",
+   "nameEn": "Hangover",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hangover",
@@ -3815,7 +3815,7 @@
   {
    "id": "6744ab1def61d56e020b5c56",
    "name": "对空遮断",
-   "nameEn": "对空遮断",
+   "nameEn": "Protect the Sky",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Protect_the_Sky",
@@ -3828,7 +3828,7 @@
   {
    "id": "5d6fbc2886f77449d825f9d3",
    "name": "导师",
-   "nameEn": "导师",
+   "nameEn": "Mentor",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Mentor",
@@ -3839,7 +3839,7 @@
   {
    "id": "5c10f94386f774227172c572",
    "name": "小事大帮忙",
-   "nameEn": "小事大帮忙",
+   "nameEn": "Small Things, Big Help",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Small_Things%2C_Big_Help",
@@ -3886,7 +3886,7 @@
   {
    "id": "6663148ed7f171c4c20226c1",
    "name": "小本生意 - 1",
-   "nameEn": "小本生意 - 1",
+   "nameEn": "Small Business - Part 1",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Small_Business_-_Part_1",
@@ -3897,7 +3897,7 @@
   {
    "id": "6663149196a9349baa021baa",
    "name": "小本生意 - 2",
-   "nameEn": "小本生意 - 2",
+   "nameEn": "Small Business - Part 2",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Small_Business_-_Part_2",
@@ -3908,7 +3908,7 @@
   {
    "id": "66631493312343839d032d22",
    "name": "小本生意 - 3",
-   "nameEn": "小本生意 - 3",
+   "nameEn": "Small Business - Part 3",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Small_Business_-_Part_3",
@@ -3977,7 +3977,7 @@
   {
    "id": "6179ac7511973d018217d0b9",
    "name": "小菜一碟",
-   "nameEn": "小菜一碟",
+   "nameEn": "Easy Job",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 21,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Easy_Job",
@@ -4024,7 +4024,7 @@
   {
    "id": "6179acbdc760af5ad2053585",
    "name": "小菜一碟 - 2",
-   "nameEn": "小菜一碟 - 2",
+   "nameEn": "Easy Job - Part 2",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 21,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Easy_Job_-_Part_2",
@@ -4049,7 +4049,7 @@
   {
    "id": "639136f086e646067c176a8b",
    "name": "屋顶战神",
-   "nameEn": "屋顶战神",
+   "nameEn": "Kings of the Rooftops",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Kings_of_the_Rooftops",
@@ -4062,7 +4062,7 @@
   {
    "id": "63a9b36cc31b00242d28a99f",
    "name": "屠宰场",
-   "nameEn": "屠宰场",
+   "nameEn": "Slaughterhouse",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 33,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Slaughterhouse",
@@ -4073,7 +4073,7 @@
   {
    "id": "675c1570526ff496850895d9",
    "name": "工欲善其事",
-   "nameEn": "工欲善其事",
+   "nameEn": "Passion for Ergonomics",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Passion_for_Ergonomics",
@@ -4086,7 +4086,7 @@
   {
    "id": "5c12452c86f7744b83469073",
    "name": "左右逢源",
-   "nameEn": "左右逢源",
+   "nameEn": "Perfect Mediator",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 35,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Perfect_Mediator",
@@ -4097,7 +4097,7 @@
   {
    "id": "5968eb3186f7741dde183a4d",
    "name": "带血的水",
-   "nameEn": "带血的水",
+   "nameEn": "Blood in the Water",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Blood_in_the_Water",
@@ -4110,7 +4110,7 @@
   {
    "id": "675c04f4db8807b75d0f38e8",
    "name": "平易近人",
-   "nameEn": "平易近人",
+   "nameEn": "Closer to the People",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Closer_to_the_People",
@@ -4123,7 +4123,7 @@
   {
    "id": "66058cb7c7f3584787181476",
    "name": "平衡之力 - 1（PVP）",
-   "nameEn": "平衡之力 - 1（PVP）",
+   "nameEn": "Balancing - Part 1",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Balancing_-_Part_1",
@@ -4134,7 +4134,7 @@
   {
    "id": "66058cb9e8e4f17985230805",
    "name": "平衡之力 - 2（PVP）",
-   "nameEn": "平衡之力 - 2（PVP）",
+   "nameEn": "Balancing - Part 2",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Balancing_-_Part_2",
@@ -4145,7 +4145,7 @@
   {
    "id": "669fa3979b0ce3feae01a130",
    "name": "幽闭恐惧症",
-   "nameEn": "幽闭恐惧症",
+   "nameEn": "Claustrophobia",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Claustrophobia",
@@ -4190,7 +4190,7 @@
   {
    "id": "5ae4493486f7744efa289417",
    "name": "库存清单",
-   "nameEn": "库存清单",
+   "nameEn": "Inventory Files",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Inventory_Files",
@@ -4203,7 +4203,7 @@
   {
    "id": "6672d9def1c88688a707d042",
    "name": "建立联系",
-   "nameEn": "建立联系",
+   "nameEn": "Establish Contact",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Establish_Contact",
@@ -4214,7 +4214,7 @@
   {
    "id": "675c3507a06634b5110e3c18",
    "name": "引路先驱",
-   "nameEn": "引路先驱",
+   "nameEn": "Belka and Strelka",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Belka_and_Strelka",
@@ -4227,7 +4227,7 @@
   {
    "id": "63966fe7ea74a47c2d3fc0e6",
    "name": "归还人情",
-   "nameEn": "归还人情",
+   "nameEn": "Return the Favor",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Return_the_Favor",
@@ -4263,7 +4263,7 @@
   {
    "id": "67a09636b8725511260bc421",
    "name": "影子雇员",
-   "nameEn": "影子雇员",
+   "nameEn": "Shady Contractor",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shady_Contractor",
@@ -4288,7 +4288,7 @@
   {
    "id": "5c0bd01e86f7747cdd799e56",
    "name": "彻夜难眠",
-   "nameEn": "彻夜难眠",
+   "nameEn": "Insomnia",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Insomnia",
@@ -4299,7 +4299,7 @@
   {
    "id": "59674eb386f774539f14813a",
    "name": "往事速递",
-   "nameEn": "往事速递",
+   "nameEn": "Delivery From the Past",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Delivery_From_the_Past",
@@ -4324,7 +4324,7 @@
   {
    "id": "666314b4d7f171c4c20226c3",
    "name": "往昔时光 - 1",
-   "nameEn": "往昔时光 - 1",
+   "nameEn": "The Good Times - Part 1",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Good_Times_-_Part_1",
@@ -4337,7 +4337,7 @@
   {
    "id": "666314bafd5ca9577902e03a",
    "name": "往昔时光 - 2",
-   "nameEn": "往昔时光 - 2",
+   "nameEn": "The Good Times - Part 2",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Good_Times_-_Part_2",
@@ -4348,7 +4348,7 @@
   {
    "id": "6a5c1578f2689567c30eb0f3",
    "name": "徒步旅行",
-   "nameEn": "徒步旅行",
+   "nameEn": "Hiking",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hiking",
@@ -4373,7 +4373,7 @@
   {
    "id": "5b478d0f86f7744d190d91b5",
    "name": "微型客车",
-   "nameEn": "微型客车",
+   "nameEn": "Minibus",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Minibus",
@@ -4420,7 +4420,7 @@
   {
    "id": "673f6027352b4da8e00322d2",
    "name": "必然回应",
-   "nameEn": "必然回应",
+   "nameEn": "Inevitable Response",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Inevitable_Response",
@@ -4431,7 +4431,7 @@
   {
    "id": "666314bd920800278d0f6748",
    "name": "忠实观众",
-   "nameEn": "忠实观众",
+   "nameEn": "Viewer",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Viewer",
@@ -4480,7 +4480,7 @@
   {
    "id": "60e729cf5698ee7b05057439",
    "name": "快枪手",
-   "nameEn": "快枪手",
+   "nameEn": "Swift",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Swift",
@@ -4493,7 +4493,7 @@
   {
    "id": "657315e270bb0b8dba00cc48",
    "name": "快车初体验",
-   "nameEn": "快车初体验",
+   "nameEn": "Burning Rubber",
    "trader": "58330581ace78e27b8b10cee",
    "level": 1,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Burning_Rubber",
@@ -4506,7 +4506,7 @@
   {
    "id": "5d25e4ad86f77443e625e387",
    "name": "怀旧之情",
-   "nameEn": "怀旧之情",
+   "nameEn": "Nostalgia",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Nostalgia",
@@ -4531,7 +4531,7 @@
   {
    "id": "60e71d6d7fcf9c556f325055",
    "name": "急先锋",
-   "nameEn": "急先锋",
+   "nameEn": "The Courier",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Courier",
@@ -4556,7 +4556,7 @@
   {
    "id": "60e71c48c1bfa3050473b8e5",
    "name": "急单",
-   "nameEn": "急单",
+   "nameEn": "Crisis",
    "trader": "54cb57776803fa99248b456e",
    "level": 38,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Crisis",
@@ -4567,7 +4567,7 @@
   {
    "id": "5d25e46e86f77409453bce7c",
    "name": "急救措施",
-   "nameEn": "急救措施",
+   "nameEn": "First Aid",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/First_Aid",
@@ -4578,7 +4578,7 @@
   {
    "id": "64f3176921045e77405d63b5",
    "name": "急诊室的故事",
-   "nameEn": "急诊室的故事",
+   "nameEn": "Paramedic",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Paramedic",
@@ -4591,7 +4591,7 @@
   {
    "id": "60e71bb4e456d449cd47ca75",
    "name": "恐吓者",
-   "nameEn": "恐吓者",
+   "nameEn": "Intimidator",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Intimidator",
@@ -4602,7 +4602,7 @@
   {
    "id": "5ac3467986f7741d6224abc2",
    "name": "恶意环伺",
-   "nameEn": "恶意环伺",
+   "nameEn": "Ill-Wisher",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Ill-Wisher",
@@ -4660,7 +4660,7 @@
   {
    "id": "669fa38fad7f1eac2607ed46",
    "name": "悬结已解",
-   "nameEn": "悬结已解",
+   "nameEn": "One Less Loose End",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/One_Less_Loose_End",
@@ -4690,7 +4690,7 @@
   {
    "id": "63966faeea19ac7ed845db2c",
    "name": "情报之源",
-   "nameEn": "情报之源",
+   "nameEn": "Information Source",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Information_Source",
@@ -4701,7 +4701,7 @@
   {
    "id": "5b47926a86f7747ccc057c15",
    "name": "情报就是力量",
-   "nameEn": "情报就是力量",
+   "nameEn": "Informed Means Armed",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Informed_Means_Armed",
@@ -4738,7 +4738,7 @@
   {
    "id": "66058cbb06ef1d50a60c1f46",
    "name": "惊喜（PVP）",
-   "nameEn": "惊喜（PVP）",
+   "nameEn": "Surprise",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Surprise",
@@ -4749,7 +4749,7 @@
   {
    "id": "59c512ad86f7741f0d09de9b",
    "name": "惩罚者 - 1",
-   "nameEn": "惩罚者 - 1",
+   "nameEn": "The Punisher - Part 1",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Punisher_-_Part_1",
@@ -4762,7 +4762,7 @@
   {
    "id": "59c50a9e86f7745fef66f4ff",
    "name": "惩罚者 - 2",
-   "nameEn": "惩罚者 - 2",
+   "nameEn": "The Punisher - Part 2",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Punisher_-_Part_2",
@@ -4775,7 +4775,7 @@
   {
    "id": "59c50c8886f7745fed3193bf",
    "name": "惩罚者 - 3",
-   "nameEn": "惩罚者 - 3",
+   "nameEn": "The Punisher - Part 3",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 21,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Punisher_-_Part_3",
@@ -4788,7 +4788,7 @@
   {
    "id": "59ca264786f77445a80ed044",
    "name": "惩罚者 - 4",
-   "nameEn": "惩罚者 - 4",
+   "nameEn": "The Punisher - Part 4",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Punisher_-_Part_4",
@@ -4801,7 +4801,7 @@
   {
    "id": "59ca29fb86f77445ab465c87",
    "name": "惩罚者 - 5",
-   "nameEn": "惩罚者 - 5",
+   "nameEn": "The Punisher - Part 5",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Punisher_-_Part_5",
@@ -4812,7 +4812,7 @@
   {
    "id": "59ca2eb686f77445a80ed049",
    "name": "惩罚者 - 6",
-   "nameEn": "惩罚者 - 6",
+   "nameEn": "The Punisher - Part 6",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Punisher_-_Part_6",
@@ -4823,7 +4823,7 @@
   {
    "id": "67a0967c003a9986cb0f5ac1",
    "name": "感官分析 - 1",
-   "nameEn": "感官分析 - 1",
+   "nameEn": "Sensory Analysis - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sensory_Analysis_-_Part_1",
@@ -4834,7 +4834,7 @@
   {
    "id": "67a096ed77dd677f600804ba",
    "name": "感官分析 - 2",
-   "nameEn": "感官分析 - 2",
+   "nameEn": "Sensory Analysis - Part 2",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sensory_Analysis_-_Part_2",
@@ -4845,7 +4845,7 @@
   {
    "id": "5ae449b386f77446d8741719",
    "name": "感恩的心",
-   "nameEn": "感恩的心",
+   "nameEn": "Gratitude",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gratitude",
@@ -4891,7 +4891,7 @@
   {
    "id": "5b4795fb86f7745876267770",
    "name": "愿者上钩",
-   "nameEn": "愿者上钩",
+   "nameEn": "Chumming",
    "trader": "58330581ace78e27b8b10cee",
    "level": 7,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Chumming",
@@ -4928,7 +4928,7 @@
   {
    "id": "5ae4498786f7744bde357695",
    "name": "成功的关键",
-   "nameEn": "成功的关键",
+   "nameEn": "The Key to Success",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Key_to_Success",
@@ -4941,7 +4941,7 @@
   {
    "id": "6179b5b06e9dd54ac275e409",
    "name": "我们的土地，我们的血",
-   "nameEn": "我们的土地，我们的血",
+   "nameEn": "Our Own Land",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Our_Own_Land",
@@ -4954,7 +4954,7 @@
   {
    "id": "5b47876e86f7744d1c353205",
    "name": "战争之血 - 2",
-   "nameEn": "战争之血 - 2",
+   "nameEn": "The Blood of War - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 23,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Blood_of_War_-_Part_2",
@@ -4965,7 +4965,7 @@
   {
    "id": "69ce204c8702b378f9091e4b",
    "name": "战争从未改变",
-   "nameEn": "战争从未改变",
+   "nameEn": "War Never Changes",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/War_Never_Changes",
@@ -4978,7 +4978,7 @@
   {
    "id": "60e71ccb5688f6424c7bfec4",
    "name": "战利品",
-   "nameEn": "战利品",
+   "nameEn": "Trophies",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Trophies",
@@ -4989,7 +4989,7 @@
   {
    "id": "657315df034d76585f032e01",
    "name": "打靶训练",
-   "nameEn": "打靶训练",
+   "nameEn": "Shooting Cans",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 1,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shooting_Cans",
@@ -5025,7 +5025,7 @@
   {
    "id": "60effd818b669d08a35bfad5",
    "name": "抉择",
-   "nameEn": "抉择",
+   "nameEn": "The Choice",
    "trader": "579dc571d53a0658a154fbec",
    "level": 50,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Choice",
@@ -5036,7 +5036,7 @@
   {
    "id": "5ac345dc86f774288030817f",
    "name": "投机第一步",
-   "nameEn": "投机第一步",
+   "nameEn": "Playing the Market",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Playing_the_Market",
@@ -5082,7 +5082,7 @@
   {
    "id": "674492b6909d2013670a347a",
    "name": "投石问路",
-   "nameEn": "投石问路",
+   "nameEn": "Ask for Directions",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Ask_for_Directions",
@@ -5140,7 +5140,7 @@
   {
    "id": "63966fccac6f8f3c677b9d89",
    "name": "抢夺先机",
-   "nameEn": "抢夺先机",
+   "nameEn": "Snatch",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Snatch",
@@ -5165,7 +5165,7 @@
   {
    "id": "60e71b62a0beca400d69efc4",
    "name": "护送",
-   "nameEn": "护送",
+   "nameEn": "Escort",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 46,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Escort",
@@ -5176,7 +5176,7 @@
   {
    "id": "69c27158e350f01390049e77",
    "name": "拯救大兵罗曼",
-   "nameEn": "拯救大兵罗曼",
+   "nameEn": "Saving Private Roman",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Saving_Private_Roman",
@@ -5213,7 +5213,7 @@
   {
    "id": "639670029113f06a7c3b2377",
    "name": "按图索骥",
-   "nameEn": "按图索骥",
+   "nameEn": "Following the Bread Crumbs",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Following_the_Bread_Crumbs",
@@ -5249,7 +5249,7 @@
   {
    "id": "63966ff54c3ef01b6f3ffad8",
    "name": "挑衅",
-   "nameEn": "挑衅",
+   "nameEn": "Provocation",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Provocation",
@@ -5317,7 +5317,7 @@
   {
    "id": "5ac3462b86f7741d6118b983",
    "name": "挖矿",
-   "nameEn": "挖矿",
+   "nameEn": "Farming",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Farming",
@@ -5347,7 +5347,7 @@
   {
    "id": "5ac3460c86f7742880308185",
    "name": "挖矿 - 2",
-   "nameEn": "挖矿 - 2",
+   "nameEn": "Farming - Part 2",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Farming_-_Part_2",
@@ -5358,7 +5358,7 @@
   {
    "id": "5ac346a886f7744e1b083d67",
    "name": "捕鼠计划",
-   "nameEn": "捕鼠计划",
+   "nameEn": "Rat Hunting",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Rat_Hunting",
@@ -5369,7 +5369,7 @@
   {
    "id": "5ae4493d86f7744b8e15aa8f",
    "name": "损失惨重",
-   "nameEn": "损失惨重",
+   "nameEn": "A Big Loss",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Big_Loss",
@@ -5382,7 +5382,7 @@
   {
    "id": "60e71b9bbd90872cb85440f3",
    "name": "掠地攻城",
-   "nameEn": "掠地攻城",
+   "nameEn": "Capturing Outposts",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Capturing_Outposts",
@@ -5424,7 +5424,7 @@
   {
    "id": "5967725e86f774601a446662",
    "name": "探囊取物",
-   "nameEn": "探囊取物",
+   "nameEn": "Shaking Up the Teller",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shaking_Up_the_Teller",
@@ -5437,7 +5437,7 @@
   {
    "id": "639135e8c115f907b14700aa",
    "name": "探望",
-   "nameEn": "探望",
+   "nameEn": "Surveillance",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Surveillance",
@@ -5450,7 +5450,7 @@
   {
    "id": "5ae449c386f7744bde357697",
    "name": "探路者",
-   "nameEn": "探路者",
+   "nameEn": "Pathfinder",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Pathfinder",
@@ -5497,7 +5497,7 @@
   {
    "id": "5c0d190cd09282029f5390d8",
    "name": "掷弹兵",
-   "nameEn": "掷弹兵",
+   "nameEn": "Grenadier",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 6,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Grenadier",
@@ -5508,7 +5508,7 @@
   {
    "id": "5fd9fad9c1ce6b1a3b486d00",
    "name": "搜索任务",
-   "nameEn": "搜索任务",
+   "nameEn": "Search Mission",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Search_Mission",
@@ -5544,7 +5544,7 @@
   {
    "id": "59c93e8e86f7742a406989c4",
    "name": "收买人心",
-   "nameEn": "收买人心",
+   "nameEn": "Loyalty Buyout",
    "trader": "58330581ace78e27b8b10cee",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Loyalty_Buyout",
@@ -5555,7 +5555,7 @@
   {
    "id": "5c51aac186f77432ea65c552",
    "name": "收藏家",
-   "nameEn": "收藏家",
+   "nameEn": "Collector",
    "trader": "579dc571d53a0658a154fbec",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Collector",
@@ -5566,7 +5566,7 @@
   {
    "id": "675c15fbf7da9792a4059871",
    "name": "收视灵药",
-   "nameEn": "收视灵药",
+   "nameEn": "Provide Viewership",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Provide_Viewership",
@@ -5635,7 +5635,7 @@
   {
    "id": "59c9392986f7742f6923add2",
    "name": "救助站点",
-   "nameEn": "救助站点",
+   "nameEn": "Aid Stations",
    "trader": "54cb57776803fa99248b456e",
    "level": 5,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Aid_Stations",
@@ -5646,7 +5646,7 @@
   {
    "id": "657315e4a6af4ab4b50f3459",
    "name": "救援行动",
-   "nameEn": "救援行动",
+   "nameEn": "Saving the Mole",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 1,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Saving_the_Mole",
@@ -5671,7 +5671,7 @@
   {
    "id": "596b43fb86f77457ca186186",
    "name": "敲诈者",
-   "nameEn": "敲诈者",
+   "nameEn": "The Extortionist",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Extortionist",
@@ -5684,7 +5684,7 @@
   {
    "id": "657315ddab5a49b71f098853",
    "name": "新手上路",
-   "nameEn": "新手上路",
+   "nameEn": "First in Line",
    "trader": "54cb57776803fa99248b456e",
    "level": 1,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/First_in_Line",
@@ -5709,7 +5709,7 @@
   {
    "id": "6761f28a022f60bb320f3e95",
    "name": "新起点",
-   "nameEn": "新起点",
+   "nameEn": "New Beginning (Prestige 1)",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 25,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/New_Beginning_(Prestige_1)",
@@ -5720,7 +5720,7 @@
   {
    "id": "6761ff17cdc36bd66102e9d0",
    "name": "新起点",
-   "nameEn": "新起点",
+   "nameEn": "New Beginning (Prestige 2)",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 30,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/New_Beginning_(Prestige_2)",
@@ -5733,7 +5733,7 @@
   {
    "id": "6848100b00afffa81f09e365",
    "name": "新起点",
-   "nameEn": "新起点",
+   "nameEn": "New Beginning (Prestige 3)",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 35,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/New_Beginning_(Prestige_3)",
@@ -5744,7 +5744,7 @@
   {
    "id": "68481881f43abfdda2058369",
    "name": "新起点",
-   "nameEn": "新起点",
+   "nameEn": "New Beginning (Prestige 4)",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/New_Beginning_(Prestige_4)",
@@ -5755,7 +5755,7 @@
   {
    "id": "66aa58245ab22944110db6e9",
    "name": "新路线，新机遇",
-   "nameEn": "新路线，新机遇",
+   "nameEn": "New Paths",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/New_Paths",
@@ -5791,7 +5791,7 @@
   {
    "id": "69ce21e990144e437802b1e0",
    "name": "新鲜到货",
-   "nameEn": "新鲜到货",
+   "nameEn": "Fresh Stock",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fresh_Stock",
@@ -5804,7 +5804,7 @@
   {
    "id": "6086c852c945025d41566124",
    "name": "无中生有 - 储备站",
-   "nameEn": "无中生有 - 储备站",
+   "nameEn": "Revision - Reserve",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 19,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Revision_-_Reserve",
@@ -5906,7 +5906,7 @@
   {
    "id": "639135f286e646067c176a87",
    "name": "无中生有 - 塔科夫街区",
-   "nameEn": "无中生有 - 塔科夫街区",
+   "nameEn": "Revision - Streets of Tarkov",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Revision_-_Streets_of_Tarkov",
@@ -5953,7 +5953,7 @@
   {
    "id": "6179b4d1bca27a099552e04e",
    "name": "无中生有 - 灯塔",
-   "nameEn": "无中生有 - 灯塔",
+   "nameEn": "Revision - Lighthouse",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 19,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Revision_-_Lighthouse",
@@ -6011,7 +6011,7 @@
   {
    "id": "675c03d1f7da9792a405549a",
    "name": "无主货物",
-   "nameEn": "无主货物",
+   "nameEn": "Abandoned Cargo",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Abandoned_Cargo",
@@ -6066,7 +6066,7 @@
   {
    "id": "666314a50aa5c7436c00908a",
    "name": "旧情难却",
-   "nameEn": "旧情难却",
+   "nameEn": "Old Patterns",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Old_Patterns",
@@ -6077,7 +6077,7 @@
   {
    "id": "596a101f86f7741ddb481582",
    "name": "暗中破坏",
-   "nameEn": "暗中破坏",
+   "nameEn": "Kind of Sabotage",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Kind_of_Sabotage",
@@ -6088,7 +6088,7 @@
   {
    "id": "5ae449a586f7744bde357696",
    "name": "暗度陈仓",
-   "nameEn": "暗度陈仓",
+   "nameEn": "No Fuss Needed",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/No_Fuss_Needed",
@@ -6099,7 +6099,7 @@
   {
    "id": "67a096577e86e067eb045733",
    "name": "暗藏玄机",
-   "nameEn": "暗藏玄机",
+   "nameEn": "Hidden Layer",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hidden_Layer",
@@ -6135,7 +6135,7 @@
   {
    "id": "63a9ae24009ffc6a551631a5",
    "name": "最好的差事",
-   "nameEn": "最好的差事",
+   "nameEn": "Best Job in the World",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Best_Job_in_the_World",
@@ -6146,7 +6146,7 @@
   {
    "id": "63a9b229813bba58a50c9ee5",
    "name": "最烂的差事",
-   "nameEn": "最烂的差事",
+   "nameEn": "Worst Job in the World",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Worst_Job_in_the_World",
@@ -6157,7 +6157,7 @@
   {
    "id": "67af4c1405c58dc6f7056667",
    "name": "有利可图的生意",
-   "nameEn": "有利可图的生意",
+   "nameEn": "Profitable Venture",
    "trader": "58330581ace78e27b8b10cee",
    "level": 50,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Profitable_Venture",
@@ -6168,7 +6168,7 @@
   {
    "id": "6a959d33b9b22567ed0d0a4e",
    "name": "本事不是喝出来的",
-   "nameEn": "本事不是喝出来的",
+   "nameEn": "Can't Drink Away Skill",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 25,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Can't_Drink_Away_Skill",
@@ -6179,7 +6179,7 @@
   {
    "id": "67a09724972c11a3f5077324",
    "name": "机密情报",
-   "nameEn": "机密情报",
+   "nameEn": "Confidential Info",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Confidential_Info",
@@ -6204,7 +6204,7 @@
   {
    "id": "61958c366726521dd96828ec",
    "name": "来自塔科夫的礼物",
-   "nameEn": "来自塔科夫的礼物",
+   "nameEn": "Gifts from Tarkov",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gifts_from_Tarkov",
@@ -6229,7 +6229,7 @@
   {
    "id": "5ae327c886f7745c7b3f2f3f",
    "name": "枪匠 - AK-105",
-   "nameEn": "枪匠 - AK-105",
+   "nameEn": "Gunsmith - AK-105",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_AK-105",
@@ -6240,7 +6240,7 @@
   {
    "id": "5ae3270f86f77445ba41d4dd",
    "name": "枪匠 - AKM",
-   "nameEn": "枪匠 - AKM",
+   "nameEn": "Gunsmith - AKM",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_AKM",
@@ -6251,7 +6251,7 @@
   {
    "id": "5ae3277186f7745973054106",
    "name": "枪匠 - AKS-74N",
-   "nameEn": "枪匠 - AKS-74N",
+   "nameEn": "Gunsmith - AKS-74N",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_AKS-74N",
@@ -6262,7 +6262,7 @@
   {
    "id": "5ac2426c86f774138762edfe",
    "name": "枪匠 - AKS-74U",
-   "nameEn": "枪匠 - AKS-74U",
+   "nameEn": "Gunsmith - AKS-74U",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_AKS-74U",
@@ -6273,7 +6273,7 @@
   {
    "id": "5ae3280386f7742a41359364",
    "name": "枪匠 - AS VAL",
-   "nameEn": "枪匠 - AS VAL",
+   "nameEn": "Gunsmith - AS VAL",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 29,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_AS_VAL",
@@ -6284,7 +6284,7 @@
   {
    "id": "5ac2428686f77412450b42bf",
    "name": "枪匠 - HK MP5",
-   "nameEn": "枪匠 - HK MP5",
+   "nameEn": "Gunsmith - HK MP5",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_HK_MP5",
@@ -6295,7 +6295,7 @@
   {
    "id": "5ac244eb86f7741356335af1",
    "name": "枪匠 - M4A1",
-   "nameEn": "枪匠 - M4A1",
+   "nameEn": "Gunsmith - M4A1",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_M4A1",
@@ -6306,7 +6306,7 @@
   {
    "id": "5ae3267986f7742a413592fe",
    "name": "枪匠 - M870",
-   "nameEn": "枪匠 - M870",
+   "nameEn": "Gunsmith - Model 870",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_Model_870",
@@ -6317,7 +6317,7 @@
   {
    "id": "5ac23c6186f7741247042bad",
    "name": "枪匠 - MP-133",
-   "nameEn": "枪匠 - MP-133",
+   "nameEn": "Gunsmith - MP-133",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_MP-133",
@@ -6328,7 +6328,7 @@
   {
    "id": "5b47799d86f7746c5d6a5fd8",
    "name": "枪匠 - MPX",
-   "nameEn": "枪匠 - MPX",
+   "nameEn": "Gunsmith - MPX",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_MPX",
@@ -6339,7 +6339,7 @@
   {
    "id": "639872f9decada40426d3447",
    "name": "枪匠 - OP-SKS",
-   "nameEn": "枪匠 - OP-SKS",
+   "nameEn": "Gunsmith - OP-SKS",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_OP-SKS",
@@ -6350,7 +6350,7 @@
   {
    "id": "639872fa9b4fb827b200d8e5",
    "name": "枪匠 - P226R",
-   "nameEn": "枪匠 - P226R",
+   "nameEn": "Gunsmith - P226R",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_P226R",
@@ -6361,7 +6361,7 @@
   {
    "id": "639872fc93ae507d5858c3a6",
    "name": "枪匠 - Vector 9x19",
-   "nameEn": "枪匠 - Vector 9x19",
+   "nameEn": "Gunsmith - Vector 9x19",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_-_Vector_9x19",
@@ -6372,7 +6372,7 @@
   {
    "id": "639872fe8871e1272b10ccf6",
    "name": "枪匠大师 - 1",
-   "nameEn": "枪匠大师 - 1",
+   "nameEn": "Gunsmith Master - Part 1",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_1",
@@ -6383,7 +6383,7 @@
   {
    "id": "64f83bb69878a0569d6ecfbe",
    "name": "枪匠大师 - 10",
-   "nameEn": "枪匠大师 - 10",
+   "nameEn": "Gunsmith Master - Part 10",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_10",
@@ -6394,7 +6394,7 @@
   {
    "id": "64f83bcdde58fc437700d8fa",
    "name": "枪匠大师 - 11",
-   "nameEn": "枪匠大师 - 11",
+   "nameEn": "Gunsmith Master - Part 11",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_11",
@@ -6405,7 +6405,7 @@
   {
    "id": "676529af9c90953d090882e7",
    "name": "枪匠大师 - 12",
-   "nameEn": "枪匠大师 - 12",
+   "nameEn": "Gunsmith Master - Part 12",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_12",
@@ -6416,7 +6416,7 @@
   {
    "id": "64f83bd983cfca080a362c82",
    "name": "枪匠大师 - 13",
-   "nameEn": "枪匠大师 - 13",
+   "nameEn": "Gunsmith Master - Part 13",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_13",
@@ -6427,7 +6427,7 @@
   {
    "id": "5ac244c486f77413e12cf945",
    "name": "枪匠大师 - 2",
-   "nameEn": "枪匠大师 - 2",
+   "nameEn": "Gunsmith Master - Part 2",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_2",
@@ -6438,7 +6438,7 @@
   {
    "id": "5ac242ab86f77412464f68b4",
    "name": "枪匠大师 - 3",
-   "nameEn": "枪匠大师 - 3",
+   "nameEn": "Gunsmith Master - Part 3",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_3",
@@ -6449,7 +6449,7 @@
   {
    "id": "5b47749f86f7746c5d6a5fd4",
    "name": "枪匠大师 - 4",
-   "nameEn": "枪匠大师 - 4",
+   "nameEn": "Gunsmith Master - Part 4",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_4",
@@ -6460,7 +6460,7 @@
   {
    "id": "5b477b6f86f7747290681823",
    "name": "枪匠大师 - 5",
-   "nameEn": "枪匠大师 - 5",
+   "nameEn": "Gunsmith Master - Part 5",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_5",
@@ -6471,7 +6471,7 @@
   {
    "id": "639873003693c63d86328f25",
    "name": "枪匠大师 - 6",
-   "nameEn": "枪匠大师 - 6",
+   "nameEn": "Gunsmith Master - Part 6",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_6",
@@ -6482,7 +6482,7 @@
   {
    "id": "5b477f7686f7744d1b23c4d2",
    "name": "枪匠大师 - 7",
-   "nameEn": "枪匠大师 - 7",
+   "nameEn": "Gunsmith Master - Part 7",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_7",
@@ -6493,7 +6493,7 @@
   {
    "id": "63987301e11ec11ff5504036",
    "name": "枪匠大师 - 8",
-   "nameEn": "枪匠大师 - 8",
+   "nameEn": "Gunsmith Master - Part 8",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_8",
@@ -6504,7 +6504,7 @@
   {
    "id": "5b47825886f77468074618d3",
    "name": "枪匠大师 - 9",
-   "nameEn": "枪匠大师 - 9",
+   "nameEn": "Gunsmith Master - Part 9",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Gunsmith_Master_-_Part_9",
@@ -6515,7 +6515,7 @@
   {
    "id": "5edac020218d181e29451446",
    "name": "样品",
-   "nameEn": "样品",
+   "nameEn": "Samples",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Samples",
@@ -6526,7 +6526,7 @@
   {
    "id": "67a0970f05d1611ed90be75d",
    "name": "检验假说",
-   "nameEn": "检验假说",
+   "nameEn": "Hypotheses Testing",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hypotheses_Testing",
@@ -6551,7 +6551,7 @@
   {
    "id": "6740a3f4eca8acb2d2055159",
    "name": "横插一杠",
-   "nameEn": "横插一杠",
+   "nameEn": "Stick in the Wheel",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Stick_in_the_Wheel",
@@ -6562,7 +6562,7 @@
   {
    "id": "639282134ed9512be67647ed",
    "name": "此路不通",
-   "nameEn": "此路不通",
+   "nameEn": "Road Closed",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Road_Closed",
@@ -6598,7 +6598,7 @@
   {
    "id": "66aa61663aa37705c5024277",
    "name": "此路是我开！",
-   "nameEn": "此路是我开！",
+   "nameEn": "Know Your Place!",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 27,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Know_Your_Place!",
@@ -6609,7 +6609,7 @@
   {
    "id": "63a5cf262964a7488f5243ce",
    "name": "武力说服",
-   "nameEn": "武力说服",
+   "nameEn": "Power of Persuasion",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Power_of_Persuasion",
@@ -6620,7 +6620,7 @@
   {
    "id": "5a27ba1c86f77461ea5a3c56",
    "name": "武器流通",
-   "nameEn": "武器流通",
+   "nameEn": "Weapons Circulation",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Weapons_Circulation",
@@ -6673,7 +6673,7 @@
   {
    "id": "67a0970744893b9f3f0d9b68",
    "name": "武装侦察",
-   "nameEn": "武装侦察",
+   "nameEn": "Offensive Reconnaissance",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Offensive_Reconnaissance",
@@ -6698,7 +6698,7 @@
   {
    "id": "669fa3a40c828825de06d6a1",
    "name": "武装郊游",
-   "nameEn": "武装郊游",
+   "nameEn": "Easy-Breezy",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Easy-Breezy",
@@ -6709,7 +6709,7 @@
   {
    "id": "59689fbd86f7740d137ebfc4",
    "name": "水瓶座行动",
-   "nameEn": "水瓶座行动",
+   "nameEn": "Operation Aquarius",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Operation_Aquarius",
@@ -6739,7 +6739,7 @@
   {
    "id": "600302d73b897b11364cd161",
    "name": "污秽遍地……",
-   "nameEn": "污秽遍地……",
+   "nameEn": "All This Filth...",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/All_This_Filth...",
@@ -6750,7 +6750,7 @@
   {
    "id": "596a218586f77420d232807c",
    "name": "汽车修理",
-   "nameEn": "汽车修理",
+   "nameEn": "Car Repair",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Car_Repair",
@@ -6761,7 +6761,7 @@
   {
    "id": "69ce1de03e15cd80bd06f6c9",
    "name": "油料交换",
-   "nameEn": "油料交换",
+   "nameEn": "Oil Change",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Oil_Change",
@@ -6774,7 +6774,7 @@
   {
    "id": "59c124d686f774189b3c843f",
    "name": "油料快车",
-   "nameEn": "油料快车",
+   "nameEn": "Oil Run",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Oil_Run",
@@ -6814,7 +6814,7 @@
   {
    "id": "626bdcc3a371ee3a7a3514c5",
    "name": "流浪狗",
-   "nameEn": "流浪狗",
+   "nameEn": "Stray Dogs",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 33,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Stray_Dogs",
@@ -6825,7 +6825,7 @@
   {
    "id": "675c085d59b0575973005f52",
    "name": "浑水摸鱼",
-   "nameEn": "浑水摸鱼",
+   "nameEn": "Break the Deal",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Break_the_Deal",
@@ -6883,7 +6883,7 @@
   {
    "id": "6179ad56c760af5ad2053587",
    "name": "海边假期",
-   "nameEn": "海边假期",
+   "nameEn": "Seaside Vacation",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Seaside_Vacation",
@@ -6896,7 +6896,7 @@
   {
    "id": "6179afd0bca27a099552e040",
    "name": "消失的线人",
-   "nameEn": "消失的线人",
+   "nameEn": "Lost Contact",
    "trader": "54cb57776803fa99248b456e",
    "level": 18,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Lost_Contact",
@@ -6921,7 +6921,7 @@
   {
    "id": "60e71c9ad54b755a3b53eb66",
    "name": "清洁工",
-   "nameEn": "清洁工",
+   "nameEn": "The Cleaner",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Cleaner",
@@ -6934,7 +6934,7 @@
   {
    "id": "67d03be712fb5f8fd2096332",
    "name": "清空外围",
-   "nameEn": "清空外围",
+   "nameEn": "Vacate the Premises",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Vacate_the_Premises",
@@ -6947,7 +6947,7 @@
   {
    "id": "5a27b75b86f7742e97191958",
    "name": "渔具",
-   "nameEn": "渔具",
+   "nameEn": "Fishing Gear",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 8,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fishing_Gear",
@@ -7009,7 +7009,7 @@
   {
    "id": "5a27bb8386f7741c770d2d0a",
    "name": "湿活 - 1",
-   "nameEn": "湿活 - 1",
+   "nameEn": "Wet Job - Part 1",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 8,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Wet_Job_-_Part_1",
@@ -7022,7 +7022,7 @@
   {
    "id": "5a27bbf886f774333a418eeb",
    "name": "湿活 - 2",
-   "nameEn": "湿活 - 2",
+   "nameEn": "Wet Job - Part 2",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 8,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Wet_Job_-_Part_2",
@@ -7068,7 +7068,7 @@
   {
    "id": "5a27bc1586f7741f6d40fa2f",
    "name": "湿活 - 3",
-   "nameEn": "湿活 - 3",
+   "nameEn": "Wet Job - Part 3",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 19,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Wet_Job_-_Part_3",
@@ -7104,7 +7104,7 @@
   {
    "id": "5a27bc3686f7741c73584026",
    "name": "湿活 - 4",
-   "nameEn": "湿活 - 4",
+   "nameEn": "Wet Job - Part 4",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 19,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Wet_Job_-_Part_4",
@@ -7117,7 +7117,7 @@
   {
    "id": "5a27bc6986f7741c7358402b",
    "name": "湿活 - 5",
-   "nameEn": "湿活 - 5",
+   "nameEn": "Wet Job - Part 5",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Wet_Job_-_Part_5",
@@ -7130,7 +7130,7 @@
   {
    "id": "5a27bc8586f7741b543d8ea4",
    "name": "湿活 - 6",
-   "nameEn": "湿活 - 6",
+   "nameEn": "Wet Job - Part 6",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Wet_Job_-_Part_6",
@@ -7141,7 +7141,7 @@
   {
    "id": "6a5cd2178fd7c2b201032f3f",
    "name": "演示原型",
-   "nameEn": "演示原型",
+   "nameEn": "Demonstration Model",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 19,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Demonstration_Model",
@@ -7154,7 +7154,7 @@
   {
    "id": "5b478b1886f7744d1b23c57d",
    "name": "火线速递",
-   "nameEn": "火线速递",
+   "nameEn": "Hot Delivery",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hot_Delivery",
@@ -7201,7 +7201,7 @@
   {
    "id": "5c0d1c4cd0928202a02a6f5c",
    "name": "灭虫服务",
-   "nameEn": "灭虫服务",
+   "nameEn": "Decontamination Service",
    "trader": "54cb57776803fa99248b456e",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Decontamination_Service",
@@ -7214,7 +7214,7 @@
   {
    "id": "5d24b81486f77439c92d6ba8",
    "name": "熟人",
-   "nameEn": "熟人",
+   "nameEn": "Acquaintance",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Acquaintance",
@@ -7225,7 +7225,7 @@
   {
    "id": "5a0327ba86f77456b9154236",
    "name": "燃料短缺",
-   "nameEn": "燃料短缺",
+   "nameEn": "Fuel Shortage",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fuel_Shortage",
@@ -7236,7 +7236,7 @@
   {
    "id": "5ae448f286f77448d73c0131",
    "name": "燃油危机",
-   "nameEn": "燃油危机",
+   "nameEn": "Fuel Crisis",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fuel_Crisis",
@@ -7282,7 +7282,7 @@
   {
    "id": "64f5deac39e45b527a7c4232",
    "name": "爱国者的使命",
-   "nameEn": "爱国者的使命",
+   "nameEn": "Job for a Patriot",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 25,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Job_for_a_Patriot",
@@ -7293,7 +7293,7 @@
   {
    "id": "6089732b59b92115597ad789",
    "name": "物尽其用",
-   "nameEn": "物尽其用",
+   "nameEn": "Surplus Goods",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Surplus_Goods",
@@ -7306,7 +7306,7 @@
   {
    "id": "66ab970848ddbe9d4a0c49a8",
    "name": "特别联络",
-   "nameEn": "特别联络",
+   "nameEn": "Special Comms",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Special_Comms",
@@ -7343,7 +7343,7 @@
   {
    "id": "666314a1920800278d0f6746",
    "name": "特殊提议",
-   "nameEn": "特殊提议",
+   "nameEn": "Special Offer",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Special_Offer",
@@ -7354,7 +7354,7 @@
   {
    "id": "60e71ce009d7c801eb0c0ec6",
    "name": "特殊装备",
-   "nameEn": "特殊装备",
+   "nameEn": "Special Equipment",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Special_Equipment",
@@ -7365,7 +7365,7 @@
   {
    "id": "68ee1c18b4e5bc9a68018cd7",
    "name": "特殊订单",
-   "nameEn": "特殊订单",
+   "nameEn": "Special Order",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Special_Order",
@@ -7376,7 +7376,7 @@
   {
    "id": "5c0be13186f7746f016734aa",
    "name": "狙击疯魔",
-   "nameEn": "狙击疯魔",
+   "nameEn": "Psycho Sniper",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Psycho_Sniper",
@@ -7387,7 +7387,7 @@
   {
    "id": "5d25e4ca86f77409dd5cdf2c",
    "name": "狩猎之旅",
-   "nameEn": "狩猎之旅",
+   "nameEn": "Hunting Trip",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hunting_Trip",
@@ -7400,7 +7400,7 @@
   {
    "id": "6744af0969a58fceba101fed",
    "name": "独立的代价",
-   "nameEn": "独立的代价",
+   "nameEn": "The Price of Independence",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Price_of_Independence",
@@ -7448,7 +7448,7 @@
   {
    "id": "6745cbee909d2013670a4a55",
    "name": "独立的代价",
-   "nameEn": "独立的代价",
+   "nameEn": "The Price of Independence",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Price_of_Independence",
@@ -7496,7 +7496,7 @@
   {
    "id": "5d25e2b486f77409de05bba0",
    "name": "猎人之路 - 周边安全",
-   "nameEn": "猎人之路 - 周边安全",
+   "nameEn": "The Huntsman Path - Secured Perimeter",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Secured_Perimeter",
@@ -7509,7 +7509,7 @@
   {
    "id": "6578eb36e5020875d64645cd",
    "name": "猎人之路 - 坏警察",
-   "nameEn": "猎人之路 - 坏警察",
+   "nameEn": "The Huntsman Path - Crooked Cop",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Crooked_Cop",
@@ -7522,7 +7522,7 @@
   {
    "id": "64e7b971f9d6fa49d6769b44",
    "name": "猎人之路 - 大动作",
-   "nameEn": "猎人之路 - 大动作",
+   "nameEn": "The Huntsman Path - Big Game",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Big_Game",
@@ -7535,7 +7535,7 @@
   {
    "id": "60c0c018f7afb4354815096a",
    "name": "猎人之路 - 工厂头目",
-   "nameEn": "猎人之路 - 工厂头目",
+   "nameEn": "The Huntsman Path - Factory Chief",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Factory_Chief",
@@ -7548,7 +7548,7 @@
   {
    "id": "5d25e44386f77409453bce7b",
    "name": "猎人之路 - 愤怒守望者",
-   "nameEn": "猎人之路 - 愤怒守望者",
+   "nameEn": "The Huntsman Path - Angry Watchman",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Angry_Watchman",
@@ -7573,7 +7573,7 @@
   {
    "id": "5d25e2c386f77443e7549029",
    "name": "猎人之路 - 战利品",
-   "nameEn": "猎人之路 - 战利品",
+   "nameEn": "The Huntsman Path - Trophy",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Trophy",
@@ -7586,7 +7586,7 @@
   {
    "id": "6a4532e48e82d8ffea0c3eae",
    "name": "猎人之路 - 控制",
-   "nameEn": "猎人之路 - 控制",
+   "nameEn": "The Huntsman Path - Control",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 33,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Control",
@@ -7599,7 +7599,7 @@
   {
    "id": "5d25e2d886f77442734d335e",
    "name": "猎人之路 - 支配者",
-   "nameEn": "猎人之路 - 支配者",
+   "nameEn": "The Huntsman Path - Controller",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Controller",
@@ -7610,7 +7610,7 @@
   {
    "id": "60e71e8ed54b755a3b53eb67",
    "name": "猎人之路 - 无情杀手",
-   "nameEn": "猎人之路 - 无情杀手",
+   "nameEn": "The Huntsman Path - Relentless",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 55,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Relentless",
@@ -7621,7 +7621,7 @@
   {
    "id": "5d25e2cc86f77443e47ae019",
    "name": "猎人之路 - 杀戮森林",
-   "nameEn": "猎人之路 - 杀戮森林",
+   "nameEn": "The Huntsman Path - Forest Cleaning",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Forest_Cleaning",
@@ -7632,7 +7632,7 @@
   {
    "id": "5d25e2ee86f77443e35162ea",
    "name": "猎人之路 - 森林管理员",
-   "nameEn": "猎人之路 - 森林管理员",
+   "nameEn": "The Huntsman Path - Woods Keeper",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Woods_Keeper",
@@ -7645,7 +7645,7 @@
   {
    "id": "5d25e43786f7740a212217fa",
    "name": "猎人之路 - 正义",
-   "nameEn": "猎人之路 - 正义",
+   "nameEn": "The Huntsman Path - Justice",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Justice",
@@ -7656,7 +7656,7 @@
   {
    "id": "6179ad0a6e9dd54ac275e3f2",
    "name": "猎人之路 - 流浪汉",
-   "nameEn": "猎人之路 - 流浪汉",
+   "nameEn": "The Huntsman Path - Outcasts",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Outcasts",
@@ -7669,7 +7669,7 @@
   {
    "id": "639136df4b15ca31f76bc31f",
    "name": "猎人之路 - 管理者",
-   "nameEn": "猎人之路 - 管理者",
+   "nameEn": "The Huntsman Path - Administrator",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Administrator",
@@ -7705,7 +7705,7 @@
   {
    "id": "6a45208043b8d7604d00b8d5",
    "name": "猎人之路 - 管理者",
-   "nameEn": "猎人之路 - 管理者",
+   "nameEn": "The Huntsman Path - Administrator",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Administrator",
@@ -7741,7 +7741,7 @@
   {
    "id": "5d25e2e286f77444001e2e48",
    "name": "猎人之路 - 脱销",
-   "nameEn": "猎人之路 - 脱销",
+   "nameEn": "The Huntsman Path - Sellout",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Sellout",
@@ -7754,7 +7754,7 @@
   {
    "id": "5d25e44f86f77443e625e385",
    "name": "猎人之路 - 蒸发密令 - 1",
-   "nameEn": "猎人之路 - 蒸发密令 - 1",
+   "nameEn": "The Huntsman Path - Eraser",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Eraser",
@@ -7767,7 +7767,7 @@
   {
    "id": "5edab4b1218d181e29451435",
    "name": "猎人之路 - 虐待狂",
-   "nameEn": "猎人之路 - 虐待狂",
+   "nameEn": "The Huntsman Path - Sadist",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Sadist",
@@ -7780,7 +7780,7 @@
   {
    "id": "5d25e45e86f77408251c4bfa",
    "name": "猎人之路 - 解放",
-   "nameEn": "猎人之路 - 解放",
+   "nameEn": "The Huntsman Path - Liberation",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Huntsman_Path_-_Liberation",
@@ -7791,7 +7791,7 @@
   {
    "id": "66b38e144f2ab7cc530c3fe7",
    "name": "猎人必修课",
-   "nameEn": "猎人必修课",
+   "nameEn": "Every Hunter Knows This",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Every_Hunter_Knows_This",
@@ -7828,7 +7828,7 @@
   {
    "id": "5a27b7a786f774579c3eb376",
    "name": "猎虎行动",
-   "nameEn": "猎虎行动",
+   "nameEn": "Tigr Safari",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Tigr_Safari",
@@ -7863,7 +7863,7 @@
   {
    "id": "6745fcded0fbbc74ca0f721d",
    "name": "现世报",
-   "nameEn": "现世报",
+   "nameEn": "Swift Retribution",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Swift_Retribution",
@@ -7876,7 +7876,7 @@
   {
    "id": "69ce213a298a6529b30d7134",
    "name": "生化分析",
-   "nameEn": "生化分析",
+   "nameEn": "Biochemistry",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Biochemistry",
@@ -7889,7 +7889,7 @@
   {
    "id": "5d25e29d86f7740a22516326",
    "name": "生存者之路 -  雕鸮",
-   "nameEn": "生存者之路 -  雕鸮",
+   "nameEn": "The Survivalist Path - Eagle-Owl",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Eagle-Owl",
@@ -7900,7 +7900,7 @@
   {
    "id": "5d25bfd086f77442734d3007",
    "name": "生存者之路 - Zhivchik",
-   "nameEn": "生存者之路 - Zhivchik",
+   "nameEn": "The Survivalist Path - Zhivchik",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Zhivchik",
@@ -7911,7 +7911,7 @@
   {
    "id": "5d25d2c186f77443e35162e5",
    "name": "生存者之路 - 冷血",
-   "nameEn": "生存者之路 - 冷血",
+   "nameEn": "The Survivalist Path - Cold Blooded",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Cold_Blooded",
@@ -7922,7 +7922,7 @@
   {
    "id": "5d25aed386f77442734d25d2",
    "name": "生存者之路 - 危险零距离",
-   "nameEn": "生存者之路 - 危险零距离",
+   "nameEn": "The Survivalist Path - Unprotected but Dangerous",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Unprotected_but_Dangerous",
@@ -7933,7 +7933,7 @@
   {
    "id": "5d25c81b86f77443e625dd71",
    "name": "生存者之路 - 受伤的野兽",
-   "nameEn": "生存者之路 - 受伤的野兽",
+   "nameEn": "The Survivalist Path - Wounded Beast",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Wounded_Beast",
@@ -7944,7 +7944,7 @@
   {
    "id": "5d25e2a986f77409dd5cdf2a",
    "name": "生存者之路 - 战地军医",
-   "nameEn": "生存者之路 - 战地军医",
+   "nameEn": "The Survivalist Path - Combat Medic",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Combat_Medic",
@@ -7955,7 +7955,7 @@
   {
    "id": "5eaaaa7c93afa0558f3b5a1c",
    "name": "生存者之路 - 瘾君子",
-   "nameEn": "生存者之路 - 瘾君子",
+   "nameEn": "The Survivalist Path - Junkie",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 33,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Junkie",
@@ -7968,7 +7968,7 @@
   {
    "id": "5d25b6be86f77444001e1b89",
    "name": "生存者之路 - 省吃俭用",
-   "nameEn": "生存者之路 - 省吃俭用",
+   "nameEn": "The Survivalist Path - Thrifty",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Thrifty",
@@ -8026,7 +8026,7 @@
   {
    "id": "5d25cf2686f77443e75488d4",
    "name": "生存者之路 - 硬汉",
-   "nameEn": "生存者之路 - 硬汉",
+   "nameEn": "The Survivalist Path - Tough Guy",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Tough_Guy",
@@ -8039,7 +8039,7 @@
   {
    "id": "5ae448a386f7744d3730fff0",
    "name": "生意至上",
-   "nameEn": "生意至上",
+   "nameEn": "Only Business",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 15,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Only_Business",
@@ -8050,7 +8050,7 @@
   {
    "id": "6744a728352b4da8e003eda9",
    "name": "电池换新",
-   "nameEn": "电池换新",
+   "nameEn": "Battery Change",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Battery_Change",
@@ -8061,7 +8061,7 @@
   {
    "id": "6744a9dfef61d56e020b5c4a",
    "name": "电池换新",
-   "nameEn": "电池换新",
+   "nameEn": "Battery Change",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Battery_Change",
@@ -8072,7 +8072,7 @@
   {
    "id": "5a03173786f77451cb427172",
    "name": "疗养之旅 - 2",
-   "nameEn": "疗养之旅 - 2",
+   "nameEn": "Spa Tour - Part 2",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Spa_Tour_-_Part_2",
@@ -8118,7 +8118,7 @@
   {
    "id": "5a27ba9586f7741b543d8e85",
    "name": "疗养之旅 - 6",
-   "nameEn": "疗养之旅 - 6",
+   "nameEn": "Spa Tour - Part 6",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Spa_Tour_-_Part_6",
@@ -8129,7 +8129,7 @@
   {
    "id": "60896e28e4a85c72ef3fa301",
    "name": "病历",
-   "nameEn": "病历",
+   "nameEn": "Disease History",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Disease_History",
@@ -8142,7 +8142,7 @@
   {
    "id": "5ae4490786f7744ca822adcc",
    "name": "盛装杀戮",
-   "nameEn": "盛装杀戮",
+   "nameEn": "Dressed to Kill",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Dressed_to_Kill",
@@ -8153,7 +8153,7 @@
   {
    "id": "68db9c7557bc51a8c804c14b",
    "name": "目标与手段",
-   "nameEn": "目标与手段",
+   "nameEn": "Goals and Means",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Goals_and_Means",
@@ -8164,7 +8164,7 @@
   {
    "id": "626bd75e47ea7f506e5493c5",
    "name": "直播 - 1",
-   "nameEn": "直播 - 1",
+   "nameEn": "Broadcast - Part 1",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Broadcast_-_Part_1",
@@ -8200,7 +8200,7 @@
   {
    "id": "63913715f8e5dd32bf4e3aaa",
    "name": "直播 - 2",
-   "nameEn": "直播 - 2",
+   "nameEn": "Broadcast - Part 2",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Broadcast_-_Part_2",
@@ -8225,7 +8225,7 @@
   {
    "id": "63a511ea30d85e10e375b045",
    "name": "直播 - 3",
-   "nameEn": "直播 - 3",
+   "nameEn": "Broadcast - Part 3",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Broadcast_-_Part_3",
@@ -8250,7 +8250,7 @@
   {
    "id": "6391372c8ba6894d155e77d7",
    "name": "直播 - 4",
-   "nameEn": "直播 - 4",
+   "nameEn": "Broadcast - Part 4",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Broadcast_-_Part_4",
@@ -8275,7 +8275,7 @@
   {
    "id": "64ee99639878a0569d6ec8c9",
    "name": "直播 - 5",
-   "nameEn": "直播 - 5",
+   "nameEn": "Broadcast - Part 5",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Broadcast_-_Part_5",
@@ -8311,7 +8311,7 @@
   {
    "id": "6663149cfd5ca9577902e037",
    "name": "看不见的大手",
-   "nameEn": "看不见的大手",
+   "nameEn": "The Invisible Hand",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Invisible_Hand",
@@ -8322,7 +8322,7 @@
   {
    "id": "5967733e86f774602332fc84",
    "name": "短缺",
-   "nameEn": "短缺",
+   "nameEn": "Shortage",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shortage",
@@ -8333,7 +8333,7 @@
   {
    "id": "5a27b7d686f77460d847e6a6",
    "name": "破铜烂铁",
-   "nameEn": "破铜烂铁",
+   "nameEn": "Scrap Metal",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Scrap_Metal",
@@ -8395,7 +8395,7 @@
   {
    "id": "59674cd986f7744ab26e32f2",
    "name": "硝烟野餐",
-   "nameEn": "硝烟野餐",
+   "nameEn": "Shootout Picnic",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shootout_Picnic",
@@ -8408,7 +8408,7 @@
   {
    "id": "5d25e48186f77443e625e386",
    "name": "礼节性拜访",
-   "nameEn": "礼节性拜访",
+   "nameEn": "Courtesy Visit",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Courtesy_Visit",
@@ -8455,7 +8455,7 @@
   {
    "id": "64ee9df4496db64f9b7a4432",
    "name": "神秘的门",
-   "nameEn": "神秘的门",
+   "nameEn": "The Door",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Door",
@@ -8502,7 +8502,7 @@
   {
    "id": "5a27bb1e86f7741f27621b7e",
    "name": "神秘货物",
-   "nameEn": "神秘货物",
+   "nameEn": "Cargo X",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Cargo_X",
@@ -8515,7 +8515,7 @@
   {
    "id": "5a27bb5986f7741dfb660900",
    "name": "神秘货物 - 3",
-   "nameEn": "神秘货物 - 3",
+   "nameEn": "Cargo X - Part 3",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 19,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Cargo_X_-_Part_3",
@@ -8540,7 +8540,7 @@
   {
    "id": "658027799634223183395339",
    "name": "禁止打劫",
-   "nameEn": "禁止打劫",
+   "nameEn": "No Swiping",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/No_Swiping",
@@ -8571,7 +8571,7 @@
   {
    "id": "675c3582f6ddc329a90f9c6d",
    "name": "私人俱乐部",
-   "nameEn": "私人俱乐部",
+   "nameEn": "Private Club",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Private_Club",
@@ -8584,7 +8584,7 @@
   {
    "id": "5c0be5fc86f774467a116593",
    "name": "私人诊所",
-   "nameEn": "私人诊所",
+   "nameEn": "Private Clinic",
    "trader": "54cb57776803fa99248b456e",
    "level": 35,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Private_Clinic",
@@ -8595,7 +8595,7 @@
   {
    "id": "6a5424ae135497b9df0c68be",
    "name": "秋季综合征",
-   "nameEn": "秋季综合征",
+   "nameEn": "Fall Ailment",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fall_Ailment",
@@ -8606,7 +8606,7 @@
   {
    "id": "64f6aafd67e11a7c6206e0d0",
    "name": "秘制食谱",
-   "nameEn": "秘制食谱",
+   "nameEn": "The Secret Recipe",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Secret_Recipe",
@@ -8619,7 +8619,7 @@
   {
    "id": "6a5ccda873f06065630d61b0",
    "name": "秘密消息",
-   "nameEn": "秘密消息",
+   "nameEn": "Secret Message",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Secret_Message",
@@ -8632,7 +8632,7 @@
   {
    "id": "6744a4717e3818d5bb0680bb",
    "name": "稳定业务",
-   "nameEn": "稳定业务",
+   "nameEn": "Stabilize Business",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Stabilize_Business",
@@ -8645,7 +8645,7 @@
   {
    "id": "6578ec473dbd035d04531a8d",
    "name": "稳定信号",
-   "nameEn": "稳定信号",
+   "nameEn": "Steady Signal",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Steady_Signal",
@@ -8690,7 +8690,7 @@
   {
    "id": "69e5583240c3e6c8ba0edbd5",
    "name": "窃听风暴",
-   "nameEn": "窃听风暴",
+   "nameEn": "Wiring the Vessel",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Wiring_the_Vessel",
@@ -8703,7 +8703,7 @@
   {
    "id": "67af4c1991ee75c6d7060a16",
    "name": "站稳脚跟",
-   "nameEn": "站稳脚跟",
+   "nameEn": "Get a Foothold",
    "trader": "58330581ace78e27b8b10cee",
    "level": 50,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Get_a_Foothold",
@@ -8714,7 +8714,7 @@
   {
    "id": "697877e0c639962b2e0cf24f",
    "name": "竞技场差事（PVP）",
-   "nameEn": "竞技场差事（PVP）",
+   "nameEn": "Arena Business",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Arena_Business",
@@ -8725,7 +8725,7 @@
   {
    "id": "6745fdddd3346c216702e0bf",
    "name": "简单副业",
-   "nameEn": "简单副业",
+   "nameEn": "Simple Side Job",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Simple_Side_Job",
@@ -8750,7 +8750,7 @@
   {
    "id": "5d4bec3486f7743cac246665",
    "name": "管制材料",
-   "nameEn": "管制材料",
+   "nameEn": "Regulated Materials",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Regulated_Materials",
@@ -8761,7 +8761,7 @@
   {
    "id": "5e381b0286f77420e3417a74",
    "name": "纺织业 - 1",
-   "nameEn": "纺织业 - 1",
+   "nameEn": "Textile - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Textile_-_Part_1",
@@ -8772,7 +8772,7 @@
   {
    "id": "5e383a6386f77465910ce1f3",
    "name": "纺织业 - 1",
-   "nameEn": "纺织业 - 1",
+   "nameEn": "Textile - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Textile_-_Part_1",
@@ -8783,7 +8783,7 @@
   {
    "id": "5e4d4ac186f774264f758336",
    "name": "纺织业 - 2",
-   "nameEn": "纺织业 - 2",
+   "nameEn": "Textile - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Textile_-_Part_2",
@@ -8794,7 +8794,7 @@
   {
    "id": "5e4d515e86f77438b2195244",
    "name": "纺织业 - 2",
-   "nameEn": "纺织业 - 2",
+   "nameEn": "Textile - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Textile_-_Part_2",
@@ -8805,7 +8805,7 @@
   {
    "id": "6663149f1d3ec95634095e75",
    "name": "经济流动",
-   "nameEn": "经济流动",
+   "nameEn": "Circulate",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Circulate",
@@ -8816,7 +8816,7 @@
   {
    "id": "65802b627b44fa5e14638899",
    "name": "绝不上当",
-   "nameEn": "绝不上当",
+   "nameEn": "Nothing Fishy About This",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Nothing_Fishy_About_This",
@@ -8846,7 +8846,7 @@
   {
    "id": "60896888e4a85c72ef3fa300",
    "name": "绝密技术",
-   "nameEn": "绝密技术",
+   "nameEn": "Classified Technologies",
    "trader": "58330581ace78e27b8b10cee",
    "level": 22,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Classified_Technologies",
@@ -8859,7 +8859,7 @@
   {
    "id": "67a097379f2068e74603c6ac",
    "name": "绝对威信",
-   "nameEn": "绝对威信",
+   "nameEn": "Indisputable Authority",
    "trader": "58330581ace78e27b8b10cee",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Indisputable_Authority",
@@ -8872,7 +8872,7 @@
   {
    "id": "5b478eca86f7744642012254",
    "name": "维他命",
-   "nameEn": "维他命",
+   "nameEn": "Vitamins",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Vitamins",
@@ -8883,7 +8883,7 @@
   {
    "id": "5c0d4c12d09282029f539173",
    "name": "维和任务",
-   "nameEn": "维和任务",
+   "nameEn": "Peacekeeping Mission",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Peacekeeping_Mission",
@@ -8894,7 +8894,7 @@
   {
    "id": "639136d68ba6894d155e77cf",
    "name": "绿色通道",
-   "nameEn": "绿色通道",
+   "nameEn": "Green Corridor",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Green_Corridor",
@@ -8930,7 +8930,7 @@
   {
    "id": "626bd75b05f287031503c7f6",
    "name": "缉毒行动",
-   "nameEn": "缉毒行动",
+   "nameEn": "Drug Trafficking",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Drug_Trafficking",
@@ -8966,7 +8966,7 @@
   {
    "id": "6740a15566e6a521aa051b15",
    "name": "缔结友谊",
-   "nameEn": "缔结友谊",
+   "nameEn": "Forge a Friendship",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Forge_a_Friendship",
@@ -8979,7 +8979,7 @@
   {
    "id": "5967530a86f77462ba22226b",
    "name": "罪证",
-   "nameEn": "罪证",
+   "nameEn": "Bad Rep Evidence",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Bad_Rep_Evidence",
@@ -8990,7 +8990,7 @@
   {
    "id": "63a88045abf76d719f42d715",
    "name": "美味香肠",
-   "nameEn": "美味香肠",
+   "nameEn": "The Delicious Sausage",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Delicious_Sausage",
@@ -9048,7 +9048,7 @@
   {
    "id": "639dbaf17c898a131e1cffff",
    "name": "老赖",
-   "nameEn": "老赖",
+   "nameEn": "Debtor",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Debtor",
@@ -9084,7 +9084,7 @@
   {
    "id": "5c1128e386f7746565181106",
    "name": "肥料",
-   "nameEn": "肥料",
+   "nameEn": "Fertilizers",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fertilizers",
@@ -9095,7 +9095,7 @@
   {
    "id": "5edabd13218d181e29451442",
    "name": "肮脏游戏",
-   "nameEn": "肮脏游戏",
+   "nameEn": "Rigged Game",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Rigged_Game",
@@ -9142,7 +9142,7 @@
   {
    "id": "5936da9e86f7742d65037edf",
    "name": "背景调查",
-   "nameEn": "背景调查",
+   "nameEn": "Background Check",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Background_Check",
@@ -9155,7 +9155,7 @@
   {
    "id": "6179b3a12153c15e937d52bc",
    "name": "能源危机",
-   "nameEn": "能源危机",
+   "nameEn": "Energy Crisis",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Energy_Crisis",
@@ -9213,7 +9213,7 @@
   {
    "id": "6740a02a69a58fceba0ff399",
    "name": "自然交换",
-   "nameEn": "自然交换",
+   "nameEn": "Natural Exchange",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Natural_Exchange",
@@ -9249,7 +9249,7 @@
   {
    "id": "60e71d23c1bfa3050473b8e6",
    "name": "致命校准",
-   "nameEn": "致命校准",
+   "nameEn": "Calibration",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Calibration",
@@ -9260,7 +9260,7 @@
   {
    "id": "674605df60a98cad1b0ec799",
    "name": "致命论据",
-   "nameEn": "致命论据",
+   "nameEn": "Killer Argument",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Killer_Argument",
@@ -9273,7 +9273,7 @@
   {
    "id": "671a59e43d73dac1360765cc",
    "name": "致命道具",
-   "nameEn": "致命道具",
+   "nameEn": "Dangerous Props",
    "trader": "58330581ace78e27b8b10cee",
    "level": 38,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Dangerous_Props",
@@ -9284,7 +9284,7 @@
   {
    "id": "666314b8312343839d032d24",
    "name": "航空包裹",
-   "nameEn": "航空包裹",
+   "nameEn": "Airmail",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Airmail",
@@ -9309,7 +9309,7 @@
   {
    "id": "66058ccbc7f3584787181478",
    "name": "良心作祟 - 1（PVP）",
-   "nameEn": "良心作祟 - 1（PVP）",
+   "nameEn": "Against the Conscience - Part 1",
    "trader": "579dc571d53a0658a154fbec",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Against_the_Conscience_-_Part_1",
@@ -9355,7 +9355,7 @@
   {
    "id": "66058ccde8e4f17985230807",
    "name": "良心作祟 - 2（PVP）",
-   "nameEn": "良心作祟 - 2（PVP）",
+   "nameEn": "Against the Conscience - Part 2",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Against_the_Conscience_-_Part_2",
@@ -9366,7 +9366,7 @@
   {
    "id": "5edac34d0bb72a50635c2bfa",
    "name": "艰难抉择",
-   "nameEn": "艰难抉择",
+   "nameEn": "A Difficult Choice",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Difficult_Choice",
@@ -9377,7 +9377,7 @@
   {
    "id": "67b45467814ab0ffa000c7e7",
    "name": "艺术就是爆炸",
-   "nameEn": "艺术就是爆炸",
+   "nameEn": "The Art of Explosion",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Art_of_Explosion",
@@ -9388,7 +9388,7 @@
   {
    "id": "639135a7e705511c8a4a1b78",
    "name": "芭蕾舞者",
-   "nameEn": "芭蕾舞者",
+   "nameEn": "Ballet Lover",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Ballet_Lover",
@@ -9413,7 +9413,7 @@
   {
    "id": "65734c186dc1e402c80dc19e",
    "name": "花花公子",
-   "nameEn": "花花公子",
+   "nameEn": "Dandies",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Dandies",
@@ -9449,7 +9449,7 @@
   {
    "id": "64f5aac4b63b74469b6c14c2",
    "name": "苏共之辉",
-   "nameEn": "苏共之辉",
+   "nameEn": "Glory to CPSU",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 6,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Glory_to_CPSU",
@@ -9474,7 +9474,7 @@
   {
    "id": "639135b04ed9512be67647d7",
    "name": "苏共之辉 - 1",
-   "nameEn": "苏共之辉 - 1",
+   "nameEn": "Glory to CPSU - Part 1",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Glory_to_CPSU_-_Part_1",
@@ -9499,7 +9499,7 @@
   {
    "id": "69c277f3ea6da9c23e07f8d2",
    "name": "苦涩的胜利",
-   "nameEn": "苦涩的胜利",
+   "nameEn": "A Bitter Victory",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Bitter_Victory",
@@ -9510,7 +9510,7 @@
   {
    "id": "5969f9e986f7741dde183a50",
    "name": "药剂师",
-   "nameEn": "药剂师",
+   "nameEn": "Pharmacist",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Pharmacist",
@@ -9523,7 +9523,7 @@
   {
    "id": "59675d6c86f7740a842fc482",
    "name": "蛋卷冰淇淋",
-   "nameEn": "蛋卷冰淇淋",
+   "nameEn": "Ice Cream Cones",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 6,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Ice_Cream_Cones",
@@ -9536,7 +9536,7 @@
   {
    "id": "66aba85403e0ee3101042877",
    "name": "街区之下",
-   "nameEn": "街区之下",
+   "nameEn": "Beneath The Streets",
    "trader": "54cb57776803fa99248b456e",
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Beneath_The_Streets",
@@ -9583,7 +9583,7 @@
   {
    "id": "5a27c99a86f7747d2c6bdd8e",
    "name": "西方来客",
-   "nameEn": "西方来客",
+   "nameEn": "Friend From the West",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Friend_From_the_West",
@@ -9594,7 +9594,7 @@
   {
    "id": "5a27d2af86f7744e1115b323",
    "name": "西方来客 - 2",
-   "nameEn": "西方来客 - 2",
+   "nameEn": "Friend From the West - Part 2",
    "trader": "58330581ace78e27b8b10cee",
    "level": 9,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Friend_From_the_West_-_Part_2",
@@ -9605,7 +9605,7 @@
   {
    "id": "6a7b0df31ea00c9a980e2742",
    "name": "西西弗斯",
-   "nameEn": "西西弗斯",
+   "nameEn": "Sisyphus",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sisyphus",
@@ -9642,7 +9642,7 @@
   {
    "id": "6396700fea19ac7ed845db32",
    "name": "观察员",
-   "nameEn": "观察员",
+   "nameEn": "Spotter",
    "trader": "638f541a29ffd1183d187f57",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Spotter",
@@ -9725,7 +9725,7 @@
   {
    "id": "67460662d0fbbc74ca0f7229",
    "name": "识时务者为俊杰",
-   "nameEn": "识时务者为俊杰",
+   "nameEn": "Choose Your Friends Wisely",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Choose_Your_Friends_Wisely",
@@ -9736,7 +9736,7 @@
   {
    "id": "675c1ec7a46173572a0bf20a",
    "name": "试炼之路",
-   "nameEn": "试炼之路",
+   "nameEn": "Rite of Passage",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Rite_of_Passage",
@@ -9772,7 +9772,7 @@
   {
    "id": "671a49f77d49aea42c029b5f",
    "name": "诱人新货",
-   "nameEn": "诱人新货",
+   "nameEn": "Irresistible",
    "trader": "58330581ace78e27b8b10cee",
    "level": 22,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Irresistible",
@@ -9785,7 +9785,7 @@
   {
    "id": "6573397ef3f8344c4575cd87",
    "name": "财不外露",
-   "nameEn": "财不外露",
+   "nameEn": "Properties All Around",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Properties_All_Around",
@@ -9810,7 +9810,7 @@
   {
    "id": "5ae449d986f774453a54a7e1",
    "name": "财务总监",
-   "nameEn": "财务总监",
+   "nameEn": "Supervisor",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Supervisor",
@@ -9857,7 +9857,7 @@
   {
    "id": "673f348dd3346c21670217e7",
    "name": "货运延误 - 1",
-   "nameEn": "货运延误 - 1",
+   "nameEn": "Shipping Delay - Part 1",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shipping_Delay_-_Part_1",
@@ -9870,7 +9870,7 @@
   {
    "id": "673f2cd5d3346c2167020484",
    "name": "货运延误 - 2",
-   "nameEn": "货运延误 - 2",
+   "nameEn": "Shipping Delay - Part 2",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shipping_Delay_-_Part_2",
@@ -9917,7 +9917,7 @@
   {
    "id": "675c047fa46173572a0bd878",
    "name": "货运追踪",
-   "nameEn": "货运追踪",
+   "nameEn": "Shipment Tracking",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shipment_Tracking",
@@ -9930,7 +9930,7 @@
   {
    "id": "666314b696a9349baa021bac",
    "name": "质量标准",
-   "nameEn": "质量标准",
+   "nameEn": "Quality Standard",
    "trader": "54cb57776803fa99248b456e",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Quality_Standard",
@@ -9943,7 +9943,7 @@
   {
    "id": "66058cb22cee99303f1ba067",
    "name": "赚点快钱 - 1（PVP）",
-   "nameEn": "赚点快钱 - 1（PVP）",
+   "nameEn": "Easy Money - Part 1",
    "trader": "58330581ace78e27b8b10cee",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Easy_Money_-_Part_1",
@@ -9988,7 +9988,7 @@
   {
    "id": "66058cb5ae4719735349b9e8",
    "name": "赚点快钱 - 2（PVP）",
-   "nameEn": "赚点快钱 - 2（PVP）",
+   "nameEn": "Easy Money - Part 2",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Easy_Money_-_Part_2",
@@ -9999,7 +9999,7 @@
   {
    "id": "626bd75c71bd851e971b82a5",
    "name": "踩点行动",
-   "nameEn": "踩点行动",
+   "nameEn": "Reconnaissance",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Reconnaissance",
@@ -10024,7 +10024,7 @@
   {
    "id": "5c0d0f1886f77457b8210226",
    "name": "转口贸易",
-   "nameEn": "转口贸易",
+   "nameEn": "From Hand to Hand",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/From_Hand_to_Hand",
@@ -10060,7 +10060,7 @@
   {
    "id": "639135c3744e452011470807",
    "name": "软禁",
-   "nameEn": "软禁",
+   "nameEn": "House Arrest",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/House_Arrest",
@@ -10096,7 +10096,7 @@
   {
    "id": "639135cd8ba6894d155e77cb",
    "name": "软禁 - 2",
-   "nameEn": "软禁 - 2",
+   "nameEn": "House Arrest - Part 2",
    "trader": "58330581ace78e27b8b10cee",
    "level": 33,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/House_Arrest_-_Part_2",
@@ -10132,7 +10132,7 @@
   {
    "id": "6942b44f891369fc790e385a",
    "name": "轻重缓急",
-   "nameEn": "轻重缓急",
+   "nameEn": "Setting Priorities",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Setting_Priorities",
@@ -10143,7 +10143,7 @@
   {
    "id": "5c0d0d5086f774363760aef2",
    "name": "运动员",
-   "nameEn": "运动员",
+   "nameEn": "Athlete",
    "trader": "54cb57776803fa99248b456e",
    "level": 30,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Athlete",
@@ -10154,7 +10154,7 @@
   {
    "id": "67a0972e77dd677f600804bd",
    "name": "这带子糟透了",
-   "nameEn": "这带子糟透了",
+   "nameEn": "This Tape Sucks",
    "trader": "54cb57776803fa99248b456e",
    "level": 26,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/This_Tape_Sucks",
@@ -10179,7 +10179,7 @@
   {
    "id": "66d9cbb67b491f9d5304f6e6",
    "name": "这是什么梗？",
-   "nameEn": "这是什么梗？",
+   "nameEn": "Is This a Reference?",
    "trader": "579dc571d53a0658a154fbec",
    "level": 25,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Is_This_a_Reference%3F",
@@ -10497,7 +10497,7 @@
   {
    "id": "5c139eb686f7747878361a6f",
    "name": "进口",
-   "nameEn": "进口",
+   "nameEn": "Import",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Import",
@@ -10508,7 +10508,7 @@
   {
    "id": "67e993f5ed537409f009da75",
    "name": "迟来的奖励（PVP）",
-   "nameEn": "迟来的奖励（PVP）",
+   "nameEn": "Postponed Reward",
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 35,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Postponed_Reward",
@@ -10519,7 +10519,7 @@
   {
    "id": "6574e0dedc0d635f633a5805",
    "name": "透透气",
-   "nameEn": "透透气",
+   "nameEn": "Getting Some Air",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 36,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Getting_Some_Air",
@@ -10530,7 +10530,7 @@
   {
    "id": "5a27b9de86f77464e5044585",
    "name": "邪教",
-   "nameEn": "邪教",
+   "nameEn": "The Cult",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 8,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Cult",
@@ -10555,7 +10555,7 @@
   {
    "id": "59675ea386f77414b32bded2",
    "name": "邮递员派特 - 1",
-   "nameEn": "邮递员派特 - 1",
+   "nameEn": "Postman Pat - Part 1",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Postman_Pat_-_Part_1",
@@ -10568,7 +10568,7 @@
   {
    "id": "596760e186f7741e11214d58",
    "name": "邮递员派特 - 2",
-   "nameEn": "邮递员派特 - 2",
+   "nameEn": "Postman Pat - Part 2",
    "trader": "54cb57776803fa99248b456e",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Postman_Pat_-_Part_2",
@@ -10579,7 +10579,7 @@
   {
    "id": "60e71dc67fcf9c556f325056",
    "name": "酒瘾",
-   "nameEn": "酒瘾",
+   "nameEn": "Booze",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 27,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Booze",
@@ -10590,7 +10590,7 @@
   {
    "id": "5979eee086f774311955e614",
    "name": "金色失物",
-   "nameEn": "金色失物",
+   "nameEn": "Golden Swag",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Golden_Swag",
@@ -10615,7 +10615,7 @@
   {
    "id": "59ca1a6286f774509a270942",
    "name": "铁证如山",
-   "nameEn": "铁证如山",
+   "nameEn": "Ironclad Proof",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Ironclad_Proof",
@@ -10626,7 +10626,7 @@
   {
    "id": "5b4794cb86f774598100d5d4",
    "name": "铁鸟坠落",
-   "nameEn": "铁鸟坠落",
+   "nameEn": "Metal Birds",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Metal_Birds",
@@ -10639,7 +10639,7 @@
   {
    "id": "666314c10aa5c7436c00908c",
    "name": "镜头就位，开拍！",
-   "nameEn": "镜头就位，开拍！",
+   "nameEn": "Camera, Action!",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Camera%2C_Action!",
@@ -10650,7 +10650,7 @@
   {
    "id": "60e71dc0a94be721b065bbfc",
    "name": "长期合作",
-   "nameEn": "长期合作",
+   "nameEn": "Long Line",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Long_Line",
@@ -10663,7 +10663,7 @@
   {
    "id": "6193850f60b34236ee0483de",
    "name": "长路漫漫",
-   "nameEn": "长路漫漫",
+   "nameEn": "Long Road",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Long_Road",
@@ -10694,7 +10694,7 @@
   {
    "id": "66631489acf8442f8b05319f",
    "name": "陌路相交",
-   "nameEn": "陌路相交",
+   "nameEn": "Friend Among Strangers",
    "trader": "579dc571d53a0658a154fbec",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Friend_Among_Strangers",
@@ -10705,7 +10705,7 @@
   {
    "id": "61904daa7d0d857927447b9c",
    "name": "隐士",
-   "nameEn": "隐士",
+   "nameEn": "The Hermit",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Hermit",
@@ -10730,7 +10730,7 @@
   {
    "id": "669fa39c64ea11e84c0642a6",
    "name": "隔墙有“眼”",
-   "nameEn": "隔墙有“眼”",
+   "nameEn": "The Walls Have Eyes",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Walls_Have_Eyes",
@@ -10777,7 +10777,7 @@
   {
    "id": "608974d01a66564e74191fc0",
    "name": "雪中送炭",
-   "nameEn": "雪中送炭",
+   "nameEn": "A Fuel Matter",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 27,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/A_Fuel_Matter",
@@ -10813,7 +10813,7 @@
   {
    "id": "596b455186f77457cb50eccb",
    "name": "风波",
-   "nameEn": "风波",
+   "nameEn": "Stirrup",
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Stirrup",
@@ -10826,7 +10826,7 @@
   {
    "id": "5ae4499a86f77449783815db",
    "name": "风流倜傥",
-   "nameEn": "风流倜傥",
+   "nameEn": "Charisma Brings Success",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Charisma_Brings_Success",
@@ -10837,7 +10837,7 @@
   {
    "id": "673f4e956f1b89c7bc0f56ef",
    "name": "风火轮",
-   "nameEn": "风火轮",
+   "nameEn": "Hot Wheels",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hot_Wheels",
@@ -10862,7 +10862,7 @@
   {
    "id": "673f5a4976553f78350bdac1",
    "name": "风火轮 - 再次出发",
-   "nameEn": "风火轮 - 再次出发",
+   "nameEn": "Hot Wheels - Let's Try Again",
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hot_Wheels_-_Let's_Try_Again",
@@ -10887,7 +10887,7 @@
   {
    "id": "5936d90786f7742b1420ba5b",
    "name": "首秀",
-   "nameEn": "首秀",
+   "nameEn": "Debut",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Debut",
@@ -10898,7 +10898,7 @@
   {
    "id": "639135bbc115f907b14700a6",
    "name": "高保真",
-   "nameEn": "高保真",
+   "nameEn": "Audiophile",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 27,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Audiophile",
@@ -10923,7 +10923,7 @@
   {
    "id": "666314bc1d3ec95634095e77",
    "name": "高光时刻",
-   "nameEn": "高光时刻",
+   "nameEn": "Minute of Fame",
    "trader": "58330581ace78e27b8b10cee",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Minute_of_Fame",
@@ -10936,7 +10936,7 @@
   {
    "id": "6573382e557ff128bf3da536",
    "name": "高效秘诀",
-   "nameEn": "高效秘诀",
+   "nameEn": "The Secret to Productivity",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Secret_to_Productivity",
@@ -10961,7 +10961,7 @@
   {
    "id": "5d25e4b786f77408251c4bfc",
    "name": "鱼塘",
-   "nameEn": "鱼塘",
+   "nameEn": "Fishing Place",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Fishing_Place",
@@ -10972,7 +10972,7 @@
   {
    "id": "5a27b80086f774429a5d7e20",
    "name": "鹰眼",
-   "nameEn": "鹰眼",
+   "nameEn": "Eagle Eye",
    "trader": "5935c25fb3acc3127c3d8cd9",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Eagle_Eye",
@@ -11008,7 +11008,7 @@
   {
    "id": "5eda19f0edce541157209cee",
    "name": "麻醉",
-   "nameEn": "麻醉",
+   "nameEn": "Anesthesia",
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Anesthesia",
@@ -11055,7 +11055,7 @@
   {
    "id": "669fa39b91b0a8c9680fc467",
    "name": "黑天鹅计划",
-   "nameEn": "黑天鹅计划",
+   "nameEn": "Black Swan",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 12,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Black_Swan",
@@ -11090,7 +11090,7 @@
   {
    "id": "5d25e48d86f77408251c4bfb",
    "name": "黑幕交易",
-   "nameEn": "黑幕交易",
+   "nameEn": "Shady Business",
    "trader": "5c0647fdd443bc2504c2d371",
    "level": 20,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Shady_Business",

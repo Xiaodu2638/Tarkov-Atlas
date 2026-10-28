@@ -1,5 +1,17 @@
 namespace TarkovAtlas.Models;
 
+/// <summary>
+/// Read-only overlay state that settings may persist. Kept as an interface so
+/// headless check projects can compile <see cref="AppSettings"/> without the
+/// Avalonia window.
+/// </summary>
+public interface IOverlayState
+{
+    double OverlayZoomValue { get; }
+    double OverlayOpacityValue { get; }
+    bool IsLocked { get; }
+}
+
 public sealed class AppSettings
 {
     public string? LogsPath { get; set; }
@@ -54,6 +66,12 @@ public sealed class AppSettings
     {
         if (overlay is not Avalonia.Controls.Window window) return;
         OverlaySize = Math.Clamp(window.Width, 120, 900);
+        if (overlay is IOverlayState mini)
+        {
+            OverlayZoom = Math.Clamp(mini.OverlayZoomValue, 0.5, 12);
+            OverlayOpacity = Math.Clamp(mini.OverlayOpacityValue, 0.25, 1.0);
+            OverlayLocked = mini.IsLocked;
+        }
         if (!double.IsNaN(window.Position.X) && window.Position.X >= 0)
             OverlayOffsetX = Math.Max(0, OverlayOffsetX);
     }

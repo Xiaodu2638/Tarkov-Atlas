@@ -16,6 +16,15 @@ public static class AppPaths
         get
         {
             if (_dataDir is not null) return _dataDir;
+            // Tests and portable runs redirect all mutable state into a local
+            // folder so nothing is written to the host profile.
+            var overrideDir = Environment.GetEnvironmentVariable("TARKOVATLAS_DATA_DIR");
+            if (!string.IsNullOrWhiteSpace(overrideDir))
+            {
+                Directory.CreateDirectory(overrideDir);
+                _dataDir = overrideDir;
+                return _dataDir;
+            }
             try
             {
                 var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TarkovAtlas");

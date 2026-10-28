@@ -76,20 +76,27 @@ public sealed class QuestService
     {
         foreach (var quest in _quests)
         {
-            var display = quest.TraderDisplay;
-            if (!string.IsNullOrWhiteSpace(display) && !TraderInfo.IsRawId(display)) continue;
-
+            // The task list keeps the trader's original (English) nickname; the
+            // Chinese translation is only used for display elsewhere.
+            var display = "";
+            var slug = "";
             if (_traders.TryGetValue(quest.Trader, out var trader))
-                display = trader.DisplayName;
-            else if (TraderNames.TryGetValue(quest.Trader, out var known))
+            {
+                display = trader.Name;
+                slug = trader.Slug;
+            }
+            if (string.IsNullOrWhiteSpace(display) && TraderNames.TryGetValue(quest.Trader, out var known))
                 display = known;
-            else if (!TraderInfo.IsRawId(quest.Trader))
+            if (string.IsNullOrWhiteSpace(slug))
+                slug = display.Replace(".", "").Replace(" ", "-").ToLowerInvariant();
+            if (string.IsNullOrWhiteSpace(display) && !TraderInfo.IsRawId(quest.Trader))
                 display = quest.Trader;
 
             // Never let a raw hex object id reach the UI.
             quest.TraderDisplay = string.IsNullOrWhiteSpace(display) || TraderInfo.IsRawId(display)
                 ? "未知商人"
                 : display;
+            quest.TraderSlug = string.IsNullOrWhiteSpace(slug) ? "unknown" : slug;
         }
     }
 
@@ -267,7 +274,7 @@ public sealed class QuestService
         return false;
     }
 
-    private static string TraderDisplay(Quest quest) => quest.Trader;
+    private static string TraderDisplay(Quest quest) => quest.TraderDisplay;
 
     private void OnCompletedChanged(QuestRow row, bool done)
     {
@@ -367,7 +374,7 @@ public sealed class QuestService
                     {
                         QuestId = quest.Id,
                         QuestName = quest.Title,
-                        TraderSlug = quest.Trader,
+                        TraderSlug = quest.TraderSlug,
                         TraderName = TraderDisplay(quest),
                         X = zone.X,
                         Z = zone.Z,

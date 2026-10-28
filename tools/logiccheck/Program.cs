@@ -1,6 +1,7 @@
 using System.Text.Json;
 using TarkovAtlas;
 using TarkovAtlas.Models;
+using TarkovAtlas.Services;
 
 // Logic-level checks for the quest scoping rules and marker generation that the
 // UI depends on. Runs headless: no window is created.
@@ -11,6 +12,9 @@ internal static class LogicChecks
     public static int Main()
     {
         var assets = Path.Combine(AppContext.BaseDirectory, "Assets");
+        // Keep progress/settings reads out of the host profile.
+        Environment.SetEnvironmentVariable("TARKOVATLAS_DATA_DIR",
+            Path.Combine(AppContext.BaseDirectory, "data"));
         var manifest = JsonSerializer.Deserialize(
             File.ReadAllText(Path.Combine(assets, "Maps", "mapdata.json")),
             AppJsonContext.Default.MapManifest)!;
@@ -238,6 +242,83 @@ internal static class LogicChecks
                 new() { X = 2, Z = 2 }, new() { X = 0, Z = 2 },
             },
         }, lab));
+
+        // 14. Live service resolution: the sidebar and markers must never print a
+        //     raw 24-hex trader id, must keep the trader's English nickname, and
+        //     story jumps must only point at maps that exist.
+        var service = new QuestService();
+        service.Load();
+        Check("service loads every task", service.TotalCount == db.Quests.Count,
+            $"{service.TotalCount}/{db.Quests.Count}");
+
+        var badDisplay = service.Quests
+            .Where(q => string.IsNullOrWhiteSpace(q.TraderDisplay) || TraderInfo.IsRawId(q.TraderDisplay))
+            .Select(q => q.Trader)
+            .Distinct()
+            .ToList();
+        Check("trader display resolved", badDisplay.Count == 0, string.Join(",", badDisplay));
+
+        var badSlug = service.Quests
+            .Where(q => string.IsNullOrWhiteSpace(q.TraderSlug) || TraderInfo.IsRawId(q.TraderSlug))
+            .Select(q => q.Trader)
+            .Distinct()
+            .ToList();
+        Check("trader slug resolved", badSlug.Count == 0, string.Join(",", badSlug));
+
+        // Tasks keep the English original nickname (e.g. "Prapor"), not the
+        // Chinese display name used elsewhere.
+        var englishNameMismatch = service.Quests
+            .Where(q => traders.TryGetValue(q.Trader, out var t) && q.TraderDisplay != t.Name)
+            .Select(q => $"{q.TraderDisplay}!={traders[q.Trader].Name}")
+            .Take(5)
+            .ToList();
+        Check("trader display keeps English name", englishNameMismatch.Count == 0,
+            string.Join("; ", englishNameMismatch));
+
+        var missingSlugPng = service.Quests
+            .Select(q => q.TraderSlug)
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Where(s => !File.Exists(Path.Combine(assets, "traders", s + ".png")))
+            .ToList();
+        Check("every task trader has an avatar", missingSlugPng.Count == 0,
+            string.Join(",", missingSlugPng));
+
+        // Jump affordance: a task naming a map must expose the jump button even
+        // when its objectives carry no typed coordinates.
+        var mappedNoZones = service.Quests
+            .Where(q => q.Maps.Count > 0 && !q.HasAnyZones)
+            .ToList();
+        Check("mapped tasks without zones exist", mappedNoZones.Count > 0, mappedNoZones.Count.ToString());
+        Check("mapped tasks can still jump", mappedNoZones.All(q => q.CanJump),
+            mappedNoZones.Count(q => !q.CanJump).ToString());
+        Check("zoneless tasks without maps cannot jump",
+            service.Quests.Where(q => q.Maps.Count == 0 && !q.HasAnyZones).All(q => !q.CanJump));
+
+        // Story objectives exposed to the UI must resolve their map and keep
+        // calibrated coordinates inside that map.
+        var storyRows = service.StoryRows;
+        var allStoryObjectives = storyRows.SelectMany(r => r.Objectives).ToList();
+        Check("story rows expose objectives", allStoryObjectives.Count > 200,
+            allStoryObjectives.Count.ToString());
+        Check("story objective text kept",
+            allStoryObjectives.All(o => !string.IsNullOrWhiteSpace(o.Text)));
+        var brokenStoryMap = allStoryObjectives
+            .Where(o => o.HasLocation && !maps.ContainsKey(o.Map))
+            .Select(o => o.Map)
+            .Distinct()
+            .Take(5)
+            .ToList();
+        Check("story objective maps resolve", brokenStoryMap.Count == 0,
+            string.Join(",", brokenStoryMap));
+        var brokenStoryCoord = allStoryObjectives
+            .Where(o => o.HasCoordinates
+                        && (!maps.TryGetValue(o.Map, out var owner) || !owner.Contains(o.X, o.Z, 200)))
+            .Select(o => $"{o.Map}@{o.X:0},{o.Z:0}")
+            .Take(5)
+            .ToList();
+        Check("story objective coords resolve", brokenStoryCoord.Count == 0,
+            string.Join("; ", brokenStoryCoord));
 
         Console.WriteLine(_failures == 0 ? "\nALL LOGIC CHECKS PASSED" : $"\n{_failures} LOGIC CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;

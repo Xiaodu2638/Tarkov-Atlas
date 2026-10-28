@@ -12,7 +12,7 @@ namespace TarkovAtlas;
 /// Borderless square mini-map that stays glued to the right edge of the screen
 /// and re-centres itself on the player's latest screenshot position.
 /// </summary>
-public partial class OverlayWindow : Window
+public partial class OverlayWindow : Window, IOverlayState
 {
     private const int GwlExStyle = -20;
     private const long WsExTransparent = 0x00000020L;
@@ -141,6 +141,13 @@ public partial class OverlayWindow : Window
         Recenter();
     }
 
+    /// <summary>Mirror the main window's display toggles onto the mini-map.</summary>
+    public void ApplyDisplayOptions(AppSettings settings)
+    {
+        OverlayMap.Options = BuildOptions(settings);
+        OverlayMap.InvalidateVisual();
+    }
+
     /// <summary>Keep the player position in the middle of the cut-out.</summary>
     private void Recenter()
     {
@@ -210,16 +217,19 @@ public partial class OverlayWindow : Window
     }
 
     /// <summary>
-    /// Mouse-wheel zoom for the floating map. The canvas has its own wheel
-    /// handler, but the window's transparent chrome swallowed the event, which
-    /// is why zooming used to do nothing at all.
+    /// Mouse-wheel zoom for the floating map. Anchor the zoom on the cursor so
+    /// the spot under the pointer stays put, like the main map; resizing or a
+    /// fresh screenshot re-centres on the player again.
     /// </summary>
     private void OnRootWheel(object? sender, PointerWheelEventArgs e)
     {
         if (_locked) return;
         var factor = e.Delta.Y > 0 ? 1.15 : 1 / 1.15;
-        _zoom = Math.Clamp(_zoom * factor, 0.5, 12);
-        Recenter();
+        var before = OverlayMap.Zoom;
+        OverlayMap.ZoomAtScreen(e.GetPosition(OverlayMap), factor);
+        _zoom = Math.Clamp(OverlayMap.Zoom, 0.5, 12);
+        if (Math.Abs(_zoom - before) < 0.0001) return;
+        HintText.Text = _map is null ? "" : _map.DisplayName;
         RaiseSettingsChanged();
         e.Handled = true;
     }

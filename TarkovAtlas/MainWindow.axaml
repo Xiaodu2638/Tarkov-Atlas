@@ -273,7 +273,7 @@
                             <Button Content="跳转到地图 ▸" FontSize="9" Padding="4,1"
                                     HorizontalAlignment="Left" Classes="ghost"
                                     Tag="{Binding Id}" Click="QuestJumpButton_Click"
-                                    IsVisible="{Binding Quest.HasAnyZones}" />
+                                    IsVisible="{Binding Quest.CanJump}" />
                           </StackPanel>
                           <TextBlock Grid.Column="2" Text="{Binding LevelText}" FontSize="9"
                                      Foreground="{StaticResource TextMuted}" VerticalAlignment="Top" />
@@ -350,10 +350,23 @@
                             <Expander Header="目标列表" FontSize="9.5" IsExpanded="False">
                               <ItemsControl ItemsSource="{Binding Objectives}">
                                 <ItemsControl.ItemTemplate>
-                                  <DataTemplate x:DataType="x:String">
-                                    <TextBlock Text="{Binding}" FontSize="9.5"
-                                               Foreground="{StaticResource TextSecondary}"
-                                               TextWrapping="Wrap" Margin="0,1" />
+                                  <DataTemplate x:DataType="models:StoryObjective">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" Margin="0,2">
+                                      <StackPanel Grid.Column="0" Spacing="1">
+                                        <TextBlock Text="{Binding Text}" FontSize="9.5"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding LocationText}" FontSize="8.5"
+                                                   Foreground="{StaticResource Accent}"
+                                                   IsVisible="{Binding HasLocation}" />
+                                      </StackPanel>
+                                      <Button Grid.Column="1" Content="前往 ▸" FontSize="8.5"
+                                              Padding="4,0" VerticalAlignment="Top"
+                                              Classes="ghost"
+                                              Tag="{Binding}" Click="StoryJumpButton_Click"
+                                              IsVisible="{Binding HasLocation}"
+                                              ToolTip.Tip="{Binding Tooltip}" />
+                                    </Grid>
                                   </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                               </ItemsControl>

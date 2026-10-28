@@ -274,6 +274,7 @@ public partial class MainWindow : Window
                 var bitmap = await Task.Run(() => _repo.GetBitmap(map));
                 if (_currentMap?.Key != map.Key) return;
                 MapView.SetMap(map, bitmap);
+                MapView.ClearFocusPin();
                 LoadFloorLayers(map);
                 _overlay?.SetMap(map, bitmap);
                 SyncOverlayFloor();
@@ -511,6 +512,7 @@ public partial class MainWindow : Window
         };
         MapView.Hazards = _currentMap?.Hazards ?? new List<HazardZone>();
         MapView.InvalidateVisual();
+        _overlay?.ApplyDisplayOptions(_settings);
     }
 
     private void DisplayMenuButton_Click(object? sender, RoutedEventArgs e)
@@ -1000,9 +1002,21 @@ public partial class MainWindow : Window
             .Select(m => m!)
             .ToList();
 
+        // Objectives without coordinates still name the raid(s) they happen on;
+        // fall back to that list so hand-in/visit tasks keep a jump button.
         if (maps.Count == 0)
         {
-            ShowToast("该任务没有地图坐标（击杀/交付类任务）");
+            maps = quest.Maps
+                .Select(_repo.FindByKey)
+                .Where(m => m is not null)
+                .Select(m => m!)
+                .DistinctBy(m => m.Key)
+                .ToList();
+        }
+
+        if (maps.Count == 0)
+        {
+            ShowToast("该任务没有关联地图（击杀/交付类任务）");
             return;
         }
 
@@ -1026,9 +1040,42 @@ public partial class MainWindow : Window
         if (first is not null)
         {
             MapView.FocusOn(first.X, first.Z, 3.2);
+            MapView.SetFocusPin(first.X, first.Z, quest.Title);
             MapView.InvalidateVisual();
         }
+        else
+        {
+            MapView.ClearFocusPin();
+        }
         ShowToast($"已跳转到 {target.DisplayName}");
+    }
+
+    /// <summary>Jump to the map (and calibrated marker) of one story objective.</summary>
+    private async void StoryJumpButton_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Control { Tag: StoryObjective objective }) return;
+        var target = _repo.FindByKey(objective.Map);
+        if (target is null)
+        {
+            ShowToast("该目标没有关联地图");
+            return;
+        }
+
+        SelectMapListItem(target);
+        await SelectMapAsync(target, remember: true);
+
+        if (objective.HasCoordinates)
+        {
+            MapView.FocusOn(objective.X, objective.Z, 3.2);
+            MapView.SetFocusPin(objective.X, objective.Z, objective.Text);
+            ShowToast($"已跳转到 {target.DisplayName} 的目标位置");
+        }
+        else
+        {
+            MapView.ClearFocusPin();
+            ShowToast($"已跳转到 {target.DisplayName}（该目标无精确坐标）");
+        }
+        MapView.InvalidateVisual();
     }
 
     private async Task<MapDefinition?> PickMapAsync(Quest quest, IReadOnlyList<MapDefinition> maps)

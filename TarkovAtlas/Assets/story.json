@@ -1,121 +1,405 @@
 {
  "generatedAt": "2026-10-28",
- "source": "escapefromtarkov.fandom.com story chapters",
+ "source": "https://www.eftarkov.com/storyline (Chinese objectives); marker coordinates calibrated against this app's map labels",
  "chapters": [
   {
-   "id": "story-accidental-witness",
-   "name": "Accidental Witness",
-   "nameZh": "Accidental Witness",
+   "id": "story-falling-skies",
+   "name": "Falling Skies",
+   "nameZh": "陨落星辰",
    "order": 0,
    "maps": [
-    "streets-of-tarkov"
+    "woods",
+    "shoreline"
    ],
    "mapNames": [
-    "塔科夫街区"
+    "森林",
+    "海岸线"
    ],
    "objectives": [
-    "Figure out where Kozlov lived",
-    "Read the note on Kozlov's door",
-    "Find out what Kozlov was involved in",
-    "（可选） Access Kozlov's room",
-    "（可选） Figure out where to get Kozlov's key",
-    "（可选） Investigate Kozlov's room",
-    "Ask the traders about Anastasia",
-    "Access Skier's accomplice's apartment",
-    "（可选） Find the key to the apartment",
-    "Learn more about Skier's accomplice",
-    "（可选） Investigate the apartment",
-    "Read the documents in Skier's accomplice's apartment",
-    "Survive and extract from Streets of Tarkov",
-    "Report to Skier",
-    "Talk to Ragman",
-    "Locate Anastasia's apartment",
-    "Learn more about Anastasia",
-    "Investigate the entrance of Anastasia's building",
-    "Locate courier Pasha",
-    "Search the ambush spot",
-    "Talk to Skier",
-    "Locate Reshala's stash",
-    "（可选） Locate and neutralize Reshala",
-    "（可选） Obtain the key to Reshala's stash",
-    "Investigate Reshala's bunkhouse",
-    "（可选） Obtain Reshala's work notes",
-    "（可选） Obtain courier Pasha's belongings",
-    "Locate Kozlov's hideout",
-    "Locate and obtain Kozlov's evidence"
+    {
+     "text": "在森林找到坠毁的飞机",
+     "map": "woods",
+     "mapName": "森林",
+     "x": -251.62,
+     "z": -26.42,
+     "hasCoordinates": true
+    },
+    {
+     "text": "Prapor 信任度达到 2 级",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "询问 Prapor 有关坠毁飞机的事情",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到指定的 G 型越野车，回收 U 盘",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": 326.0,
+     "z": 315.41,
+     "hasCoordinates": true
+    },
+    {
+     "text": "把 U 盘交给 Prapor",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "等待 Prapor 的消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "从飞机上回收飞行记录仪",
+     "map": "woods",
+     "mapName": "森林",
+     "x": -252.46,
+     "z": -30.89,
+     "hasCoordinates": true
+    },
+    {
+     "text": "将飞行记录仪留在指定交货位置",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": 248.81,
+     "z": 438.62,
+     "hasCoordinates": true
+    },
+    {
+     "text": "和 Prapor 见面",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将战局中找到的物品上交给 Prapor：工具 2 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将战局中找到的物品上交给 Prapor：充电电池 3 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将战局中找到的物品上交给 Prapor：印刷电路板 5 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "等待 Prapor 传来消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到飞行员的通话记录",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": 406.99,
+     "z": -37.47,
+     "hasCoordinates": true
+    },
+    {
+     "text": "找到 Elektronik 的加密 U 盘",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": 408.48,
+     "z": -38.96,
+     "hasCoordinates": true
+    },
+    {
+     "text": "将飞行员通话记录交给 Prapor",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Elektronik 的加密 U 盘交给 Prapor",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "等待 Prapor 传来消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "回收加固手提箱",
+     "map": "woods",
+     "mapName": "森林",
+     "x": -246.48,
+     "z": -21.72,
+     "hasCoordinates": true
+    }
    ],
-   "objectiveCount": 29
+   "objectiveCount": 19
   },
   {
-   "id": "story-batya",
-   "name": "Batya",
-   "nameZh": "Batya",
+   "id": "story-tour",
+   "name": "Tour",
+   "nameZh": "塔科夫之旅",
    "order": 1,
    "maps": [
-    "reserve",
-    "lighthouse",
-    "interchange"
+    "shoreline",
+    "the-lab"
    ],
    "mapNames": [
-    "储备站",
-    "灯塔",
-    "立交桥"
+    "海岸线",
+    "实验室"
    ],
    "objectives": [
-    "Locate the traces of the BEAR special squad",
-    "（可选） Locate and obtain the Bogatyr squad patch",
-    "Learn more about the Bogatyr squad from the traders",
-    "Locate the Ryabina outpost",
-    "Find more information about the Bogatyr squad",
-    "（可选） Locate and obtain a keepsake of one of the Bogatyrs",
-    "Locate the Carousel outpost",
-    "Find the Bogatyr squad's personal notes",
-    "Learn more about Strelets",
-    "Learn more about Taran",
-    "（可选） Locate and obtain a personal item of one of the Bogatyrs",
-    "Learn more about Voevoda",
-    "Find Voevoda's personal belongings",
-    "（可选） Locate and obtain the squad commander's recorder",
-    "Locate the Gnezdo outpost",
-    "Search the Gnezdo outpost",
-    "Figure out what happened to the Bogatyr squad",
-    "Figure out where the Bogatyr squad got ambushed",
-    "Learn more about the Bogatyr squad's activities",
-    "Learn more about the Bogatyr squad's members",
-    "Locate the ambush spot",
-    "Obtain more information about the Bogatyr squad",
-    "Inspect Moreman's body",
-    "（可选） Locate and obtain Moreman's phone",
-    "（可选） Locate and obtain a dogtag of one of the Bogatyrs",
-    "Retrieve more information about the ambush from Moreman's phone",
-    "Obtain Intelligence Center level 3",
-    "Contact the Bogatyr squad",
-    "Gain access to Lightkeeper",
-    "Stay on good terms with Lightkeeper",
-    "Bring all the Bogatyr squad's items to Lightkeeper",
-    "Wait for Voevoda to reach out",
-    "Reach the Light Machine Guns skill level 5",
-    "Reach the Assault Rifles skill level 10",
-    "Reach the Stress Resistance skill level 10",
-    "Reach the Strength skill level 15",
-    "Eliminate any 15 targets without dying",
-    "Eliminate 4 PMC operatives without dying",
-    "Contact Voevoda",
-    "Locate the traces of the traitors",
-    "（可选） Investigate the command bunker on Reserve",
-    "（可选） Investigate the BEAR camp on Lighthouse",
-    "（可选） Investigate the BEAR camp east of the Ultra mall on Interchange",
-    "Interrogate Prapor",
-    "Figure out how the cultists are connected to the General",
-    "Talk to Lightkeeper",
-    "Wait for Lightkeeper to prepare the documents on The Unheard"
+    {
+     "text": "逃离中心区",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "和 Therapist 交谈",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "把现金交给 Therapist 250,000 卢布",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "和 Ragman 交谈",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "告诉 Ragman 侦察行动期间的发现",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "幸存并从立交桥撤离或进入立交桥3次",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "与 Skier 对话",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将任意战局中找到的建筑材料上交给 Skier 5 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "幸存并从海关撤离或进入海关3次",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "和 Mechanic 谈话",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "把任意战局中找到的武器带给 Mechanic 2 把",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "幸存并从工厂撤离或进入工厂3次",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "与 Skier 对话",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在森林击杀任意目标 3 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "幸存并从森林撤离或进入森林3次",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到港口终点站的入口",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -882.2,
+     "z": 351.76,
+     "hasCoordinates": true
+    },
+    {
+     "text": "想办法与港口终点站的守军联系",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -912.55,
+     "z": 267.42,
+     "hasCoordinates": true
+    },
+    {
+     "text": "使用对讲机联系港口守军",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -912.55,
+     "z": 267.42,
+     "hasCoordinates": true
+    },
+    {
+     "text": "了解逃出塔科夫的方法",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将物品上交给Prapor：PMC 狗牌 5 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "幸存并从海岸线撤离或进入海岸线3次",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "把现金交给 Mechanic 8,000 美元",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "前往 TerraGroup 秘密设施",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在实验室内找到通过排水系统的撤离路线",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "搜查实验室机房",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "搜查实验室管理层的办公室",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    }
    ],
-   "objectiveCount": 47
+   "objectiveCount": 26
   },
   {
-   "id": "story-blue-fire",
-   "name": "Blue Fire",
-   "nameZh": "Blue Fire",
+   "id": "story-the-ticket",
+   "name": "The Ticket",
+   "nameZh": "门票",
    "order": 2,
    "maps": [
     "the-lab"
@@ -124,416 +408,1829 @@
     "实验室"
    ],
    "objectives": [
-    "Talk to Mechanic about the EMP blast",
-    "（可选） Gain access to Mechanic",
-    "Locate and obtain the device fragment",
-    "Hand over the device fragment to Mechanic",
-    "Plant the hacking device in the server room in the Lab",
-    "Talk to Mechanic",
-    "Keep the fragment of Item 1156 for yourself or hand it over to Mechanic",
-    "Find a lead on Item 1156",
-    "Investigate the Rus Post office",
-    "Locate the Rus Post Car",
-    "Obtain the blueprint for Item 1156"
+    {
+     "text": "情报中心 等级1",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "和 Kerman 先生交谈",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "开启加固手提箱",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "向 Mechanic 求助",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "获得实验型信号干扰器",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "和 Mechanic 谈话",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "使用实验型信号干扰器以解锁箱子",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "取得“门票”",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "阅读加固手提箱里找到的提示",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "抵达港口码头的入口通道",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将钥匙卡插入对讲机读卡器",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    }
    ],
    "objectiveCount": 11
+  },
+  {
+   "id": "story-batya",
+   "name": "Batya",
+   "nameZh": "Batya",
+   "order": 3,
+   "maps": [
+    "customs",
+    "interchange",
+    "woods",
+    "lighthouse"
+   ],
+   "mapNames": [
+    "海关",
+    "立交桥",
+    "森林",
+    "灯塔"
+   ],
+   "objectives": [
+    {
+     "text": "找到BEAR特种小队的踪迹",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 502.16,
+     "z": 90.55,
+     "hasCoordinates": true
+    },
+    {
+     "text": "从 Jaeger 处了解 Bogatyr 小队的更多消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到“鸟巢”前哨站",
+     "map": "interchange",
+     "mapName": "立交桥",
+     "x": -349.57,
+     "z": -45.34,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查 Bogatyr 小队的遭遇",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "收集 Bogatyr 小队的更多消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到“花楸树”营地",
+     "map": "woods",
+     "mapName": "森林",
+     "x": 21.8,
+     "z": -293.22,
+     "hasCoordinates": true
+    },
+    {
+     "text": "找到 Bogatyr 小队的更多消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到伏击地点",
+     "map": "woods",
+     "mapName": "森林",
+     "x": -440.93,
+     "z": -34.2,
+     "hasCoordinates": true
+    },
+    {
+     "text": "检查 Moreman 的尸体",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到“旋转木马”营地",
+     "map": "interchange",
+     "mapName": "立交桥",
+     "x": 63.84,
+     "z": -289.41,
+     "hasCoordinates": true
+    },
+    {
+     "text": "深入了解 Taran",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到 Bogatyr 小队成员的个人档案",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "深入了解 Voevoda",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "深入了解 Strelets",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "从 Moreman 的手机里提取关于那场伏击更多的消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "藏身处 情报中心 达到 3 级",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "联络 Bogatyr 小队",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "想办法接触 Lightkeeper",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "把 Bogatyr 小队的物品交给Lightkeeper",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Bogatyr 小队臂章交给 Lightkeeper",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Moreman 的狗牌交给 Lightkeeper",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Strelets 的护身符交给 Lightkeeper",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Taran 的明信片交给 Lightkeeper",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Voevoda 的录音机交给 Lightkeeper",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "等待 Voevoda 主动联络",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "力量技能达到 15 级",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "抗压技能达到 10 级",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "轻机枪技能达到 5 级",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "突击步枪技能达到 10 级",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "一命连续击杀 PMC 4 名",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "一命连续击杀任意目标 15 名",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "联系 Voevoda",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到叛徒的踪迹",
+     "map": "lighthouse",
+     "mapName": "灯塔",
+     "x": -56.85,
+     "z": 453.84,
+     "hasCoordinates": true
+    },
+    {
+     "text": "逼问 Prapor",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找出邪教徒是怎么和军方的将军扯上关系的",
+     "map": "woods",
+     "mapName": "森林",
+     "x": 195.75,
+     "z": -8.21,
+     "hasCoordinates": true
+    },
+    {
+     "text": "和 Lightkeeper 交谈",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "等待 Lightkeeper 准备与“无名者”相关的文件",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "收集 Lightkeeper 的文件",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    }
+   ],
+   "objectiveCount": 38
+  },
+  {
+   "id": "story-the-labyrinth",
+   "name": "The Labyrinth",
+   "nameZh": "探秘“迷宫”",
+   "order": 4,
+   "maps": [
+    "the-labyrinth",
+    "shoreline"
+   ],
+   "mapNames": [
+    "迷宫",
+    "海岸线"
+   ],
+   "objectives": [
+    {
+     "text": "向 Jaeger 打听地下设施的消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "等待 Jaeger 找来钥匙卡",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到疗养院地下设施的入口通道",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入设施",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在“迷宫”中找到 BEAR 小队的踪迹",
+     "map": "the-labyrinth",
+     "mapName": "迷宫",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "调查 1156 项目周围的 BEAR 小队集结点",
+     "map": "the-labyrinth",
+     "mapName": "迷宫",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到小队长",
+     "map": "the-labyrinth",
+     "mapName": "迷宫",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "收集小队的更多消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "获取观察室钥匙",
+     "map": "the-labyrinth",
+     "mapName": "迷宫",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "调查科学家的尸体",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入上锁的办公室",
+     "map": "the-labyrinth",
+     "mapName": "迷宫",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "听办公室里的录音带",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将录音带交给 Jaeger",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "阅读迷宫设施研究报告",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -272.33,
+     "z": 480.24,
+     "hasCoordinates": true
+    }
+   ],
+   "objectiveCount": 14
+  },
+  {
+   "id": "story-blue-fire",
+   "name": "Blue Fire",
+   "nameZh": "神秘蓝焰",
+   "order": 5,
+   "maps": [
+    "streets-of-tarkov",
+    "the-lab",
+    "ground-zero"
+   ],
+   "mapNames": [
+    "塔科夫街区",
+    "实验室",
+    "零号区域"
+   ],
+   "objectives": [
+    {
+     "text": "和 Mechanic 谈谈 EMP 冲击的事情",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到并获取设备的碎片",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": 190.05,
+     "z": 228.18,
+     "hasCoordinates": true
+    },
+    {
+     "text": "将黑客入侵装置安放在实验室的机房内",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "和 Mechanic 交谈",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "寻找 #1156 项目的线索",
+     "map": "ground-zero",
+     "mapName": "零号区域",
+     "x": -19.89,
+     "z": 47.36,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查俄罗斯邮政办公室",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": 42.42,
+     "z": 125.3,
+     "hasCoordinates": true
+    },
+    {
+     "text": "获得 #1156 项目的蓝图",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": 22.33,
+     "z": 116.0,
+     "hasCoordinates": true
+    }
+   ],
+   "objectiveCount": 7
+  },
+  {
+   "id": "story-the-unheard",
+   "name": "The Unheard",
+   "nameZh": "无名者",
+   "order": 6,
+   "maps": [
+    "the-lab",
+    "factory",
+    "streets-of-tarkov",
+    "shoreline"
+   ],
+   "mapNames": [
+    "实验室",
+    "工厂",
+    "塔科夫街区",
+    "海岸线"
+   ],
+   "objectives": [
+    {
+     "text": "了解 TerraGroup 活动的更多消息",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "搜集更多有关转运特种催化剂的消息",
+     "map": "factory",
+     "mapName": "工厂",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到勒热夫斯基的配车",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": 21.53,
+     "z": 353.08,
+     "hasCoordinates": true
+    },
+    {
+     "text": "获取勒热夫斯基的个人物品",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "从勒热夫斯基的配车里找到的硬盘中提取数据",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到并获取“蓝冰”燃料催化剂的相关研究文件",
+     "map": "factory",
+     "mapName": "工厂",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在实验室查找与 A.P. 相关的任何消息",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "了解A.P.活动的更多消息",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "深入了解A.P.的职责",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在疗养院找到A.P.的房间",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -280.9,
+     "z": -91.91,
+     "hasCoordinates": true
+    },
+    {
+     "text": "获取 A.P. 的个人物品",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "获得 A.P. 的数据存储设备",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "破解A.P.房间里的U盘",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "把现金交给 Mechanic 5,000,000 卢布",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "把A.P.的U盘交给 Mechanic",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "等待 Elektronik 传来消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将从A.P.的U盘里找到的技术文件写入 TerraGroup 钥匙卡中",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入集团分配给A.P.的公寓",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": 139.23,
+     "z": -24.17,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查 A.P. 的公寓",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入A.P.公寓里的隐藏房间",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "研究 A.P.办公室里的 TerraGroup文件",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "研究“蓝冰”催化剂在“无名者”的协议中扮演什么角色",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "深入了解“无名者”的协议",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "查出“无名者”与塔科夫之间的联系",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    }
+   ],
+   "objectiveCount": 24
+  },
+  {
+   "id": "story-they-are-already-here",
+   "name": "They Are Already Here",
+   "nameZh": "他们已经来了",
+   "order": 7,
+   "maps": [
+    "customs",
+    "lighthouse",
+    "streets-of-tarkov",
+    "shoreline",
+    "woods",
+    "interchange"
+   ],
+   "mapNames": [
+    "海关",
+    "灯塔",
+    "塔科夫街区",
+    "海岸线",
+    "森林",
+    "立交桥"
+   ],
+   "objectives": [
+    {
+     "text": "了解在塔科夫四处留下奇特符号的神秘人士",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 183.93,
+     "z": 183.74,
+     "hasCoordinates": true
+    },
+    {
+     "text": "找到与“世界之眼”有关的地方",
+     "map": "lighthouse",
+     "mapName": "灯塔",
+     "x": -305.01,
+     "z": -317.26,
+     "hasCoordinates": true
+    },
+    {
+     "text": "在行刑室里寻找邪教徒受害者的更多消息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到邪教受害者的公寓",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": -59.04,
+     "z": -144.27,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查邪教受害者的公寓",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "问问 Mechanic 关于“世界之眼”的事情",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到并消灭邪教徒祭司 1 名",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "收集更多有关“世界之眼”的情报",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 183.93,
+     "z": 183.74,
+     "hasCoordinates": true
+    },
+    {
+     "text": "在海岸线找到标有“世界之眼”的地方",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -707.92,
+     "z": 99.57,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查 Sordi 塔楼周围的区域",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "修复 Sordi 通讯塔",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在森林找到标有“世界之眼”的地方",
+     "map": "woods",
+     "mapName": "森林",
+     "x": -134.34,
+     "z": -684.25,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查标有“世界之眼”的邪教徒房屋",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在灯塔找到标有“世界之眼”的地方",
+     "map": "lighthouse",
+     "mapName": "灯塔",
+     "x": -76.46,
+     "z": -67.67,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查被打砸一空的邪教徒房间",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到受害人笔记中提到的那把钥匙",
+     "map": "lighthouse",
+     "mapName": "灯塔",
+     "x": -95.23,
+     "z": -14.33,
+     "hasCoordinates": true
+    },
+    {
+     "text": "从 Mechanic 处了解更多与 14-4 KORD 站点相关的情报",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "修复 Arshavin 的钥匙卡",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "设法进入 NGO Cobalt 的秘密设施",
+     "map": "interchange",
+     "mapName": "立交桥",
+     "x": -198.34,
+     "z": -356.72,
+     "hasCoordinates": true
+    },
+    {
+     "text": "恢复站点的供电",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "启动机房内的冷却系统",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "插入U盘以下载数据",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "彻底调查代号 14-4 KORD 的 ARRS 站点",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "以幸存状态撤离立交桥",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "想办法断开站点与外部代理之间的连接",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 ARRS 站点回滚至备用配置",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "从 ARRS 站点回收 U 盘",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "以幸存状态撤离立交桥",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将装有数据的U盘交给 Mechanic",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "阅读 ARRS 站点规格说明",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    }
+   ],
+   "objectiveCount": 30
+  },
+  {
+   "id": "story-accidental-witness",
+   "name": "Accidental Witness",
+   "nameZh": "意外证人",
+   "order": 8,
+   "maps": [
+    "customs",
+    "streets-of-tarkov",
+    "shoreline"
+   ],
+   "mapNames": [
+    "海关",
+    "塔科夫街区",
+    "海岸线"
+   ],
+   "objectives": [
+    {
+     "text": "找出科兹洛夫的住址",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 228.31,
+     "z": 161.63,
+     "hasCoordinates": true
+    },
+    {
+     "text": "搞清楚科兹洛夫到底被卷进什么麻烦里了",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "询问 Skier 阿纳斯塔西娅的事情",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入 Skier 犯罪同伙的公寓",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": 99.0,
+     "z": 131.64,
+     "hasCoordinates": true
+    },
+    {
+     "text": "了解 Skier 这位同伙的更多信息",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "阅读从 Skier 同伙的公寓里找到的文件",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "向 Skier 报告",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "和 Ragman 交谈",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到阿纳斯塔西娅的公寓",
+     "map": "streets-of-tarkov",
+     "mapName": "塔科夫街区",
+     "x": 218.44,
+     "z": 230.09,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查阿纳斯塔西娅公寓的入口",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "深入了解阿纳斯塔西娅",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到信使帕沙",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 280.27,
+     "z": 134.02,
+     "hasCoordinates": true
+    },
+    {
+     "text": "捜索偷袭位置周围",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "与 Skier 对话",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到 Reshala 的储藏处",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 84.51,
+     "z": -104.02,
+     "hasCoordinates": true
+    },
+    {
+     "text": "调查 Reshala 的窝棚",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到科兹洛夫的藏身处",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": 293.68,
+     "z": 117.26,
+     "hasCoordinates": true
+    },
+    {
+     "text": "找到并获取科兹洛夫的证据",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    }
+   ],
+   "objectiveCount": 18
   },
   {
    "id": "story-boreas",
    "name": "Boreas",
    "nameZh": "Boreas",
-   "order": 3,
-   "maps": [
-    "woods",
-    "reserve",
-    "customs",
-    "shoreline",
-    "lighthouse",
-    "the-lab"
-   ],
-   "mapNames": [
-    "森林",
-    "储备站",
-    "海关",
-    "海岸线",
-    "灯塔",
-    "实验室"
-   ],
-   "objectives": [
-    "Find out from traders more about the connection between TerraGroup and Paradigm Shipping/Ask Mechanic where the distress signal came from",
-    "Locate the equipment under the cellular tower on Woods",
-    "Repair the equipment under the cellular tower on Woods",
-    "Report back to Mechanic",
-    "Locate and obtain the Paradigm Shipping documentation",
-    "Tell Mechanic about \"Boreas\"",
-    "Arrange a transport to the icebreaker",
-    "Hand over the AMG-10 fluid to Prapor",
-    "Hand over 3 found in raid Military power filters to Prapor",
-    "Hand over the AMG-10 fluid to Prapor",
-    "Eliminate any 30 targets on Reserve",
-    "Launch a yellow signal flare at the Woods transit on Reserve",
-    "Hand over the AMG-10 fluid to Prapor",
-    "Find an alternative transport to the icebreaker",
-    "Talk to the BTR Driver",
-    "Return to the Hideout",
-    "Return to the BTR Driver",
-    "Tell Mechanic that you found transport to the icebreaker",
-    "Hand over 200 7.62x54mm R BT gzh",
-    "Locate and obtain Skier's reports on Customs",
-    "Burn Skier's reports on Customs",
-    "Eliminate any 15 targets at the smugglers' territories",
-    "Report back to the BTR Driver",
-    "Tell Mechanic that you found transport to the icebreaker",
-    "Eliminate any 10 targets at the smugglers' territories",
-    "Report back to the BTR Driver",
-    "Tell Mechanic that you found transport to the icebreaker",
-    "Board the smuggler hovercraft on Shoreline or Lighthouse",
-    "（可选） Bring a marine repair kit",
-    "（可选） Bring a green RSP signal flare",
-    "（可选） Bring 2,500 Euros to pay for the evacuation from the icebreaker",
-    "Arrive at the Icebreaker",
-    "Check if any crew members survived on the ship",
-    "Access the engine room",
-    "（可选） Locate and obtain the engine room keycard",
-    "（可选） Reach the engine room",
-    "Find a way into the icebreaker superstructure",
-    "Ask Mechanic about explosives",
-    "Ask Prapor about explosives",
-    "Arrive at the Icebreaker",
-    "Reach the damaged door on the roof of the engine room",
-    "Break the chain on the door on the roof of the engine room using the SZ-1 charge",
-    "Enter the icebreaker superstructure from the roof of the engine room",
-    "（可选） Inspect the crew living quarters in the icebreaker superstructure",
-    "Find a way to the upper decks of the icebreaker superstructure",
-    "Ask the surviving scientist how to open the code-locked door on level 6",
-    "Ask Mechanic for help with finding the second part of the code for the locked door on level 6",
-    "Plant the hacking device in the server room in The Lab",
-    "Return to Mechanic",
-    "Arrive at the Icebreaker",
-    "Reach the engine room",
-    "（可选） Locate and obtain the engine room keycard",
-    "Reach the damaged door on the roof of the engine room",
-    "Return to the BTR driver",
-    "Return to the BTR driver",
-    "Break the chain on the door on the roof of the engine room using the SZ-1 charge",
-    "Reach the code-locked door",
-    "Use the correct access code",
-    "Locate compartment C-1",
-    "（可选） Locate and obtain the keycard with access to compartment C-1",
-    "（可选） Locate the entrance to the bridge",
-    "（可选） Locate an alternative path to the bridge",
-    "Reach the upper decks",
-    "Thaw the hatch on the roof of the bridge",
-    "（可选） Find something to thaw the hatch on the roof of the bridge",
-    "Rescue the icebreaker captain",
-    "Access Compartment C-1",
-    "Search the shelves in compartment C-1",
-    "Search the area near the workstation in compartment C-1",
-    "Search the servers in compartment C-1",
-    "Ask Mechanic for help decoding the hard drives from the icebreaker",
-    "Hand over 3 found in raid Ultralink satellite modules to Mechanic",
-    "（可选） Locate and obtain Ultralink satellite modules on the icebreaker",
-    "Hand over 4 found in raid server RAM modules to Mechanic",
-    "（可选） Locate and obtain the server RAM modules on the icebreaker",
-    "Hand over 2 found in raid cryptographic processors to Mechanic",
-    "（可选） Locate and obtain the cryptographic processors on the icebreaker",
-    "Analyse the data from the icebreaker",
-    "Inform the scientist about the captain's death",
-    "Ask the BTR driver if he can help evacuate the scientist from the icebreaker",
-    "Assist the smugglers with their conflict against the Rogues",
-    "Return to the BTR driver",
-    "Eliminate 20 targets on the icebreaker",
-    "Hand over 5 respirators to the BTR driver",
-    "（可选） Obtain respirators for the BTR driver",
-    "Hand over 2 class 5 or higher ballistic plates to the BTR driver",
-    "（可选） Obtain class 5+ ballistic plates for the BTR driver",
-    "Hand over the Kirasa-N body armor to the BTR driver",
-    "（可选） Obtain the Kirasa-N body armor for the BTR driver",
-    "Inform the scientist that everything is ready for his evacuation",
-    "Ask the BTR driver how the scientist's rescue went"
-   ],
-   "objectiveCount": 91
-  },
-  {
-   "id": "story-falling-skies",
-   "name": "Falling Skies",
-   "nameZh": "Falling Skies",
-   "order": 4,
-   "maps": [],
-   "mapNames": [],
-   "objectives": [
-    "Locate the fallen plane",
-    "Reach Loyalty Level 2 with Prapor",
-    "Ask the traders about the fallen plane",
-    "（可选） Hand over 2,000 USD to Therapist to learn details about the right G-Wagon SUV",
-    "Retrieve the flash drive from one of the G-Wagon SUVs",
-    "Hand over the flash drive to Prapor",
-    "Wait for information from Prapor",
-    "Retrieve the plane's flight recorder",
-    "Leave the flight recorder in the specified spot",
-    "Visit Prapor",
-    "Hand over 3 found in raid Rechargeable batteries",
-    "Hand over 5 found in raid Printed circuit boards",
-    "Hand over 2 found in raid Toolsets",
-    "Wait for information from Prapor",
-    "Hand over the flight crew's transcript to Prapor",
-    "Hand over Elektronik's secure flash drive to Prapor",
-    "Wait for information from Prapor",
-    "Retrieve the armored case",
-    "（可选） Find any additional clues",
-    "Keep the armored case for yourself or hand it over to Prapor"
-   ],
-   "objectiveCount": 20
-  },
-  {
-   "id": "story-the-labyrinth-story-chapter",
-   "name": "The Labyrinth (story chapter)",
-   "nameZh": "The Labyrinth (story chapter)",
-   "order": 5,
-   "maps": [
-    "the-lab",
-    "the-labyrinth"
-   ],
-   "mapNames": [
-    "实验室",
-    "迷宫"
-   ],
-   "objectives": [
-    "Ask the traders about the underground facility",
-    "（可选） Ask Therapist how to access the underground facility",
-    "Wait for Jaeger to gather the keycards",
-    "Figure out what happened to the BEAR squad",
-    "（可选） Locate the entrance to the underground facility beneath the Health Resort",
-    "（可选） Access the facility",
-    "（可选） Locate the traces of the BEAR squad in The Labyrinth",
-    "（可选） Investigate the BEAR squad regroup spot at Item 1156",
-    "（可选） Locate the squad leader",
-    "（可选） Gather more information about the squad",
-    "（可选） Investigate the 5 lab staff bodies",
-    "（可选） Access the locked office",
-    "Listen to the audio tape from the office",
-    "Hand over the audio tape to Jaeger",
-    "Read the Labyrinth facility research report",
-    "（可选） Locate and obtain the Labyrinth facility research report"
-   ],
-   "objectiveCount": 16
-  },
-  {
-   "id": "story-the-ticket",
-   "name": "The Ticket",
-   "nameZh": "The Ticket",
-   "order": 6,
-   "maps": [
-    "lighthouse",
-    "interchange",
-    "the-lab"
-   ],
-   "mapNames": [
-    "灯塔",
-    "立交桥",
-    "实验室"
-   ],
-   "objectives": [
-    "Obtain Intelligence Center level 1",
-    "Talk to Mr. Kerman",
-    "Wait for Mr. Kerman to reach out",
-    "Talk to Prapor",
-    "Talk to Mr. Kerman",
-    "Locate the camp of Prapor's people on Lighthouse",
-    "Find any clues about Prapor's people's intentions",
-    "Talk to Mr. Kerman",
-    "Talk to Lightkeeper",
-    "Gain access to Lightkeeper",
-    "Stay on good terms with Lightkeeper",
-    "Obtain 3 TerraGroup \"Blue Folders\" materials",
-    "Bring the found items to Lightkeeper",
-    "Launch a yellow signal flare in front of ULTRA's main entrance on Interchange",
-    "Eliminate any 15 targets in one raid on Interchange",
-    "Talk to Lightkeeper",
-    "Unlock the armored case",
-    "Obtain the \"Ticket\"",
-    "Ask Mechanic for help",
-    "Obtain the Experimental signal jammer",
-    "（可选） Gain access to The Lab",
-    "（可选） Obtain the TerraGroup Labs access keycard",
-    "Use the Experimental signal jammer to unlock the case",
-    "Read the  instructions from the armored case",
-    "Contact Mr. Kerman"
-   ],
-   "objectiveCount": 25
-  },
-  {
-   "id": "story-the-unheard",
-   "name": "The Unheard",
-   "nameZh": "The Unheard",
-   "order": 7,
-   "maps": [
-    "the-lab"
-   ],
-   "mapNames": [
-    "实验室"
-   ],
-   "objectives": [
-    "Learn more about The Unheard",
-    "Learn more about TerraGroup's activities",
-    "Learn more about the \"fuel\" mentioned in the note",
-    "Find more information about the special catalyst shipment",
-    "Locate Rzhevsky's service vehicle and obtain his personal belongings",
-    "Retrieve the data from the hard drive in Rzhevsky's car",
-    "Read the transcript of Rzhevsky's conversation",
-    "Locate and obtain the documents on the Blue Ice fuel catalyst research",
-    "Find as much information as possible about the plans of The Unheard",
-    "Learn more about A.P.'s activities",
-    "Learn more about A.P.'s role",
-    "Search for any mention of A.P. in The Lab",
-    "Locate A.P.'s room in the Health Resort",
-    "（可选） Find out which room A.P. was assigned to",
-    "Obtain A.P.'s personal belongings",
-    "Obtain A.P.'s data storage device",
-    "Decrypt the flash drive from A.P.'s room",
-    "Ask Mechanic for help",
-    "Hand over 5,000,000 Roubles to Mechanic",
-    "Hand over the A.P. flash drive to Mechanic",
-    "Wait for the news from Elektronik",
-    "Integrate the tech files from A.P.'s flash drive into a TerraGroup keycard",
-    "Access A.P.'s corporate apartment",
-    "Investigate A.P.'s apartment",
-    "Access the hidden room in A.P.'s apartment",
-    "Study the TerraGroup documentation in A.P.'s office",
-    "Study the role of the Blue Ice catalyst in The Unheard's protocol",
-    "Learn more about The Unheard's protocol",
-    "Figure out how The Unheard are connected to Tarkov"
-   ],
-   "objectiveCount": 29
-  },
-  {
-   "id": "story-they-are-already-here",
-   "name": "They Are Already Here",
-   "nameZh": "They Are Already Here",
-   "order": 8,
-   "maps": [
-    "lighthouse",
-    "woods",
-    "shoreline",
-    "interchange"
-   ],
-   "mapNames": [
-    "灯塔",
-    "森林",
-    "海岸线",
-    "立交桥"
-   ],
-   "objectives": [
-    "Learn more about the hooded men/Learn more about the people leaving strange symbols in Tarkov",
-    "Locate a place connected to the Eye of the World",
-    "Learn more about the cultist's victim from the torture room",
-    "Locate the cult victim's apartment",
-    "（可选） Obtain the key to the apartment",
-    "Investigate the victim's apartment",
-    "Obtain the victim's first audio tape",
-    "Obtain and read the book that the cultists planted with Igor",
-    "Ask Mechanic about the Eye of the World",
-    "（可选） Gain access to Mechanic",
-    "Locate and neutralize a Cultist priest",
-    "Obtain more information about the Eye of the World",
-    "Locate the place marked with the Eye of the World on Lighthouse",
-    "Investigate the ransacked cultist room in the chalet",
-    "（可选） Locate the victim's belongings",
-    "Locate and obtain the key mentioned in the victim's note",
-    "Locate the place marked with the Eye of the World on Woods",
-    "Investigate the cultists' house marked with the Eye of the World",
-    "Locate the place marked with the Eye of the World on Shoreline",
-    "Investigate the area around the Sordi communications tower",
-    "Repair the Sordi tower",
-    "Restore Arshavin's keycard",
-    "Gain access to NGO Cobalt's secret facility",
-    "Restore power at the station",
-    "Turn on the cooling system in the server room",
-    "Install a flash drive to download the data",
-    "Investigate ARRS Station 14-4 KORD thoroughly",
-    "Survive and extract from Interchange",
-    "Find a way to disconnect the station from external agents",
-    "Restore the ARRS station to backup settings",
-    "（可选） Check that the station power is turned on",
-    "Collect the flash drive from the ARRS station",
-    "Survive and extract from Interchange",
-    "Hand over the flash drive with data to Mechanic",
-    "Read the ARRS station specifications"
-   ],
-   "objectiveCount": 35
-  },
-  {
-   "id": "story-tour",
-   "name": "Tour",
-   "nameZh": "Tour",
    "order": 9,
    "maps": [
-    "ground-zero",
-    "streets-of-tarkov",
-    "interchange",
-    "customs",
-    "factory",
     "woods",
-    "terminal",
-    "reserve",
-    "shoreline",
     "lighthouse",
+    "reserve",
+    "customs",
+    "shoreline",
+    "icebreaker",
     "the-lab"
    ],
    "mapNames": [
-    "中心区",
-    "塔科夫街区",
-    "立交桥",
-    "海关",
-    "工厂",
     "森林",
-    "码头",
-    "储备站",
-    "海岸线",
     "灯塔",
+    "储备站",
+    "海关",
+    "海岸线",
+    "破冰船",
     "实验室"
    ],
    "objectives": [
-    "Escape Ground Zero",
-    "Talk to Therapist",
-    "Ensure access to the Streets of Tarkov",
-    "Hand over the cash to Therapist",
-    "（可选） Collect the required 250,000 Roubles",
-    "Talk to Ragman",
-    "Survive and extract from Interchange or visit Interchange 3 times",
-    "Tell Ragman what you found during the recon",
-    "Talk to Skier",
-    "Survive and extract from Customs or visit Customs 3 times",
-    "Hand over any 5 found in raid building materials items to Skier",
-    "（可选） Find any 5 items in raid from the building materials category",
-    "Talk to Mechanic",
-    "Survive and extract from Factory or visit Factory 3 times",
-    "Hand over any 2 found in raid weapons to Mechanic",
-    "（可选） Find any 2 weapons in raid",
-    "Talk to Skier",
-    "Eliminate any 3 targets on Woods",
-    "Survive and extract from Woods or visit Woods 3 times",
-    "Locate the entrance to the port Terminal",
-    "Find a way to contact the soldiers at the Terminal",
-    "Use the intercom to contact the port garrison",
-    "Learn how to escape Tarkov",
-    "Ensure access to Reserve",
-    "Survive and extract from Shoreline or visit Shoreline 3 times",
-    "Hand over 5 PMC dogtags to Prapor",
-    "（可选） Find 5 PMC dogtags in raid",
-    "Ensure access to Lighthouse",
-    "Hand over 8,000 USD to Mechanic",
-    "（可选） Collect the required 8,000 USD",
-    "Ensure access to The Lab",
-    "Access the secret TerraGroup facility",
-    "（可选） Obtain a keycard or access codes to enter the facility",
-    "（可选） Locate the entrance to the facility on Factory",
-    "（可选） Locate the entrance to the facility on Streets of Tarkov",
-    "Search the top management offices in The Lab",
-    "Search the server room in The Lab",
-    "Locate the escape path through the drainage system in The Lab"
+    {
+     "text": "询问 Mechanic 求救信号的来源",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在森林找到通讯基站下的设备",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在森林修复通讯基站下的设备",
+     "map": "woods",
+     "mapName": "森林",
+     "x": 234.25,
+     "z": -710.38,
+     "hasCoordinates": true
+    },
+    {
+     "text": "向 Mechanic 汇报情况",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到并获取 Paradigm 航运文件",
+     "map": "lighthouse",
+     "mapName": "灯塔",
+     "x": 35.89,
+     "z": -848.08,
+     "hasCoordinates": true
+    },
+    {
+     "text": "告诉 Mechanic 关于 Boreas 号的情况",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "安排登船的交通工具",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在储备站击杀 30名 任意目标",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在储备站的森林转移点发射一枚黄色信号棒",
+     "map": "reserve",
+     "mapName": "储备站",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "把 AMG-10 液压油交给 Prapor",
+     "map": "reserve",
+     "mapName": "储备站",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "想办法找到其他登船方式",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "返回藏身处",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "上交 7.62x54R 7BT1 弹药给 BTR 司机 200 发",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在海关找到并获取 Skier 的报告",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 126.11,
+     "z": -155.34,
+     "hasCoordinates": true
+    },
+    {
+     "text": "在海关烧掉 Skier 的报告",
+     "map": "customs",
+     "mapName": "海关",
+     "x": 204.73,
+     "z": -126.13,
+     "hasCoordinates": true
+    },
+    {
+     "text": "在走私者营地范围内消灭任意目标 15 名",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -598.04,
+     "z": -168.21,
+     "hasCoordinates": true
+    },
+    {
+     "text": "在走私者营地范围内消灭任意目标 10 名",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -598.04,
+     "z": -168.21,
+     "hasCoordinates": true
+    },
+    {
+     "text": "返回 BTR 司机处报告进展",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "告诉 Mechanic 你找到了登船的交通工具",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在海岸线登上走私者的气垫船",
+     "map": "shoreline",
+     "mapName": "海岸线",
+     "x": -316.68,
+     "z": 522.78,
+     "hasCoordinates": true
+    },
+    {
+     "text": "登上破冰船",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "检查破冰船上是否有任何船员幸存",
+     "map": "icebreaker",
+     "mapName": "破冰船",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入破冰船的轮机舱",
+     "map": "icebreaker",
+     "mapName": "破冰船",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "想办法进入破冰船的上层建筑",
+     "map": "icebreaker",
+     "mapName": "破冰船",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "向 Mechanic 询问炸药的事情",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "向 Prapor 了解炸药的事情",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在海岸线登上走私者的气垫船",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "登上破冰船",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "抵达轮机舱顶部那扇损坏的门",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "使用 SZ-1 炸药破坏轮机舱顶部密闭门的锁链",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "从轮机舱顶部的门进入破冰船上层舱室",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "想办法进入破冰船上层舱室的上甲板",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "询问幸存的科学家如何打开第 6 层的密码锁",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "向 Mechanic 寻求帮助，找到第 6 层上锁大门的密码",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将黑客入侵装置安放在实验室的机房内",
+     "map": "the-lab",
+     "mapName": "实验室",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "返回 Mechanic 处",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在海岸线登上走私者的气垫船",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "登上破冰船",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "抵达破冰船的轮机舱",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "抵达轮机舱顶部那扇损坏的门",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "使用 SZ-1 炸药破坏轮机舱顶部密闭门的锁链",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "抵达密码锁旁",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "使用正确的密码开锁",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入破冰船上层甲板",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "找到 C-1 舱窒",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "抵达上层甲板",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "营救破冰船船长",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "解冻舰桥顶部的舱口",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "进入 C-1 舱窒",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在 C-1 舱室的服务器周边寻找有情报价值的东西",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在 C-1 舱室中的工作台周围寻找有情报价值的东西",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在 C-1 舱室的架子上寻找有情报价值的东西",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "请 Mechanic 帮忙破解破冰船上找回的闪存盘",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Ultralink 卫星通讯模块 交给 Mechanic 3 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 Memento 服务器内存模块 交给 Mechanic 4 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 IBX Gigachad 加密处理器 交给 Mechanic 2 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "分析从破冰船上回收的数据",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将船长的死讯通知科学家",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "询问 BTR 司机能否协助从船上撤离科学家",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "帮助走私者在冲突中对抗游荡者",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "在破冰船上消灭任意目标 20 名",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "上交 Kirasa-N（胸甲-N）防弹衣给 BTR 司机 1 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "将 5 级及以上的防弹插板上交给 BTR 司机 2 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "上交呼吸面罩给 BTR 司机 5 个",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "向 BTR 司机询问接下来的行动",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "通知科学家，救援行动已经一切就绪",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "text": "向 BTR 司机询问救援行动的进展",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    }
    ],
-   "objectiveCount": 38
+   "objectiveCount": 67
   }
  ]
 }
