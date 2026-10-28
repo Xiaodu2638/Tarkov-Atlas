@@ -394,8 +394,9 @@ public sealed class MapCanvas : Control
     {
         if (_map is null || _zoom < 0.7) return;
         // One caption per boss, not per spawn point: Lighthouse has 18 rogue
-        // points, and 18 overlapping "流氓" labels buried the map.
+        // points, and 18 overlapping "游荡者" labels buried the map.
         var labelled = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var placed = new List<Rect>();
         foreach (var boss in _map.Bosses)
         {
             var showLabel = !Compact && _zoom >= 0.85 && labelled.Add(boss.Mob);
@@ -406,7 +407,7 @@ public sealed class MapCanvas : Control
 
                 // A coloured dot gave no clue which boss was which; draw the portrait.
                 var r = Math.Clamp(9.0 * Math.Sqrt(_zoom), 9, 20);
-                var avatar = LoadCircle("bosses", SlugForMob(boss.Mob), (int)Math.Round(r * 2));
+                var avatar = LoadCircle("bosses", boss.AvatarSlug, (int)Math.Round(r * 2));
                 if (avatar is not null)
                 {
                     context.DrawEllipse(BossHalo, null, s, r + 2, r + 2);
@@ -429,8 +430,16 @@ public sealed class MapCanvas : Control
                     var size = _zoom >= 1.7 ? 10.5 : 9;
                     var txt = Text(boss.Name, size, BossBrush);
                     var pos = new Point(s.X + r + 4, s.Y - txt.Height / 2);
-                    context.DrawText(Text(boss.Name, size, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
-                    context.DrawText(txt, pos);
+                    // Mobs sharing a spawn point (Lighthouse chalet: rogues and
+                    // Knight) would otherwise stack their captions on top of
+                    // each other. Walk down until the box is free.
+                    var box = new Rect(pos.X, pos.Y, txt.Width + 2, txt.Height + 2);
+                    var guard = 0;
+                    while (guard++ < 12 && placed.Any(b => b.Intersects(box)))
+                        box = box.Translate(new Vector(0, box.Height + 1));
+                    placed.Add(box);
+                    context.DrawText(Text(boss.Name, size, LabelShadow), new Point(box.X + 1, box.Y + 1));
+                    context.DrawText(txt, new Point(box.X, box.Y));
                     showLabel = false;
                 }
             }
@@ -681,28 +690,6 @@ public sealed class MapCanvas : Control
 
         _circleCache[key] = circle;
         return circle;
-    }
-
-    /// <summary>
-    /// Map an API mob id (bossKilla) to its portrait file name (killa). A few
-    /// bosses do not use the in-game codename, so they are listed explicitly.
-    /// </summary>
-    private static string SlugForMob(string? mob)
-    {
-        if (string.IsNullOrWhiteSpace(mob)) return "";
-        return mob.ToLowerInvariant() switch
-        {
-            "bossbully" => "reshala",
-            "bosskojaniy" => "shturman",
-            "bossboar" => "kaban",
-            "sectantpriest" => "sectant-priest",
-            "pmcbot" => "raider",
-            "blackdivision" or "pmcbotblackdiv" => "black-division",
-            "bossbullyblackdiv" => "black-division-icebreaker",
-            _ when mob.StartsWith("boss", StringComparison.OrdinalIgnoreCase) =>
-                mob[4..].Replace("_", "-").ToLowerInvariant(),
-            _ => mob.Replace("_", "-").ToLowerInvariant(),
-        };
     }
 
     private Point Project(double x, double z)

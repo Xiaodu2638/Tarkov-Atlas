@@ -11984,7 +11984,7 @@
      ]
     },
     {
-     "name": "流氓",
+     "name": "游荡者",
      "mob": "exUsecFree",
      "chance": 1,
      "points": [
@@ -15795,7 +15795,7 @@
      ]
     },
     {
-     "name": "RF 狙击手",
+     "name": "俄军狙击手",
      "mob": "vsRFSniper",
      "chance": 1,
      "points": [
@@ -15810,7 +15810,7 @@
      ]
     },
     {
-     "name": "RF 武装力量",
+     "name": "俄军",
      "mob": "vsRF",
      "chance": 1,
      "points": [
@@ -16136,7 +16136,7 @@
      ]
     },
     {
-     "name": "USEC",
+     "name": "游荡者",
      "mob": "ExUsec",
      "chance": 0.5,
      "points": [

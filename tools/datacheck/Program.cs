@@ -318,13 +318,30 @@ internal static class DataChecks
         {
             var rogue = lighthouse.Bosses.FirstOrDefault(b =>
                 b.Mob.Equals("exUsecFree", StringComparison.OrdinalIgnoreCase));
-            Check("lighthouse rogue boss present", rogue is not null && rogue.Name == "流氓",
+            Check("lighthouse rogue boss present", rogue is not null && rogue.Name == "游荡者",
                 rogue?.Name ?? "missing");
             var usecBoss = lighthouse.Bosses.Any(b =>
                 b.Name.Equals("USEC", StringComparison.OrdinalIgnoreCase)
                 || b.Mob.Equals("ExUsec", StringComparison.OrdinalIgnoreCase));
             Check("lighthouse has no USEC boss", !usecBoss,
                 string.Join(",", lighthouse.Bosses.Select(b => b.Mob + "/" + b.Name)));
+
+            // Every Lighthouse boss must have portrait art; a missing file used
+            // to leave a blank initial in the boss rail.
+            var missingAvatars = lighthouse.Bosses
+                .Where(b => !File.Exists(Path.Combine(assets, "bosses", b.AvatarSlug + ".png")))
+                .Select(b => b.Mob + "->" + b.AvatarSlug)
+                .ToList();
+            Check("lighthouse boss avatars exist", missingAvatars.Count == 0,
+                string.Join(",", missingAvatars));
+
+            // "流氓" (thug) is the wrong translation for the rogue mob; the
+            // Chinese wiki and in-game name are 游荡者.
+            var mislabelled = manifest.Maps
+                .Where(m => m.Bosses.Any(b => b.Name == "流氓"))
+                .Select(m => m.Key)
+                .ToList();
+            Check("no boss named 流氓", mislabelled.Count == 0, string.Join(",", mislabelled));
         }
 
         // Shturman spawns on Woods are all in the Sawmill, not at USEC Camp or

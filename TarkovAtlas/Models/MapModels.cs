@@ -151,6 +151,36 @@ public sealed class BossSpawn
     /// <summary>API mob identifier (e.g. bossKilla); also the portrait file name.</summary>
     public string Mob { get; set; } = "";
     public List<GameMarker> Points { get; set; } = new();
+
+    /// <summary>
+    /// Portrait file stem under Assets/bosses. Group mobs are mapped explicitly:
+    /// ex-USEC rogues share rogue.png, raiders share raider.png, black division
+    /// variants share their own artwork.
+    /// </summary>
+    [JsonIgnore]
+    public string AvatarSlug
+    {
+        get
+        {
+            var mob = Mob ?? "";
+            return mob.ToLowerInvariant() switch
+            {
+                "bossbully" => "reshala",
+                "bosskojaniy" => "shturman",
+                "bossboar" => "kaban",
+                "bossgluhar" => "glukhar",
+                "sectantpriest" => "sectant-priest",
+                "pmcbot" => "raider",
+                "exusecfree" or "exusec" => "rogue",
+                "vsrf" or "vsrfsniper" => "ruaf",
+                "blackdivision" or "pmcbotblackdiv" => "black-division",
+                "bossbullyblackdiv" => "black-division-icebreaker",
+                _ when mob.StartsWith("boss", StringComparison.OrdinalIgnoreCase) =>
+                    mob[4..].Replace("_", "-").ToLowerInvariant(),
+                _ => mob.Replace("_", "-").ToLowerInvariant(),
+            };
+        }
+    }
 }
 
 public sealed class SpawnPoint
