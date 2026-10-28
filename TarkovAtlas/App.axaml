@@ -16,6 +16,34 @@
     <SolidColorBrush x:Key="AccentSoft" Color="#3B3220" />
     <SolidColorBrush x:Key="Danger" Color="#D85B4A" />
     <SolidColorBrush x:Key="Success" Color="#6FBF8B" />
+    <SolidColorBrush x:Key="HeaderBg" Color="#0B1117" />
+    <SolidColorBrush x:Key="DividerBg" Color="#1C2732" />
+    <SolidColorBrush x:Key="ButtonBg" Color="#18212B" />
+    <SolidColorBrush x:Key="ButtonHoverBg" Color="#22303D" />
+    <SolidColorBrush x:Key="ButtonPressedBg" Color="#0C1117" />
+    <SolidColorBrush x:Key="SurfaceBg" Color="#0A0F14" />
+    <SolidColorBrush x:Key="SurfaceDeepBg" Color="#090D12" />
+    <SolidColorBrush x:Key="PanelDeepBg" Color="#0C1219" />
+    <SolidColorBrush x:Key="PanelHeaderBg" Color="#101822" />
+    <SolidColorBrush x:Key="ListHoverBg" Color="#17212B" />
+    <SolidColorBrush x:Key="ListSelectedBg" Color="#232D35" />
+    <SolidColorBrush x:Key="ListSelectedHoverBg" Color="#28343E" />
+    <SolidColorBrush x:Key="TextOnAccent" Color="#171207" />
+    <SolidColorBrush x:Key="OverlayChromeBg" Color="#D90B1017" />
+    <SolidColorBrush x:Key="OverlayChromeBorder" Color="#26333F" />
+    <SolidColorBrush x:Key="DangerBg" Color="#2A1715" />
+    <SolidColorBrush x:Key="DangerBorder" Color="#5A2B24" />
+    <SolidColorBrush x:Key="CanvasBg" Color="#0A0F15" />
+    <SolidColorBrush x:Key="CardAltBg" Color="#131B24" />
+    <SolidColorBrush x:Key="SurfaceRaisedBg" Color="#0D131A" />
+    <SolidColorBrush x:Key="GripBg" Color="#59000000" />
+    <SolidColorBrush x:Key="GripStroke" Color="#C8D4E0" />
+    <SolidColorBrush x:Key="HintText" Color="#B3D7E1E8" />
+    <SolidColorBrush x:Key="DangerText" Color="#E08A7C" />
+    <SolidColorBrush x:Key="StatusLiveBg" Color="#17231D" />
+    <SolidColorBrush x:Key="StatusLiveBorder" Color="#2E4A37" />
+    <SolidColorBrush x:Key="StatusLiveText" Color="#A9CEB8" />
+    <SolidColorBrush x:Key="StatusIdleText" Color="#8FA0AE" />
   </Application.Resources>
 
   <Application.Styles>
@@ -32,7 +60,7 @@
     </Style>
 
     <Style Selector="Button">
-      <Setter Property="Background" Value="#18212B" />
+      <Setter Property="Background" Value="{StaticResource ButtonBg}" />
       <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
       <Setter Property="BorderBrush" Value="{StaticResource BorderSoft}" />
       <Setter Property="BorderThickness" Value="1" />
@@ -42,20 +70,20 @@
       <Setter Property="Cursor" Value="Hand" />
     </Style>
     <Style Selector="Button:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#22303D" />
+      <Setter Property="Background" Value="{StaticResource ButtonHoverBg}" />
       <Setter Property="BorderBrush" Value="{StaticResource BorderStrong}" />
     </Style>
     <Style Selector="Button:pressed /template/ ContentPresenter">
-      <Setter Property="Background" Value="#0C1117" />
+      <Setter Property="Background" Value="{StaticResource ButtonPressedBg}" />
     </Style>
     <Style Selector="Button.accent">
       <Setter Property="Background" Value="{StaticResource Accent}" />
-      <Setter Property="Foreground" Value="#171207" />
+      <Setter Property="Foreground" Value="{StaticResource TextOnAccent}" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
     <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#E6BB60" />
+      <Setter Property="Background" Value="{StaticResource AccentHover}" />
     </Style>
     <Style Selector="Button.ghost">
       <Setter Property="Background" Value="Transparent" />
@@ -63,16 +91,16 @@
       <Setter Property="Padding" Value="8,6" />
     </Style>
     <Style Selector="Button.ghost:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#1B2530" />
+      <Setter Property="Background" Value="{StaticResource ListHoverBg}" />
     </Style>
     <Style Selector="Button.danger">
-      <Setter Property="Background" Value="#2A1715" />
-      <Setter Property="Foreground" Value="#F18C7B" />
-      <Setter Property="BorderBrush" Value="#5A2B24" />
+      <Setter Property="Background" Value="{StaticResource DangerBg}" />
+      <Setter Property="Foreground" Value="{StaticResource DangerText}" />
+      <Setter Property="BorderBrush" Value="{StaticResource DangerBorder}" />
     </Style>
 
     <Style Selector="TextBox">
-      <Setter Property="Background" Value="#0B1117" />
+      <Setter Property="Background" Value="{StaticResource HeaderBg}" />
       <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
       <Setter Property="BorderBrush" Value="{StaticResource BorderSoft}" />
       <Setter Property="BorderThickness" Value="1" />
@@ -96,13 +124,13 @@
       <Setter Property="CornerRadius" Value="7" />
     </Style>
     <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#17212B" />
+      <Setter Property="Background" Value="{StaticResource ListHoverBg}" />
     </Style>
     <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-      <Setter Property="Background" Value="#232D35" />
+      <Setter Property="Background" Value="{StaticResource ListSelectedBg}" />
     </Style>
     <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="#28343E" />
+      <Setter Property="Background" Value="{StaticResource ListSelectedHoverBg}" />
     </Style>
 
     <Style Selector="CheckBox">
@@ -110,7 +138,7 @@
       <Setter Property="FontSize" Value="12" />
     </Style>
     <Style Selector="ComboBox">
-      <Setter Property="Background" Value="#0B1117" />
+      <Setter Property="Background" Value="{StaticResource HeaderBg}" />
       <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
       <Setter Property="BorderBrush" Value="{StaticResource BorderSoft}" />
       <Setter Property="CornerRadius" Value="6" />
@@ -124,7 +152,7 @@
       <Setter Property="Background" Value="Transparent" />
     </Style>
     <Style Selector="ToolTip">
-      <Setter Property="Background" Value="#E60B1017" />
+      <Setter Property="Background" Value="{StaticResource OverlayChromeBg}" />
       <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
       <Setter Property="BorderBrush" Value="{StaticResource BorderStrong}" />
       <Setter Property="FontSize" Value="11" />

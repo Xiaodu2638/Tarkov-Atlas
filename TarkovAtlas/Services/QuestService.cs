@@ -40,7 +40,7 @@ public sealed class QuestService
         _storyDone.Clear();
         _traders.Clear();
 
-        var questPath = Path.Combine(AppPaths.AssetsDir, "quests.json");
+        var questPath = Path.Combine(AppPaths.AssetsDir, AppPaths.QuestDataFile);
         if (File.Exists(questPath))
         {
             var db = JsonSerializer.Deserialize(File.ReadAllText(questPath), AppJsonContext.Default.QuestDatabase);
@@ -51,7 +51,7 @@ public sealed class QuestService
             }
         }
 
-        var mapDataPath = Path.Combine(AppPaths.MapsDir, "mapdata.json");
+        var mapDataPath = AppPaths.MapDataPath;
         if (File.Exists(mapDataPath))
         {
             var data = JsonSerializer.Deserialize(File.ReadAllText(mapDataPath), AppJsonContext.Default.MapManifest);
@@ -433,7 +433,7 @@ public sealed class QuestService
         _chapters.Clear();
         try
         {
-            var path = Path.Combine(AppPaths.AssetsDir, "story.json");
+            var path = Path.Combine(AppPaths.AssetsDir, AppPaths.StoryDataFile);
             if (!File.Exists(path)) return;
             var db = JsonSerializer.Deserialize(File.ReadAllText(path), AppJsonContext.Default.StoryDatabase);
             if (db?.Chapters is null) return;

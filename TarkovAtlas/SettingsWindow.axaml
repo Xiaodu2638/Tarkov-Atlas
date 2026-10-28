@@ -9,7 +9,7 @@
         SystemDecorations="BorderOnly"
         Background="{StaticResource AppBg}">
   <Grid RowDefinitions="58,*,58">
-    <Border Grid.Row="0" Background="#0C1219" BorderBrush="#26333F" BorderThickness="0,0,0,1"
+    <Border Grid.Row="0" Background="{StaticResource PanelDeepBg}" BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="0,0,0,1"
             Padding="20,0" PointerPressed="Header_PointerPressed">
       <Grid ColumnDefinitions="*,Auto">
         <StackPanel VerticalAlignment="Center" Spacing="1">
@@ -153,7 +153,7 @@
       </StackPanel>
     </ScrollViewer>
 
-    <Border Grid.Row="2" Background="#0C1219" BorderBrush="#26333F" BorderThickness="0,1,0,0"
+    <Border Grid.Row="2" Background="{StaticResource PanelDeepBg}" BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="0,1,0,0"
             Padding="20,0">
       <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
         <TextBlock x:Name="FooterStatusText" Text="" FontSize="10"

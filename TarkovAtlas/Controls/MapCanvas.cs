@@ -32,49 +32,49 @@ public sealed class MapCanvas : Control
     private static readonly Typeface LabelTypeface = new("Microsoft YaHei UI");
     private static readonly Typeface MarkerTypeface = new("Microsoft YaHei UI");
 
-    private static readonly IBrush LabelBrush = new SolidColorBrush(Color.Parse("#E4ECF3"));
-    private static readonly IBrush LabelShadow = new SolidColorBrush(Color.Parse("#E605080B"));
-    private static readonly IBrush EmptyBrush = new SolidColorBrush(Color.Parse("#7D8D9A"));
-    private static readonly IBrush PinBrush = new SolidColorBrush(Color.Parse("#E0523D"));
-    private static readonly IBrush PinStroke = new SolidColorBrush(Color.Parse("#FFF3DF"));
-    private static readonly IBrush PlayerBrush = new SolidColorBrush(Color.Parse("#FFD166"));
-    private static readonly IBrush PlayerDark = new SolidColorBrush(Color.Parse("#D98A22"));
-    private static readonly IBrush AccentBrush = new SolidColorBrush(Color.Parse("#D6A84B"));
-    private static readonly IBrush PanelBrush = new SolidColorBrush(Color.Parse("#D90B1017"));
-    private static readonly IBrush MutedBrush = new SolidColorBrush(Color.Parse("#8FA0AE"));
-    private static readonly IBrush BorderBrush = new SolidColorBrush(Color.Parse("#3A4856"));
+    private static readonly IBrush LabelBrush = Palette.Brush(Palette.Label);
+    private static readonly IBrush LabelShadow = Palette.Brush(Palette.LabelShadow);
+    private static readonly IBrush EmptyBrush = Palette.Brush(Palette.Empty);
+    private static readonly IBrush PinBrush = Palette.Brush(Palette.Pin);
+    private static readonly IBrush PinStroke = Palette.Brush(Palette.PinStroke);
+    private static readonly IBrush PlayerBrush = Palette.Brush(Palette.Player);
+    private static readonly IBrush PlayerDark = Palette.Brush(Palette.PlayerDark);
+    private static readonly IBrush AccentBrush = Palette.Brush(Palette.Accent);
+    private static readonly IBrush PanelBrush = Palette.Brush(Palette.OverlayPanelBg);
+    private static readonly IBrush MutedBrush = Palette.Brush(Palette.Muted);
+    private static readonly IBrush BorderBrush = Palette.Brush(Palette.BorderStrong);
 
-    private static readonly IBrush ExtractPmc = new SolidColorBrush(Color.Parse("#5FD68A"));
-    private static readonly IBrush ExtractScav = new SolidColorBrush(Color.Parse("#E0C063"));
-    private static readonly IBrush ExtractShared = new SolidColorBrush(Color.Parse("#67B2E8"));
-    private static readonly IBrush BossBrush = new SolidColorBrush(Color.Parse("#E06052"));
-    private static readonly IBrush BossHalo = new SolidColorBrush(Color.Parse("#33E06052"));
-    private static readonly IBrush SpawnPmcBrush = new SolidColorBrush(Color.Parse("#7FA8E0"));
-    private static readonly IBrush SpawnScavBrush = new SolidColorBrush(Color.Parse("#D08A5A"));
-    private static readonly IBrush TransitBrush = new SolidColorBrush(Color.Parse("#B07FD8"));
+    private static readonly IBrush ExtractPmc = Palette.Brush(Palette.ExtractPmc);
+    private static readonly IBrush ExtractScav = Palette.Brush(Palette.ExtractScav);
+    private static readonly IBrush ExtractShared = Palette.Brush(Palette.ExtractShared);
+    private static readonly IBrush BossBrush = Palette.Brush(Palette.Boss);
+    private static readonly IBrush BossHalo = Palette.Brush(Palette.BossHalo);
+    private static readonly IBrush SpawnPmcBrush = Palette.Brush(Palette.SpawnPmc);
+    private static readonly IBrush SpawnScavBrush = Palette.Brush(Palette.SpawnScav);
+    private static readonly IBrush TransitBrush = Palette.Brush(Palette.Transit);
     /// <summary>Buried stash / cache markers (物资埋藏点).</summary>
-    private static readonly IBrush CacheFill = new SolidColorBrush(Color.Parse("#CC3A2A12"));
-    private static readonly IBrush CacheStroke = new SolidColorBrush(Color.Parse("#F2C98A"));
-    private static readonly Pen CachePen = new Pen(CacheStroke, 1.5);
+    private static readonly IBrush CacheFill = Palette.Brush(Palette.CacheFill);
+    private static readonly IBrush CacheStroke = Palette.Brush(Palette.CacheStroke);
+    private static readonly Pen CachePen = new(CacheStroke, 1.5);
 
     // Per-frame brushes/pens used to be allocated for every marker; on Streets
     // that was hundreds of allocations per mouse-move. All of these are frozen
     // by convention and safe to share.
-    private static readonly IBrush MarkerShadow = new SolidColorBrush(Color.Parse("#8805080B"));
-    private static readonly IBrush QuestMarkerFill = new SolidColorBrush(Color.Parse("#F2D6A84B"));
-    private static readonly IBrush QuestMarkerStroke = new SolidColorBrush(Color.Parse("#FFF6E7C4"));
-    private static readonly IBrush ExtractFill = new SolidColorBrush(Color.Parse("#CC0A0F15"));
-    private static readonly IBrush SpawnFill = new SolidColorBrush(Color.Parse("#66222830"));
-    private static readonly IBrush TransitFill = new SolidColorBrush(Color.Parse("#CC0A0F15"));
-    private static readonly IBrush BossEmptyStroke = new SolidColorBrush(Color.Parse("#FFE8DF"));
-    private static readonly IBrush BossInitial = new SolidColorBrush(Color.Parse("#171207"));
-    private static readonly IBrush PinShadow = new SolidColorBrush(Color.Parse("#33000000"));
-    private static readonly IBrush PlayerHalo = new SolidColorBrush(Color.Parse("#55FFD166"));
-    private static readonly IBrush PlayerCone = new SolidColorBrush(Color.Parse("#B3FFD166"));
-    private static readonly IBrush PlayerPanelBorder = new SolidColorBrush(Color.Parse("#66D6A84B"));
-    private static readonly IBrush QuestLabelBrush = new SolidColorBrush(Color.Parse("#F0E4C4"));
-    private static readonly IBrush FocusHalo = new SolidColorBrush(Color.Parse("#44D6A84B"));
-    private static readonly IBrush DotBrush = new SolidColorBrush(Color.Parse("#D6A84B"));
+    private static readonly IBrush MarkerShadow = Palette.Brush(Palette.MarkerShadow);
+    private static readonly IBrush QuestMarkerFill = Palette.Brush(Palette.QuestMarkerFill);
+    private static readonly IBrush QuestMarkerStroke = Palette.Brush(Palette.QuestMarkerStroke);
+    private static readonly IBrush ExtractFill = Palette.Brush(Palette.ExtractFill);
+    private static readonly IBrush SpawnFill = Palette.Brush(Palette.SpawnFill);
+    private static readonly IBrush TransitFill = Palette.Brush(Palette.TransitFill);
+    private static readonly IBrush BossEmptyStroke = Palette.Brush(Palette.BossEmptyStroke);
+    private static readonly IBrush BossInitial = Palette.Brush(Palette.BossInitial);
+    private static readonly IBrush PinShadow = Palette.Brush(Palette.PinShadow);
+    private static readonly IBrush PlayerHalo = Palette.Brush(Palette.PlayerHalo);
+    private static readonly IBrush PlayerCone = Palette.Brush(Palette.PlayerCone);
+    private static readonly IBrush PlayerPanelBorder = Palette.Brush(Palette.PlayerPanelBorder);
+    private static readonly IBrush QuestLabelBrush = Palette.Brush(Palette.QuestLabel);
+    private static readonly IBrush FocusHalo = Palette.Brush(Palette.FocusHalo);
+    private static readonly IBrush DotBrush = Palette.Brush(Palette.Dot);
 
     private static readonly Pen ExtractPmcPen = new(ExtractPmc, 2);
     private static readonly Pen ExtractScavPen = new(ExtractScav, 2);
@@ -194,11 +194,16 @@ public sealed class MapCanvas : Control
         InvalidateVisual();
     }
 
-    /// <summary>Drop a labelled pin at a game position (task/story jump target).</summary>
-    public void SetFocusPin(double gameX, double gameZ, string label)
+    /// <summary>
+    /// Drop a labelled pin at a game position (task/story jump target). When
+    /// <paramref name="focus"/> is set, the view is also centred on that spot at
+    /// the standard jump zoom, so a jump is always one call.
+    /// </summary>
+    public void SetFocusPin(double gameX, double gameZ, string label, bool focus = false, double zoom = 3.2)
     {
         _focusPin = (gameX, gameZ, label ?? "");
-        InvalidateVisual();
+        if (focus) FocusOn(gameX, gameZ, zoom);
+        else InvalidateVisual();
     }
 
     public void ClearFocusPin()
@@ -453,16 +458,16 @@ public sealed class MapCanvas : Control
         }
     }
 
-    private static readonly IBrush CanvasBackground = new SolidColorBrush(Color.Parse("#0A0F15"));
-    private static readonly IBrush CompactBackground = new SolidColorBrush(Color.Parse("#080B10"));
+    private static readonly IBrush CanvasBackground = Palette.Brush(Palette.HazardGlyph);
+    private static readonly IBrush CompactBackground = Palette.Brush(Palette.CompactBg);
 
-    private static readonly IBrush MinefieldFill = new SolidColorBrush(Color.Parse("#33E0523D"));
-    private static readonly IBrush MinefieldStroke = new SolidColorBrush(Color.Parse("#CCE0523D"));
-    private static readonly IBrush SniperFill = new SolidColorBrush(Color.Parse("#33E0A23D"));
-    private static readonly IBrush SniperStroke = new SolidColorBrush(Color.Parse("#CCE0A23D"));
-    private static readonly IBrush HazardFill = new SolidColorBrush(Color.Parse("#33D06FE0"));
-    private static readonly IBrush HazardStroke = new SolidColorBrush(Color.Parse("#CCD06FE0"));
-    private static readonly IBrush HazardGlyph = new SolidColorBrush(Color.Parse("#0A0F15"));
+    private static readonly IBrush MinefieldFill = Palette.Brush(Palette.MinefieldFill);
+    private static readonly IBrush MinefieldStroke = Palette.Brush(Palette.MinefieldStroke);
+    private static readonly IBrush SniperFill = Palette.Brush(Palette.SniperFill);
+    private static readonly IBrush SniperStroke = Palette.Brush(Palette.SniperStroke);
+    private static readonly IBrush HazardFill = Palette.Brush(Palette.HazardFill);
+    private static readonly IBrush HazardStroke = Palette.Brush(Palette.HazardStroke);
+    private static readonly IBrush HazardGlyph = Palette.Brush(Palette.HazardGlyph);
 
     // Polygon outlines are cached in *image* coordinates (independent of pan
     // and zoom) and transformed at draw time. Rebuilding 330 StreamGeometry

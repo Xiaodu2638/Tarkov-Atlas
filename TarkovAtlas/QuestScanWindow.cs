@@ -20,8 +20,8 @@ public sealed class QuestScanWindow : Window
         MinWidth = 620;
         MinHeight = 460;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        Background = new SolidColorBrush(Color.Parse("#090E14"));
-        Foreground = new SolidColorBrush(Color.Parse("#E8EDF2"));
+        Background = Palette.Brush(Palette.DialogBg);
+        Foreground = Palette.Brush(Palette.TextPrimary);
         FontFamily = new FontFamily("Microsoft YaHei UI, Segoe UI");
         SystemDecorations = SystemDecorations.BorderOnly;
         CanResize = true;
@@ -30,14 +30,14 @@ public sealed class QuestScanWindow : Window
         {
             Text = $"{subtitle}   候选：{candidates.Count}",
             FontSize = 10.5,
-            Foreground = new SolidColorBrush(Color.Parse("#8FA0AE")),
+            Foreground = Palette.Brush(Palette.TextDim),
             TextWrapping = TextWrapping.Wrap,
         };
 
         var root = new Grid
         {
             RowDefinitions = new RowDefinitions("54,*,Auto"),
-            Background = new SolidColorBrush(Color.Parse("#090E14")),
+            Background = Palette.Brush(Palette.DialogBg),
         };
 
         root.Children.Add(BuildHeader(title));
@@ -80,8 +80,8 @@ public sealed class QuestScanWindow : Window
 
         var border = new Border
         {
-            Background = new SolidColorBrush(Color.Parse("#0D141C")),
-            BorderBrush = new SolidColorBrush(Color.Parse("#26333F")),
+            Background = Palette.Brush(Palette.CardBg),
+            BorderBrush = Palette.Brush(Palette.BorderPanel),
             BorderThickness = new Thickness(0, 0, 0, 1),
             Child = grid,
         };
@@ -103,7 +103,7 @@ public sealed class QuestScanWindow : Window
             {
                 Text = "没有匹配到任务名。\n\n可以：\n· 在任务列表里手动搜索任务名并勾选\n· 换一张更清晰的任务页面截图再试一次",
                 FontSize = 12,
-                Foreground = new SolidColorBrush(Color.Parse("#9EAEBB")),
+                Foreground = Palette.Brush(Palette.TextSecondary),
                 TextWrapping = TextWrapping.Wrap,
             });
         }
@@ -128,7 +128,7 @@ public sealed class QuestScanWindow : Window
                 {
                     Text = $"{candidate.Quest.Trader}  ·  {candidate.Quest.LevelText}  ·  {candidate.Quest.MapsText}  ·  {candidate.Evidence}",
                     FontSize = 9.5,
-                    Foreground = new SolidColorBrush(Color.Parse("#8FA0AE")),
+                    Foreground = Palette.Brush(Palette.TextDim),
                     TextWrapping = TextWrapping.Wrap,
                 };
                 var textStack = new StackPanel { Spacing = 2 };
@@ -141,8 +141,8 @@ public sealed class QuestScanWindow : Window
                     FontSize = 10,
                     FontWeight = FontWeight.Bold,
                     Foreground = new SolidColorBrush(candidate.Score >= 0.9
-                        ? Color.Parse("#6FBF8B")
-                        : Color.Parse("#D6A84B")),
+                        ? Palette.Success
+                        : Palette.Accent),
                     VerticalAlignment = VerticalAlignment.Top,
                     Margin = new Thickness(8, 1, 0, 0),
                 };
@@ -156,8 +156,8 @@ public sealed class QuestScanWindow : Window
 
                 var border = new Border
                 {
-                    Background = new SolidColorBrush(Color.Parse("#111922")),
-                    BorderBrush = new SolidColorBrush(Color.Parse("#25313D")),
+                    Background = Palette.Brush(Palette.PanelBg2),
+                    BorderBrush = Palette.Brush(Palette.BorderSoft),
                     BorderThickness = new Thickness(1),
                     CornerRadius = new CornerRadius(6),
                     Padding = new Thickness(10, 8),
@@ -185,7 +185,7 @@ public sealed class QuestScanWindow : Window
             TextWrapping = TextWrapping.Wrap,
             Height = 120,
             FontSize = 10,
-            Background = new SolidColorBrush(Color.Parse("#0A0F15")),
+            Background = Palette.Brush(Palette.CanvasBg),
         };
         var expander = new Expander
         {
@@ -193,7 +193,7 @@ public sealed class QuestScanWindow : Window
             Content = rawBox,
             IsExpanded = false,
             Margin = new Thickness(0, 6, 0, 0),
-            Foreground = new SolidColorBrush(Color.Parse("#9EAEBB")),
+            Foreground = Palette.Brush(Palette.TextSecondary),
         };
         Grid.SetRow(expander, 1);
         main.Children.Add(expander);
@@ -212,7 +212,7 @@ public sealed class QuestScanWindow : Window
         {
             Text = "提示：勾选后可以复制任务名，在右侧任务列表中搜索并标记完成。",
             FontSize = 9.5,
-            Foreground = new SolidColorBrush(Color.Parse("#6D7D8B")),
+            Foreground = Palette.Brush(Palette.TextMuted),
             VerticalAlignment = VerticalAlignment.Center,
             TextWrapping = TextWrapping.Wrap,
         });

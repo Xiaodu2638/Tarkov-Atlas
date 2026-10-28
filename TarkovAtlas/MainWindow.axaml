@@ -11,30 +11,30 @@
         Background="{StaticResource AppBg}"
         Foreground="{StaticResource TextPrimary}">
   <Grid RowDefinitions="46,*">
-    <Border Grid.Row="0" x:Name="HeaderBar" Background="#0B1016" BorderBrush="#1C2732"
+    <Border Grid.Row="0" x:Name="HeaderBar" Background="{StaticResource HeaderBg}" BorderBrush="{StaticResource DividerBg}"
             BorderThickness="0,0,0,1" PointerPressed="HeaderBar_PointerPressed">
       <Grid ColumnDefinitions="Auto,Auto,*,Auto">
         <Border Width="28" Height="28" Margin="14,0,10,0" CornerRadius="6"
                 Background="{StaticResource Accent}" VerticalAlignment="Center">
-          <TextBlock Text="T" FontSize="18" FontWeight="Black" Foreground="#171207"
+          <TextBlock Text="T" FontSize="18" FontWeight="Black" Foreground="{StaticResource TextOnAccent}"
                      HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Border>
         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
           <TextBlock Text="TARKOV ATLAS" FontSize="14" FontWeight="Bold" LetterSpacing="1.4" />
-          <Border Background="#18212A" CornerRadius="4" Padding="6,2">
+          <Border Background="{StaticResource ButtonBg}" CornerRadius="4" Padding="6,2">
             <TextBlock Text="离线地图工具" FontSize="10" Foreground="{StaticResource TextSecondary}" />
           </Border>
         </StackPanel>
 
         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center"
                     VerticalAlignment="Center" Spacing="8">
-          <Border x:Name="RaidStatusPill" Background="#17231D" BorderBrush="#2E4A37"
+          <Border x:Name="RaidStatusPill" Background="{StaticResource StatusLiveBg}" BorderBrush="{StaticResource StatusLiveBorder}"
                   BorderThickness="1" CornerRadius="12" Padding="10,4">
             <StackPanel Orientation="Horizontal" Spacing="6">
-              <Ellipse x:Name="RaidStatusDot" Width="7" Height="7" Fill="#6FBF8B"
+              <Ellipse x:Name="RaidStatusDot" Width="7" Height="7" Fill="{StaticResource Success}"
                        VerticalAlignment="Center" />
               <TextBlock x:Name="RaidStatusText" Text="等待战局" FontSize="11"
-                         Foreground="#A9CEB8" VerticalAlignment="Center" />
+                         Foreground="{StaticResource StatusLiveText}" VerticalAlignment="Center" />
             </StackPanel>
           </Border>
           <TextBlock x:Name="CursorCoordText" Text="X —  Z —" FontSize="11"
@@ -50,13 +50,13 @@
           <Button x:Name="TitleMaxButton" Classes="ghost" Content="□" FontSize="13" Width="38"
                   Click="MaximizeButton_Click" />
           <Button x:Name="TitleCloseButton" Classes="ghost" Content="✕" FontSize="13" Width="38"
-                  Foreground="#E08A7C" Click="CloseButton_Click" />
+                  Foreground="{StaticResource DangerText}" Click="CloseButton_Click" />
         </StackPanel>
       </Grid>
     </Border>
 
     <Grid Grid.Row="1" ColumnDefinitions="294,*,Auto">
-      <Border Grid.Column="0" Background="{StaticResource PanelBg}" BorderBrush="#1C2732"
+      <Border Grid.Column="0" Background="{StaticResource PanelBg}" BorderBrush="{StaticResource DividerBg}"
               BorderThickness="0,0,1,0">
         <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
           <StackPanel Margin="16,16,16,10" Spacing="2">
@@ -79,7 +79,7 @@
               <DataTemplate x:DataType="models:MapDefinition">
                 <Border Padding="9,8" CornerRadius="7">
                   <Grid ColumnDefinitions="32,*,Auto">
-                    <Border Width="26" Height="26" CornerRadius="6" Background="#1A2530"
+                    <Border Width="26" Height="26" CornerRadius="6" Background="{StaticResource ListHoverBg}"
                             VerticalAlignment="Top">
                       <TextBlock Text="{Binding Order}" FontSize="11" FontWeight="Bold"
                                  Foreground="{StaticResource Accent}"
@@ -92,7 +92,7 @@
                       <TextBlock Text="{Binding MetaLine}" FontSize="9.5"
                                  Foreground="{StaticResource TextSecondary}" />
                     </StackPanel>
-                    <Border Grid.Column="2" Background="#1A2028" CornerRadius="4"
+                    <Border Grid.Column="2" Background="{StaticResource CardAltBg}" CornerRadius="4"
                             Padding="5,2" VerticalAlignment="Top">
                       <TextBlock Text="{Binding Difficulty}" FontSize="9"
                                  Foreground="{StaticResource TextSecondary}" />
@@ -103,7 +103,7 @@
             </ListBox.ItemTemplate>
           </ListBox>
 
-          <Border Grid.Row="3" BorderBrush="#1C2732" BorderThickness="0,1,0,0" Padding="12,10">
+          <Border Grid.Row="3" BorderBrush="{StaticResource DividerBg}" BorderThickness="0,1,0,0" Padding="12,10">
             <StackPanel Spacing="7">
               <Button x:Name="QuestToggleButton" Classes="accent" Content="任务追踪  ·  截图识别"
                       HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
@@ -117,7 +117,7 @@
             </StackPanel>
           </Border>
 
-          <Border Grid.Row="4" Background="#0A0F14" Padding="12,8">
+          <Border Grid.Row="4" Background="{StaticResource SurfaceBg}" Padding="12,8">
             <StackPanel Spacing="2">
               <TextBlock x:Name="LogStatusText" Text="日志：未连接" FontSize="9.5"
                          Foreground="{StaticResource TextMuted}" TextTrimming="CharacterEllipsis" />
@@ -128,8 +128,8 @@
         </Grid>
       </Border>
 
-      <Grid Grid.Column="1" RowDefinitions="68,*,30" Background="#090D12">
-        <Border Grid.Row="0" Background="#0D131A" BorderBrush="#1C2732" BorderThickness="0,0,0,1"
+      <Grid Grid.Column="1" RowDefinitions="68,*,30" Background="{StaticResource SurfaceDeepBg}">
+        <Border Grid.Row="0" Background="{StaticResource SurfaceRaisedBg}" BorderBrush="{StaticResource DividerBg}" BorderThickness="0,0,0,1"
                 Padding="20,9,14,8">
           <Grid ColumnDefinitions="*,Auto">
             <StackPanel Spacing="1" VerticalAlignment="Center">
@@ -159,7 +159,7 @@
         <Grid Grid.Row="1">
           <controls:MapCanvas x:Name="MapView" />
           <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14"
-                  Background="#D90B1017" BorderBrush="#2A3744" BorderThickness="1"
+                  Background="{StaticResource OverlayChromeBg}" BorderBrush="{StaticResource BorderStrong}" BorderThickness="1"
                   CornerRadius="7" Padding="9,6" IsHitTestVisible="False">
             <StackPanel Spacing="1">
               <TextBlock x:Name="HoverCoordText" Text="移动到地图上查看坐标" FontSize="10.5"
@@ -170,7 +170,7 @@
           </Border>
 
           <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="14"
-                  Background="#D90B1017" BorderBrush="#2A3744" BorderThickness="1"
+                  Background="{StaticResource OverlayChromeBg}" BorderBrush="{StaticResource BorderStrong}" BorderThickness="1"
                   CornerRadius="7" Padding="10,7">
             <StackPanel Orientation="Horizontal" Spacing="10">
               <TextBlock x:Name="ZoomText" Text="100%" FontSize="10.5"
@@ -183,7 +183,7 @@
           </Border>
         </Grid>
 
-        <Border Grid.Row="2" Background="#0B1016" BorderBrush="#1C2732" BorderThickness="0,1,0,0"
+        <Border Grid.Row="2" Background="{StaticResource HeaderBg}" BorderBrush="{StaticResource DividerBg}" BorderThickness="0,1,0,0"
                 Padding="14,0">
           <Grid ColumnDefinitions="*,Auto">
             <TextBlock x:Name="HintText" Text="滚轮缩放  ·  左键拖拽  ·  双击放大  ·  0 复位"
@@ -199,9 +199,9 @@
       </Grid>
 
       <Border Grid.Column="2" x:Name="QuestDrawer" Width="0" IsVisible="False"
-              Background="#0C1219" BorderBrush="#26333F" BorderThickness="1,0,0,0">
+              Background="{StaticResource PanelDeepBg}" BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="1,0,0,0">
         <Grid RowDefinitions="52,*">
-          <Border Grid.Row="0" Background="#101822" BorderBrush="#26333F" BorderThickness="0,0,0,1" Padding="14,0">
+          <Border Grid.Row="0" Background="{StaticResource PanelHeaderBg}" BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="0,0,0,1" Padding="14,0">
             <Grid ColumnDefinitions="*,Auto">
               <StackPanel VerticalAlignment="Center" Spacing="1">
                 <TextBlock Text="任务追踪" FontSize="14" FontWeight="SemiBold" />
@@ -233,7 +233,7 @@
                              Foreground="{StaticResource TextMuted}" IsVisible="False" TextWrapping="Wrap" />
                 </StackPanel>
 
-                <Border Grid.Row="1" Margin="12,0,12,6" Padding="8,5" Background="#131B24"
+                <Border Grid.Row="1" Margin="12,0,12,6" Padding="8,5" Background="{StaticResource CardAltBg}"
                         CornerRadius="5" IsVisible="True">
                   <Grid ColumnDefinitions="*,Auto">
                     <TextBlock x:Name="QuestDatabaseText" Text="离线任务库" FontSize="9"
@@ -284,7 +284,7 @@
                 </ListBox>
                 </Grid>
 
-                <Border Grid.Row="3" Background="#0A0F15" BorderBrush="#26333F" BorderThickness="0,1,0,0"
+                <Border Grid.Row="3" Background="{StaticResource CanvasBg}" BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="0,1,0,0"
                         Padding="12,8">
                   <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="5">
                     <TextBlock x:Name="QuestDetailTitle" Text="选择一个任务" FontSize="12"
@@ -319,7 +319,7 @@
 
             <TabItem Header="剧情任务">
               <Grid RowDefinitions="Auto,*">
-                <Border Grid.Row="0" Margin="12,10,12,6" Padding="9,7" Background="#131B24" CornerRadius="5">
+                <Border Grid.Row="0" Margin="12,10,12,6" Padding="9,7" Background="{StaticResource CardAltBg}" CornerRadius="5">
                   <StackPanel Spacing="2">
                     <TextBlock x:Name="StoryCountText" Text="剧情进度 0/0" FontSize="10"
                                FontWeight="SemiBold" Foreground="{StaticResource Accent}" />

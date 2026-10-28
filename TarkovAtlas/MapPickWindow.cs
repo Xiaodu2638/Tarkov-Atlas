@@ -19,8 +19,8 @@ public sealed class MapPickWindow : Window
         Height = Math.Min(560, 170 + maps.Count * 54);
         CanResize = false;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        Background = new SolidColorBrush(Color.Parse("#0B1117"));
-        Foreground = new SolidColorBrush(Color.Parse("#E8EDF2"));
+        Background = Palette.Brush(Palette.InputBg);
+        Foreground = Palette.Brush(Palette.TextPrimary);
         FontFamily = new FontFamily("Microsoft YaHei UI, Segoe UI");
         SystemDecorations = SystemDecorations.BorderOnly;
 
@@ -41,7 +41,7 @@ public sealed class MapPickWindow : Window
         {
             Text = questName,
             FontSize = 11,
-            Foreground = new SolidColorBrush(Color.Parse("#9EAEBB")),
+            Foreground = Palette.Brush(Palette.TextSecondary),
             TextWrapping = TextWrapping.Wrap,
         });
         root.Children.Add(header);
@@ -64,7 +64,7 @@ public sealed class MapPickWindow : Window
                         {
                             Text = $"{map.NameEn}  ·  {map.Subtitle}",
                             FontSize = 9.5,
-                            Foreground = new SolidColorBrush(Color.Parse("#8FA0AE")),
+                            Foreground = Palette.Brush(Palette.TextDim),
                         },
                     },
                 },

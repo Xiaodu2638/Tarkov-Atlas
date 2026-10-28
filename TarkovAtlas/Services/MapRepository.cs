@@ -47,7 +47,7 @@ public sealed class MapRepository
 
     public void Load()
     {
-        var manifestPath = Path.Combine(AppPaths.MapsDir, "mapdata.json");
+        var manifestPath = AppPaths.MapDataPath;
         if (!File.Exists(manifestPath))
             throw new FileNotFoundException("地图清单不存在，请确认 Assets/Maps/mapdata.json 已随程序发布。", manifestPath);
 
@@ -70,7 +70,7 @@ public sealed class MapRepository
     {
         try
         {
-            var path = Path.Combine(AppPaths.MapsDir, "layers", "index.json");
+            var path = AppPaths.LayersIndexPath;
             if (!File.Exists(path)) return;
             var index = JsonSerializer.Deserialize(File.ReadAllText(path),
                 AppJsonContext.Default.DictionaryStringListMapLayer);
@@ -92,7 +92,7 @@ public sealed class MapRepository
     {
         try
         {
-            var path = Path.Combine(AppPaths.MapsDir, "hazards.json");
+            var path = AppPaths.HazardsPath;
             if (!File.Exists(path)) return;
             var data = JsonSerializer.Deserialize(File.ReadAllText(path),
                 AppJsonContext.Default.DictionaryStringListHazardZone);

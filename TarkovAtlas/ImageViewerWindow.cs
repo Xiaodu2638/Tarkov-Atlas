@@ -50,7 +50,7 @@ public sealed class ImageViewerWindow : Window
         MinWidth = 480;
         MinHeight = 360;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        Background = new SolidColorBrush(Color.Parse("#080C11"));
+        Background = Palette.Brush(Palette.AppBg);
 
         _image = new Image
         {
@@ -63,7 +63,7 @@ public sealed class ImageViewerWindow : Window
         {
             Text = "正在加载…",
             FontSize = 11,
-            Foreground = new SolidColorBrush(Color.Parse("#9EAEBB")),
+            Foreground = Palette.Brush(Palette.TextSecondary),
             VerticalAlignment = VerticalAlignment.Center,
             TextTrimming = TextTrimming.CharacterEllipsis,
         };
@@ -73,7 +73,7 @@ public sealed class ImageViewerWindow : Window
         _pager = new TextBlock
         {
             FontSize = 10,
-            Foreground = new SolidColorBrush(Color.Parse("#9EAEBB")),
+            Foreground = Palette.Brush(Palette.TextSecondary),
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(6, 0),
         };
@@ -85,7 +85,7 @@ public sealed class ImageViewerWindow : Window
             Content = _image,
             HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto,
             VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto,
-            Background = new SolidColorBrush(Color.Parse("#0A0F15")),
+            Background = Palette.Brush(Palette.CanvasBg),
         };
         _scroll.PointerWheelChanged += OnWheel;
         _scroll.PointerPressed += OnPointerPressed;
@@ -112,8 +112,8 @@ public sealed class ImageViewerWindow : Window
 
         var header = new Border
         {
-            Background = new SolidColorBrush(Color.Parse("#0D141C")),
-            BorderBrush = new SolidColorBrush(Color.Parse("#26333F")),
+            Background = Palette.Brush(Palette.CardBg),
+            BorderBrush = Palette.Brush(Palette.BorderPanel),
             BorderThickness = new Thickness(0, 0, 0, 1),
             Padding = new Thickness(16, 10),
             Child = new StackPanel
@@ -126,13 +126,13 @@ public sealed class ImageViewerWindow : Window
                         Text = _caption,
                         FontSize = 14,
                         FontWeight = FontWeight.SemiBold,
-                        Foreground = new SolidColorBrush(Color.Parse("#E8EDF2")),
+                        Foreground = Palette.Brush(Palette.TextPrimary),
                     },
                     new TextBlock
                     {
                         Text = _urls.Count > 0 ? _urls[0] : "",
                         FontSize = 9.5,
-                        Foreground = new SolidColorBrush(Color.Parse("#6D7D8B")),
+                        Foreground = Palette.Brush(Palette.TextMuted),
                         TextTrimming = TextTrimming.CharacterEllipsis,
                     },
                 },
@@ -179,8 +179,8 @@ public sealed class ImageViewerWindow : Window
 
         var footer = new Border
         {
-            Background = new SolidColorBrush(Color.Parse("#0B1016")),
-            BorderBrush = new SolidColorBrush(Color.Parse("#26333F")),
+            Background = Palette.Brush(Palette.PanelBg),
+            BorderBrush = Palette.Brush(Palette.BorderPanel),
             BorderThickness = new Thickness(0, 1, 0, 0),
             Child = footerGrid,
         };
@@ -201,7 +201,7 @@ public sealed class ImageViewerWindow : Window
         try
         {
             _status.Text = "正在加载…";
-            _status.Foreground = new SolidColorBrush(Color.Parse("#9EAEBB"));
+            _status.Foreground = Palette.Brush(Palette.TextSecondary);
             _prev.IsEnabled = _index > 0;
             _next.IsEnabled = _index < _urls.Count - 1;
             _pager.Text = _urls.Count > 1 ? $"{_index + 1} / {_urls.Count}" : "";
@@ -238,7 +238,7 @@ public sealed class ImageViewerWindow : Window
     private void ShowError(string message)
     {
         _status.Text = message;
-        _status.Foreground = new SolidColorBrush(Color.Parse("#E08A7C"));
+        _status.Foreground = Palette.Brush(Palette.DangerText);
     }
 
     private void OpenInBrowser()

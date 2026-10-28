@@ -9,6 +9,19 @@ public static class AppPaths
     public static string AssetsDir => Path.Combine(BaseDir, "Assets");
     public static string MapsDir => Path.Combine(AssetsDir, "Maps");
     public static string ScriptsDir => Path.Combine(BaseDir, "Scripts");
+
+    // Asset file names live here so the loader and the build/check tools agree
+    // on one spelling instead of repeating literals in several files.
+    public const string MapDataFile = "mapdata.json";
+    public const string QuestDataFile = "quests.json";
+    public const string StoryDataFile = "story.json";
+    public const string HazardsFile = "hazards.json";
+    public const string LayersIndexFile = "index.json";
+
+    public static string MapDataPath => Path.Combine(MapsDir, MapDataFile);
+    public static string HazardsPath => Path.Combine(MapsDir, HazardsFile);
+    public static string LayersIndexPath => Path.Combine(MapsDir, "layers", LayersIndexFile);
+
     private static string? _dataDir;
 
     public static string DataDir

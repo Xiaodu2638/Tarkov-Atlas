@@ -152,13 +152,13 @@ public partial class MainWindow : Window
             {
                 LogStatusText.Text = "日志：未找到，请在设置中指定";
                 RaidStatusText.Text = "日志未连接";
-                RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#D85B4A"));
+                RaidStatusDot.Fill = Palette.Brush(Palette.StatusErrorText);
             }
         }
         else
         {
             RaidStatusText.Text = "自动识别已关闭";
-            RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#8FA0AE"));
+            RaidStatusDot.Fill = Palette.Brush(Palette.TextDim);
         }
 
         var shotDir = ResolveScreenshotDir();
@@ -196,9 +196,9 @@ public partial class MainWindow : Window
             if (map is null) return;
 
             RaidStatusText.Text = "战局 · " + map.DisplayName;
-            RaidStatusPill.Background = new SolidColorBrush(Color.Parse("#17231D"));
-            RaidStatusPill.BorderBrush = new SolidColorBrush(Color.Parse("#2E4A37"));
-            RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#6FBF8B"));
+            RaidStatusPill.Background = Palette.Brush(Palette.StatusLiveBg);
+            RaidStatusPill.BorderBrush = Palette.Brush(Palette.StatusLiveBorder);
+            RaidStatusDot.Fill = Palette.Brush(Palette.Success);
             LogStatusText.Text = "日志：已识别 " + e.LocationId;
 
             if (_settings.AutoSwitchMap)
@@ -1038,22 +1038,15 @@ public partial class MainWindow : Window
             if (target is null) return;
         }
 
-        SelectMapListItem(target);
-        await SelectMapAsync(target, remember: true);
+        await NavigateToAsync(target, remember: true);
         if (!_quests.IsTracked(quest.Id)) _quests.SetTracked(quest.Id, true);
         RefreshQuestScope();
 
         var first = quest.ObjectivesFor(target.Key).SelectMany(o => o.Zones).FirstOrDefault(z => z.Map == target.Key);
         if (first is not null)
-        {
-            MapView.FocusOn(first.X, first.Z, 3.2);
-            MapView.SetFocusPin(first.X, first.Z, quest.Title);
-            MapView.InvalidateVisual();
-        }
+            MapView.SetFocusPin(first.X, first.Z, quest.Title, focus: true);
         else
-        {
             MapView.ClearFocusPin();
-        }
         ShowToast($"已跳转到 {target.DisplayName}");
     }
 
@@ -1068,13 +1061,11 @@ public partial class MainWindow : Window
             return;
         }
 
-        SelectMapListItem(target);
-        await SelectMapAsync(target, remember: true);
+        await NavigateToAsync(target, remember: true);
 
         if (objective.HasCoordinates)
         {
-            MapView.FocusOn(objective.X, objective.Z, 3.2);
-            MapView.SetFocusPin(objective.X, objective.Z, objective.Text);
+            MapView.SetFocusPin(objective.X, objective.Z, objective.Text, focus: true);
             ShowToast($"已跳转到 {target.DisplayName} 的目标位置");
         }
         else
@@ -1082,8 +1073,19 @@ public partial class MainWindow : Window
             MapView.ClearFocusPin();
             ShowToast($"已跳转到 {target.DisplayName}（该目标无精确坐标）");
         }
-        MapView.InvalidateVisual();
     }
+
+    /// <summary>
+    /// Switch the sidebar selection and load a map. Every jump action (task,
+    /// story objective, list click) goes through here so the selection state,
+    /// the list highlight and the async load cannot drift apart.
+    /// </summary>
+    private async Task NavigateToAsync(MapDefinition map, bool remember)
+    {
+        SelectMapListItem(map);
+        await SelectMapAsync(map, remember);
+    }
+
 
     private async Task<MapDefinition?> PickMapAsync(Quest quest, IReadOnlyList<MapDefinition> maps)
     {
@@ -1265,7 +1267,7 @@ public partial class MainWindow : Window
         else
         {
             RaidStatusText.Text = "自动识别已关闭";
-            RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#8FA0AE"));
+            RaidStatusDot.Fill = Palette.Brush(Palette.TextDim);
         }
 
         _screenshots.StopWatching();
