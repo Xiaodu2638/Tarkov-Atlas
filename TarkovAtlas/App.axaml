@@ -14,6 +14,7 @@
     <SolidColorBrush x:Key="TextMuted" Color="#6D7D8B" />
     <SolidColorBrush x:Key="Accent" Color="#D6A84B" />
     <SolidColorBrush x:Key="AccentSoft" Color="#3B3220" />
+    <SolidColorBrush x:Key="AccentHover" Color="#E6BB60" />
     <SolidColorBrush x:Key="Danger" Color="#D85B4A" />
     <SolidColorBrush x:Key="Success" Color="#6FBF8B" />
     <SolidColorBrush x:Key="HeaderBg" Color="#0B1117" />

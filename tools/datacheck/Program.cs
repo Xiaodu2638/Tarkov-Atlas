@@ -412,10 +412,66 @@ internal static class DataChecks
                 objectives.Count(o => o.HasCoordinates).ToString());
         }
 
+        // ---- XAML resource keys -------------------------------------------
+        // A missing StaticResource key only fails at runtime, when the window is
+        // constructed. Catch it here instead: every key referenced from the
+        // markup must also be declared in App.axaml.
+        {
+            var projectDir = Path.GetDirectoryName(AssetsRoot()) ?? ".";
+            var xamlFiles = Directory.Exists(projectDir)
+                ? Directory.GetFiles(projectDir, "*.axaml")
+                : Array.Empty<string>();
+
+            var declared = new HashSet<string>(StringComparer.Ordinal);
+            var referenced = new Dictionary<string, string>(StringComparer.Ordinal);
+
+            foreach (var file in xamlFiles)
+            {
+                var text = File.ReadAllText(file);
+                foreach (var key in MatchAll(text, "x:Key=\"([^\"]+)\""))
+                    declared.Add(key);
+                foreach (var key in MatchAll(text, "StaticResource\\s+([A-Za-z0-9_.]+)"))
+                    referenced[key] = Path.GetFileName(file);
+            }
+
+            var missing = referenced
+                .Where(kv => !declared.Contains(kv.Key))
+                .Select(kv => $"{kv.Key} (used in {kv.Value})")
+                .OrderBy(x => x)
+                .ToList();
+
+            Check("xaml resource keys resolve", missing.Count == 0, string.Join("; ", missing));
+        }
+
         if (_known > 0)
             Console.WriteLine($"\n{_known} known defect(s) reported above - see AGENTS.md section 7");
         Console.WriteLine(_failures == 0 ? "\nALL CHECKS PASSED" : $"\n{_failures} CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;
+    }
+
+    /// <summary>Every first capture group of <paramref name="pattern"/> in <paramref name="text"/>.</summary>
+    private static IEnumerable<string> MatchAll(string text, string pattern) =>
+        System.Text.RegularExpressions.Regex.Matches(text, pattern)
+            .Select(m => m.Groups[1].Value);
+
+    /// <summary>Assets directory used by the app, resolved from the test binary location.</summary>
+    private static string AssetsRoot()
+    {
+        var project = ProjectDir();
+        return Path.Combine(project, "Assets");
+    }
+
+    /// <summary>The TarkovAtlas project directory (…/default-workspace/TarkovAtlas).</summary>
+    private static string ProjectDir()
+    {
+        var dir = new DirectoryInfo(AppContext.BaseDirectory);
+        while (dir is not null)
+        {
+            var candidate = Path.Combine(dir.FullName, "TarkovAtlas", "App.axaml");
+            if (File.Exists(candidate)) return Path.Combine(dir.FullName, "TarkovAtlas");
+            dir = dir.Parent;
+        }
+        return AppContext.BaseDirectory;
     }
 
     /// <summary>How far the image rectangle, mapped back to game space, misses the declared bounds.</summary>
