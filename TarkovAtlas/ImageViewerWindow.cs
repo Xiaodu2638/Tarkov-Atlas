@@ -1,0 +1,298 @@
+using System.Net.Http;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Layout;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+
+namespace TarkovAtlas;
+
+/// <summary>
+/// In-app picture viewer. Used for the wiki task location maps so the image is
+/// shown inside the application instead of being handed off to a browser.
+/// Supports wheel zoom, drag to pan and a browser fallback when the download
+/// fails (offline machine, site outage, ...).
+/// </summary>
+public sealed class ImageViewerWindow : Window
+{
+    private static readonly HttpClient Http = new() { Timeout = TimeSpan.FromSeconds(45) };
+
+    private readonly Image _image;
+    private readonly TextBlock _status;
+    private readonly ScrollViewer _scroll;
+    private readonly List<string> _urls;
+    private readonly string _caption;
+    private readonly Button _prev;
+    private readonly Button _next;
+    private readonly TextBlock _pager;
+
+    private Bitmap? _bitmap;
+    private double _zoom = 1;
+    private int _index;
+    private Point _dragStart;
+    private Vector _dragOffset;
+
+    public ImageViewerWindow(string caption, string url)
+        : this(caption, new[] { url })
+    {
+    }
+
+    public ImageViewerWindow(string caption, IReadOnlyList<string> urls)
+    {
+        _caption = caption;
+        _urls = urls.Where(u => !string.IsNullOrWhiteSpace(u)).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+        if (_urls.Count == 0) _urls.Add("");
+
+        Title = caption;
+        Width = 980;
+        Height = 720;
+        MinWidth = 480;
+        MinHeight = 360;
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        Background = new SolidColorBrush(Color.Parse("#080C11"));
+
+        _image = new Image
+        {
+            Stretch = Stretch.Uniform,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        _status = new TextBlock
+        {
+            Text = "正在加载…",
+            FontSize = 11,
+            Foreground = new SolidColorBrush(Color.Parse("#9EAEBB")),
+            VerticalAlignment = VerticalAlignment.Center,
+            TextTrimming = TextTrimming.CharacterEllipsis,
+        };
+
+        _prev = new Button { Content = "‹", Width = 30, IsEnabled = false };
+        _next = new Button { Content = "›", Width = 30, IsEnabled = false };
+        _pager = new TextBlock
+        {
+            FontSize = 10,
+            Foreground = new SolidColorBrush(Color.Parse("#9EAEBB")),
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(6, 0),
+        };
+        _prev.Click += (_, _) => ShowIndex(_index - 1);
+        _next.Click += (_, _) => ShowIndex(_index + 1);
+
+        _scroll = new ScrollViewer
+        {
+            Content = _image,
+            HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto,
+            VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto,
+            Background = new SolidColorBrush(Color.Parse("#0A0F15")),
+        };
+        _scroll.PointerWheelChanged += OnWheel;
+        _scroll.PointerPressed += OnPointerPressed;
+        _scroll.PointerMoved += OnPointerMoved;
+        _scroll.PointerReleased += OnPointerReleased;
+
+        Content = BuildLayout();
+        Opened += async (_, _) => await LoadAsync();
+        KeyDown += (_, e) =>
+        {
+            switch (e.Key)
+            {
+                case Key.Escape: Close(); break;
+                case Key.Add or Key.OemPlus: SetZoom(_zoom * 1.25); break;
+                case Key.Subtract or Key.OemMinus: SetZoom(_zoom / 1.25); break;
+                case Key.D0 or Key.Home: SetZoom(1); break;
+            }
+        };
+    }
+
+    private Control BuildLayout()
+    {
+        var root = new Grid { RowDefinitions = new RowDefinitions("Auto,*,Auto") };
+
+        var header = new Border
+        {
+            Background = new SolidColorBrush(Color.Parse("#0D141C")),
+            BorderBrush = new SolidColorBrush(Color.Parse("#26333F")),
+            BorderThickness = new Thickness(0, 0, 0, 1),
+            Padding = new Thickness(16, 10),
+            Child = new StackPanel
+            {
+                Spacing = 2,
+                Children =
+                {
+                    new TextBlock
+                    {
+                        Text = _caption,
+                        FontSize = 14,
+                        FontWeight = FontWeight.SemiBold,
+                        Foreground = new SolidColorBrush(Color.Parse("#E8EDF2")),
+                    },
+                    new TextBlock
+                    {
+                        Text = _urls.Count > 0 ? _urls[0] : "",
+                        FontSize = 9.5,
+                        Foreground = new SolidColorBrush(Color.Parse("#6D7D8B")),
+                        TextTrimming = TextTrimming.CharacterEllipsis,
+                    },
+                },
+            },
+        };
+        root.Children.Add(header);
+
+        Grid.SetRow(_scroll, 1);
+        root.Children.Add(_scroll);
+
+        var zoomOut = new Button { Content = "−", Width = 32, Margin = new Thickness(0, 0, 4, 0) };
+        zoomOut.Click += (_, _) => SetZoom(_zoom / 1.25);
+        var zoomIn = new Button { Content = "+", Width = 32, Margin = new Thickness(0, 0, 8, 0) };
+        zoomIn.Click += (_, _) => SetZoom(_zoom * 1.25);
+        var reset = new Button { Content = "复位", Margin = new Thickness(0, 0, 8, 0) };
+        reset.Click += (_, _) => SetZoom(1);
+        var reload = new Button { Content = "重新加载" };
+        reload.Click += async (_, _) => await LoadAsync();
+        var browser = new Button { Content = "在浏览器打开" };
+        browser.Click += (_, _) => OpenInBrowser();
+
+        var buttons = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Spacing = 6,
+            Margin = new Thickness(16, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            Children = { zoomOut, zoomIn, reset, reload, browser, _prev, _pager, _next },
+        };
+
+        var footerGrid = new Grid
+        {
+            ColumnDefinitions = new ColumnDefinitions("Auto,*,Auto"),
+            Margin = new Thickness(0, 8, 16, 8),
+        };
+        footerGrid.Children.Add(buttons);
+        Grid.SetColumn(_status, 1);
+        footerGrid.Children.Add(_status);
+
+        var close = new Button { Content = "关闭" };
+        close.Click += (_, _) => Close();
+        Grid.SetColumn(close, 2);
+        footerGrid.Children.Add(close);
+
+        var footer = new Border
+        {
+            Background = new SolidColorBrush(Color.Parse("#0B1016")),
+            BorderBrush = new SolidColorBrush(Color.Parse("#26333F")),
+            BorderThickness = new Thickness(0, 1, 0, 0),
+            Child = footerGrid,
+        };
+        Grid.SetRow(footer, 2);
+        root.Children.Add(footer);
+
+        return root;
+    }
+
+    private async Task LoadAsync()
+    {
+        if (_urls.Count == 0 || string.IsNullOrWhiteSpace(_urls[_index]))
+        {
+            ShowError("没有可显示的图片");
+            return;
+        }
+
+        try
+        {
+            _status.Text = "正在加载…";
+            _status.Foreground = new SolidColorBrush(Color.Parse("#9EAEBB"));
+            _prev.IsEnabled = _index > 0;
+            _next.IsEnabled = _index < _urls.Count - 1;
+            _pager.Text = _urls.Count > 1 ? $"{_index + 1} / {_urls.Count}" : "";
+
+            using var response = await Http.GetAsync(_urls[_index]);
+            if (!response.IsSuccessStatusCode)
+            {
+                ShowError($"加载失败：HTTP {(int)response.StatusCode}");
+                return;
+            }
+
+            var bytes = await response.Content.ReadAsByteArrayAsync();
+            using var stream = new MemoryStream(bytes);
+            _bitmap = new Bitmap(stream);
+            _image.Source = _bitmap;
+            _zoom = 1;
+            ApplyZoom();
+
+            _status.Text = $"{_bitmap.PixelSize.Width} × {_bitmap.PixelSize.Height}  ·  滚轮缩放  ·  拖拽平移";
+        }
+        catch (Exception ex)
+        {
+            ShowError("加载失败：" + ex.Message);
+        }
+    }
+
+    private void ShowIndex(int index)
+    {
+        if (index < 0 || index >= _urls.Count || index == _index) return;
+        _index = index;
+        _ = LoadAsync();
+    }
+
+    private void ShowError(string message)
+    {
+        _status.Text = message;
+        _status.Foreground = new SolidColorBrush(Color.Parse("#E08A7C"));
+    }
+
+    private void OpenInBrowser()
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(
+                new System.Diagnostics.ProcessStartInfo { FileName = _urls[_index], UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            ShowError("无法打开浏览器：" + ex.Message);
+        }
+    }
+
+    private void OnWheel(object? sender, PointerWheelEventArgs e)
+    {
+        if (_bitmap is null) return;
+        SetZoom(e.Delta.Y > 0 ? _zoom * 1.15 : _zoom / 1.15);
+        e.Handled = true;
+    }
+
+    private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (!e.GetCurrentPoint(_scroll).Properties.IsLeftButtonPressed) return;
+        _dragStart = e.GetPosition(_scroll);
+        _dragOffset = _scroll.Offset;
+        e.Pointer.Capture(_scroll);
+    }
+
+    private void OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        if (!e.GetCurrentPoint(_scroll).Properties.IsLeftButtonPressed) return;
+        var pos = e.GetPosition(_scroll);
+        var delta = pos - _dragStart;
+        _scroll.Offset = new Vector(
+            Math.Max(0, _dragOffset.X - delta.X),
+            Math.Max(0, _dragOffset.Y - delta.Y));
+    }
+
+    private void OnPointerReleased(object? sender, PointerReleasedEventArgs e) =>
+        e.Pointer.Capture(null);
+
+    private void SetZoom(double zoom)
+    {
+        if (_bitmap is null) return;
+        _zoom = Math.Clamp(zoom, 0.2, 8);
+        ApplyZoom();
+    }
+
+    private void ApplyZoom()
+    {
+        if (_bitmap is null) return;
+        _image.Width = Math.Max(1, _bitmap.PixelSize.Width * _zoom);
+        _image.Height = Math.Max(1, _bitmap.PixelSize.Height * _zoom);
+    }
+}

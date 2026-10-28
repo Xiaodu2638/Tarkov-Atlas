@@ -1,0 +1,166 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="TarkovAtlas.SettingsWindow"
+        Title="Tarkov Atlas 设置"
+        Width="680" Height="700"
+        MinWidth="600" MinHeight="520"
+        WindowStartupLocation="CenterOwner"
+        CanResize="True"
+        SystemDecorations="BorderOnly"
+        Background="{StaticResource AppBg}">
+  <Grid RowDefinitions="58,*,58">
+    <Border Grid.Row="0" Background="#0C1219" BorderBrush="#26333F" BorderThickness="0,0,0,1"
+            Padding="20,0" PointerPressed="Header_PointerPressed">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel VerticalAlignment="Center" Spacing="1">
+          <TextBlock Text="设置" FontSize="18" FontWeight="Bold" />
+          <TextBlock Text="路径、全局快捷键与悬浮地图" FontSize="10"
+                     Foreground="{StaticResource TextMuted}" />
+        </StackPanel>
+        <Button Grid.Column="1" Classes="ghost" Content="✕" Click="CancelButton_Click" />
+      </Grid>
+    </Border>
+
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20,16">
+      <StackPanel Spacing="14">
+        <Border Background="{StaticResource CardBg}" BorderBrush="{StaticResource BorderSoft}"
+                BorderThickness="1" CornerRadius="8" Padding="16">
+          <StackPanel Spacing="10">
+            <TextBlock Text="游戏路径" FontSize="13" FontWeight="SemiBold" />
+            <Grid ColumnDefinitions="120,*,Auto" RowDefinitions="Auto,Auto" RowSpacing="8"
+                  ColumnSpacing="8">
+              <TextBlock Text="日志目录" FontSize="11" Foreground="{StaticResource TextSecondary}"
+                         VerticalAlignment="Center" />
+              <TextBox Grid.Column="1" x:Name="LogsPathBox" Watermark="例如 C:\Battlestate Games\EFT\Logs" />
+              <Button Grid.Column="2" Content="浏览" Click="BrowseLogsButton_Click" />
+              <TextBlock Grid.Row="1" Text="截图目录" FontSize="11"
+                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" />
+              <TextBox Grid.Row="1" Grid.Column="1" x:Name="ScreenshotsPathBox"
+                       Watermark="文档\Escape from Tarkov\Screenshots" />
+              <Button Grid.Row="1" Grid.Column="2" Content="浏览" Click="BrowseScreenshotsButton_Click" />
+            </Grid>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <Button Content="自动检测路径" Click="AutoDetectPathsButton_Click" />
+              <TextBlock x:Name="PathStatusText" Text="" FontSize="10"
+                         Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <Border Background="{StaticResource CardBg}" BorderBrush="{StaticResource BorderSoft}"
+                BorderThickness="1" CornerRadius="8" Padding="16">
+          <StackPanel Spacing="9">
+            <TextBlock Text="全局快捷键" FontSize="13" FontWeight="SemiBold" />
+            <TextBlock Text="点击输入框后按下组合键。至少包含一个修饰键（Ctrl / Alt / Shift / Win）。"
+                       FontSize="10" Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" />
+            <Grid ColumnDefinitions="120,*,Auto" RowDefinitions="Auto,Auto" RowSpacing="8"
+                  ColumnSpacing="8">
+              <TextBlock Text="显示 / 隐藏悬浮" FontSize="11"
+                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" />
+              <TextBox Grid.Column="1" x:Name="OverlayHotkeyBox" KeyDown="HotkeyBox_KeyDown"
+                       Watermark="Ctrl+Alt+M" />
+              <TextBlock Grid.Column="2" Text="默认" FontSize="9"
+                         Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+              <TextBlock Grid.Row="1" Text="锁定 / 解锁鼠标穿透" FontSize="11"
+                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" />
+              <TextBox Grid.Row="1" Grid.Column="1" x:Name="LockHotkeyBox" KeyDown="HotkeyBox_KeyDown"
+                       Watermark="Ctrl+Alt+L" />
+              <TextBlock Grid.Row="1" Grid.Column="2" Text="默认" FontSize="9"
+                         Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+            </Grid>
+            <TextBlock x:Name="HotkeyErrorText" Text="" FontSize="10"
+                       Foreground="{StaticResource Danger}" TextWrapping="Wrap" IsVisible="False" />
+          </StackPanel>
+        </Border>
+
+        <Border Background="{StaticResource CardBg}" BorderBrush="{StaticResource BorderSoft}"
+                BorderThickness="1" CornerRadius="8" Padding="16">
+          <StackPanel Spacing="9">
+            <TextBlock Text="悬浮地图" FontSize="13" FontWeight="SemiBold" />
+            <Grid ColumnDefinitions="120,*,60" ColumnSpacing="8">
+              <TextBlock Text="不透明度" FontSize="11" Foreground="{StaticResource TextSecondary}"
+                         VerticalAlignment="Center" />
+              <Slider Grid.Column="1" x:Name="OpacitySlider" Minimum="0.25" Maximum="1"
+                      Value="0.9" ValueChanged="OpacitySlider_ValueChanged" />
+              <TextBlock Grid.Column="2" x:Name="OpacityValueText" Text="90%" FontSize="11"
+                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"
+                         HorizontalAlignment="Right" />
+            </Grid>
+            <Grid ColumnDefinitions="120,*,60" ColumnSpacing="8">
+              <TextBlock Text="窗口大小" FontSize="11" Foreground="{StaticResource TextSecondary}"
+                         VerticalAlignment="Center" />
+              <Slider Grid.Column="1" x:Name="SizeSlider" Minimum="120" Maximum="600"
+                      Value="260" ValueChanged="SizeSlider_ValueChanged" />
+              <TextBlock Grid.Column="2" x:Name="SizeValueText" Text="260" FontSize="11"
+                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"
+                         HorizontalAlignment="Right" />
+            </Grid>
+            <Grid ColumnDefinitions="120,*,60" ColumnSpacing="8">
+              <TextBlock Text="地图缩放" FontSize="11" Foreground="{StaticResource TextSecondary}"
+                         VerticalAlignment="Center" />
+              <Slider Grid.Column="1" x:Name="ZoomSlider" Minimum="0.5" Maximum="8"
+                      Value="2.4" ValueChanged="ZoomSlider_ValueChanged" />
+              <TextBlock Grid.Column="2" x:Name="ZoomValueText" Text="2.4x" FontSize="11"
+                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"
+                         HorizontalAlignment="Right" />
+            </Grid>
+            <Grid ColumnDefinitions="120,*" ColumnSpacing="8">
+              <TextBlock Text="纵向位置" FontSize="11" Foreground="{StaticResource TextSecondary}"
+                         VerticalAlignment="Center" />
+              <ComboBox Grid.Column="1" x:Name="AnchorBox" SelectedIndex="1">
+                <ComboBoxItem Content="顶部" />
+                <ComboBoxItem Content="中间（默认）" />
+                <ComboBoxItem Content="底部" />
+              </ComboBox>
+            </Grid>
+            <TextBlock Text="悬浮窗无边框，默认停在屏幕右侧中间，并自动把最新截图位置放在窗口中心。可在主界面用鼠标拖动右下角缩放。锁定后鼠标穿透，只能靠全局快捷键解锁。"
+                       FontSize="10" Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" />
+            <CheckBox x:Name="LockedCheck" Content="启动时锁定悬浮地图（鼠标穿透）" />
+            <CheckBox x:Name="OverlayVisibleCheck" Content="启动时显示悬浮地图" />
+          </StackPanel>
+        </Border>
+
+        <Border Background="{StaticResource CardBg}" BorderBrush="{StaticResource BorderSoft}"
+                BorderThickness="1" CornerRadius="8" Padding="16">
+          <StackPanel Spacing="7">
+            <TextBlock Text="地图显示内容" FontSize="13" FontWeight="SemiBold" />
+            <CheckBox x:Name="ExtractsCheck" Content="显示撤离点" />
+            <CheckBox x:Name="BossesCheck" Content="显示 Boss 刷点" />
+            <CheckBox x:Name="SpawnsCheck" Content="显示出生点" />
+            <CheckBox x:Name="TransitsCheck" Content="显示转移点" />
+            <CheckBox x:Name="QuestMarkersCheck" Content="显示已追踪任务的地点标记（商人头像）" />
+            <CheckBox x:Name="HazardsCheck" Content="显示危险区（雷区 / 狙击区 / 其他）" />
+            <CheckBox x:Name="AutoLayerCheck" Content="按玩家高度自动切换楼层" />
+            <CheckBox x:Name="QuestFollowMapCheck" Content="任务列表只显示当前地图可做的任务" />
+          </StackPanel>
+        </Border>
+
+        <Border Background="{StaticResource CardBg}" BorderBrush="{StaticResource BorderSoft}"
+                BorderThickness="1" CornerRadius="8" Padding="16">
+          <StackPanel Spacing="7">
+            <TextBlock Text="自动化" FontSize="13" FontWeight="SemiBold" />
+            <CheckBox x:Name="AutoDetectCheck" Content="自动读取塔科夫日志，识别当前战局地图" />
+            <CheckBox x:Name="AutoSwitchCheck" Content="识别到战局后自动切换主地图和悬浮地图" />
+            <CheckBox x:Name="ScanScreenshotsCheck" Content="监听新截图并自动在地图上定位" />
+            <CheckBox x:Name="ScanOnStartupCheck" Content="启动时扫描已有截图" />
+            <CheckBox x:Name="DeleteScreenshotsCheck" Content="读取坐标后删除截图文件（不留垃圾）" />
+            <CheckBox x:Name="LabelsCheck" Content="在地图上显示地名" />
+          </StackPanel>
+        </Border>
+
+        <TextBlock Text="快捷键、路径设置保存在 %APPDATA%\TarkovAtlas\settings.json。地图和任务数据完全离线。"
+                   FontSize="9.5" Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" />
+      </StackPanel>
+    </ScrollViewer>
+
+    <Border Grid.Row="2" Background="#0C1219" BorderBrush="#26333F" BorderThickness="0,1,0,0"
+            Padding="20,0">
+      <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+        <TextBlock x:Name="FooterStatusText" Text="" FontSize="10"
+                   Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+        <Button Grid.Column="1" Content="取消" Click="CancelButton_Click" />
+        <Button Grid.Column="2" Classes="accent" Content="保存设置" Click="SaveButton_Click" />
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

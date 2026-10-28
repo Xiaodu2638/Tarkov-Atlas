@@ -1,0 +1,374 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="using:TarkovAtlas.Models"
+        xmlns:controls="using:TarkovAtlas.Controls"
+        x:Class="TarkovAtlas.MainWindow"
+        Title="Tarkov Atlas"
+        Width="1200" Height="760"
+        MinWidth="900" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        SystemDecorations="BorderOnly"
+        Background="{StaticResource AppBg}"
+        Foreground="{StaticResource TextPrimary}">
+  <Grid RowDefinitions="46,*">
+    <Border Grid.Row="0" x:Name="HeaderBar" Background="#0B1016" BorderBrush="#1C2732"
+            BorderThickness="0,0,0,1" PointerPressed="HeaderBar_PointerPressed">
+      <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+        <Border Width="28" Height="28" Margin="14,0,10,0" CornerRadius="6"
+                Background="{StaticResource Accent}" VerticalAlignment="Center">
+          <TextBlock Text="T" FontSize="18" FontWeight="Black" Foreground="#171207"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+          <TextBlock Text="TARKOV ATLAS" FontSize="14" FontWeight="Bold" LetterSpacing="1.4" />
+          <Border Background="#18212A" CornerRadius="4" Padding="6,2">
+            <TextBlock Text="离线地图工具" FontSize="10" Foreground="{StaticResource TextSecondary}" />
+          </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Spacing="8">
+          <Border x:Name="RaidStatusPill" Background="#17231D" BorderBrush="#2E4A37"
+                  BorderThickness="1" CornerRadius="12" Padding="10,4">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <Ellipse x:Name="RaidStatusDot" Width="7" Height="7" Fill="#6FBF8B"
+                       VerticalAlignment="Center" />
+              <TextBlock x:Name="RaidStatusText" Text="等待战局" FontSize="11"
+                         Foreground="#A9CEB8" VerticalAlignment="Center" />
+            </StackPanel>
+          </Border>
+          <TextBlock x:Name="CursorCoordText" Text="X —  Z —" FontSize="11"
+                     Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Orientation="Horizontal" Margin="0,0,8,0" VerticalAlignment="Center">
+          <Button x:Name="TitleOverlayButton" Classes="ghost" Content="悬浮地图" Click="OverlayButton_Click"
+                  ToolTip.Tip="显示/隐藏悬浮地图（快捷键可在设置中修改）" />
+          <Button x:Name="TitleSettingsButton" Classes="ghost" Content="设置" Click="SettingsButton_Click" />
+          <Button x:Name="TitleMinButton" Classes="ghost" Content="—" FontSize="14" Width="38"
+                  Click="MinimizeButton_Click" />
+          <Button x:Name="TitleMaxButton" Classes="ghost" Content="□" FontSize="13" Width="38"
+                  Click="MaximizeButton_Click" />
+          <Button x:Name="TitleCloseButton" Classes="ghost" Content="✕" FontSize="13" Width="38"
+                  Foreground="#E08A7C" Click="CloseButton_Click" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1" ColumnDefinitions="294,*,Auto">
+      <Border Grid.Column="0" Background="{StaticResource PanelBg}" BorderBrush="#1C2732"
+              BorderThickness="0,0,1,0">
+        <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+          <StackPanel Margin="16,16,16,10" Spacing="2">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Text="行动地图" FontSize="18" FontWeight="SemiBold" />
+              <TextBlock x:Name="MapCountText" Grid.Column="1" Text="13 张" FontSize="11"
+                         Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+            </Grid>
+            <TextBlock Text="选择地图后在右侧查看；滚轮缩放、左键拖拽。"
+                       FontSize="10.5" Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" />
+          </StackPanel>
+
+          <TextBox Grid.Row="1" x:Name="MapSearchBox" Margin="14,0,14,10"
+                   Watermark="搜索地图 / 英文名" TextChanged="MapSearchBox_TextChanged" />
+
+          <ListBox Grid.Row="2" x:Name="MapList" Margin="8,0,8,4"
+                   SelectionChanged="MapList_SelectionChanged"
+                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="models:MapDefinition">
+                <Border Padding="9,8" CornerRadius="7">
+                  <Grid ColumnDefinitions="32,*,Auto">
+                    <Border Width="26" Height="26" CornerRadius="6" Background="#1A2530"
+                            VerticalAlignment="Top">
+                      <TextBlock Text="{Binding Order}" FontSize="11" FontWeight="Bold"
+                                 Foreground="{StaticResource Accent}"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="8,0,6,0" Spacing="1">
+                      <TextBlock Text="{Binding DisplayName}" FontSize="13" FontWeight="SemiBold" />
+                      <TextBlock Text="{Binding SecondaryName}" FontSize="9.5"
+                                 Foreground="{StaticResource TextMuted}" />
+                      <TextBlock Text="{Binding MetaLine}" FontSize="9.5"
+                                 Foreground="{StaticResource TextSecondary}" />
+                    </StackPanel>
+                    <Border Grid.Column="2" Background="#1A2028" CornerRadius="4"
+                            Padding="5,2" VerticalAlignment="Top">
+                      <TextBlock Text="{Binding Difficulty}" FontSize="9"
+                                 Foreground="{StaticResource TextSecondary}" />
+                    </Border>
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+
+          <Border Grid.Row="3" BorderBrush="#1C2732" BorderThickness="0,1,0,0" Padding="12,10">
+            <StackPanel Spacing="7">
+              <Button x:Name="QuestToggleButton" Classes="accent" Content="任务追踪  ·  截图识别"
+                      HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                      Click="QuestToggleButton_Click" />
+              <Grid ColumnDefinitions="*,*" ColumnSpacing="7">
+                <Button Grid.Column="0" Content="扫描截图" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Click="ScanScreenshotsButton_Click" />
+                <Button Grid.Column="1" Content="设置" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Click="SettingsButton_Click" />
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Row="4" Background="#0A0F14" Padding="12,8">
+            <StackPanel Spacing="2">
+              <TextBlock x:Name="LogStatusText" Text="日志：未连接" FontSize="9.5"
+                         Foreground="{StaticResource TextMuted}" TextTrimming="CharacterEllipsis" />
+              <TextBlock x:Name="ScreenshotStatusText" Text="截图：0 个坐标点" FontSize="9.5"
+                         Foreground="{StaticResource TextMuted}" />
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Border>
+
+      <Grid Grid.Column="1" RowDefinitions="68,*,30" Background="#090D12">
+        <Border Grid.Row="0" Background="#0D131A" BorderBrush="#1C2732" BorderThickness="0,0,0,1"
+                Padding="20,9,14,8">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="1" VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal" Spacing="9">
+                <TextBlock x:Name="MapTitle" Text="海关" FontSize="20" FontWeight="Bold" />
+                <TextBlock x:Name="MapSubtitle" Text="CUSTOMS" FontSize="10"
+                           Foreground="{StaticResource Accent}" VerticalAlignment="Bottom"
+                           Margin="0,0,0,3" LetterSpacing="1.2" />
+              </StackPanel>
+              <TextBlock x:Name="MapDescription" Text="" FontSize="10.5"
+                         Foreground="{StaticResource TextSecondary}" TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+              <Button Content="−" Width="30" Click="ZoomOutButton_Click" ToolTip.Tip="缩小" />
+              <Button Content="+" Width="30" Click="ZoomInButton_Click" ToolTip.Tip="放大" />
+              <Button Content="复位" Click="ResetViewButton_Click" ToolTip.Tip="适应窗口（Home）" />
+              <Button Content="显示" Click="DisplayMenuButton_Click" ToolTip.Tip="选择地图上显示的内容" />
+              <ComboBox x:Name="LayerComboBox" Width="120" IsVisible="False"
+                        SelectionChanged="LayerComboBox_SelectionChanged"
+                        ToolTip.Tip="切换楼层" />
+              <Button x:Name="MapOverlayButton" Classes="accent" Content="悬浮" Click="OverlayButton_Click" />
+            </StackPanel>
+          </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+          <controls:MapCanvas x:Name="MapView" />
+          <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14"
+                  Background="#D90B1017" BorderBrush="#2A3744" BorderThickness="1"
+                  CornerRadius="7" Padding="9,6" IsHitTestVisible="False">
+            <StackPanel Spacing="1">
+              <TextBlock x:Name="HoverCoordText" Text="移动到地图上查看坐标" FontSize="10.5"
+                         Foreground="{StaticResource TextSecondary}" />
+              <TextBlock x:Name="HoverExtraText" Text="" FontSize="9.5"
+                         Foreground="{StaticResource TextMuted}" />
+            </StackPanel>
+          </Border>
+
+          <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="14"
+                  Background="#D90B1017" BorderBrush="#2A3744" BorderThickness="1"
+                  CornerRadius="7" Padding="10,7">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock x:Name="ZoomText" Text="100%" FontSize="10.5"
+                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" />
+              <Button x:Name="LocateLatestButton" Content="定位最新截图" Classes="ghost" Click="LocateLatestButton_Click"
+                      IsVisible="False" />
+              <TextBlock x:Name="PinCountText" Text="0 个截图点" FontSize="10"
+                         Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+            </StackPanel>
+          </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Background="#0B1016" BorderBrush="#1C2732" BorderThickness="0,1,0,0"
+                Padding="14,0">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock x:Name="HintText" Text="滚轮缩放  ·  左键拖拽  ·  双击放大  ·  0 复位"
+                       FontSize="9.5" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+              <TextBlock x:Name="QuestStatusText" Text="任务 0/0" FontSize="9.5"
+                         Foreground="{StaticResource TextMuted}" />
+              <TextBlock x:Name="MapSourceText" Text="" FontSize="9.5"
+                         Foreground="{StaticResource TextMuted}" />
+            </StackPanel>
+          </Grid>
+        </Border>
+      </Grid>
+
+      <Border Grid.Column="2" x:Name="QuestDrawer" Width="0" IsVisible="False"
+              Background="#0C1219" BorderBrush="#26333F" BorderThickness="1,0,0,0">
+        <Grid RowDefinitions="52,*">
+          <Border Grid.Row="0" Background="#101822" BorderBrush="#26333F" BorderThickness="0,0,0,1" Padding="14,0">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel VerticalAlignment="Center" Spacing="1">
+                <TextBlock Text="任务追踪" FontSize="14" FontWeight="SemiBold" />
+                <TextBlock x:Name="QuestCountText" Text="0 个任务" FontSize="9.5"
+                           Foreground="{StaticResource TextMuted}" />
+              </StackPanel>
+              <Button Grid.Column="1" Classes="ghost" Content="✕" Click="CloseQuestDrawer_Click" />
+            </Grid>
+          </Border>
+
+          <TabControl Grid.Row="1" Padding="0" Background="Transparent">
+            <TabItem Header="支线任务">
+              <Grid RowDefinitions="Auto,Auto,*,222">
+                <StackPanel Grid.Row="0" Margin="12,10,12,6" Spacing="7">
+                  <TextBox x:Name="QuestSearchBox" Watermark="搜索全部任务（名称 / 英文名 / 商人）"
+                           TextChanged="QuestSearchBox_TextChanged" />
+                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                    <ComboBox Grid.Column="0" x:Name="QuestFilterBox" SelectedIndex="0"
+                              SelectionChanged="QuestFilterBox_SelectionChanged">
+                      <ComboBoxItem Content="全部任务" />
+                      <ComboBoxItem Content="未完成" />
+                      <ComboBoxItem Content="已完成" />
+                    </ComboBox>
+                    <Button Grid.Column="1" Content="截图识别" Click="OcrQuestButton_Click" />
+                  </Grid>
+                  <CheckBox x:Name="QuestFollowMapCheck" Content="只显示当前地图可做的任务（搜索时自动放开）"
+                            IsChecked="True" Click="QuestFollowMapCheck_Click" FontSize="10" />
+                  <TextBlock x:Name="OcrStatusText" Text="" FontSize="9.5"
+                             Foreground="{StaticResource TextMuted}" IsVisible="False" TextWrapping="Wrap" />
+                </StackPanel>
+
+                <Border Grid.Row="1" Margin="12,0,12,6" Padding="8,5" Background="#131B24"
+                        CornerRadius="5" IsVisible="True">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock x:Name="QuestDatabaseText" Text="离线任务库" FontSize="9"
+                               Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+
+                  </Grid>
+                </Border>
+
+                <Grid Grid.Row="2">
+                <TextBlock x:Name="QuestEmptyText"
+                           Text="没有匹配的任务"
+                           FontSize="10.5"
+                           Foreground="{StaticResource TextMuted}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           TextWrapping="Wrap" MaxWidth="240" TextAlignment="Center"
+                           IsVisible="False" />
+                <ListBox x:Name="QuestList" Margin="8,0,8,4"
+                         SelectionChanged="QuestList_SelectionChanged"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:QuestRow">
+                      <Border Padding="8,7" CornerRadius="6">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="7">
+                          <CheckBox Grid.Column="0" IsChecked="{Binding IsTracked, Mode=TwoWay}"
+                                    VerticalAlignment="Top" Margin="0,3,0,0"
+                                    ToolTip.Tip="追踪：在地图上显示该任务的商人与目标点" />
+                          <StackPanel Grid.Column="1" Spacing="2">
+                            <TextBlock Text="{Binding Title}" FontSize="11.5" FontWeight="SemiBold"
+                                       TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" />
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                              <TextBlock Text="{Binding Giver}" FontSize="9"
+                                         Foreground="{StaticResource Accent}" />
+                              <TextBlock Text="{Binding MapsText}" FontSize="9"
+                                         Foreground="{StaticResource TextMuted}"
+                                         TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                            <Button Content="跳转到地图 ▸" FontSize="9" Padding="4,1"
+                                    HorizontalAlignment="Left" Classes="ghost"
+                                    Tag="{Binding Id}" Click="QuestJumpButton_Click"
+                                    IsVisible="{Binding Quest.HasAnyZones}" />
+                          </StackPanel>
+                          <TextBlock Grid.Column="2" Text="{Binding LevelText}" FontSize="9"
+                                     Foreground="{StaticResource TextMuted}" VerticalAlignment="Top" />
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+                </Grid>
+
+                <Border Grid.Row="3" Background="#0A0F15" BorderBrush="#26333F" BorderThickness="0,1,0,0"
+                        Padding="12,8">
+                  <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="5">
+                    <TextBlock x:Name="QuestDetailTitle" Text="选择一个任务" FontSize="12"
+                               FontWeight="SemiBold" TextWrapping="Wrap" MaxLines="2" />
+                    <TextBlock Grid.Row="1" x:Name="QuestDetailMeta" Text=""
+                               FontSize="9.5" Foreground="{StaticResource TextMuted}" />
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                      <ItemsControl x:Name="QuestObjectiveList">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate>
+                            <TextBlock Text="{Binding}" FontSize="9.5"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       TextWrapping="Wrap" Margin="0,1" />
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </ScrollViewer>
+                    <Grid Grid.Row="3" ColumnDefinitions="*,*,*" ColumnSpacing="6">
+                      <Button Grid.Column="0" Content="标记完成 / 取消" HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="Center" Click="ToggleSelectedQuestButton_Click" />
+                      <Button Grid.Column="1" Content="任务地点图" HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="Center" Click="OpenQuestMapImageButton_Click"
+                              ToolTip.Tip="在大傻哥 wiki 打开该任务的地点标注图" />
+                      <Button Grid.Column="2" Content="打开 Wiki" HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="Center" Click="OpenWikiButton_Click"
+                              ToolTip.Tip="打开大傻哥（eftarkov.com）任务页" />
+                    </Grid>
+                  </Grid>
+                </Border>
+              </Grid>
+            </TabItem>
+
+            <TabItem Header="剧情任务">
+              <Grid RowDefinitions="Auto,*">
+                <Border Grid.Row="0" Margin="12,10,12,6" Padding="9,7" Background="#131B24" CornerRadius="5">
+                  <StackPanel Spacing="2">
+                    <TextBlock x:Name="StoryCountText" Text="剧情进度 0/0" FontSize="10"
+                               FontWeight="SemiBold" Foreground="{StaticResource Accent}" />
+                    <TextBlock Text="勾选即标记该章已完成；进度保存在本地。" FontSize="9"
+                               Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </Border>
+
+                <ListBox Grid.Row="1" x:Name="StoryList" Margin="8,0,8,6"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:StoryRow">
+                      <Border Padding="8,7" CornerRadius="6">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="7">
+                          <CheckBox Grid.Column="0" IsChecked="{Binding IsDone, Mode=TwoWay}"
+                                    VerticalAlignment="Top" Margin="0,2,0,0"
+                                    Click="StoryCheckBox_Click"
+                                    ToolTip.Tip="标记该主线章节已完成" />
+                          <StackPanel Grid.Column="1" Spacing="3">
+                            <TextBlock Text="{Binding Title}" FontSize="11.5" FontWeight="SemiBold"
+                                       TextWrapping="Wrap" />
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                              <TextBlock Text="{Binding MapsText}" FontSize="9"
+                                         Foreground="{StaticResource Accent}" />
+                              <TextBlock Text="{Binding ObjectiveText}" FontSize="9"
+                                         Foreground="{StaticResource TextMuted}" />
+                            </StackPanel>
+                            <Expander Header="目标列表" FontSize="9.5" IsExpanded="False">
+                              <ItemsControl ItemsSource="{Binding Objectives}">
+                                <ItemsControl.ItemTemplate>
+                                  <DataTemplate x:DataType="x:String">
+                                    <TextBlock Text="{Binding}" FontSize="9.5"
+                                               Foreground="{StaticResource TextSecondary}"
+                                               TextWrapping="Wrap" Margin="0,1" />
+                                  </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                              </ItemsControl>
+                            </Expander>
+                          </StackPanel>
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+              </Grid>
+            </TabItem>
+          </TabControl>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</Window>

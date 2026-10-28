@@ -1,0 +1,52 @@
+# build output
+bin/
+obj/
+dist/
+_verify/
+_aottest/
+_avtest/
+
+# local NuGet / dotnet caches
+.nuget-cache/
+.nuget-packages/
+.dotnet-home/
+
+# scratch
+_*.py
+_*.png
+_*.jpg
+_*.log
+
+# scratch / sandbox temp
+_piptmp/
+_aotv/
+_backup/
+
+# staging dir used by build_assets.py when rasterising SVG
+tools/_tmpstage/
+
+# browser/render scratch. build_assets.py writes these under research/edge-temp;
+# the patterns below also guard against ever leaking them into Assets/ again.
+.edge-profile-*/
+.render-*.html
+
+# python bytecode caches (tools/pyext ships its own PIL)
+__pycache__/
+*.pyc
+
+# downloaded tile cache is a build input, not source
+tools/tile-cache/
+
+# local pip --target dependencies (pillow / numpy / requests) for tools/*.py;
+# recreate with: python -m pip install --target tools/pylibs pillow numpy requests
+tools/pylibs/
+
+# local-only Python data pipeline. The app builds and runs without any of this;
+# these files stay on the developer machine and are deliberately not in git.
+research/
+tools/pyext/
+tools/*.py
+/*.py
+
+# dotnet / MSBuild scratch, redirected here by build.ps1 and tools/check.ps1
+.tmp/

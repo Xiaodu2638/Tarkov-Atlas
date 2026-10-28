@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>TarkovAtlas</AssemblyName>
+    <RootNamespace>TarkovAtlas</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\TarkovAtlas.ico</ApplicationIcon>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <PublishAot>true</PublishAot>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <IlcGenerateStackTraceData>true</IlcGenerateStackTraceData>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <NoWarn>$(NoWarn);IL2026;IL3050</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Scripts\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="README.md" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="LICENSE" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="docs\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

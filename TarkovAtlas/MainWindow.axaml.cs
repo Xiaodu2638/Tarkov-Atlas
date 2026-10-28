@@ -1,0 +1,1332 @@
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
+using Avalonia.Layout;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
+using Avalonia.Threading;
+using Avalonia.VisualTree;
+using TarkovAtlas.Controls;
+using TarkovAtlas.Models;
+using TarkovAtlas.Services;
+
+namespace TarkovAtlas;
+
+public partial class MainWindow : Window
+{
+    private readonly MapRepository _repo = new();
+    private readonly SettingsService _settingsService = new();
+    private readonly QuestService _quests = new();
+    private readonly ScreenshotService _screenshots = new();
+    private readonly GameLogService _logs = new();
+    private readonly GlobalHotkeyService _hotkeys = new();
+    private readonly OcrService _ocr = new();
+    private readonly TaskGuideService _guides = new();
+    // ObservableCollection, not List<T>: the ListBox is bound once and only sees
+    // the items that exist at binding time, so a plain List left the sidebar
+    // empty (the filter filled it afterwards without any change notification).
+    private readonly ObservableCollection<MapDefinition> _visibleMaps = new();
+    private readonly Dictionary<string, List<ScreenshotInfo>> _shotsByMap = new(StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _knownShotPaths = new(StringComparer.OrdinalIgnoreCase);
+    private List<FloorLayerView> _floorLayers = new();
+    private double _lastPlayerY;
+    private bool _suppressLayerSelection;
+    private bool _hasPlayerHeight;
+    private bool _manualLayerPick;
+
+    private AppSettings _settings = new();
+    private MapDefinition? _currentMap;
+    private OverlayWindow? _overlay;
+    private Quest? _selectedQuest;
+    private string? _detectedMapKey;
+    private bool _initialized;
+    private bool _shuttingDown;
+    private bool _suppressMapSelection;
+    private bool _suppressQuestEvents;
+    private DispatcherTimer? _uiTimer;
+    private DispatcherTimer? _toastTimer;
+    private readonly string _defaultHint = "滚轮缩放  ·  左键拖拽  ·  双击放大  ·  0 复位";
+
+    public MainWindow()
+    {
+        InitializeComponent();
+        try
+        {
+            var icon = Path.Combine(AppPaths.AssetsDir, "TarkovAtlas.ico");
+            if (File.Exists(icon)) Icon = new WindowIcon(icon);
+        }
+        catch { }
+
+        Opened += OnOpened;
+        Closing += OnClosing;
+        KeyDown += OnWindowKeyDown;
+        MapView.CursorGameMoved += OnCursorGameMoved;
+        MapView.PinClicked += OnPinClicked;
+        MapView.MarkerClicked += OnMarkerClicked;
+        _quests.ProgressChanged += (_, _) => Dispatcher.UIThread.Post(() =>
+        {
+            RefreshQuestCounts();
+            SyncQuestMarkers();
+        });
+    }
+
+    private async void OnOpened(object? sender, EventArgs e)
+    {
+        if (_initialized) return;
+        _initialized = true;
+
+        try
+        {
+            _settings = _settingsService.Load();
+            _settings.Normalize();
+            _repo.Load();
+            _quests.Load();
+
+            MapCountText.Text = $"{_repo.Maps.Count} 张";
+            MapList.ItemsSource = _visibleMaps;
+            ApplyMapFilter("");
+            ApplyDisplayOptions();
+
+            _suppressQuestEvents = true;
+            try
+            {
+                QuestFilterBox.SelectedIndex = Math.Clamp(_settings.QuestFilter, 0, 2);
+                QuestFollowMapCheck.IsChecked = _settings.QuestFollowsMap;
+            }
+            finally
+            {
+                _suppressQuestEvents = false;
+            }
+
+            QuestList.ItemsSource = _quests.VisibleQuests;
+            StoryList.ItemsSource = _quests.StoryRows;
+            RefreshQuestCounts();
+            _quests.SetFilter(_settings.QuestFilter);
+            _quests.SetQuery("");
+            _quests.SetMap(_settings.SelectedMap, _settings.QuestFollowsMap);
+
+            var initial = _repo.FindByKey(_settings.SelectedMap) ?? _repo.Maps.FirstOrDefault();
+            if (initial is not null)
+            {
+                SelectMapListItem(initial);
+                await SelectMapAsync(initial, remember: false);
+            }
+
+            StartServices();
+
+            _uiTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
+            _uiTimer.Tick += (_, _) => UpdateLiveUi();
+            _uiTimer.Start();
+
+            if (_settings.OverlayVisibleOnStartup) ShowOverlay(true);
+        }
+        catch (Exception ex)
+        {
+            AppPaths.LogCrash(ex);
+            ShowToast("启动时出错: " + ex.Message);
+        }
+    }
+
+    private void StartServices()
+    {
+        _hotkeys.Update(_settings.OverlayHotkey, _settings.OverlayLockHotkey);
+        _hotkeys.OverlayToggleRequested += (_, _) => ToggleOverlay();
+        _hotkeys.LockToggleRequested += (_, _) => ToggleOverlayLock();
+        _hotkeys.Install();
+
+        if (_settings.AutoDetect)
+        {
+            var logDir = GameLogService.ResolveLogDirectory(_settings.LogsPath);
+            if (logDir is not null)
+            {
+                _settings.LogsPath = logDir;
+                _logs.MapDetected += OnMapDetected;
+                _logs.Start(logDir);
+                LogStatusText.Text = "日志：" + logDir;
+            }
+            else
+            {
+                LogStatusText.Text = "日志：未找到，请在设置中指定";
+                RaidStatusText.Text = "日志未连接";
+                RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#D85B4A"));
+            }
+        }
+        else
+        {
+            RaidStatusText.Text = "自动识别已关闭";
+            RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#8FA0AE"));
+        }
+
+        var shotDir = ResolveScreenshotDir();
+        if (shotDir is not null)
+        {
+            _screenshots.StartWatching(shotDir, info => Dispatcher.UIThread.Post(() => _ = OnNewScreenshotAsync(info)));
+            ScreenshotStatusText.Text = "截图：" + shotDir;
+        }
+        else
+        {
+            ScreenshotStatusText.Text = "截图：目录不存在";
+        }
+
+        if (_settings.ScanOnStartup) _ = ScanScreenshotsAsync(quiet: true);
+    }
+
+    private string? ResolveScreenshotDir()
+    {
+        if (!string.IsNullOrWhiteSpace(_settings.ScreenshotsPath) && Directory.Exists(_settings.ScreenshotsPath))
+            return _settings.ScreenshotsPath;
+        if (Directory.Exists(AppPaths.DefaultScreenshotsDir))
+        {
+            _settings.ScreenshotsPath = AppPaths.DefaultScreenshotsDir;
+            return _settings.ScreenshotsPath;
+        }
+        return null;
+    }
+
+    private void OnMapDetected(object? sender, MapDetectedEventArgs e)
+    {
+        Dispatcher.UIThread.Post(async () =>
+        {
+            _detectedMapKey = e.MapKey;
+            var map = _repo.FindByKey(e.MapKey);
+            if (map is null) return;
+
+            RaidStatusText.Text = "战局 · " + map.DisplayName;
+            RaidStatusPill.Background = new SolidColorBrush(Color.Parse("#17231D"));
+            RaidStatusPill.BorderBrush = new SolidColorBrush(Color.Parse("#2E4A37"));
+            RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#6FBF8B"));
+            LogStatusText.Text = "日志：已识别 " + e.LocationId;
+
+            if (_settings.AutoSwitchMap)
+            {
+                SelectMapListItem(map);
+                await SelectMapAsync(map, remember: true);
+            }
+        });
+    }
+
+    // ------------------------------------------------------------------
+    // map selection
+
+    private void ApplyMapFilter(string query)
+    {
+        query = (query ?? "").Trim();
+        _visibleMaps.Clear();
+        foreach (var map in _repo.Maps)
+        {
+            if (query.Length == 0 ||
+                map.DisplayName.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                map.NameEn.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                map.Subtitle.Contains(query, StringComparison.OrdinalIgnoreCase))
+            {
+                _visibleMaps.Add(map);
+            }
+        }
+        MapCountText.Text = query.Length == 0 ? $"{_repo.Maps.Count} 张" : $"{_visibleMaps.Count} / {_repo.Maps.Count}";
+    }
+
+    private void SelectMapListItem(MapDefinition map)
+    {
+        if (!_visibleMaps.Contains(map))
+        {
+            ApplyMapFilter("");
+        }
+        _suppressMapSelection = true;
+        MapList.SelectedItem = map;
+        MapList.ScrollIntoView(map);
+        _suppressMapSelection = false;
+    }
+
+    private async void MapList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (!_initialized || _suppressMapSelection) return;
+        if (MapList.SelectedItem is MapDefinition map)
+            await SelectMapAsync(map, remember: true);
+    }
+
+    private async Task SelectMapAsync(MapDefinition map, bool remember)
+    {
+        var mapChanged = _currentMap?.Key != map.Key;
+        _currentMap = map;
+
+        // The screenshot height is only meaningful for the map it was captured
+        // on; carrying it across maps could pick a floor from another building.
+        if (mapChanged)
+        {
+            _hasPlayerHeight = false;
+            _lastPlayerY = 0;
+            _manualLayerPick = false;
+        }
+
+        MapTitle.Text = map.DisplayName;
+        MapSubtitle.Text = map.NameEn.ToUpperInvariant();
+        MapDescription.Text = map.Description;
+        MapSourceText.Text = $"{map.Extracts.Count} 撤离点  ·  {map.Bosses.Count} Boss";
+
+        if (mapChanged)
+        {
+            try
+            {
+                var bitmap = await Task.Run(() => _repo.GetBitmap(map));
+                if (_currentMap?.Key != map.Key) return;
+                MapView.SetMap(map, bitmap);
+                LoadFloorLayers(map);
+                _overlay?.SetMap(map, bitmap);
+                SyncOverlayFloor();
+            }
+            catch (Exception ex)
+            {
+                AppPaths.LogCrash(ex);
+                ShowToast("地图图片加载失败: " + ex.Message);
+            }
+        }
+
+        UpdatePinsForCurrentMap();
+        RefreshQuestScope();
+        SyncOverlayPlayer();
+
+        if (remember) RememberMap(map);
+    }
+
+    private void RememberMap(MapDefinition map)
+    {
+        _settings.SelectedMap = map.Key;
+        _settingsService.Save(_settings);
+    }
+
+    /// <summary>
+    /// Resolve which building levels are available for the map and hand the
+    /// selected one to the canvas. Levels are baked into the base image's pixel
+    /// grid, so no extra transform is needed.
+    /// </summary>
+    private void LoadFloorLayers(MapDefinition map)
+    {
+        try
+        {
+            if (map.Layers.Count == 0)
+            {
+                _floorLayers = new List<FloorLayerView>();
+                MapView.Layers = Array.Empty<FloorLayerView>();
+                if (LayerComboBox is not null)
+                {
+                    LayerComboBox.ItemsSource = null;
+                    LayerComboBox.IsVisible = false;
+                }
+                return;
+            }
+
+            // Decoding every floor PNG up-front is what made switching to a
+            // multi-deck map (Icebreaker has 16 x 4120x5255 images) feel frozen.
+            // Only the label + height range is needed for the combo box; the
+            // bitmap is fetched on demand by ApplySelectedFloor().
+            var views = map.Layers
+                .OrderBy(l => l.Order)
+                .Select(l => new FloorLayerView
+                {
+                    Name = l.Name,
+                    Order = l.Order,
+                    MinHeight = l.MinHeight,
+                    MaxHeight = l.MaxHeight,
+                    Source = l,
+                })
+                .ToList();
+
+            _floorLayers = views;
+            if (LayerComboBox is null) return;
+
+            LayerComboBox.ItemsSource = views.Select(v => v.Name).ToList();
+            LayerComboBox.IsVisible = views.Count > 1;
+
+            // Auto-layer (on by default) wins over a remembered pick, so a fresh
+            // screenshot immediately shows the floor the player is actually on.
+            FloorLayerView? preferred = null;
+            if (_settings.AutoLayer && _hasPlayerHeight)
+                preferred = views.FirstOrDefault(v => v.MatchesHeight(_lastPlayerY));
+
+            if (preferred is null && _settings.SelectedLayer.TryGetValue(map.Key, out var saved))
+                preferred = views.FirstOrDefault(v => v.Name == saved);
+
+            preferred ??= views.FirstOrDefault();
+
+            _suppressLayerSelection = true;
+            try
+            {
+                LayerComboBox.SelectedIndex = preferred is null ? -1 : views.IndexOf(preferred);
+            }
+            finally
+            {
+                _suppressLayerSelection = false;
+            }
+            ApplySelectedFloor();
+        }
+        catch (Exception ex)
+        {
+            AppPaths.LogCrash(ex);
+        }
+    }
+
+    /// <summary>Manual floor switch: remember the choice for this map.</summary>
+    private void LayerComboBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (_suppressLayerSelection) return;
+
+        // A deliberate pick disables auto-layer for this map until the user
+        // switches map (or re-enables it), otherwise the next screenshot would
+        // yank the view back to another floor.
+        _manualLayerPick = true;
+        ApplySelectedFloor();
+
+        if (_currentMap is null || LayerComboBox.SelectedIndex < 0) return;
+        var name = LayerComboBox.SelectedItem as string;
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            _settings.SelectedLayer[_currentMap.Key] = name;
+            Persist();
+        }
+    }
+
+    /// <summary>
+    /// Pick the floor that matches a fresh player height (auto layer mode).
+    /// Only engages when the map actually has layered artwork.
+    /// </summary>
+    private void AutoSelectLayerForHeight(double y)
+    {
+        _lastPlayerY = y;
+        _hasPlayerHeight = true;
+
+        if (!_settings.AutoLayer || _manualLayerPick || _currentMap is null || _floorLayers.Count < 2) return;
+        if (LayerComboBox is null) return;
+
+        var match = _floorLayers.FirstOrDefault(l => l.MatchesHeight(y));
+        if (match is null) return;
+
+        var index = _floorLayers.IndexOf(match);
+        if (index < 0 || index == LayerComboBox.SelectedIndex) return;
+
+        _suppressLayerSelection = true;
+        try
+        {
+            LayerComboBox.SelectedIndex = index;
+        }
+        finally
+        {
+            _suppressLayerSelection = false;
+        }
+        ApplySelectedFloor();
+        SyncOverlayFloor();
+    }
+
+    /// <summary>Keep the little overlay window on the same building level.</summary>
+    private void SyncOverlayFloor()
+    {
+        if (_overlay is null) return;
+        var index = LayerComboBox?.SelectedIndex ?? -1;
+        _overlay.SetFloor(index >= 0 && index < _floorLayers.Count ? _floorLayers[index] : null);
+    }
+
+    /// <summary>Push the currently selected floor (or all of them) to the canvas.</summary>
+    private void ApplySelectedFloor()
+    {
+        if (_currentMap is null) { MapView.Layers = Array.Empty<FloorLayerView>(); return; }
+
+        var index = LayerComboBox.SelectedIndex;
+        var view = index >= 0 && index < _floorLayers.Count ? _floorLayers[index] : null;
+        if (view is null)
+        {
+            MapView.Layers = Array.Empty<FloorLayerView>();
+            MapView.InvalidateVisual();
+            return;
+        }
+
+        // Load the PNG lazily (and memoise it inside the repository).
+        view.Bitmap ??= view.Source is null ? null : _repo.GetLayerBitmap(view.Source);
+        MapView.Layers = new[] { view };
+        MapView.InvalidateVisual();
+    }
+
+    private void UpdatePinsForCurrentMap()
+    {
+        if (_currentMap is null)
+        {
+            MapView.Pins = Array.Empty<ScreenshotInfo>();
+            PinCountText.Text = "0 个截图点";
+            return;
+        }
+
+        var pins = GetPins(_currentMap.Key);
+        MapView.Pins = pins;
+        MapView.ActivePin = GetLatestPin(_currentMap.Key);
+        PinCountText.Text = $"{pins.Count} 个截图点";
+        MapView.InvalidateVisual();
+    }
+
+    private List<ScreenshotInfo> GetPins(string mapKey)
+    {
+        if (!_shotsByMap.TryGetValue(mapKey, out var list)) return new List<ScreenshotInfo>();
+        return list.OrderBy(p => p.CapturedAt == default ? p.FileTime : p.CapturedAt).ToList();
+    }
+
+    private ScreenshotInfo? GetLatestPin(string mapKey)
+    {
+        if (!_shotsByMap.TryGetValue(mapKey, out var list) || list.Count == 0) return null;
+        return list.OrderByDescending(p => p.CapturedAt == default ? p.FileTime : p.CapturedAt).First();
+    }
+
+    private void OnCursorGameMoved(object? sender, (double X, double Z) point)
+    {
+        var text = $"X {point.X,8:0.0}   Z {point.Z,8:0.0}";
+        HoverCoordText.Text = "游戏坐标  " + text;
+        CursorCoordText.Text = text;
+        HoverExtraText.Text = _currentMap is null ? "" : $"{_currentMap.DisplayName} · {_currentMap.Difficulty}难度";
+    }
+
+    private void OnPinClicked(object? sender, ScreenshotInfo pin)
+    {
+        HoverExtraText.Text = $"{pin.FileName}  ·  {pin.TimeText}  ·  朝向 {pin.HeadingDegrees:0}°";
+        HoverCoordText.Text = $"X {pin.X:0.0}   Y {pin.Y:0.0}   Z {pin.Z:0.0}";
+        MapView.ActivePin = pin;
+        MapView.InvalidateVisual();
+        SyncOverlayPlayer();
+    }
+
+    // ------------------------------------------------------------------
+    // display options
+
+    private void ApplyDisplayOptions()
+    {
+        MapView.Options = new MapDisplayOptions
+        {
+            ShowLabels = _settings.ShowLabels,
+            ShowExtracts = _settings.ShowExtracts,
+            ExtractFilter = _settings.ExtractFilter,
+            ShowBosses = _settings.ShowBosses,
+            ShowSpawns = _settings.ShowSpawns,
+            ShowTransits = _settings.ShowTransits,
+            ShowQuestMarkers = _settings.ShowQuestMarkers,
+            ShowHazards = _settings.ShowHazards,
+        };
+        MapView.Hazards = _currentMap?.Hazards ?? new List<HazardZone>();
+        MapView.InvalidateVisual();
+    }
+
+    private void DisplayMenuButton_Click(object? sender, RoutedEventArgs e)
+    {
+        var menu = new ContextMenu();
+        menu.Items.Add(ToggleItem("撤离点", _settings.ShowExtracts, v =>
+        {
+            _settings.ShowExtracts = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+
+        var faction = new MenuItem { Header = "撤离点类型" };
+        foreach (var (key, label) in new[]
+                 {
+                     ("all", "全部（PMC + Scav）"), ("pmc", "仅 PMC / 共享"),
+                     ("scav", "仅 Scav / 共享"), ("shared", "仅共享撤离"),
+                 })
+        {
+            var item = new MenuItem
+            {
+                Header = label,
+                ToggleType = MenuItemToggleType.Radio,
+                IsChecked = _settings.ExtractFilter == key,
+            };
+            item.Click += (_, _) =>
+            {
+                _settings.ExtractFilter = key;
+                ApplyDisplayOptions();
+                Persist();
+            };
+            faction.Items.Add(item);
+        }
+        menu.Items.Add(faction);
+
+        menu.Items.Add(ToggleItem("Boss 刷点", _settings.ShowBosses, v =>
+        {
+            _settings.ShowBosses = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+        menu.Items.Add(ToggleItem("出生点", _settings.ShowSpawns, v =>
+        {
+            _settings.ShowSpawns = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+        menu.Items.Add(ToggleItem("转移点", _settings.ShowTransits, v =>
+        {
+            _settings.ShowTransits = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+        menu.Items.Add(ToggleItem("任务地点标记", _settings.ShowQuestMarkers, v =>
+        {
+            _settings.ShowQuestMarkers = v;
+            ApplyDisplayOptions();
+            SyncQuestMarkers();
+            Persist();
+        }));
+        menu.Items.Add(ToggleMenuItem("危险区（雷区 / 狙击区 / 其他）", _settings.ShowHazards, v =>
+        {
+            _settings.ShowHazards = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+        menu.Items.Add(new Separator());
+        menu.Items.Add(ToggleItem("地名", _settings.ShowLabels, v =>
+        {
+            _settings.ShowLabels = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+
+        if (sender is Control anchor)
+            menu.Open(anchor);
+    }
+
+    /// <summary>Same as <see cref="ToggleItem"/> but keeps the menu open on click.</summary>
+    private static MenuItem ToggleMenuItem(string header, bool isChecked, Action<bool> onChange)
+    {
+        var item = ToggleItem(header, isChecked, onChange);
+        item.StaysOpenOnClick = true;
+        return item;
+    }
+
+    private static MenuItem ToggleItem(string header, bool isChecked, Action<bool> onChange)
+    {
+        var item = new MenuItem
+        {
+            Header = header,
+            ToggleType = MenuItemToggleType.CheckBox,
+            IsChecked = isChecked,
+        };
+        item.Click += (_, _) => onChange(item.IsChecked);
+        return item;
+    }
+
+    private void Persist()
+    {
+        _settingsService.Save(_settings);
+    }
+
+    // ------------------------------------------------------------------
+    // screenshots
+
+    private async Task ScanScreenshotsAsync(bool quiet = false)
+    {
+        var dir = ResolveScreenshotDir();
+        if (dir is null)
+        {
+            ScreenshotStatusText.Text = "截图：目录不存在";
+            if (!quiet) ShowToast("未找到截图目录，请在设置中指定");
+            return;
+        }
+
+        if (!quiet) ShowToast("正在扫描截图目录…");
+        var files = await Task.Run(() => _screenshots.Scan(dir));
+        var imported = 0;
+        var deleted = 0;
+        MapDefinition? latestMap = null;
+        ScreenshotInfo? latestInfo = null;
+        var latestTime = DateTime.MinValue;
+
+        foreach (var info in files)
+        {
+            if (!_knownShotPaths.Add(info.FilePath)) continue;
+            AssignScreenshotMap(info);
+            AddScreenshotInternal(info);
+            imported++;
+
+            if (_settings.DeleteScreenshotsAfterScan && _screenshots.TryDeleteAfterImport(info.FilePath))
+                deleted++;
+
+            var time = info.CapturedAt == default ? info.FileTime : info.CapturedAt;
+            if (time > latestTime)
+            {
+                latestTime = time;
+                latestInfo = info;
+                latestMap = _repo.FindByKey(info.MapKey);
+            }
+        }
+
+        UpdatePinsForCurrentMap();
+        UpdateScreenshotCount();
+
+        if (!quiet)
+        {
+            var msg = imported == 0
+                ? "没有发现新的截图坐标"
+                : $"已导入 {imported} 个坐标" + (deleted > 0 ? $"，清理 {deleted} 张截图" : "");
+            ShowToast(msg);
+        }
+
+        if (latestInfo is not null) AutoSelectLayerForHeight(latestInfo.Y);
+
+        if (latestMap is not null && _settings.AutoSwitchMap && latestMap.Key != _currentMap?.Key)
+        {
+            SelectMapListItem(latestMap);
+            await SelectMapAsync(latestMap, remember: true);
+        }
+        SyncOverlayPlayer();
+    }
+
+    private void AssignScreenshotMap(ScreenshotInfo info)
+    {
+        var candidates = _repo.Maps.Where(m => m.Contains(info.X, info.Z, 25)).ToList();
+        if (_detectedMapKey is not null && candidates.Any(m => m.Key == _detectedMapKey))
+        {
+            info.MapKey = _detectedMapKey;
+            return;
+        }
+        if (candidates.Count == 1)
+        {
+            info.MapKey = candidates[0].Key;
+            return;
+        }
+        if (_currentMap is not null && candidates.Any(m => m.Key == _currentMap.Key))
+        {
+            info.MapKey = _currentMap.Key;
+            info.MapWasGuessed = true;
+            return;
+        }
+        info.MapKey = _currentMap?.Key ?? _settings.SelectedMap;
+        info.MapWasGuessed = true;
+    }
+
+    private void AddScreenshotInternal(ScreenshotInfo info)
+    {
+        if (!_shotsByMap.TryGetValue(info.MapKey, out var list))
+        {
+            list = new List<ScreenshotInfo>();
+            _shotsByMap[info.MapKey] = list;
+        }
+        if (!list.Any(p => p.FilePath.Equals(info.FilePath, StringComparison.OrdinalIgnoreCase)))
+            list.Add(info);
+    }
+
+    private async Task OnNewScreenshotAsync(ScreenshotInfo info)
+    {
+        if (!_settings.ScanScreenshots) return;
+        if (!_knownShotPaths.Add(info.FilePath)) return;
+
+        AssignScreenshotMap(info);
+        AddScreenshotInternal(info);
+        UpdateScreenshotCount();
+
+        if (_settings.DeleteScreenshotsAfterScan)
+            _screenshots.TryDeleteAfterImport(info.FilePath);
+
+        if (_settings.AutoSwitchMap && info.MapKey != _currentMap?.Key)
+        {
+            var map = _repo.FindByKey(info.MapKey);
+            if (map is not null)
+            {
+                SelectMapListItem(map);
+                await SelectMapAsync(map, remember: true);
+            }
+        }
+        else if (_currentMap?.Key == info.MapKey)
+        {
+            UpdatePinsForCurrentMap();
+        }
+
+        AutoSelectLayerForHeight(info.Y);
+
+        SyncOverlayPlayer();
+        ShowToast($"新截图已定位: X {info.X:0.0}  Z {info.Z:0.0}");
+    }
+
+    private void UpdateScreenshotCount()
+    {
+        var count = _shotsByMap.Values.Sum(v => v.Count);
+        ScreenshotStatusText.Text = $"截图：{count} 个坐标点";
+    }
+
+    private void ScanScreenshotsButton_Click(object? sender, RoutedEventArgs e) => _ = ScanScreenshotsAsync();
+
+    private void LocateLatestButton_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_currentMap is null) return;
+        var latest = GetLatestPin(_currentMap.Key);
+        if (latest is null) return;
+        MapView.ActivePin = latest;
+        MapView.FocusOn(latest.X, latest.Z, 4.0);
+        MapView.InvalidateVisual();
+    }
+
+    // ------------------------------------------------------------------
+    // overlay
+
+    private void OverlayButton_Click(object? sender, RoutedEventArgs e) => ToggleOverlay();
+
+    private void ToggleOverlay() => ShowOverlay(_overlay is not { IsVisible: true });
+
+    private void ShowOverlay(bool visible)
+    {
+        try
+        {
+            if (_overlay is null)
+            {
+                _overlay = new OverlayWindow(this, _settings.Clone());
+                _overlay.SettingsChanged += (_, _) =>
+                {
+                    if (_overlay is null) return;
+                    _settings.OverlayWidthFrom(_overlay);
+                    Persist();
+                };
+                _overlay.VisibilityChanged += (_, _) =>
+                {
+                    if (_overlay is { IsVisible: false })
+                    {
+                        _settings.OverlayVisibleOnStartup = false;
+                        Persist();
+                    }
+                    UpdateOverlayUi();
+                };
+                _overlay.Closed += (_, _) =>
+                {
+                    if (!_shuttingDown) _overlay = null;
+                    UpdateOverlayUi();
+                };
+            }
+
+            if (_currentMap is not null)
+            {
+                _overlay.SetMap(_currentMap, _repo.GetBitmap(_currentMap));
+                _overlay.SetPlayer(GetLatestPin(_currentMap.Key));
+                SyncOverlayFloor();
+            }
+
+            if (visible)
+            {
+                _overlay.ShowOverlay();
+                _settings.OverlayVisibleOnStartup = true;
+            }
+            else
+            {
+                _overlay.HideOverlay();
+                _settings.OverlayVisibleOnStartup = false;
+            }
+            Persist();
+            UpdateOverlayUi();
+        }
+        catch (Exception ex)
+        {
+            AppPaths.LogCrash(ex);
+            ShowToast("悬浮地图打开失败: " + ex.Message);
+        }
+    }
+
+    private void ToggleOverlayLock()
+    {
+        if (_overlay is null || !_overlay.IsVisible) return;
+        _overlay.SetLocked(!_overlay.IsLocked);
+        _settings.OverlayLocked = _overlay.IsLocked;
+        Persist();
+    }
+
+    private void SyncOverlayPlayer()
+    {
+        if (_overlay is null || _currentMap is null) return;
+        try
+        {
+            _overlay.SetMap(_currentMap, _repo.GetBitmap(_currentMap));
+            _overlay.SetPlayer(GetLatestPin(_currentMap.Key));
+        }
+        catch (Exception ex)
+        {
+            AppPaths.LogCrash(ex);
+        }
+    }
+
+    private void UpdateOverlayUi()
+    {
+        var visible = _overlay is { IsVisible: true };
+        TitleOverlayButton.Content = visible ? "隐藏悬浮" : "悬浮地图";
+        MapOverlayButton.Content = visible ? "隐藏悬浮" : "悬浮";
+    }
+
+    // ------------------------------------------------------------------
+    // quests
+
+    private void QuestToggleButton_Click(object? sender, RoutedEventArgs e) => ToggleQuestDrawer();
+
+    private void ToggleQuestDrawer()
+    {
+        var open = !QuestDrawer.IsVisible;
+        QuestDrawer.IsVisible = open;
+        QuestDrawer.Width = open ? 400 : 0;
+        if (open)
+        {
+            RefreshQuestScope();
+            QuestSearchBox.Focus();
+        }
+    }
+
+    private void CloseQuestDrawer_Click(object? sender, RoutedEventArgs e)
+    {
+        QuestDrawer.IsVisible = false;
+        QuestDrawer.Width = 0;
+    }
+
+    private void QuestSearchBox_TextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (!_initialized || _suppressQuestEvents) return;
+        RefreshQuestScope();
+    }
+
+    private void QuestFilterBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (!_initialized || _suppressQuestEvents) return;
+        _settings.QuestFilter = Math.Clamp(QuestFilterBox.SelectedIndex, 0, 2);
+        Persist();
+        RefreshQuestScope();
+    }
+
+    private void QuestFollowMapCheck_Click(object? sender, RoutedEventArgs e)
+    {
+        if (!_initialized || _suppressQuestEvents) return;
+        _settings.QuestFollowsMap = QuestFollowMapCheck.IsChecked == true;
+        Persist();
+        RefreshQuestScope();
+    }
+
+    /// <summary>Recompute the quest list for the current map + search + filter.</summary>
+    private void RefreshQuestScope()
+    {
+        if (_currentMap is null) return;
+        var query = QuestSearchBox.Text ?? "";
+        _quests.SetMap(_currentMap.Key, _settings.QuestFollowsMap);
+        _quests.SetQuery(query);
+        _quests.SetFilter(Math.Clamp(QuestFilterBox.SelectedIndex, 0, 2));
+        _quests.Apply();
+        RefreshQuestCounts();
+        SyncQuestMarkers();
+    }
+
+    /// <summary>主轴章节勾选：写回进度文件并刷新计数。</summary>
+    private void StoryCheckBox_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not CheckBox { DataContext: StoryRow row } box) return;
+        _quests.SetStoryDone(row.Id, box.IsChecked == true);
+        RefreshQuestCounts();
+    }
+
+    private void RefreshQuestCounts()
+    {
+        if (QuestEmptyText is not null)
+            QuestEmptyText.IsVisible = _quests.VisibleQuests.Count == 0;
+        var total = _quests.TotalCount;
+        var completed = _quests.CompletedCount;
+        var shown = _quests.VisibleQuests.Count;
+        var scope = _quests.Searching || !_settings.QuestFollowsMap
+            ? "全部地图"
+            : _currentMap?.DisplayName ?? "全部地图";
+        QuestCountText.Text = $"{scope} · 显示 {shown} · 已完成 {completed}/{total}";
+        QuestStatusText.Text = $"任务 {completed}/{total} · 追踪 {_quests.TrackedCount}";
+        QuestDatabaseText.Text = $"{total} 个任务 · 本地化 · 2026-10-27";
+        if (StoryCountText is not null)
+            StoryCountText.Text = $"剧情进度 {_quests.StoryDoneCount}/{_quests.Chapters.Count}";
+    }
+
+    private void SyncQuestMarkers()
+    {
+        if (_currentMap is null)
+        {
+            MapView.QuestMarkers = Array.Empty<QuestMarker>();
+            return;
+        }
+        MapView.QuestMarkers = _settings.ShowQuestMarkers
+            ? _quests.BuildMarkers(_currentMap.Key)
+            : Array.Empty<QuestMarker>();
+        MapView.InvalidateVisual();
+    }
+
+    private void QuestList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (QuestList.SelectedItem is not QuestRow row)
+        {
+            _selectedQuest = null;
+            QuestDetailTitle.Text = "选择一个任务";
+            QuestDetailMeta.Text = "";
+            QuestObjectiveList.ItemsSource = null;
+            return;
+        }
+
+        _selectedQuest = row.Quest;
+        QuestDetailTitle.Text = row.Title;
+        QuestDetailMeta.Text = $"{row.Giver}  ·  {row.LevelText}  ·  {row.MapsText}";
+        QuestObjectiveList.ItemsSource = row.Quest.Objectives
+            .Select(o =>
+            {
+                var maps = o.Zones.Select(z => z.Map).Distinct().ToList();
+                var prefix = maps.Count == 0 ? "" : $"[{string.Join("/", maps.Select(MapName))}] ";
+                return prefix + o.Text;
+            })
+            .ToList();
+    }
+
+    private string MapName(string key) => _repo.FindByKey(key)?.DisplayName ?? key;
+
+    private void ToggleSelectedQuestButton_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_selectedQuest is null) return;
+        var row = _quests.VisibleQuests.FirstOrDefault(r => r.Id == _selectedQuest.Id);
+        if (row is not null)
+            row.IsCompleted = !row.IsCompleted;
+        else
+            _quests.SetCompleted(_selectedQuest.Id, !_quests.IsCompleted(_selectedQuest.Id));
+
+        // Re-run the active filter/sort: otherwise a task completed while the
+        // "未完成" filter is on stays in the list and the click looks ignored.
+        RefreshQuestScope();
+    }
+
+    /// <summary>Jump to the task's map (prompt when it spans several maps).</summary>
+    private async void QuestJumpButton_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Control { Tag: string questId }) return;
+        var quest = _quests.FindById(questId);
+        if (quest is null) return;
+
+        var maps = quest.ZoneMaps
+            .Select(_repo.FindByKey)
+            .Where(m => m is not null)
+            .Select(m => m!)
+            .ToList();
+
+        if (maps.Count == 0)
+        {
+            ShowToast("该任务没有地图坐标（击杀/交付类任务）");
+            return;
+        }
+
+        MapDefinition? target;
+        if (maps.Count == 1)
+        {
+            target = maps[0];
+        }
+        else
+        {
+            target = await PickMapAsync(quest, maps);
+            if (target is null) return;
+        }
+
+        SelectMapListItem(target);
+        await SelectMapAsync(target, remember: true);
+        if (!_quests.IsTracked(quest.Id)) _quests.SetTracked(quest.Id, true);
+        RefreshQuestScope();
+
+        var first = quest.ObjectivesFor(target.Key).SelectMany(o => o.Zones).FirstOrDefault(z => z.Map == target.Key);
+        if (first is not null)
+        {
+            MapView.FocusOn(first.X, first.Z, 3.2);
+            MapView.InvalidateVisual();
+        }
+        ShowToast($"已跳转到 {target.DisplayName}");
+    }
+
+    private async Task<MapDefinition?> PickMapAsync(Quest quest, IReadOnlyList<MapDefinition> maps)
+    {
+        var dialog = new MapPickWindow(quest.Name, maps);
+        return await dialog.ShowDialog<MapDefinition?>(this);
+    }
+
+    /// <summary>大傻哥 (eftarkov.com) task page: /task/{id}.</summary>
+    private const string WikiBase = "https://www.eftarkov.com/task/";
+
+    /// <summary>Task location artwork lives under /uploads/task/{id}.webp.</summary>
+    private const string WikiImageBase = "https://www.eftarkov.com/uploads/task/";
+    private const string WikiPageBase = "https://www.eftarkov.com/task/";
+
+    private void OpenWikiButton_Click(object? sender, RoutedEventArgs e) => OpenQuestPage();
+
+    /// <summary>Show the task's annotated location map inside the app.</summary>
+    private void OpenQuestMapImageButton_Click(object? sender, RoutedEventArgs e) => OpenQuestMapImage();
+
+    private void OpenQuestPage()
+    {
+        var id = _selectedQuest?.Id;
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            ShowToast("请先选择一个任务");
+            return;
+        }
+
+        OpenExternalUrl(WikiPageBase + id);
+    }
+
+    /// <summary>
+    /// Show the task's guide pictures (the annotated location shots), not the
+    /// wiki cover art. Falls back to the cover when the page has no guide image.
+    /// </summary>
+    private async void OpenQuestMapImage()
+    {
+        var quest = _selectedQuest;
+        if (quest is null || string.IsNullOrWhiteSpace(quest.Id))
+        {
+            ShowToast("请先选择一个任务");
+            return;
+        }
+
+        var caption = string.IsNullOrWhiteSpace(quest.Name) ? quest.Id : quest.Name;
+
+        IReadOnlyList<string> images;
+        try
+        {
+            ShowToast("正在获取任务地点图…");
+            images = await _guides.GetLocationImagesAsync(quest.Id);
+        }
+        catch
+        {
+            images = Array.Empty<string>();
+        }
+
+        if (images.Count == 0)
+            images = new[] { WikiImageBase + quest.Id + ".webp" };
+
+        var viewer = new ImageViewerWindow("任务地点图 · " + caption, images);
+        viewer.Show(this);
+    }
+
+    /// <summary>Clicking a quest marker opens that task's guide pictures.</summary>
+    private async void OnMarkerClicked(object? sender, QuestMarker marker)
+    {
+        if (marker is null || string.IsNullOrWhiteSpace(marker.QuestId)) return;
+
+        var quest = _quests.FindById(marker.QuestId);
+        if (quest is null) return;
+
+        _selectedQuest = quest;
+        QuestDetailTitle.Text = quest.Title;
+        QuestDetailMeta.Text = $"{quest.Trader}  ·  {quest.LevelText}  ·  {quest.MapsText}";
+
+        IReadOnlyList<string> images;
+        try
+        {
+            images = await _guides.GetLocationImagesAsync(quest.Id);
+        }
+        catch
+        {
+            images = Array.Empty<string>();
+        }
+
+        if (images.Count == 0)
+        {
+            ShowToast("这个任务没有地点图，已打开任务页");
+            OpenExternalUrl(WikiPageBase + quest.Id);
+            return;
+        }
+
+        var viewer = new ImageViewerWindow("任务地点图 · " + quest.Title, images);
+        viewer.Show(this);
+    }
+
+    private void OpenExternalUrl(string url)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            ShowToast("无法打开浏览器: " + ex.Message);
+        }
+    }
+
+    private async void OcrQuestButton_Click(object? sender, RoutedEventArgs e)
+    {
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "选择任务页面截图",
+            AllowMultiple = false,
+            FileTypeFilter = new[]
+            {
+                new FilePickerFileType("图片")
+                {
+                    Patterns = new[] { "*.png", "*.jpg", "*.jpeg", "*.bmp", "*.webp" },
+                },
+            },
+        });
+        var path = files.Count > 0 ? files[0].TryGetLocalPath() : null;
+        if (string.IsNullOrWhiteSpace(path)) return;
+
+        OcrStatusText.IsVisible = true;
+        OcrStatusText.Text = "正在用 Windows OCR 识别截图…";
+        try
+        {
+            var result = await _ocr.RecognizeAsync(path);
+            if (!result.Ok)
+            {
+                OcrStatusText.Text = "OCR 失败：" + result.Error;
+                return;
+            }
+
+            var candidates = _quests.MatchText(result.Text);
+            OcrStatusText.Text = candidates.Count == 0
+                ? "未匹配到任务名；可在下方列表手动搜索勾选。"
+                : $"识别到 {candidates.Count} 个候选任务。";
+
+            var dialog = new QuestScanWindow("截图任务识别",
+                "请核对 OCR 候选；未收录的任务可稍后在任务库更新后使用。",
+                candidates, result.Text);
+            await dialog.ShowDialog(this);
+        }
+        catch (Exception ex)
+        {
+            AppPaths.LogCrash(ex);
+            OcrStatusText.Text = "OCR 出错：" + ex.Message;
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // settings
+
+    private async void SettingsButton_Click(object? sender, RoutedEventArgs e)
+    {
+        var window = new SettingsWindow(_settings.Clone(), _hotkeys.LastError);
+        var saved = await window.ShowDialog<bool>(this);
+        if (!saved) return;
+        _settings = window.Settings;
+        _settings.Normalize();
+        Persist();
+        ApplySettings();
+    }
+
+    private async void ApplySettings()
+    {
+        ApplyDisplayOptions();
+        _hotkeys.Update(_settings.OverlayHotkey, _settings.OverlayLockHotkey);
+        _hotkeys.Install();
+
+        _logs.Stop();
+        _logs.MapDetected -= OnMapDetected;
+        _logs.MapDetected += OnMapDetected;
+        if (_settings.AutoDetect) _logs.Start(_settings.LogsPath);
+        else
+        {
+            RaidStatusText.Text = "自动识别已关闭";
+            RaidStatusDot.Fill = new SolidColorBrush(Color.Parse("#8FA0AE"));
+        }
+
+        _screenshots.StopWatching();
+        var shotDir = ResolveScreenshotDir();
+        if (shotDir is not null)
+        {
+            _screenshots.StartWatching(shotDir, info => Dispatcher.UIThread.Post(() => _ = OnNewScreenshotAsync(info)));
+            _settings.ScreenshotsPath = shotDir;
+        }
+
+        _suppressQuestEvents = true;
+        try
+        {
+            QuestFollowMapCheck.IsChecked = _settings.QuestFollowsMap;
+        }
+        finally
+        {
+            _suppressQuestEvents = false;
+        }
+
+        _overlay?.ApplySettings(_settings);
+        SyncOverlayPlayer();
+        RefreshQuestScope();
+        await ScanScreenshotsAsync(quiet: true);
+        ShowToast("设置已保存");
+    }
+
+    // ------------------------------------------------------------------
+    // window chrome
+
+    private void HeaderBar_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.Source is Visual visual && visual.FindAncestorOfType<Button>() is not null) return;
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) return;
+        if (e.ClickCount == 2)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            return;
+        }
+        BeginMoveDrag(e);
+    }
+
+    private void MinimizeButton_Click(object? sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+    private void MaximizeButton_Click(object? sender, RoutedEventArgs e) =>
+        WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+
+    private void CloseButton_Click(object? sender, RoutedEventArgs e) => Close();
+
+    private void MapSearchBox_TextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (!_initialized) return;
+        ApplyMapFilter(MapSearchBox.Text ?? "");
+    }
+
+    private void ResetViewButton_Click(object? sender, RoutedEventArgs e) => MapView.ResetView();
+
+    private void ZoomInButton_Click(object? sender, RoutedEventArgs e) => MapView.ZoomIn();
+
+    private void ZoomOutButton_Click(object? sender, RoutedEventArgs e) => MapView.ZoomOut();
+
+    private void OnWindowKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Control) && e.Key == Key.F)
+        {
+            MapSearchBox.Focus();
+            MapSearchBox.SelectAll();
+            e.Handled = true;
+        }
+        else if (e.Key == Key.Escape && QuestDrawer.IsVisible)
+        {
+            QuestDrawer.IsVisible = false;
+            QuestDrawer.Width = 0;
+            e.Handled = true;
+        }
+    }
+
+    private void UpdateLiveUi()
+    {
+        if (_currentMap is null) return;
+        ZoomText.Text = $"{MapView.Zoom * 100:0}%";
+        LocateLatestButton.IsVisible = GetLatestPin(_currentMap.Key) is not null;
+        PinCountText.Text = $"{GetPins(_currentMap.Key).Count} 个截图点";
+    }
+
+    private void ShowToast(string message)
+    {
+        HintText.Text = message;
+        _toastTimer?.Stop();
+        _toastTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4.5) };
+        _toastTimer.Tick += (_, _) =>
+        {
+            _toastTimer?.Stop();
+            HintText.Text = _defaultHint;
+        };
+        _toastTimer.Start();
+    }
+
+    private void OnClosing(object? sender, WindowClosingEventArgs e)
+    {
+        _shuttingDown = true;
+        try { _uiTimer?.Stop(); } catch { }
+        _settings.SelectedMap = _currentMap?.Key ?? _settings.SelectedMap;
+        if (_overlay is not null)
+        {
+            _settings.OverlayWidthFrom(_overlay);
+            _settings.OverlayLocked = _overlay.IsLocked;
+            _settings.OverlayOpacity = _overlay.OverlayOpacityValue;
+            _overlay.AllowClose();
+            _overlay.Close();
+        }
+        Persist();
+        _hotkeys.Dispose();
+        _logs.Dispose();
+        _screenshots.Dispose();
+        _quests.FlushProgress();
+    }
+}

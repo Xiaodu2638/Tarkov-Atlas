@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>LogicChecks</AssemblyName>
+    <RootNamespace>LogicChecks</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\MapModels.cs" Link="Models\MapModels.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\QuestModels.cs" Link="Models\QuestModels.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\AppSettings.cs" Link="Models\AppSettings.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\MapNames.cs" Link="Models\MapNames.cs" />
+    <Compile Include="..\..\TarkovAtlas\AppJsonContext.cs" Link="AppJsonContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\TarkovAtlas\Assets\**\*" Link="Assets\%(RecursiveDir)%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

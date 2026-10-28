@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>ShotChecks</AssemblyName>
+    <RootNamespace>ShotChecks</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\TarkovAtlas\Services\ScreenshotService.cs" Link="ScreenshotService.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\ScreenshotInfo.cs" Link="ScreenshotInfo.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\AppSettings.cs" Link="AppSettings.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\MapModels.cs" Link="MapModels.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\MapNames.cs" Link="MapModels\MapNames.cs" />
+    <Compile Include="..\..\TarkovAtlas\Models\QuestModels.cs" Link="QuestModels.cs" />
+    <Compile Include="..\..\TarkovAtlas\Services\SettingsService.cs" Link="SettingsService.cs" />
+    <Compile Include="..\..\TarkovAtlas\AppJsonContext.cs" Link="AppJsonContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.22" />
+  </ItemGroup>
+</Project>

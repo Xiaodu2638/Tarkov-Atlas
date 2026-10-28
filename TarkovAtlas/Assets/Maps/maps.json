@@ -1,0 +1,2526 @@
+{
+  "generatedAt": "2026-10-28",
+  "maps": [
+    {
+      "key": "ground-zero",
+      "name": "ground-zero",
+      "nameZh": "零号区域",
+      "subtitle": "新手区域 · 高密度任务",
+      "description": "塔科夫市郊的封锁区，低等级玩家的任务起点，也常有老玩家进入刷任务。",
+      "difficulty": "低",
+      "players": "10–12",
+      "raidMinutes": 20,
+      "image": "ground-zero.jpg",
+      "width": 3993,
+      "height": 5600,
+      "affine": [
+        -11.474137931034482,
+        0.0,
+        2857.060344827586,
+        0.0,
+        11.475409836065573,
+        1422.950819672131
+      ],
+      "bounds": [
+        -99.00000000000001,
+        -124.0,
+        249.0,
+        364.00000000000006
+      ],
+      "labels": [
+        {
+          "x": -50,
+          "z": 0,
+          "text": "TerraGroup",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 150,
+          "z": 1,
+          "text": "Skyside",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 141,
+          "z": 142,
+          "text": "Fusion",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 14,
+          "z": 201,
+          "text": "Empire",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 115,
+          "z": 285,
+          "text": "Capital Insight",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 2,
+          "z": 324,
+          "text": "Nakatani",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 80,
+          "z": -118,
+          "text": "Elemental Global",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 115,
+          "z": 104,
+          "text": "Oasis",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 115,
+          "z": 30,
+          "text": "ASAP Winery",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 43,
+          "z": 150,
+          "text": "Tarbank",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 58,
+          "z": 234,
+          "text": "GAGRIN Hotel",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 97,
+          "z": 223,
+          "text": "M Showroom",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -13,
+          "z": 48,
+          "text": "Science Office",
+          "size": 60,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 1
+    },
+    {
+      "key": "customs",
+      "name": "customs",
+      "nameZh": "海关",
+      "subtitle": "工业区 · 经典战场",
+      "description": "塔科夫最具代表性的地图，宿舍、红厂房与加油站构成主要交火区。",
+      "difficulty": "中",
+      "players": "10–12",
+      "raidMinutes": 35,
+      "image": "customs.jpg",
+      "width": 5600,
+      "height": 2847,
+      "affine": [
+        -5.233644859813084,
+        0.0,
+        3653.0841121495328,
+        0.0,
+        5.233455882352941,
+        1606.670955882353
+      ],
+      "bounds": [
+        -372.0,
+        -307.0,
+        698.0,
+        237.0
+      ],
+      "labels": [
+        {
+          "x": -215,
+          "z": -119,
+          "text": "Big Red",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 200,
+          "z": 150,
+          "text": "Dorms",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 404,
+          "z": 31,
+          "text": "New Gas",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 331,
+          "z": -173,
+          "text": "Old Gas",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 201,
+          "z": -127,
+          "text": "Fortress",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 83,
+          "z": -153,
+          "text": "Crackhouse",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 567,
+          "z": -67,
+          "text": "Streamer House",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -69,
+          "z": 9,
+          "text": "Main Bridge",
+          "size": 90,
+          "rotation": 6.0
+        },
+        {
+          "x": 110,
+          "z": 85,
+          "text": "Sniper Hill",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -288,
+          "z": -134,
+          "text": "Storage",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -211,
+          "z": -219,
+          "text": "Trailer Park",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -66,
+          "z": 46,
+          "text": "Junk Bridge",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 106,
+          "z": -90,
+          "text": "Repair Shop",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 491,
+          "z": 63,
+          "text": "Sniper Ridge",
+          "size": 100,
+          "rotation": 5.0
+        },
+        {
+          "x": 75,
+          "z": -9,
+          "text": "Old Construction",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 200,
+          "z": -13,
+          "text": "Skeleton",
+          "size": 100,
+          "rotation": -9.0
+        },
+        {
+          "x": 390,
+          "z": -94,
+          "text": "Warehouse 3",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 472,
+          "z": -67,
+          "text": "Depot",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 555,
+          "z": -118,
+          "text": "Warehouse 7",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 572,
+          "z": 0,
+          "text": "Military Checkpoint",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 238,
+          "z": 53,
+          "text": "Bus Station",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 333,
+          "z": -67,
+          "text": "Warehouse 4",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 497,
+          "z": 110,
+          "text": "Powerline Tower",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 46,
+          "z": -59,
+          "text": "Warehouse 17",
+          "size": 90,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 2
+    },
+    {
+      "key": "factory",
+      "name": "factory",
+      "nameZh": "工厂",
+      "subtitle": "室内近战 · 快节奏",
+      "description": "狭小多层工业厂房，近距离交火和 Boss Tagilla 的主场。",
+      "difficulty": "高",
+      "players": "4–6",
+      "raidMinutes": 20,
+      "image": "factory.jpg",
+      "width": 3763,
+      "height": 3487,
+      "affine": [
+        -26.064,
+        -1.5959597086488306e-15,
+        2031.8000000000002,
+        -1.5959597086488306e-15,
+        26.064,
+        1705.6
+      ],
+      "bounds": [
+        -66.42111724984652,
+        -65.43891958256599,
+        77.95426642111725,
+        68.34714548802947
+      ],
+      "labels": [
+        {
+          "x": 21,
+          "z": 39,
+          "text": "Office Building",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 15.5,
+          "z": 39,
+          "text": "Main Office",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 24.5,
+          "z": 39,
+          "text": "Breach Room",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 30.5,
+          "z": 39,
+          "text": "Locked Office",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 35,
+          "z": 39,
+          "text": "North Stairs",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 9,
+          "z": 39,
+          "text": "South Stairs",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 34,
+          "z": 26,
+          "text": "Sky Bridge",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 29.5,
+          "z": 17,
+          "text": "Connector",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 29,
+          "z": 41,
+          "text": "Locker Rooms",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 15,
+          "z": 41,
+          "text": "Sinks",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 20,
+          "z": 42,
+          "text": "Hole",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -3,
+          "z": 37,
+          "text": "Platform",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -21,
+          "z": 27,
+          "text": "Servers",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -18,
+          "z": -29,
+          "text": "Med Tent",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 4.5,
+          "z": 10.5,
+          "text": "Silos",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 30,
+          "z": -8.5,
+          "text": "Heli Crash",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -1,
+          "z": 16,
+          "text": "Pit",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -2,
+          "z": -24.5,
+          "text": "Underground Stash",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -20.5,
+          "z": 23,
+          "text": "Scav Bunker",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -18,
+          "z": 50,
+          "text": "Blue Containers",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -45.5,
+          "z": 61,
+          "text": "Wood Room",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 68.25,
+          "z": -20,
+          "text": "Glass Hall",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 56,
+          "z": 5,
+          "text": "Boilers",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 41,
+          "z": -11,
+          "text": "Pumping Station",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 44,
+          "z": -36,
+          "text": "East Halls",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 66,
+          "z": -42,
+          "text": "Forklifts",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 18,
+          "z": 4,
+          "text": "Rafters",
+          "size": 100,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov.dev tile layer",
+      "order": 3
+    },
+    {
+      "key": "woods",
+      "name": "woods",
+      "nameZh": "森林",
+      "subtitle": "开阔林地 · 远距离",
+      "description": "视野开阔的森林与伐木场，适合狙击，也容易遭遇 Shturman。",
+      "difficulty": "中",
+      "players": "10–14",
+      "raidMinutes": 40,
+      "image": "woods.jpg",
+      "width": 5600,
+      "height": 5397,
+      "affine": [
+        -3.9800995024875623,
+        0.0,
+        2571.144278606965,
+        0.0,
+        3.980088495575221,
+        3637.8008849557523
+      ],
+      "bounds": [
+        -761.0000000000001,
+        -914.0000000000001,
+        646.0,
+        442.0
+      ],
+      "labels": [
+        {
+          "x": 10,
+          "z": -3,
+          "text": "Sawmill",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -485,
+          "z": -390,
+          "text": "Scav Town",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -517,
+          "z": -210,
+          "text": "Old Sawmill",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -80,
+          "z": -680,
+          "text": "Cultist Village",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 290,
+          "z": -475,
+          "text": "USEC Camp",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -188,
+          "z": 235,
+          "text": "Military Camp",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -5,
+          "z": -515,
+          "text": "Ponds",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -252,
+          "z": -37,
+          "text": "Crash Site",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 239,
+          "z": -65,
+          "text": "Checkpoint",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 244,
+          "z": 125,
+          "text": "Shack",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -16,
+          "z": -122,
+          "text": "Lumber",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -3,
+          "z": -74,
+          "text": "Cabins",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -234,
+          "z": 357,
+          "text": "Bus Stop",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -327,
+          "z": 19,
+          "text": "Jaeger's Camp",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 85,
+          "z": -147,
+          "text": "Sniper Rock",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 200,
+          "z": -606,
+          "text": "Convoy",
+          "size": 70,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 4
+    },
+    {
+      "key": "interchange",
+      "name": "interchange",
+      "nameZh": "立交桥",
+      "subtitle": "超级商场 · 室内搜刮",
+      "description": "U LTRA 购物中心与地下停车场，室内近战和电力开关是核心机制。",
+      "difficulty": "中",
+      "players": "10–14",
+      "raidMinutes": 40,
+      "image": "interchange.jpg",
+      "width": 5600,
+      "height": 4715,
+      "affine": [
+        -5.431619786614937,
+        0.0,
+        3248.1086323957325,
+        0.0,
+        5.432027649769585,
+        2400.9562211981565
+      ],
+      "bounds": [
+        -432.99999999999994,
+        -441.99999999999994,
+        598.0,
+        426.0
+      ],
+      "labels": [
+        {
+          "x": -186.4,
+          "z": -318.7,
+          "text": "Power Station",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 155,
+          "z": -253,
+          "text": "Go Kart",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 158,
+          "z": -78.5,
+          "text": "Four Camp",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 68.2,
+          "z": 312.9,
+          "text": "Cargo Containers",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -260.2,
+          "z": 123.8,
+          "text": "Wall Break",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -175.5,
+          "z": 145.1,
+          "text": "Ramps",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 202.3,
+          "z": 219.4,
+          "text": "Oli Tower",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 46.5,
+          "z": -358.5,
+          "text": "Idea Tower",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 263.2,
+          "z": -11.1,
+          "text": "Scav Camp",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 373.5,
+          "z": -391.2,
+          "text": "Highway Construction",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 33,
+          "z": -222,
+          "text": "Garage A",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 47,
+          "z": -112,
+          "text": "Garage B",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 0,
+          "z": 47,
+          "text": "Garage C",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 20,
+          "z": 138,
+          "text": "Garage D",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -34,
+          "z": -235,
+          "text": "IDEA",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -115,
+          "z": -45,
+          "text": "Goshan",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -28,
+          "z": 140,
+          "text": "OLI",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 87,
+          "z": -165,
+          "text": "Nortex",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 60,
+          "z": -152,
+          "text": "TRend",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 69.5,
+          "z": -134,
+          "text": "Mode7",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 19,
+          "z": -129,
+          "text": "TTS",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -38,
+          "z": -129,
+          "text": "Book Store",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 91,
+          "z": -119,
+          "text": "Dino Clothes",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 18,
+          "z": -103,
+          "text": "EMERCOM",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -28,
+          "z": -103,
+          "text": "Kostin",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -65,
+          "z": -103,
+          "text": "Bizarro",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 92,
+          "z": -87,
+          "text": "Spiel",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -18,
+          "z": -87,
+          "text": "Voyage",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 57,
+          "z": -66,
+          "text": "Viking",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 13,
+          "z": -66,
+          "text": "Mantis",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -18,
+          "z": -72,
+          "text": "German",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 57,
+          "z": -32,
+          "text": "The National",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 13,
+          "z": -32,
+          "text": "Brutal",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -18,
+          "z": -25,
+          "text": "Kiba",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -34,
+          "z": -20,
+          "text": "Pretty Lights",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 92,
+          "z": -18,
+          "text": "Telespot",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 62,
+          "z": -12,
+          "text": "Revis",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 19,
+          "z": -6,
+          "text": "ADIK",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -28,
+          "z": 0.5,
+          "text": "Generic",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 92,
+          "z": 15,
+          "text": "Top Brand",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 61,
+          "z": 15,
+          "text": "Sports",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 70,
+          "z": 32,
+          "text": "Yushka",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 19.5,
+          "z": 26,
+          "text": "Rasmussen",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -37,
+          "z": 26,
+          "text": "Avokado",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 91,
+          "z": 55,
+          "text": "Boots 4 Life",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 61,
+          "z": 50,
+          "text": "Texho",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 6,
+          "z": 49,
+          "text": "Dom",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 38,
+          "z": -170,
+          "text": "Father & Sons",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 69,
+          "z": -150,
+          "text": "Tarkovstar",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 26,
+          "z": -149,
+          "text": "Eastland",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 71,
+          "z": -130,
+          "text": "Arena",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 54,
+          "z": -128,
+          "text": "ТАРЗДРАВ",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 20,
+          "z": -128,
+          "text": "МЕБЕЛЬ МК",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 69,
+          "z": -116,
+          "text": "Intourist",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -27,
+          "z": -103,
+          "text": "Burger Spot",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 70,
+          "z": -94,
+          "text": "FCK",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 70,
+          "z": -87,
+          "text": "McDaniels",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 64,
+          "z": -69,
+          "text": "Tarducks",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 43,
+          "z": -69,
+          "text": "Coffee Joy",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 15,
+          "z": -74,
+          "text": "Jacob & Jacob",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -34,
+          "z": -79,
+          "text": "ПУШКИН",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 64,
+          "z": -34,
+          "text": "Sushi Huyushi",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -17,
+          "z": -32,
+          "text": "Underway",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 67,
+          "z": -23.5,
+          "text": "Burger House",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": -34,
+          "z": -24,
+          "text": "Philly Cute",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 67,
+          "z": -16,
+          "text": "Shiccos",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 17,
+          "z": 0,
+          "text": "МУЗЕЙ ИСТОРИИ",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 92,
+          "z": 17,
+          "text": "Papillon",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 58,
+          "z": 13,
+          "text": "ЗАКРЫТО НА РЕМОНТ",
+          "size": 60,
+          "rotation": 0.0
+        },
+        {
+          "x": 70,
+          "z": 27,
+          "text": "НА-СВЯЗИ",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 54,
+          "z": 24,
+          "text": "СКОРО ОТКРЫТИЕ",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 19,
+          "z": 26,
+          "text": "Figaro",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 71,
+          "z": 47,
+          "text": "АПТЕКА",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 53,
+          "z": 47,
+          "text": "SARA",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 26,
+          "z": 46,
+          "text": "Urban Clothes",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 91,
+          "z": 54,
+          "text": "TECHLIGHT",
+          "size": 65,
+          "rotation": 0.0
+        },
+        {
+          "x": 39,
+          "z": 67,
+          "text": "Fashion Store",
+          "size": 65,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 5
+    },
+    {
+      "key": "shoreline",
+      "name": "shoreline",
+      "nameZh": "海岸线",
+      "subtitle": "度假村 · 多区域",
+      "description": "从村庄、码头到气象站和疗养院，跨度极大，任务线密集。",
+      "difficulty": "中",
+      "players": "10–13",
+      "raidMinutes": 40,
+      "image": "shoreline.jpg",
+      "width": 5600,
+      "height": 3708,
+      "affine": [
+        -3.58974358974359,
+        0.0,
+        1809.2307692307693,
+        0.0,
+        3.589545014520813,
+        1489.6611810261375
+      ],
+      "bounds": [
+        -1055.9999999999998,
+        -414.99999999999994,
+        503.99999999999994,
+        617.9999999999999
+      ],
+      "labels": [
+        {
+          "x": -258.2,
+          "z": -71.2,
+          "text": "Resort",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -215.8,
+          "z": 178.4,
+          "text": "Power Station",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -189.3,
+          "z": 420,
+          "text": "Gas Station",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -496,
+          "z": 257,
+          "text": "Weather Station",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -708.9,
+          "z": 93.91,
+          "text": "Radio Tower",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 326,
+          "z": -118.5,
+          "text": "Swamp",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 418.4,
+          "z": 118,
+          "text": "Village",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 288,
+          "z": 144,
+          "text": "Cabins",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 128,
+          "z": 93,
+          "text": "Cottages",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -355,
+          "z": 188,
+          "text": "Tank Bridge",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -338.6,
+          "z": 525,
+          "text": "Pier",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 216,
+          "z": 424,
+          "text": "Scav Island",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -96,
+          "z": -6,
+          "text": "Bus Stop",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 52,
+          "z": 134,
+          "text": "Construction",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -153,
+          "z": -290,
+          "text": "Bunker",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -625,
+          "z": 484,
+          "text": "Crane",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -622,
+          "z": -202,
+          "text": "Scav Farm",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -171,
+          "z": -83,
+          "text": "West Wing",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -329,
+          "z": -83,
+          "text": "East Wing",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -252,
+          "z": -146,
+          "text": "Admin",
+          "size": 100,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 6
+    },
+    {
+      "key": "reserve",
+      "name": "reserve",
+      "nameZh": "储备站",
+      "subtitle": "军事基地 · 地下 bunker",
+      "description": "废弃军事基地，地上地下多层结构，Raider 与 Glukhar 出没。",
+      "difficulty": "高",
+      "players": "9–12",
+      "raidMinutes": 40,
+      "image": "reserve.jpg",
+      "width": 5600,
+      "height": 5080,
+      "affine": [
+        -9.45945945945946,
+        0.0,
+        2733.7837837837837,
+        0.0,
+        9.45996275605214,
+        2771.7690875232774
+      ],
+      "bounds": [
+        -302.99999999999994,
+        -293.0,
+        289.0,
+        244.0
+      ],
+      "labels": [
+        {
+          "x": 28,
+          "z": -102,
+          "text": "K Buildings",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -25,
+          "z": 180,
+          "text": "White Queen",
+          "size": 100,
+          "rotation": -15.0
+        },
+        {
+          "x": -104,
+          "z": 93,
+          "text": "White Pawn",
+          "size": 100,
+          "rotation": 14.0
+        },
+        {
+          "x": -140,
+          "z": -14.5,
+          "text": "Black Bishop",
+          "size": 100,
+          "rotation": 14.0
+        },
+        {
+          "x": -67,
+          "z": -30,
+          "text": "White Bishop",
+          "size": 100,
+          "rotation": 14.0
+        },
+        {
+          "x": -49.5,
+          "z": 15.5,
+          "text": "White King",
+          "size": 100,
+          "rotation": 14.0
+        },
+        {
+          "x": 14.5,
+          "z": -10.8,
+          "text": "Black Knight",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 82.2,
+          "z": -30.2,
+          "text": "White Knight",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 149,
+          "z": -124,
+          "text": "White Rook",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 161,
+          "z": -149,
+          "text": "Train Station",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": -165,
+          "z": 57,
+          "text": "Black Pawn",
+          "size": 100,
+          "rotation": -75.0
+        },
+        {
+          "x": 167,
+          "z": -222,
+          "text": "Barracks",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -220,
+          "z": -13,
+          "text": "E1 Bunkers",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 173,
+          "z": -3,
+          "text": "E2 Bunkers",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 80,
+          "z": -167,
+          "text": "д - Warehouse Bunkers",
+          "size": 100,
+          "rotation": 14.0
+        },
+        {
+          "x": 96,
+          "z": 30,
+          "text": "Garage",
+          "size": 80,
+          "rotation": -75.0
+        },
+        {
+          "x": 55.5,
+          "z": 60.6,
+          "text": "Mechanic",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 29.7,
+          "z": 29.5,
+          "text": "Gas Station",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": -31,
+          "z": -150,
+          "text": "Shipping Yard",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": -1,
+          "z": -71,
+          "text": "K1",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": 66,
+          "z": -90,
+          "text": "K2",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": -5.5,
+          "z": -94,
+          "text": "K3",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": 60,
+          "z": -112,
+          "text": "K4",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": -10.5,
+          "z": -115,
+          "text": "K5",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": 54,
+          "z": -132,
+          "text": "K6",
+          "size": 80,
+          "rotation": 14.0
+        },
+        {
+          "x": -8.5,
+          "z": 175,
+          "text": "Dome",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -120,
+          "z": 37,
+          "text": "Tarmac",
+          "size": 80,
+          "rotation": 14.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 7
+    },
+    {
+      "key": "the-lab",
+      "name": "the-lab",
+      "nameZh": "实验室",
+      "subtitle": "高危室内 · 需要门卡",
+      "description": "TerraGroup 地下研究设施，Raider 密集，入场成本和风险都很高。",
+      "difficulty": "极高",
+      "players": "6–10",
+      "raidMinutes": 35,
+      "image": "the-lab.jpg",
+      "width": 1954,
+      "height": 2662,
+      "affine": [
+        -9.2,
+        -1.6900125828233471e-15,
+        -711.1999999999998,
+        -1.6900125828233471e-15,
+        9.2,
+        4413.2
+      ],
+      "bounds": [
+        -289.695652173913,
+        -479.6956521739132,
+        -77.30434782608687,
+        -190.34782608695653
+      ],
+      "labels": [
+        {
+          "x": -230,
+          "z": -400,
+          "text": "Parking",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -246,
+          "z": -379,
+          "text": "Vestibules #1",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -216,
+          "z": -379,
+          "text": "Vestibules #2",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -172,
+          "z": -342,
+          "text": "Main Working Area",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -148,
+          "z": -398,
+          "text": "Negotiation Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -130,
+          "z": -398,
+          "text": "Infirmary Lvl 1",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -130,
+          "z": -356,
+          "text": "Test Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -125,
+          "z": -308,
+          "text": "Server Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -116,
+          "z": -266,
+          "text": "Warehouse Tunnels",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -163,
+          "z": -269,
+          "text": "Warehouse",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -170,
+          "z": -248,
+          "text": "Warehouse Gate",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -207,
+          "z": -305,
+          "text": "Lecture Hall",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -221,
+          "z": -343,
+          "text": "Recreation Area",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -236,
+          "z": -302,
+          "text": "Gym",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -241,
+          "z": -280,
+          "text": "Men's Locker Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -232,
+          "z": -280,
+          "text": "Women's Locker Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -259,
+          "z": -366,
+          "text": "Boiler Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -260,
+          "z": -319,
+          "text": "Security Barracks",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -260,
+          "z": -342,
+          "text": "Reception",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -260,
+          "z": -364,
+          "text": "Administrative Office",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -254,
+          "z": -320,
+          "text": "Security Office",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -244,
+          "z": -378,
+          "text": "Security #1",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -215,
+          "z": -379,
+          "text": "Security #2",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -229,
+          "z": -343,
+          "text": "Conference Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -219,
+          "z": -302,
+          "text": "Cafeteria",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -189,
+          "z": -401,
+          "text": "Offices #1",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -149,
+          "z": -401,
+          "text": "Offices #2",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -130,
+          "z": -401,
+          "text": "Infirmary Lvl 2",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -130,
+          "z": -361,
+          "text": "Sterile Laboratory",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -169,
+          "z": -288,
+          "text": "Control Room",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -250,
+          "z": -281,
+          "text": "Corridor To Building #2",
+          "size": 90,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov.dev tile layer",
+      "order": 8
+    },
+    {
+      "key": "lighthouse",
+      "name": "lighthouse",
+      "nameZh": "灯塔",
+      "subtitle": "海岸长图 · 水电站",
+      "description": "狭长的海岸地图，水电站、村庄与灯塔区域分布着 Rogues。",
+      "difficulty": "高",
+      "players": "9–12",
+      "raidMinutes": 40,
+      "image": "lighthouse.jpg",
+      "width": 3445,
+      "height": 5600,
+      "affine": [
+        -3.25,
+        0.0,
+        1673.75,
+        0.0,
+        3.250145095763204,
+        3243.6448055716774
+      ],
+      "bounds": [
+        -545.0,
+        -997.9999999999999,
+        515.0,
+        725.0
+      ],
+      "labels": [
+        {
+          "x": -30,
+          "z": -882,
+          "text": "Train Yard",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -120,
+          "z": -841,
+          "text": "Drug Lab",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -65,
+          "z": -600,
+          "text": "Water Treatment",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 40,
+          "z": -618,
+          "text": "Plant 1",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -97,
+          "z": -737,
+          "text": "Plant 2",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -189,
+          "z": -665,
+          "text": "Plant 3",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -182,
+          "z": -552,
+          "text": "Pipes",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 18,
+          "z": -453,
+          "text": "Gunner Nest",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -177,
+          "z": -356,
+          "text": "Island",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -278,
+          "z": -323,
+          "text": "Cabins",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -162,
+          "z": -225,
+          "text": "Cottages",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -55,
+          "z": -288,
+          "text": "Convenience",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -75,
+          "z": -284,
+          "text": "Red Brick",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -151,
+          "z": -243,
+          "text": "Hillside",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 125,
+          "z": -153,
+          "text": "Boathouses",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 62,
+          "z": -60,
+          "text": "Dead Tree",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 0,
+          "z": -188,
+          "text": "Construction",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -107,
+          "z": -53,
+          "text": "Pikes Peak Resort",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -133,
+          "z": 100,
+          "text": "Grand Chalet",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -70,
+          "z": 129,
+          "text": "Tennis Court",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": 382,
+          "z": 496,
+          "text": "Lightkeeper Island",
+          "size": 100,
+          "rotation": 0.0
+        },
+        {
+          "x": -125,
+          "z": 296,
+          "text": "Crash Site",
+          "size": 100,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 9
+    },
+    {
+      "key": "streets-of-tarkov",
+      "name": "streets-of-tarkov",
+      "nameZh": "塔科夫街区",
+      "subtitle": "城市巷战 · 超大地图",
+      "description": "塔科夫市中心街区，建筑密集、任务极多，是后期主要战场。",
+      "difficulty": "高",
+      "players": "12–16",
+      "raidMinutes": 40,
+      "image": "streets-of-tarkov.jpg",
+      "width": 4083,
+      "height": 5600,
+      "affine": [
+        -6.7711442786069655,
+        0.0,
+        2187.07960199005,
+        0.0,
+        6.771463119709795,
+        1997.5816203143893
+      ],
+      "bounds": [
+        -279.99999999999994,
+        -295.0,
+        323.00000000000006,
+        531.9999999999999
+      ],
+      "labels": [
+        {
+          "x": 9,
+          "z": 308,
+          "text": "Primorsky Ave.",
+          "size": 80,
+          "rotation": -90.0
+        },
+        {
+          "x": 9,
+          "z": 104,
+          "text": "Primorsky Ave.",
+          "size": 80,
+          "rotation": -90.0
+        },
+        {
+          "x": 9,
+          "z": -80,
+          "text": "Primorsky Ave.",
+          "size": 80,
+          "rotation": -90.0
+        },
+        {
+          "x": 125,
+          "z": 10,
+          "text": "Kilmov St.",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -104,
+          "z": 28,
+          "text": "Kilmov St.",
+          "size": 80,
+          "rotation": 10.0
+        },
+        {
+          "x": -125,
+          "z": 210,
+          "text": "Nikitskaya St.",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -112,
+          "z": 361,
+          "text": "Verhnyaya St.",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -200,
+          "z": 290,
+          "text": "Malevecha St.",
+          "size": 80,
+          "rotation": -64.0
+        },
+        {
+          "x": 111,
+          "z": 251,
+          "text": "Chekannaya St.",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": -101,
+          "z": 441,
+          "text": "Nizhnyaya St.",
+          "size": 80,
+          "rotation": 0.0
+        },
+        {
+          "x": 174,
+          "z": 430,
+          "text": "Razvedchikov St.",
+          "size": 80,
+          "rotation": -30.0
+        },
+        {
+          "x": 140,
+          "z": 150,
+          "text": "Zmejskij Alley",
+          "size": 80,
+          "rotation": -68.0
+        },
+        {
+          "x": 232,
+          "z": 100,
+          "text": "Kamchatskaya St.",
+          "size": 80,
+          "rotation": -90.0
+        },
+        {
+          "x": -128,
+          "z": -35,
+          "text": "Kilmov Shopping Mall",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -45,
+          "z": -52,
+          "text": "Beluga",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 99,
+          "z": -71,
+          "text": "Cardinal Apartments",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 230,
+          "z": 295,
+          "text": "Construction",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 66,
+          "z": 305,
+          "text": "Lexos",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 140,
+          "z": 300,
+          "text": "Sparja Grocery",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -175,
+          "z": 400,
+          "text": "Cinema",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -218,
+          "z": 135,
+          "text": "Shestyorochka",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": -35,
+          "z": 64,
+          "text": "Pinewood Hotel",
+          "size": 90,
+          "rotation": 0.0
+        },
+        {
+          "x": 65,
+          "z": 398,
+          "text": "Teppakot / Koener",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 140,
+          "z": 362,
+          "text": "Concordia",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 89,
+          "z": -20,
+          "text": "Cardinal Bank",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 239,
+          "z": -60,
+          "text": "LERM Expo",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -64,
+          "z": 166,
+          "text": "Sparja Express",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -30,
+          "z": 138,
+          "text": "Burger Spot",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 42,
+          "z": 97,
+          "text": "Post Office",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 42,
+          "z": 160,
+          "text": "Pharmacy 1",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -173,
+          "z": 226,
+          "text": "Office",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -197,
+          "z": 340,
+          "text": "Corner Restaurant",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -43,
+          "z": 335,
+          "text": "Pharmacy 2",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 90,
+          "z": -277,
+          "text": "Pharmacy 3",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 67,
+          "z": 230,
+          "text": "Tarbank",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 211,
+          "z": 129,
+          "text": "School",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 222,
+          "z": 173,
+          "text": "Vet Clinic",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -212,
+          "z": 300,
+          "text": "Hive",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -223,
+          "z": 279,
+          "text": "Family Market",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -200,
+          "z": 248,
+          "text": "Marked Hotel",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -175,
+          "z": 297,
+          "text": "South Hotel",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -119,
+          "z": 287,
+          "text": "Abandon Factory",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -80,
+          "z": 235,
+          "text": "Diner",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": -13,
+          "z": 244,
+          "text": "Primorskij 49",
+          "size": 70,
+          "rotation": 0.0
+        },
+        {
+          "x": 39,
+          "z": 230,
+          "text": "Prestigio Cafe",
+          "size": 60,
+          "rotation": -45.0
+        },
+        {
+          "x": -70,
+          "z": 343,
+          "text": "Bilbo Coffee",
+          "size": 60,
+          "rotation": 0.0
+        }
+      ],
+      "source": "tarkov-dev-svg-maps",
+      "order": 10
+    },
+    {
+      "key": "the-labyrinth",
+      "name": "the-labyrinth",
+      "nameZh": "迷宫",
+      "subtitle": "地下迷宫 · 高危",
+      "description": "塔科夫下方的古老迷宫，陷阱、Boss 与高价值战利品并存。",
+      "difficulty": "极高",
+      "players": "?–?",
+      "raidMinutes": 30,
+      "image": "the-labyrinth.jpg",
+      "width": 3602,
+      "height": 3873,
+      "affine": [
+        -33.84,
+        -6.216307152471965e-15,
+        1818.0,
+        -6.216307152471965e-15,
+        33.84,
+        1277.0
+      ],
+      "bounds": [
+        -52.71867612293145,
+        -37.736406619385356,
+        53.723404255319146,
+        76.71394799054374
+      ],
+      "labels": [],
+      "source": "tarkov.dev tile layer",
+      "order": 11
+    },
+    {
+      "key": "terminal",
+      "name": "terminal",
+      "nameZh": "航站楼",
+      "subtitle": "机场终端 · 新区域",
+      "description": "塔科夫国际机场航站楼及周边区域，最新加入的战术地图之一。",
+      "difficulty": "高",
+      "players": "?–?",
+      "raidMinutes": 40,
+      "image": "terminal.jpg",
+      "width": 4756,
+      "height": 5600,
+      "affine": [
+        -5.308035714285714,
+        0.0,
+        2457.620535714286,
+        0.0,
+        5.308056872037914,
+        3078.6729857819905
+      ],
+      "bounds": [
+        -432.99999999999994,
+        -580.0,
+        462.99999999999994,
+        475.0
+      ],
+      "labels": [],
+      "source": "tarkov-dev-svg-maps",
+      "order": 12
+    },
+    {
+      "key": "icebreaker",
+      "name": "icebreaker",
+      "nameZh": "破冰船",
+      "subtitle": "极地船只 · 多层室内",
+      "description": "冰封海域中的巨型破冰船，多层船舱与狭窄通道构成垂直战场。",
+      "difficulty": "极高",
+      "players": "?–?",
+      "raidMinutes": 35,
+      "image": "icebreaker.jpg",
+      "width": 4120,
+      "height": 5255,
+      "affine": [
+        -32.0,
+        -3.91886975727153e-15,
+        2512.0,
+        -6.858022075225178e-15,
+        56.0,
+        3760.0
+      ],
+      "bounds": [
+        -50.25,
+        -67.14285714285715,
+        78.50000000000001,
+        26.69642857142858
+      ],
+      "labels": [],
+      "source": "tarkov.dev tile layer",
+      "order": 13
+    }
+  ]
+}

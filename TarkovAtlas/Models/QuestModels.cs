@@ -1,0 +1,234 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+
+namespace TarkovAtlas.Models;
+
+public sealed class QuestDatabase
+{
+    public string GeneratedAt { get; set; } = "";
+    public string Source { get; set; } = "";
+    public List<Quest> Quests { get; set; } = new();
+}
+
+/// <summary>Story chapters file (story.json); separate from the side tasks.</summary>
+public sealed class StoryDatabase
+{
+    public string GeneratedAt { get; set; } = "";
+    public string Source { get; set; } = "";
+    public List<StoryChapter> Chapters { get; set; } = new();
+}
+
+/// <summary>
+/// One main-story chapter. Story progress is tracked on its own, apart from the
+/// side task list, but behaves the same way (ticked off, persisted).
+/// </summary>
+public sealed class StoryChapter
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    public string NameZh { get; set; } = "";
+    public int Order { get; set; }
+    /// <summary>Map keys this chapter sends you to.</summary>
+    public List<string> Maps { get; set; } = new();
+    public List<string> MapNames { get; set; } = new();
+    public List<string> Objectives { get; set; } = new();
+    public int ObjectiveCount { get; set; }
+
+    [JsonIgnore] public string Title => string.IsNullOrWhiteSpace(NameZh) ? Name : NameZh;
+    [JsonIgnore] public string MapsText => MapNames.Count == 0 ? "任意地图" : string.Join(" / ", MapNames);
+    [JsonIgnore] public string ObjectiveText => ObjectiveCount == 0 ? "无目标" : $"{ObjectiveCount} 个目标";
+}
+
+/// <summary>
+/// Bindable wrapper for one story chapter in the 剧情任务 tab. The check state
+/// lives on the row so the TwoWay binding has something to write to.
+/// </summary>
+public sealed class StoryRow : INotifyPropertyChanged
+{
+    private bool _isDone;
+
+    public StoryRow(StoryChapter chapter, int index, bool isDone)
+    {
+        Chapter = chapter;
+        Index = index;
+        _isDone = isDone;
+    }
+
+    public StoryChapter Chapter { get; }
+    public int Index { get; }
+    public string Id => Chapter.Id;
+    public string Title => Chapter.Title;
+    public string MapsText => Chapter.MapsText;
+    public string ObjectiveText => Chapter.ObjectiveText;
+    public IReadOnlyList<string> Objectives => Chapter.Objectives;
+    public bool HasObjectives => Chapter.Objectives.Count > 0;
+
+    public bool IsDone
+    {
+        get => _isDone;
+        set
+        {
+            if (_isDone == value) return;
+            _isDone = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(StatusText));
+        }
+    }
+
+    public string StatusText => _isDone ? "已完成" : "未完成";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+}
+
+public sealed class Quest
+{
+    /// <summary>Task id from tarkov.dev (hex object id); used for progress storage.</summary>
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    public string NameEn { get; set; } = "";
+    /// <summary>Trader object id (hex) as delivered by the API.</summary>
+    public string Trader { get; set; } = "";
+    /// <summary>Human readable trader name resolved at load time (never an id).</summary>
+    [JsonIgnore] public string TraderDisplay { get; set; } = "";
+    public int Level { get; set; }
+    public string Wiki { get; set; } = "";
+    public List<string> Prerequisites { get; set; } = new();
+    /// <summary>Map keys this task can be progressed on (objectives' maps first).</summary>
+    public List<string> Maps { get; set; } = new();
+    public List<QuestObjective> Objectives { get; set; } = new();
+
+    [JsonIgnore] public string Title => Name;
+    [JsonIgnore] public string LevelText => Level > 0 ? $"Lv.{Level}" : "无等级要求";
+    [JsonIgnore]
+    public string MapsText => Maps.Count == 0
+        ? "任意地图"
+        : string.Join(" / ", Maps.Select(MapNames.Display));
+    /// <summary>True when the task has objectives on more than one raid map.</summary>
+    [JsonIgnore] public bool IsMultiMap => Maps.Count > 1;
+
+    /// <summary>
+    /// True for tasks that carry no map at all ("kill 20 PMCs anywhere", pure
+    /// hand-ins). These still show up on every map, just sorted to the bottom.
+    /// </summary>
+    [JsonIgnore] public bool IsAnyLocation => Maps.Count == 0;
+
+    public IEnumerable<QuestObjective> ObjectivesFor(string mapKey) =>
+        Objectives.Where(o => o.Zones.Any(z => string.Equals(z.Map, mapKey, StringComparison.OrdinalIgnoreCase)));
+
+    /// <summary>
+    /// True when this task can be progressed on the given map. Tasks with no map
+    /// data at all (e.g. "kill 20 PMCs anywhere" or pure hand-in tasks) are NOT
+    /// shown in a single map's list, mirroring how the game groups tasks; they
+    /// stay reachable through search and the "all maps" toggle.
+    /// </summary>
+    public bool AppliesTo(string mapKey) =>
+        Maps.Any(m => string.Equals(m, mapKey, StringComparison.OrdinalIgnoreCase));
+
+    /// <summary>True when the objective list carries at least one coordinate.</summary>
+    [JsonIgnore] public bool HasAnyZones => Objectives.Any(o => o.Zones.Count > 0);
+
+    [JsonIgnore] public IEnumerable<string> ZoneMaps =>
+        Objectives.SelectMany(o => o.Zones).Select(z => z.Map)
+            .Where(m => !string.IsNullOrWhiteSpace(m)).Distinct();
+}
+
+public sealed class QuestObjective
+{
+    public string Text { get; set; } = "";
+    /// <summary>kill | visit | find | pickup | mark | ...</summary>
+    public string Type { get; set; } = "";
+    public List<ObjectiveZone> Zones { get; set; } = new();
+}
+
+public sealed class ObjectiveZone
+{
+    public string Map { get; set; } = "";
+    public double X { get; set; }
+    public double Z { get; set; }
+}
+
+public sealed class QuestRow : INotifyPropertyChanged
+{
+    private bool _isCompleted;
+    private bool _isTracked;
+    private readonly Action<QuestRow, bool>? _onCompletedChanged;
+    private readonly Action<QuestRow, bool>? _onTrackedChanged;
+
+    public QuestRow(Quest quest, bool isCompleted, bool isTracked,
+        Action<QuestRow, bool>? onCompletedChanged = null,
+        Action<QuestRow, bool>? onTrackedChanged = null)
+    {
+        Quest = quest;
+        _isCompleted = isCompleted;
+        _isTracked = isTracked;
+        _onCompletedChanged = onCompletedChanged;
+        _onTrackedChanged = onTrackedChanged;
+    }
+
+    public Quest Quest { get; }
+    public string Id => Quest.Id;
+    public string Title => Quest.Title;
+    public string Giver => string.IsNullOrWhiteSpace(Quest.TraderDisplay) ? Quest.Trader : Quest.TraderDisplay;
+    public string LevelText => Quest.LevelText;
+    public string MapsText => Quest.MapsText;
+    public bool IsMultiMap => Quest.IsMultiMap;
+
+    public bool IsCompleted
+    {
+        get => _isCompleted;
+        set
+        {
+            if (_isCompleted == value) return;
+            _isCompleted = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(StatusText));
+            _onCompletedChanged?.Invoke(this, value);
+        }
+    }
+
+    /// <summary>Tracked tasks draw their objective markers on the map.</summary>
+    public bool IsTracked
+    {
+        get => _isTracked;
+        set
+        {
+            if (_isTracked == value) return;
+            _isTracked = value;
+            OnPropertyChanged();
+            _onTrackedChanged?.Invoke(this, value);
+        }
+    }
+
+    public string StatusText => _isCompleted ? "已完成" : "未完成";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+}
+
+public sealed class QuestCandidate
+{
+    public Quest Quest { get; init; } = new();
+    public double Score { get; init; }
+    public string Evidence { get; init; } = "";
+    public bool Selected { get; set; } = true;
+    public string ScoreText => $"{Score * 100:0}%";
+}
+
+/// <summary>A quest objective marker to draw on the map, with the giver avatar.</summary>
+public sealed class QuestMarker
+{
+    public string QuestId { get; init; } = "";
+    public string QuestName { get; init; } = "";
+    public string TraderSlug { get; init; } = "";
+    public string TraderName { get; init; } = "";
+    public double X { get; init; }
+    public double Z { get; init; }
+    public string ObjectiveText { get; init; } = "";
+    public string Tooltip => $"{QuestName}\n{TraderName}\n{ObjectiveText}";
+}
