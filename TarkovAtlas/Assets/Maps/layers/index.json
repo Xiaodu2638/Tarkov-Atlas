@@ -1,292 +1,335 @@
 {
-  "ground-zero": [
-    {
-      "name": "2nd Floor",
-      "image": "layers/ground-zero/0_2nd-floor.png",
-      "order": 0,
-      "minHeight": 26,
-      "maxHeight": 32.3
-    },
-    {
-      "name": "3rd Floor",
-      "image": "layers/ground-zero/1_3rd-floor.png",
-      "order": 1,
-      "minHeight": 32.3,
-      "maxHeight": 1000
-    },
-    {
-      "name": "Garage",
-      "image": "layers/ground-zero/2_garage.png",
-      "order": 2,
-      "minHeight": -1000,
-      "maxHeight": 21
-    }
-  ],
-  "customs": [
-    {
-      "name": "2nd Floor",
-      "image": "layers/customs/0_2nd-floor.png",
-      "order": 0,
-      "minHeight": 2.7,
-      "maxHeight": 1000
-    },
-    {
-      "name": "3rd Floor",
-      "image": "layers/customs/1_3rd-floor.png",
-      "order": 1,
-      "minHeight": 5.7,
-      "maxHeight": 1000
-    },
-    {
-      "name": "4th Floor",
-      "image": "layers/customs/2_4th-floor.png",
-      "order": 2,
-      "minHeight": 11.2,
-      "maxHeight": 54.7
-    },
-    {
-      "name": "Underground",
-      "image": "layers/customs/3_underground.png",
-      "order": 3,
-      "minHeight": -1000,
-      "maxHeight": 0.5
-    }
-  ],
-  "factory": [
-    {
-      "name": "2nd Floor",
-      "image": "layers/factory/0_2nd-floor.png",
-      "order": 0,
-      "minHeight": 3,
-      "maxHeight": 6
-    },
-    {
-      "name": "3rd Floor",
-      "image": "layers/factory/1_3rd-floor.png",
-      "order": 1,
-      "minHeight": 6,
-      "maxHeight": 10000
-    },
-    {
-      "name": "Tunnels",
-      "image": "layers/factory/2_tunnels.png",
-      "order": 2,
-      "minHeight": -10000,
-      "maxHeight": -1
-    }
-  ],
-  "reserve": [
-    {
-      "name": "2nd Floor",
-      "image": "layers/reserve/0_2nd-floor.png",
-      "order": 0,
-      "minHeight": -4.3,
-      "maxHeight": 25.7
-    },
-    {
-      "name": "3rd Floor",
-      "image": "layers/reserve/1_3rd-floor.png",
-      "order": 1,
-      "minHeight": -2.2,
-      "maxHeight": 29.3
-    },
-    {
-      "name": "4th Floor",
-      "image": "layers/reserve/2_4th-floor.png",
-      "order": 2,
-      "minHeight": 1.6,
-      "maxHeight": 36
-    },
-    {
-      "name": "5th Floor",
-      "image": "layers/reserve/3_5th-floor.png",
-      "order": 3,
-      "minHeight": 5,
-      "maxHeight": 9.5
-    },
-    {
-      "name": "Bunkers",
-      "image": "layers/reserve/4_bunkers.png",
-      "order": 4,
-      "minHeight": -10000,
-      "maxHeight": 18
-    }
-  ],
-  "the-lab": [
-    {
-      "name": "First Level",
-      "image": "",
-      "order": 0,
-      "minHeight": -0.9,
-      "maxHeight": 3
-    },
-    {
-      "name": "Second Level",
-      "image": "layers/the-lab/0_second-level.png",
-      "order": 1,
-      "minHeight": 3,
-      "maxHeight": 10000
-    },
-    {
-      "name": "Technical",
-      "image": "layers/the-lab/1_technical.png",
-      "order": 2,
-      "minHeight": -10000,
-      "maxHeight": -0.9
-    }
-  ],
-  "icebreaker": [
-    {
-      "name": "Infirmary",
-      "image": "layers/icebreaker/0_infirmary.png",
-      "order": 0,
-      "minHeight": 18.92,
-      "maxHeight": 19.56
-    },
-    {
-      "name": "Helipad",
-      "image": "layers/icebreaker/1_helipad.png",
-      "order": 1,
-      "minHeight": 19.57,
-      "maxHeight": 22.1
-    },
-    {
-      "name": "Gym/Canteen",
-      "image": "layers/icebreaker/2_gym-canteen.png",
-      "order": 2,
-      "minHeight": 22.2,
-      "maxHeight": 25.2
-    },
-    {
-      "name": "Accommodation (lower)",
-      "image": "layers/icebreaker/3_accommodation-lower.png",
-      "order": 3,
-      "minHeight": 25.3,
-      "maxHeight": 28.2
-    },
-    {
-      "name": "Accommodation (mid)",
-      "image": "layers/icebreaker/4_accommodation-mid.png",
-      "order": 4,
-      "minHeight": 28.3,
-      "maxHeight": 31.3
-    },
-    {
-      "name": "Accommodation (upper)",
-      "image": "layers/icebreaker/5_accommodation-upper.png",
-      "order": 5,
-      "minHeight": 31.4,
-      "maxHeight": 34.4
-    },
-    {
-      "name": "Officers' Deck",
-      "image": "layers/icebreaker/6_officers-deck.png",
-      "order": 6,
-      "minHeight": 34.5,
-      "maxHeight": 37.5
-    },
-    {
-      "name": "Stairs (blocked)",
-      "image": "layers/icebreaker/7_stairs-blocked.png",
-      "order": 7,
-      "minHeight": 37.6,
-      "maxHeight": 40.6
-    },
-    {
-      "name": "Bridge",
-      "image": "layers/icebreaker/8_bridge.png",
-      "order": 8,
-      "minHeight": 40.7,
-      "maxHeight": 43.7
-    },
-    {
-      "name": "Bridge Roof",
-      "image": "layers/icebreaker/9_bridge-roof.png",
-      "order": 9,
-      "minHeight": 43.8,
-      "maxHeight": 10000
-    },
-    {
-      "name": "Control Room",
-      "image": "layers/icebreaker/10_control-room.png",
-      "order": 10,
-      "minHeight": -10000,
-      "maxHeight": 3.5
-    },
-    {
-      "name": "Engine Room",
-      "image": "layers/icebreaker/11_engine-room.png",
-      "order": 11,
-      "minHeight": 3.6,
-      "maxHeight": 5.6
-    },
-    {
-      "name": "Engine Room (upper)",
-      "image": "layers/icebreaker/12_engine-room-upper.png",
-      "order": 12,
-      "minHeight": 5.7,
-      "maxHeight": 8.7
-    },
-    {
-      "name": "Fuel Pumps (lower)",
-      "image": "layers/icebreaker/13_fuel-pumps-lower.png",
-      "order": 13,
-      "minHeight": 8.8,
-      "maxHeight": 11.8
-    },
-    {
-      "name": "Fuel Pumps",
-      "image": "layers/icebreaker/14_fuel-pumps.png",
-      "order": 14,
-      "minHeight": 11.9,
-      "maxHeight": 14.9
-    },
-    {
-      "name": "Storage/Security",
-      "image": "layers/icebreaker/15_storage-security.png",
-      "order": 15,
-      "minHeight": 15,
-      "maxHeight": 18.93
-    }
-  ],
-  "interchange": [
-    {
-      "name": "Ground Floor",
-      "image": "",
-      "order": 0,
-      "minHeight": -1000,
-      "maxHeight": 25
-    },
-    {
-      "name": "2nd Floor",
-      "image": "layers/interchange/x_2nd-floor.png",
-      "order": 1,
-      "minHeight": 25,
-      "maxHeight": 34
-    },
-    {
-      "name": "3rd Floor",
-      "image": "layers/interchange/x_3rd-floor.png",
-      "order": 2,
-      "minHeight": 34,
-      "maxHeight": 1000
-    }
-  ],
-  "shoreline": [
-    {
-      "name": "2nd Floor",
-      "image": "layers/shoreline/x_2nd-floor.png",
-      "order": 0
-    },
-    {
-      "name": "3rd Floor",
-      "image": "layers/shoreline/x_3rd-floor.png",
-      "order": 1
-    },
-    {
-      "name": "Underground",
-      "image": "layers/shoreline/x_underground.png",
-      "order": 2
-    }
-  ]
+ "ground-zero": [
+  {
+   "name": "2nd Floor",
+   "image": "layers/ground-zero/0_2nd-floor.png",
+   "order": 0,
+   "minHeight": 26,
+   "maxHeight": 32.3
+  },
+  {
+   "name": "3rd Floor",
+   "image": "layers/ground-zero/1_3rd-floor.png",
+   "order": 1,
+   "minHeight": 32.3,
+   "maxHeight": 1000
+  },
+  {
+   "name": "Garage",
+   "image": "layers/ground-zero/2_garage.png",
+   "order": 2,
+   "minHeight": -1000,
+   "maxHeight": 21
+  }
+ ],
+ "customs": [
+  {
+   "name": "2nd Floor",
+   "image": "layers/customs/0_2nd-floor.png",
+   "order": 0,
+   "minHeight": 2.7,
+   "maxHeight": 1000
+  },
+  {
+   "name": "3rd Floor",
+   "image": "layers/customs/1_3rd-floor.png",
+   "order": 1,
+   "minHeight": 5.7,
+   "maxHeight": 1000
+  },
+  {
+   "name": "4th Floor",
+   "image": "layers/customs/2_4th-floor.png",
+   "order": 2,
+   "minHeight": 11.2,
+   "maxHeight": 54.7
+  },
+  {
+   "name": "Underground",
+   "image": "layers/customs/3_underground.png",
+   "order": 3,
+   "minHeight": -1000,
+   "maxHeight": 0.5
+  }
+ ],
+ "factory": [
+  {
+   "name": "2nd Floor",
+   "image": "layers/factory/0_2nd-floor.png",
+   "order": 0,
+   "minHeight": 3,
+   "maxHeight": 6
+  },
+  {
+   "name": "3rd Floor",
+   "image": "layers/factory/1_3rd-floor.png",
+   "order": 1,
+   "minHeight": 6,
+   "maxHeight": 10000
+  },
+  {
+   "name": "Tunnels",
+   "image": "layers/factory/2_tunnels.png",
+   "order": 2,
+   "minHeight": -10000,
+   "maxHeight": -1
+  }
+ ],
+ "interchange": [
+  {
+   "name": "Ground Floor",
+   "image": "",
+   "order": 0,
+   "minHeight": -1000.0,
+   "maxHeight": 25.0
+  },
+  {
+   "name": "2nd Floor",
+   "image": "layers/interchange/0_2nd-floor.png",
+   "order": 1,
+   "minHeight": 25,
+   "maxHeight": 34
+  },
+  {
+   "name": "3rd Floor",
+   "image": "layers/interchange/1_3rd-floor.png",
+   "order": 2,
+   "minHeight": 34,
+   "maxHeight": 1000
+  }
+ ],
+ "shoreline": [
+  {
+   "name": "2nd Floor",
+   "image": "layers/shoreline/0_2nd-floor.png",
+   "order": 0,
+   "minHeight": -1,
+   "maxHeight": 2
+  },
+  {
+   "name": "3rd Floor",
+   "image": "layers/shoreline/1_3rd-floor.png",
+   "order": 1,
+   "minHeight": 2,
+   "maxHeight": 1000
+  },
+  {
+   "name": "Underground",
+   "image": "layers/shoreline/2_underground.png",
+   "order": 2,
+   "minHeight": -1000,
+   "maxHeight": -5
+  }
+ ],
+ "reserve": [
+  {
+   "name": "2nd Floor",
+   "image": "layers/reserve/0_2nd-floor.png",
+   "order": 0,
+   "minHeight": -4.3,
+   "maxHeight": 25.7
+  },
+  {
+   "name": "3rd Floor",
+   "image": "layers/reserve/1_3rd-floor.png",
+   "order": 1,
+   "minHeight": -2.2,
+   "maxHeight": 29.3
+  },
+  {
+   "name": "4th Floor",
+   "image": "layers/reserve/2_4th-floor.png",
+   "order": 2,
+   "minHeight": 1.6,
+   "maxHeight": 36
+  },
+  {
+   "name": "5th Floor",
+   "image": "layers/reserve/3_5th-floor.png",
+   "order": 3,
+   "minHeight": 5,
+   "maxHeight": 9.5
+  },
+  {
+   "name": "Bunkers",
+   "image": "layers/reserve/4_bunkers.png",
+   "order": 4,
+   "minHeight": -10000,
+   "maxHeight": 18
+  }
+ ],
+ "the-lab": [
+  {
+   "name": "First Level",
+   "image": "",
+   "order": 0,
+   "minHeight": -0.9,
+   "maxHeight": 3.0
+  },
+  {
+   "name": "Second Level",
+   "image": "layers/the-lab/0_second-level.png",
+   "order": 1,
+   "minHeight": 3,
+   "maxHeight": 10000
+  },
+  {
+   "name": "Technical",
+   "image": "layers/the-lab/1_technical.png",
+   "order": 2,
+   "minHeight": -10000,
+   "maxHeight": -0.9
+  }
+ ],
+ "streets-of-tarkov": [
+  {
+   "name": "2nd Floor",
+   "image": "layers/streets-of-tarkov/0_2nd-floor.png",
+   "order": 0,
+   "minHeight": 10,
+   "maxHeight": 15
+  },
+  {
+   "name": "3rd Floor",
+   "image": "layers/streets-of-tarkov/1_3rd-floor.png",
+   "order": 1,
+   "minHeight": 15,
+   "maxHeight": 20
+  },
+  {
+   "name": "4th Floor",
+   "image": "layers/streets-of-tarkov/2_4th-floor.png",
+   "order": 2,
+   "minHeight": 20,
+   "maxHeight": 25
+  },
+  {
+   "name": "5th Floor",
+   "image": "layers/streets-of-tarkov/3_5th-floor.png",
+   "order": 3,
+   "minHeight": 25,
+   "maxHeight": 10000
+  },
+  {
+   "name": "Underground",
+   "image": "layers/streets-of-tarkov/4_underground.png",
+   "order": 4,
+   "minHeight": -10000,
+   "maxHeight": -6
+  }
+ ],
+ "icebreaker": [
+  {
+   "name": "Infirmary",
+   "image": "layers/icebreaker/0_infirmary.png",
+   "order": 0,
+   "minHeight": 18.92,
+   "maxHeight": 19.56
+  },
+  {
+   "name": "Helipad",
+   "image": "layers/icebreaker/1_helipad.png",
+   "order": 1,
+   "minHeight": 19.57,
+   "maxHeight": 22.1
+  },
+  {
+   "name": "Gym/Canteen",
+   "image": "layers/icebreaker/2_gym-canteen.png",
+   "order": 2,
+   "minHeight": 22.2,
+   "maxHeight": 25.2
+  },
+  {
+   "name": "Accommodation (lower)",
+   "image": "layers/icebreaker/3_accommodation-lower.png",
+   "order": 3,
+   "minHeight": 25.3,
+   "maxHeight": 28.2
+  },
+  {
+   "name": "Accommodation (mid)",
+   "image": "layers/icebreaker/4_accommodation-mid.png",
+   "order": 4,
+   "minHeight": 28.3,
+   "maxHeight": 31.3
+  },
+  {
+   "name": "Accommodation (upper)",
+   "image": "layers/icebreaker/5_accommodation-upper.png",
+   "order": 5,
+   "minHeight": 31.4,
+   "maxHeight": 34.4
+  },
+  {
+   "name": "Officers' Deck",
+   "image": "layers/icebreaker/6_officers-deck.png",
+   "order": 6,
+   "minHeight": 34.5,
+   "maxHeight": 37.5
+  },
+  {
+   "name": "Stairs (blocked)",
+   "image": "layers/icebreaker/7_stairs-blocked.png",
+   "order": 7,
+   "minHeight": 37.6,
+   "maxHeight": 40.6
+  },
+  {
+   "name": "Bridge",
+   "image": "layers/icebreaker/8_bridge.png",
+   "order": 8,
+   "minHeight": 40.7,
+   "maxHeight": 43.7
+  },
+  {
+   "name": "Bridge Roof",
+   "image": "layers/icebreaker/9_bridge-roof.png",
+   "order": 9,
+   "minHeight": 43.8,
+   "maxHeight": 10000
+  },
+  {
+   "name": "Control Room",
+   "image": "layers/icebreaker/10_control-room.png",
+   "order": 10,
+   "minHeight": -10000,
+   "maxHeight": 3.5
+  },
+  {
+   "name": "Engine Room",
+   "image": "layers/icebreaker/11_engine-room.png",
+   "order": 11,
+   "minHeight": 3.6,
+   "maxHeight": 5.6
+  },
+  {
+   "name": "Engine Room (upper)",
+   "image": "layers/icebreaker/12_engine-room-upper.png",
+   "order": 12,
+   "minHeight": 5.7,
+   "maxHeight": 8.7
+  },
+  {
+   "name": "Fuel Pumps (lower)",
+   "image": "layers/icebreaker/13_fuel-pumps-lower.png",
+   "order": 13,
+   "minHeight": 8.8,
+   "maxHeight": 11.8
+  },
+  {
+   "name": "Fuel Pumps",
+   "image": "layers/icebreaker/14_fuel-pumps.png",
+   "order": 14,
+   "minHeight": 11.9,
+   "maxHeight": 14.9
+  },
+  {
+   "name": "Storage/Security",
+   "image": "layers/icebreaker/15_storage-security.png",
+   "order": 15,
+   "minHeight": 15,
+   "maxHeight": 18.93
+  }
+ ]
 }

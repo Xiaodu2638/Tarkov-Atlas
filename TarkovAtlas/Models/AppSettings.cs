@@ -38,6 +38,8 @@ public sealed class AppSettings
     public bool ShowSpawns { get; set; }
     public bool ShowQuestMarkers { get; set; } = true;
     public bool ShowTransits { get; set; }
+    /// <summary>Draw buried stash / cache spots (物资埋藏点).</summary>
+    public bool ShowCaches { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
     /// <summary>Selected building level per map key ("" = automatic by player Y).</summary>

@@ -16,6 +16,7 @@ namespace TarkovAtlas;
 [JsonSerializable(typeof(BossSpawn))]
 [JsonSerializable(typeof(SpawnPoint))]
 [JsonSerializable(typeof(TransitPoint))]
+[JsonSerializable(typeof(CachePoint))]
 [JsonSerializable(typeof(GameMarker))]
 [JsonSerializable(typeof(List<MapDefinition>))]
 [JsonSerializable(typeof(List<TraderInfo>))]

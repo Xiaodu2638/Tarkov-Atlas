@@ -507,6 +507,7 @@ public partial class MainWindow : Window
             ShowBosses = _settings.ShowBosses,
             ShowSpawns = _settings.ShowSpawns,
             ShowTransits = _settings.ShowTransits,
+            ShowCaches = _settings.ShowCaches,
             ShowQuestMarkers = _settings.ShowQuestMarkers,
             ShowHazards = _settings.ShowHazards,
         };
@@ -563,6 +564,12 @@ public partial class MainWindow : Window
         menu.Items.Add(ToggleItem("转移点", _settings.ShowTransits, v =>
         {
             _settings.ShowTransits = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+        menu.Items.Add(ToggleItem("物资埋藏点", _settings.ShowCaches, v =>
+        {
+            _settings.ShowCaches = v;
             ApplyDisplayOptions();
             Persist();
         }));

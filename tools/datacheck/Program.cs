@@ -63,7 +63,7 @@ internal static class DataChecks
         // ---- geometry consistency ------------------------------------------
         // The bitmap rectangle (via the affine) and the declared bounds must
         // describe the same world area, and every marker has to land inside both.
-        // icebreaker breaks this today, so it is a tracked defect (HANDOVER §3):
+        // icebreaker breaks this today, so it is a tracked defect (AGENTS.md §7):
         // its failures print as KNOWN instead of failing the suite.
         var knownGeometryDefects = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "icebreaker" };
         foreach (var map in manifest.Maps)
@@ -413,7 +413,7 @@ internal static class DataChecks
         }
 
         if (_known > 0)
-            Console.WriteLine($"\n{_known} known defect(s) reported above - see HANDOVER section 3");
+            Console.WriteLine($"\n{_known} known defect(s) reported above - see AGENTS.md section 7");
         Console.WriteLine(_failures == 0 ? "\nALL CHECKS PASSED" : $"\n{_failures} CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;
     }

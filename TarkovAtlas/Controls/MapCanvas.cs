@@ -18,6 +18,8 @@ public sealed class MapDisplayOptions
     public bool ShowBosses { get; set; } = true;
     public bool ShowSpawns { get; set; }
     public bool ShowTransits { get; set; }
+    /// <summary>Draw buried stash / cache spots (物资埋藏点).</summary>
+    public bool ShowCaches { get; set; } = true;
     public bool ShowQuestMarkers { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
@@ -50,6 +52,10 @@ public sealed class MapCanvas : Control
     private static readonly IBrush SpawnPmcBrush = new SolidColorBrush(Color.Parse("#7FA8E0"));
     private static readonly IBrush SpawnScavBrush = new SolidColorBrush(Color.Parse("#D08A5A"));
     private static readonly IBrush TransitBrush = new SolidColorBrush(Color.Parse("#B07FD8"));
+    /// <summary>Buried stash / cache markers (物资埋藏点).</summary>
+    private static readonly IBrush CacheFill = new SolidColorBrush(Color.Parse("#CC3A2A12"));
+    private static readonly IBrush CacheStroke = new SolidColorBrush(Color.Parse("#F2C98A"));
+    private static readonly Pen CachePen = new Pen(CacheStroke, 1.5);
 
     // Per-frame brushes/pens used to be allocated for every marker; on Streets
     // that was hundreds of allocations per mouse-move. All of these are frozen
@@ -337,6 +343,7 @@ public sealed class MapCanvas : Control
         if (Options.ShowHazards) DrawHazards(context);
         if (Options.ShowSpawns) DrawSpawns(context);
         if (Options.ShowTransits) DrawTransits(context);
+        if (Options.ShowCaches) DrawCaches(context);
         if (Options.ShowExtracts) DrawExtracts(context);
         if (Options.ShowBosses) DrawBosses(context);
         if (Options.ShowQuestMarkers) DrawQuestMarkers(context);
@@ -564,6 +571,37 @@ public sealed class MapCanvas : Control
             var s = Project(t.X, t.Z);
             if (!OnScreen(s, 30)) continue;
             context.DrawRectangle(TransitFill, TransitPen, new Rect(s.X - 5, s.Y - 5, 10, 10));
+        }
+    }
+
+    /// <summary>
+    /// Buried stash spots (物资埋藏点). These are dug up rather than looted in
+    /// the open, so they get a distinct amber "dig" glyph instead of the plain
+    /// loot dot. Cached as geometry like the hazard polygons.
+    /// </summary>
+    private void DrawCaches(DrawingContext context)
+    {
+        if (_map is null || _zoom < 0.7) return;
+        if (_map.Caches.Count == 0) return;
+
+        var r = Math.Clamp(5.2 * Math.Sqrt(_zoom), 4.5, 9);
+        var showLabel = !Compact && _zoom >= 1.25;
+        foreach (var c in _map.Caches)
+        {
+            var s = Project(c.X, c.Z);
+            if (!OnScreen(s, 24)) continue;
+
+            context.DrawEllipse(CacheFill, CachePen, s, r, r);
+            // A single spade stroke: the marker has to read at tiny sizes.
+            context.DrawLine(CachePen,
+                new Point(s.X - r * 0.45, s.Y + r * 0.45),
+                new Point(s.X + r * 0.45, s.Y - r * 0.45));
+
+            if (!showLabel) continue;
+            var cacheLabel = Text("埋藏点", 9.5, CacheStroke);
+            var pos = new Point(s.X - cacheLabel.Width / 2, s.Y + r + 3);
+            context.DrawText(Text("埋藏点", 9.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+            context.DrawText(cacheLabel, pos);
         }
     }
 
@@ -879,6 +917,18 @@ public sealed class MapCanvas : Control
             screen.X - (Bounds.Width - drawW) / 2 - before.X * newScale,
             screen.Y - (Bounds.Height - drawH) / 2 - before.Y * newScale);
         InvalidateVisual();
+    }
+
+    /// <summary>
+    /// Zoom while keeping a game position under the centre of the control.
+    /// The mini-map uses this so rolling the wheel with the modifier held
+    /// scales around the player instead of an arbitrary cursor spot.
+    /// </summary>
+    public void ZoomAtGame(double gameX, double gameZ, double factor)
+    {
+        if (_map is null) return;
+        _zoom = Math.Clamp(_zoom * factor, 0.35, 32);
+        FocusOn(gameX, gameZ, _zoom);
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)

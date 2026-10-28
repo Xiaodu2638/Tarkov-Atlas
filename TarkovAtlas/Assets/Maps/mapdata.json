@@ -1136,6 +1136,7 @@
      "dest": "streets-of-tarkov"
     }
    ],
+   "caches": [],
    "source": "tarkov-dev-svg-maps",
    "order": 1,
    "flipped": true
@@ -3006,6 +3007,333 @@
      "dest": "shoreline"
     }
    ],
+   "caches": [
+    {
+     "x": 277.826,
+     "z": 72.766,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 428.027466,
+     "z": -10.7794647,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 560.603,
+     "z": 115.131,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 554.848,
+     "z": 192.654,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 607.301636,
+     "z": -37.1151123,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 670.25,
+     "z": -47.57,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 656.736,
+     "z": -149.654,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -40.483,
+     "z": -76.69699,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 184.295,
+     "z": -227.100983,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 204.007874,
+     "z": 70.91833,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 212.011856,
+     "z": 38.5095177,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 152.2533,
+     "z": 47.81419,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 162.350433,
+     "z": 14.7094307,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 257.505249,
+     "z": 32.8986664,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 218.338867,
+     "z": 18.0747032,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 314.861267,
+     "z": 26.6847248,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 335.8783,
+     "z": 75.9049,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 341.884338,
+     "z": 79.4533,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 368.0431,
+     "z": 31.83318,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 418.0852,
+     "z": 56.400177,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 410.227051,
+     "z": 81.10801,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 391.809,
+     "z": 204.783112,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 407.3587,
+     "z": 211.221558,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 430.1357,
+     "z": 207.753891,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 452.8422,
+     "z": 220.203308,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 403.752533,
+     "z": 63.75535,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 376.4537,
+     "z": 23.3787861,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 403.2805,
+     "z": -8.128334,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 436.550232,
+     "z": 29.1125336,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 429.403625,
+     "z": -84.72633,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 425.120117,
+     "z": -91.85288,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 438.90863,
+     "z": -101.461662,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 465.459045,
+     "z": -102.9959,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 515.665344,
+     "z": 127.0757,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 504.552368,
+     "z": 131.761581,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 458.937866,
+     "z": 100.923149,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 522.8997,
+     "z": 117.0268,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 660.5046,
+     "z": 125.893753,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 642.5672,
+     "z": 117.880547,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 617.052246,
+     "z": 74.2924042,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 588.9445,
+     "z": 139.452072,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 616.1579,
+     "z": -120.158791,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 583.525452,
+     "z": -130.298,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 580.234436,
+     "z": -78.29914,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 647.9005,
+     "z": -64.90734,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -46.0551,
+     "z": -102.672783,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -41.1875763,
+     "z": -74.70531,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -79.00282,
+     "z": -46.75732,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -49.2335663,
+     "z": -25.5060158,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 96.4383545,
+     "z": -86.3659058,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 73.64198,
+     "z": -102.4106,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 89.3344955,
+     "z": -70.77135,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 85.9944153,
+     "z": -84.21442,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 227.151,
+     "z": -241.808014,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 211.565521,
+     "z": -270.26355,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 177.44252,
+     "z": -232.092545,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 169.868515,
+     "z": -208.132553,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 286.395,
+     "z": -205.56601,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 294.105042,
+     "z": -191.005234,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 289.6825,
+     "z": -175.49292,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 252.440033,
+     "z": -192.6765,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 226.995,
+     "z": -54.3379974,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 231.76651,
+     "z": -45.7285461,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 241.714523,
+     "z": -38.2765465,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 211.084518,
+     "z": 12.290453,
+     "kind": "buried-barrel-cache"
+    }
+   ],
    "source": "tarkov-dev-svg-maps",
    "order": 2,
    "flipped": true
@@ -3020,21 +3348,21 @@
    "players": "7-8",
    "raidMinutes": 20,
    "image": "factory.jpg",
-   "width": 3763,
-   "height": 3487,
+   "width": 5600,
+   "height": 5183,
    "affine": [
-    -26.064,
-    -1.5959597086488306e-15,
-    2031.8000000000002,
-    -1.5959597086488306e-15,
-    26.064,
-    1705.6
+    -39.29824561403509,
+    0.0,
+    3025.964912280702,
+    0.0,
+    39.29824561403509,
+    2534.5223654283545
    ],
    "bounds": [
-    -66.42111724984652,
-    -65.43891958256599,
-    77.95426642111725,
-    68.34714548802947
+    -65.5,
+    -64.5,
+    77.00000000000001,
+    67.40000000000002
    ],
    "labels": [
     {
@@ -3924,7 +4252,8 @@
      "dest": ""
     }
    ],
-   "source": "tarkov.dev tile layer",
+   "caches": [],
+   "source": "tarkov-dev-svg-maps",
    "order": 3,
    "flipped": true
   },
@@ -5912,6 +6241,233 @@
      "dest": "customs"
     }
    ],
+   "caches": [
+    {
+     "x": -663.76416,
+     "z": 171.340591,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -647.8602,
+     "z": 159.573868,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -706.584351,
+     "z": 99.94235,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -677.4762,
+     "z": 132.210754,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -360.02597,
+     "z": 142.4444,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 144.209747,
+     "z": -144.831055,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -308.035034,
+     "z": 370.319,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -482.5333,
+     "z": 43.4662781,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -461.2438,
+     "z": -86.51633,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -567.8197,
+     "z": -76.74298,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -488.136749,
+     "z": -233.851379,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -265.812164,
+     "z": -264.15155,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -268.996338,
+     "z": -357.1502,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -192.284515,
+     "z": -361.239319,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -258.124573,
+     "z": -568.270447,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -61.3203735,
+     "z": -431.6386,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -46.4834,
+     "z": -598.9307,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 9.12616,
+     "z": -578.513245,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 342.599762,
+     "z": -633.6597,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 330.6547,
+     "z": -296.103821,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 114.887543,
+     "z": -294.973328,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -499.647766,
+     "z": 247.263733,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 99.85715,
+     "z": -364.998,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 197.82901,
+     "z": 53.7150269,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 235.643463,
+     "z": 295.008636,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -314.127,
+     "z": -51.3580322,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -314.758484,
+     "z": 136.44342,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 232.593048,
+     "z": 58.474,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -335.727,
+     "z": -418.1706,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -422.241974,
+     "z": -509.887634,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -602.153931,
+     "z": -239.978577,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -176.0753,
+     "z": -414.846375,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -41.73297,
+     "z": -344.49762,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -149.044983,
+     "z": -583.79364,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 80.00101,
+     "z": -475.3416,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 296.644562,
+     "z": -746.5369,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 385.350983,
+     "z": -417.460632,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 185.711578,
+     "z": -797.978943,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 485.812042,
+     "z": -156.819611,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 160.622833,
+     "z": -577.408142,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -522.738037,
+     "z": 38.537384,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -7.436981,
+     "z": -588.244568,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -215.207977,
+     "z": -397.16864,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 223.698517,
+     "z": -314.1054,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -483.1533,
+     "z": -119.864929,
+     "kind": "buried-barrel-cache"
+    }
+   ],
    "source": "tarkov-dev-svg-maps",
    "order": 4,
    "flipped": true
@@ -7777,6 +8333,453 @@
      "dest": "streets-of-tarkov"
     }
    ],
+   "caches": [
+    {
+     "x": 31.064,
+     "z": 330.852,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 82.818,
+     "z": 356.873,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 113.385,
+     "z": 355.688,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 129.111,
+     "z": 310.563,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 117.665,
+     "z": 367.982,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 165.042,
+     "z": 375.12,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 197.643,
+     "z": 358.037,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 236.606,
+     "z": 358.325,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -123.979912,
+     "z": 238.488,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -98.775,
+     "z": 264.885,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -61.399,
+     "z": 297.325,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -47.306,
+     "z": 231.468,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -252.486725,
+     "z": -256.05014,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -254.516,
+     "z": -309.241,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -227.75,
+     "z": -389.235,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -215.076,
+     "z": -283.032,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 339.125641,
+     "z": -158.080765,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 307.04,
+     "z": -229.308,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 344.23,
+     "z": -266.361,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 378.662,
+     "z": -228.832,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 496.411,
+     "z": -250.487,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 484.71,
+     "z": -291,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 497.674,
+     "z": -326.421,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 427.399,
+     "z": -299.107,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 209.894547,
+     "z": 357.61734,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 176.732529,
+     "z": 347.8633,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 241.76236,
+     "z": 293.1124,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 244.2978,
+     "z": 395.593658,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 369.16,
+     "z": -211.646,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 420.257782,
+     "z": -255.913086,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 472.934021,
+     "z": -243.274658,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 439.045135,
+     "z": -220.714737,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 435.8316,
+     "z": -246.6426,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 405.061,
+     "z": -229.24,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 367.801147,
+     "z": -301.802673,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 382.043274,
+     "z": -350.077545,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 524.505,
+     "z": -298.825,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 484.421326,
+     "z": -287.302582,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 472.0653,
+     "z": -337.0275,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 472.9233,
+     "z": -385.206482,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 220.792984,
+     "z": -354.43573,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 199.390976,
+     "z": -402.997742,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 165.184952,
+     "z": -362.3416,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 113.541634,
+     "z": -358.954865,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 146.367,
+     "z": -317.485,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 171.567169,
+     "z": -274.3512,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 184.278656,
+     "z": -241.287964,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 149.371658,
+     "z": -212.034,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 196.8738,
+     "z": 215.116745,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 243.662079,
+     "z": 222.542374,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 246.395691,
+     "z": 288.8893,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 230.132584,
+     "z": 187.360458,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -131.160141,
+     "z": 253.29451,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -122.357712,
+     "z": 237.17688,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -168.9357,
+     "z": 199.772888,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -175.1186,
+     "z": 237.1789,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -295.726,
+     "z": 179.3603,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -322.953064,
+     "z": 225.418823,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -294.156921,
+     "z": 196.8323,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -241.619736,
+     "z": 198.560669,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -203.364,
+     "z": -386.714,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -221.728,
+     "z": -375.783,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -203.97,
+     "z": -373.96,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -248.57,
+     "z": -361.462,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 231.928741,
+     "z": 81.21702,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 225.882858,
+     "z": 101.695915,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 247.531815,
+     "z": 107.443436,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 194.16983,
+     "z": 123.268532,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 0.8823616,
+     "z": -397.018433,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -26.16572,
+     "z": -361.863983,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -50.73597,
+     "z": -394.956543,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -47.6539726,
+     "z": -385.906525,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 161.8909,
+     "z": -266.850677,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 118.237,
+     "z": -272.071,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 119.292,
+     "z": -198.215,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 217.653,
+     "z": -138.706,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 69.398,
+     "z": 298.609,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 10.571,
+     "z": 301.892,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -13.055,
+     "z": 258.497,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -85.896,
+     "z": 221.214,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 66.9327,
+     "z": -396.7644,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -2.216,
+     "z": -379.478,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 64.714,
+     "z": -341.047,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 88.823,
+     "z": -370.011,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -361.342163,
+     "z": 189.241959,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -355.838867,
+     "z": 203.2355,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -311.622162,
+     "z": 139.550964,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -351.0335,
+     "z": 252.530487,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 236.9117,
+     "z": 356.838959,
+     "kind": "buried-barrel-cache"
+    }
+   ],
    "source": "tarkov-dev-svg-maps",
    "order": 5,
    "flipped": true
@@ -9594,6 +10597,323 @@
      "dest": "icebreaker"
     }
    ],
+   "caches": [
+    {
+     "x": 204.5873,
+     "z": 436.297668,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 64.76955,
+     "z": 365.113434,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -180.356,
+     "z": 447.0798,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -444.0304,
+     "z": 552.737366,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -572.3005,
+     "z": 423.981323,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -1013.611,
+     "z": 299.0252,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -707.1855,
+     "z": 102.543015,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -524.1959,
+     "z": 21.9515076,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -763.054138,
+     "z": 314.4578,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -641.383,
+     "z": 469.874023,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 53.2463226,
+     "z": 99.04764,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 165.0717,
+     "z": -11.9379578,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 60.62761,
+     "z": -116.73465,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 403.183533,
+     "z": -87.06131,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 240.212784,
+     "z": -163.479309,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 319.7437,
+     "z": -81.7355347,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 463.943848,
+     "z": 135.075623,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 351.6148,
+     "z": 155.686752,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 361.312622,
+     "z": 140.069183,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 242.326,
+     "z": -91.8623657,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -385.857239,
+     "z": -116.659088,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -149.303665,
+     "z": -18.688446,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 227.613266,
+     "z": 233.267914,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -471.1435,
+     "z": 398.8624,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -718.889465,
+     "z": 255.646408,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -1008.87408,
+     "z": 354.334045,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -788.512,
+     "z": 210.177841,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -912.255432,
+     "z": 127.120041,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -640.7978,
+     "z": 23.605072,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -354.39,
+     "z": 188.041016,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -153.034988,
+     "z": 75.11401,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 349.05127,
+     "z": -115.500092,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 420.52655,
+     "z": 58.71042,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 166.894852,
+     "z": -102.224121,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -71.88298,
+     "z": -374.13797,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -176.778,
+     "z": -365.897,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -414.921448,
+     "z": -373.61264,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -750.2575,
+     "z": 3.7572937,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 305.248535,
+     "z": 134.35611,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 142.83,
+     "z": 190.331009,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -683.4532,
+     "z": -348.403656,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -546.869446,
+     "z": -340.7596,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -881.2741,
+     "z": -5.584503,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -671.323669,
+     "z": 382.47226,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -354.34552,
+     "z": 394.4775,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -288.09552,
+     "z": 348.9124,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -238.803482,
+     "z": 245.340942,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -456.9317,
+     "z": 291.993866,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -899.033,
+     "z": 335.616577,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -842.5025,
+     "z": 460.2711,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -565.5281,
+     "z": 151.424255,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -440.3764,
+     "z": 103.700195,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -325.565979,
+     "z": 26.5133667,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -405.219482,
+     "z": -184.3906,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -447.68634,
+     "z": -54.3152161,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -69.6804657,
+     "z": 285.5014,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 322.084351,
+     "z": 274.5868,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 421.325745,
+     "z": 218.42952,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 74.89348,
+     "z": 270.6196,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -34.0384674,
+     "z": 71.07941,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -295.9225,
+     "z": -253.366608,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -954.1695,
+     "z": 267.503418,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -276.879028,
+     "z": 76.2428,
+     "kind": "ground-cache"
+    }
+   ],
    "source": "tarkov-dev-svg-maps",
    "order": 6,
    "flipped": true
@@ -10816,6 +12136,7 @@
      "dest": "lighthouse"
     }
    ],
+   "caches": [],
    "source": "tarkov-dev-svg-maps",
    "order": 7,
    "flipped": true
@@ -11695,6 +13016,7 @@
      "dest": "streets-of-tarkov"
     }
    ],
+   "caches": [],
    "source": "tarkov.dev tile layer",
    "order": 8,
    "flipped": true
@@ -12932,6 +14254,128 @@
      "x": 147.37,
      "z": -182.55,
      "dest": "icebreaker"
+    }
+   ],
+   "caches": [
+    {
+     "x": 127.698563,
+     "z": 283.50708,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 74.466,
+     "z": 389.256958,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 58.0792542,
+     "z": 545.046631,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -88.366,
+     "z": 423.068,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -72.76902,
+     "z": 318.422974,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -103.136116,
+     "z": -955.653137,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 105.754776,
+     "z": -824.9059,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -140.219513,
+     "z": -793.376831,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -310.73,
+     "z": -644.725,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -313.59,
+     "z": -540.652,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -453.840027,
+     "z": -388.36,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -469.195923,
+     "z": -250.153809,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 140.148575,
+     "z": -507.0209,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 150.482254,
+     "z": -693.401062,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 59.3379974,
+     "z": -276.623,
+     "kind": "ground-cache"
+    },
+    {
+     "x": 68.68358,
+     "z": 120.98291,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -180.997,
+     "z": 446.219,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -175.664352,
+     "z": 194.1034,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -9.281006,
+     "z": 584.6279,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -204.087555,
+     "z": -616.0691,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -23.2647247,
+     "z": -88.90546,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -93.91443,
+     "z": 82.62543,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 71.85899,
+     "z": 35.65503,
+     "kind": "ground-cache"
+    },
+    {
+     "x": -165.0594,
+     "z": 257.00647,
+     "kind": "ground-cache"
     }
    ],
    "source": "tarkov-dev-svg-maps",
@@ -15534,6 +16978,168 @@
      "dest": ""
     }
    ],
+   "caches": [
+    {
+     "x": -71.77886,
+     "z": 386.209351,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -20.91835,
+     "z": 270.3809,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 201.158813,
+     "z": 280.327057,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 243.605286,
+     "z": 361.984741,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -235.4913,
+     "z": 178.7677,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -143.844,
+     "z": 64.14112,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -69.5783,
+     "z": 277.3045,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 87.398,
+     "z": 110.784,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 123.572914,
+     "z": 214.984314,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 199.173,
+     "z": 221.362,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 162.907,
+     "z": 111.178,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 195.291992,
+     "z": 82.798,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 163.379,
+     "z": -16.8390045,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 146.649,
+     "z": -122.591,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -20.465889,
+     "z": 414.418335,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -15.55838,
+     "z": 323.292358,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 220.094421,
+     "z": 324.3949,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 114.62944,
+     "z": 337.1289,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -171.059113,
+     "z": 284.0851,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -143.846008,
+     "z": 170.634125,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -71.14739,
+     "z": 329.796631,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 93.447,
+     "z": 199.197,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 52.19306,
+     "z": 202.871414,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 211.432983,
+     "z": 204.05,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 207.09198,
+     "z": 186.104,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 211.608,
+     "z": 74.839,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 179.978,
+     "z": -60.7720032,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 90.721,
+     "z": -102.12001,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 92.786,
+     "z": -47.859,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -32.844,
+     "z": -17.1559982,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": -168.670013,
+     "z": 15.3209991,
+     "kind": "buried-barrel-cache"
+    },
+    {
+     "x": 99.14073,
+     "z": 370.625977,
+     "kind": "buried-barrel-cache"
+    }
+   ],
    "source": "tarkov-dev-svg-maps",
    "order": 10,
    "flipped": true
@@ -15610,6 +17216,7 @@
     }
    ],
    "transits": [],
+   "caches": [],
    "source": "tarkov.dev tile layer",
    "order": 11,
    "flipped": true
@@ -15941,6 +17548,7 @@
     }
    ],
    "transits": [],
+   "caches": [],
    "source": "tarkov-dev-svg-maps",
    "order": 12,
    "flipped": true
@@ -16212,6 +17820,7 @@
     }
    ],
    "transits": [],
+   "caches": [],
    "source": "tarkov.dev tile layer",
    "order": 13,
    "flipped": true

@@ -47,8 +47,17 @@ public partial class OverlayWindow : Window, IOverlayState
     private MapDefinition? _map;
     private ScreenshotInfo? _player;
 
-    public OverlayWindow(MainWindow owner, AppSettings settings)
-    {
+    /// <summary>
+    /// Hold this key and roll the mouse wheel to zoom the mini-map without
+    /// resizing the window. Focus stays on the player (or map centre) so the
+    /// view does not drift under the pointer.
+    /// </summary>
+    public Key ZoomModifier { get; set; } = Key.LeftAlt;
+
+    private bool _zoomModifierDown;
+
+
+    public OverlayWindow(MainWindow owner, AppSettings settings)    {
         _owner = owner;
         InitializeComponent();
         var grip = ResizeGrip;
@@ -96,6 +105,7 @@ public partial class OverlayWindow : Window, IOverlayState
         ShowBosses = settings.ShowBosses,
         ShowSpawns = false,
         ShowTransits = false,
+        ShowCaches = settings.ShowCaches,
         ShowQuestMarkers = settings.ShowQuestMarkers,
         ShowHazards = settings.ShowHazards,
     };
@@ -220,18 +230,65 @@ public partial class OverlayWindow : Window, IOverlayState
     /// Mouse-wheel zoom for the floating map. Anchor the zoom on the cursor so
     /// the spot under the pointer stays put, like the main map; resizing or a
     /// fresh screenshot re-centres on the player again.
+    ///
+    /// Holding <see cref="ZoomModifier"/> switches to "zoom on the player": the
+    /// wheel scales the viewport around the newest screenshot position (or the
+    /// map centre when no screenshot was imported yet) and leaves the window
+    /// size untouched.
     /// </summary>
     private void OnRootWheel(object? sender, PointerWheelEventArgs e)
     {
         if (_locked) return;
         var factor = e.Delta.Y > 0 ? 1.15 : 1 / 1.15;
         var before = OverlayMap.Zoom;
-        OverlayMap.ZoomAtScreen(e.GetPosition(OverlayMap), factor);
+
+        if (_zoomModifierDown || IsZoomModifierDown(e.KeyModifiers))
+        {
+            var anchorX = _player?.X ?? (_map is null ? 0 : (_map.MinX + _map.MaxX) / 2);
+            var anchorZ = _player?.Z ?? (_map is null ? 0 : (_map.MinZ + _map.MaxZ) / 2);
+            OverlayMap.ZoomAtGame(anchorX, anchorZ, factor);
+        }
+        else
+        {
+            OverlayMap.ZoomAtScreen(e.GetPosition(OverlayMap), factor);
+        }
+
         _zoom = Math.Clamp(OverlayMap.Zoom, 0.5, 12);
         if (Math.Abs(_zoom - before) < 0.0001) return;
         HintText.Text = _map is null ? "" : _map.DisplayName;
         RaiseSettingsChanged();
         e.Handled = true;
+    }
+
+    private bool IsZoomModifierDown(KeyModifiers modifiers) => ZoomModifier switch
+    {
+        Key.LeftAlt or Key.RightAlt => modifiers.HasFlag(KeyModifiers.Alt),
+        Key.LeftCtrl or Key.RightCtrl => modifiers.HasFlag(KeyModifiers.Control),
+        Key.LeftShift or Key.RightShift => modifiers.HasFlag(KeyModifiers.Shift),
+        Key.LWin or Key.RWin => modifiers.HasFlag(KeyModifiers.Meta),
+        _ => modifiers.HasFlag(KeyModifiers.Alt),
+    };
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+        if (e.Key == ZoomModifier) _zoomModifierDown = true;
+    }
+
+    protected override void OnKeyUp(KeyEventArgs e)
+    {
+        base.OnKeyUp(e);
+        if (e.Key == ZoomModifier) _zoomModifierDown = false;
+    }
+
+    /// <summary>
+    /// Losing focus while the modifier is held would otherwise leave it latched,
+    /// silently hijacking every later wheel event.
+    /// </summary>
+    protected override void OnLostFocus(Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        base.OnLostFocus(e);
+        _zoomModifierDown = false;
     }
 
     private void OnRootPointerPressed(object? sender, PointerPressedEventArgs e)

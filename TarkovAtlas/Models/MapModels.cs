@@ -57,6 +57,12 @@ public sealed class MapDefinition
     public List<BossSpawn> Bosses { get; set; } = new();
     public List<SpawnPoint> Spawns { get; set; } = new();
     public List<TransitPoint> Transits { get; set; } = new();
+    /// <summary>
+    /// Buried stash / cache spots (物资埋藏点). Sourced from the tarkov.dev
+    /// lootContainer table, filtered to the buried-barrel-cache and ground-cache
+    /// container types, which are the ones the game hides under the ground.
+    /// </summary>
+    public List<CachePoint> Caches { get; set; } = new();
     public List<MapLayer> Layers { get; set; } = new();
     /// <summary>Minefield / sniper zones, loaded from hazards.json.</summary>
     [JsonIgnore] public List<HazardZone> Hazards { get; set; } = new();
@@ -194,6 +200,18 @@ public sealed class TransitPoint
 {
     public double X { get; set; }
     public double Z { get; set; }
+}
+
+/// <summary>
+/// A buried stash / cache (物资埋藏点): loot the player has to dig up, so it is
+/// worth its own marker rather than being lumped in with loose loot.
+/// </summary>
+public sealed class CachePoint
+{
+    public double X { get; set; }
+    public double Z { get; set; }
+    /// <summary>buried-barrel-cache | ground-cache</summary>
+    public string Kind { get; set; } = "ground-cache";
 }
 
 public sealed class GameMarker
