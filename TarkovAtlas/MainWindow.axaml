@@ -144,8 +144,12 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-              <Button Content="−" Width="30" Click="ZoomOutButton_Click" ToolTip.Tip="缩小" />
-              <Button Content="+" Width="30" Click="ZoomInButton_Click" ToolTip.Tip="放大" />
+              <Button Content="−" Width="34" Height="30" Padding="0" FontSize="14"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      Click="ZoomOutButton_Click" ToolTip.Tip="缩小" />
+              <Button Content="+" Width="34" Height="30" Padding="0" FontSize="14"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      Click="ZoomInButton_Click" ToolTip.Tip="放大" />
               <Button Content="复位" Click="ResetViewButton_Click" ToolTip.Tip="适应窗口（Home）" />
               <Button Content="显示" Click="DisplayMenuButton_Click" ToolTip.Tip="选择地图上显示的内容" />
               <ComboBox x:Name="LayerComboBox" Width="120" IsVisible="False"
