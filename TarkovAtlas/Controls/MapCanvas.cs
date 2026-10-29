@@ -812,9 +812,12 @@ public sealed class MapCanvas : Control
                 context.DrawRectangle(TransitFill, TransitPen, new Rect(s.X - 5, s.Y - 5, 10, 10));
 
             if (_zoom < 1.1 || Compact) continue;
-            var label = Text(t.Dest, 10, TransitBrush);
+            // Dest stores the raw map key ("reserve") - print the localized
+            // name so the label matches every other map reference.
+            var dest = MapNames.Display(t.Dest);
+            var label = Text(dest, 10, TransitBrush);
             var pos = new Point(s.X - label.Width / 2, s.Y + iconSide / 2 + 3);
-            context.DrawText(Text(t.Dest, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+            context.DrawText(Text(dest, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
             context.DrawText(label, pos);
         }
     }
