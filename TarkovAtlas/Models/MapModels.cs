@@ -190,6 +190,8 @@ public sealed class BossSpawn
     /// <summary>API mob identifier (e.g. bossKilla); also the portrait file name.</summary>
     public string Mob { get; set; } = "";
     public List<GameMarker> Points { get; set; } = new();
+    /// <summary>Most likely opening spawn (densest cluster centre); falls back to Points[0].</summary>
+    public GameMarker? Primary { get; set; }
 
     /// <summary>
     /// Portrait file stem under Assets/bosses. Group mobs are mapped explicitly:

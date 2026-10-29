@@ -591,82 +591,65 @@ public sealed class MapCanvas : Control
     private void DrawBosses(DrawingContext context)
     {
         if (_map is null || _zoom < 0.7) return;
-        // One caption per boss, not per spawn point: Lighthouse has 18 rogue
-        // points, and 18 overlapping "游荡者" labels buried the map.
-        var labelled = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        // ONE avatar per boss at its primary (densest) spawn; the translucent
+        // circle is the roam range covering all raw points. A carpet of the
+        // same portrait told nothing the circle doesn't show better.
         var placed = new List<Rect>();
         foreach (var boss in _map.Bosses)
         {
-            var showLabel = !Compact && _zoom >= 0.85 && labelled.Add(boss.Mob);
-            // Bosses roam (三狗 patrols the whole compound). Instead of one
-            // portrait per spawn point, cluster the raw points, draw ONE
-            // avatar at the cluster centre and a translucent patrol range
-            // circle around it covering all its points.
             var pts = boss.Points;
             if (pts.Count == 0) continue;
-            var cx = pts.Average(p => p.X);
-            var cz = pts.Average(p => p.Z);
+            var primary = boss.Primary ?? pts[0];
+            var cx = primary.X;
+            var cz = primary.Z;
             var radiusGame = pts.Max(p => Math.Sqrt((p.X - cx) * (p.X - cx) + (p.Z - cz) * (p.Z - cz)));
-            // range never smaller than the avatar itself
-            const double minRangeM = 24.0;
-            var rangeM = Math.Max(radiusGame, minRangeM);
+            // Range: cover all points, minimum 30 m (avatar-scale); cap at
+            // 170 m so one stray upstream point can never paint a map blob.
+            var rangeM = Math.Clamp(radiusGame, 30.0, 170.0);
 
             var centre = Project(cx, cz);
-            if (OnScreen(centre, 160))
+            if (!OnScreen(centre, 220)) continue;
+
+            var mPerPx = Math.Abs(_map.Affine[0]);
+            var rangePx = rangeM * mPerPx * Scale;
+            context.DrawEllipse(BossHalo, BossRingPen, centre, rangePx, rangePx);
+
+            // Avatar rides the circle centre.
+            var r = Math.Clamp(9.0 * Math.Sqrt(_zoom), 9, 20);
+            var avatar = LoadCircle("bosses", boss.AvatarSlug, (int)Math.Round(r * 2));
+            if (avatar is not null)
             {
-                var rangePx = rangeM * Math.Abs(_map.Affine[0]) * Scale;
-                var rangeBrush = _bossRangeCache ??= Palette.Brush(Palette.BossHalo);
-                context.DrawEllipse(rangeBrush, null, centre, rangePx, rangePx);
-                context.DrawEllipse(null, BossRingPen, centre, rangePx, rangePx);
+                var side = (int)Math.Round(r * 2);
+                context.DrawImage(avatar, new Rect(0, 0, side, side),
+                    new Rect(centre.X - r, centre.Y - r, r * 2, r * 2));
+                context.DrawEllipse(null, BossRingPen, centre, r, r);
+            }
+            else
+            {
+                context.DrawEllipse(BossHalo, null, centre, r + 7, r + 7);
+                context.DrawEllipse(BossBrush, BossEmptyPen, centre, r, r);
+                var initial = string.IsNullOrEmpty(boss.Name) ? "?" : boss.Name[..1].ToUpperInvariant();
+                var itxt = Text(initial, r, BossInitial);
+                context.DrawText(itxt, new Point(centre.X - itxt.Width / 2, centre.Y - itxt.Height / 2));
             }
 
-            foreach (var point in pts)
-            {
-                var s = Project(point.X, point.Z);
-                if (!OnScreen(s, 40)) continue;
-
-                // A coloured dot gave no clue which boss was which; draw the portrait.
-                var r = Math.Clamp(9.0 * Math.Sqrt(_zoom), 9, 20);
-                var avatar = LoadCircle("bosses", boss.AvatarSlug, (int)Math.Round(r * 2));
-                if (avatar is not null)
-                {
-                    context.DrawEllipse(BossHalo, null, s, r + 2, r + 2);
-                    var side = (int)Math.Round(r * 2);
-                    context.DrawImage(avatar, new Rect(0, 0, side, side),
-                        new Rect(s.X - r, s.Y - r, r * 2, r * 2));
-                    context.DrawEllipse(null, BossRingPen, s, r, r);
-                }
-                else
-                {
-                    context.DrawEllipse(BossHalo, null, s, r + 7, r + 7);
-                    context.DrawEllipse(BossBrush, BossEmptyPen, s, r, r);
-                    var initial = string.IsNullOrEmpty(boss.Name) ? "?" : boss.Name[..1].ToUpperInvariant();
-                    var itxt = Text(initial, r, BossInitial);
-                    context.DrawText(itxt, new Point(s.X - itxt.Width / 2, s.Y - itxt.Height / 2));
-                }
-
-                if (showLabel)
-                {
-                    var size = _zoom >= 1.7 ? 10.5 : 9;
-                    var txt = Text(boss.Name, size, BossBrush);
-                    var pos = new Point(s.X + r + 4, s.Y - txt.Height / 2);
-                    // Mobs sharing a spawn point (Lighthouse chalet: rogues and
-                    // Knight) would otherwise stack their captions on top of
-                    // each other. Walk down until the box is free.
-                    var box = new Rect(pos.X, pos.Y, txt.Width + 2, txt.Height + 2);
-                    var guard = 0;
-                    while (guard++ < 12 && placed.Any(b => b.Intersects(box)))
-                        box = box.Translate(new Vector(0, box.Height + 1));
-                    placed.Add(box);
-                    context.DrawText(Text(boss.Name, size, LabelShadow), new Point(box.X + 1, box.Y + 1));
-                    context.DrawText(txt, new Point(box.X, box.Y));
-                    showLabel = false;
-                }
-            }
+            if (Compact || _zoom < 0.85) continue;
+            var showLabel = labelled.Add(boss.Mob);
+            if (!showLabel) continue;
+            var size = _zoom >= 1.7 ? 10.5 : 9;
+            var txt = Text(boss.Name, size, BossBrush);
+            var pos = new Point(centre.X + rangePx + 4, centre.Y - txt.Height / 2);
+            var box = new Rect(pos.X, pos.Y, txt.Width + 2, txt.Height + 2);
+            var guard = 0;
+            while (guard++ < 12 && placed.Any(b => b.Intersects(box)))
+                box = box.Translate(new Vector(0, box.Height + 1));
+            placed.Add(box);
+            context.DrawText(Text(boss.Name, size, LabelShadow), new Point(box.X + 1, box.Y + 1));
+            context.DrawText(txt, new Point(box.X, box.Y));
         }
     }
 
-    private IBrush? _bossRangeCache;
+    private readonly HashSet<string> labelled = new(StringComparer.OrdinalIgnoreCase);
 
     private static readonly IBrush CanvasBackground = Palette.Brush(Palette.HazardGlyph);
     private static readonly IBrush CompactBackground = Palette.Brush(Palette.CompactBg);
