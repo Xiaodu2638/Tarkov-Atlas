@@ -1051,6 +1051,7 @@ public partial class MainWindow : Window
         QuestDrawer.Width = open ? 400 : 0;
         if (open)
         {
+            _deferQuestSort = false;
             RefreshQuestScope();
             QuestSearchBox.Focus();
         }
@@ -1065,6 +1066,7 @@ public partial class MainWindow : Window
     private void QuestSearchBox_TextChanged(object? sender, TextChangedEventArgs e)
     {
         if (!_initialized || _suppressQuestEvents) return;
+        _deferQuestSort = false;
         RefreshQuestScope();
     }
 
@@ -1073,6 +1075,7 @@ public partial class MainWindow : Window
         if (!_initialized || _suppressQuestEvents) return;
         _settings.QuestFilter = Math.Clamp(QuestFilterBox.SelectedIndex, 0, 2);
         Persist();
+        _deferQuestSort = false;
         RefreshQuestScope();
     }
 
@@ -1081,21 +1084,24 @@ public partial class MainWindow : Window
         if (!_initialized || _suppressQuestEvents) return;
         _settings.QuestFollowsMap = QuestFollowMapCheck.IsChecked == true;
         Persist();
+        _deferQuestSort = false;
         RefreshQuestScope();
     }
 
     /// <summary>Recompute the quest list for the current map + search + filter.
-    /// <paramref name="deferSort"/> keeps the current row order and selection
-    /// when the call comes from a jump (the tracked sort would scroll the list
-    /// away from the row the user just clicked).</summary>
-    private void RefreshQuestScope(bool deferSort = false)
+    /// A jump sets <see cref="_deferQuestSort"/> so every refresh caused by the
+    /// map switch keeps the current row order; the next user-driven refresh
+    /// (filter, search, drawer open) resets it and re-sorts normally.</summary>
+    private bool _deferQuestSort;
+
+    private void RefreshQuestScope()
     {
         if (_currentMap is null) return;
         var query = QuestSearchBox.Text ?? "";
         _quests.SetMap(_currentMap.Key, _settings.QuestFollowsMap);
         _quests.SetQuery(query);
         _quests.SetFilter(Math.Clamp(QuestFilterBox.SelectedIndex, 0, 2));
-        if (deferSort)
+        if (_deferQuestSort)
         {
             // Keep row order: just re-bind tracking/completion state.
             foreach (var row in _quests.VisibleQuests)
@@ -1196,6 +1202,7 @@ public partial class MainWindow : Window
 
         // Re-run the active filter/sort: otherwise a task completed while the
         // "未完成" filter is on stays in the list and the click looks ignored.
+        _deferQuestSort = false;
         RefreshQuestScope();
     }
 
@@ -1240,6 +1247,11 @@ public partial class MainWindow : Window
             if (target is null) return;
         }
 
+        // The map switch inside NavigateToAsync refreshes the quest list; keep
+        // the current sort until the next user-driven refresh, otherwise the
+        // promoted tracked task scrolls the list and the next jump click
+        // lands on the wrong row.
+        _deferQuestSort = true;
         await NavigateToAsync(target, remember: true);
         if (!_quests.IsTracked(quest.Id)) _quests.SetTracked(quest.Id, true);
 
