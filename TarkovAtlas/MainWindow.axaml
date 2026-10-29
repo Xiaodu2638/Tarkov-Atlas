@@ -162,12 +162,14 @@
 
         <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
           <!-- Legend: same toggles as the 显示 menu, as a docked panel.
-               Width 190 + 22px rows: every artwork logo displays uncropped. -->
-          <Border x:Name="LegendPanel" Grid.Column="0" Width="190" IsVisible="False"
-                  Background="{StaticResource PanelBg}" BorderBrush="{StaticResource DividerBg}"
-                  BorderThickness="0,0,1,0" Padding="12,10">
+               Card rows under group headings; 90% panel opacity keeps the
+               map readable where they overlap. -->
+          <Border x:Name="LegendPanel" Grid.Column="0" Width="196" IsVisible="False"
+                  Background="{StaticResource PanelBg}" Opacity="0.92"
+                  BorderBrush="{StaticResource DividerBg}"
+                  BorderThickness="0,0,1,0" Padding="10,10">
             <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Center">
-              <StackPanel x:Name="LegendItems" Spacing="6" />
+              <StackPanel x:Name="LegendItems" Spacing="4" />
             </ScrollViewer>
           </Border>
 

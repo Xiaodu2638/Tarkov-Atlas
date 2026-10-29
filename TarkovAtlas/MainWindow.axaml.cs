@@ -550,6 +550,8 @@ public partial class MainWindow : Window
         public required Func<bool> Get { get; init; }
         public required Action<bool> Set { get; init; }
         public int Count { get; init; }
+        /// <summary>Group heading the row renders under (点位 / 环境 / 道具).</summary>
+        public required string Group { get; init; }
     }
 
     /// <summary>POI kind → display name (kept in sync with build_data's kinds).</summary>
@@ -565,6 +567,9 @@ public partial class MainWindow : Window
     private List<LegendRow> CollectLegendRows()
     {
         var map = _currentMap;
+        const string points = "点位";
+        const string env = "环境";
+        const string items = "道具";
         // Only offer toggles for marker sets this map actually has — a BTR
         // toggle on The Lab or a cache toggle on Factory is dead weight.
         var rows = new List<LegendRow>();
@@ -573,7 +578,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "撤离点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.ExtractPmc),
-                Icon = "extract-pmc",
+                Icon = "extract-pmc", Group = points,
                 Get = () => _settings.ShowExtracts, Set = v => _settings.ShowExtracts = v, Count = map?.Extracts.Count ?? 0,
             });
         }
@@ -582,6 +587,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "Boss 刷点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Boss),
+                Group = points,
                 Get = () => _settings.ShowBosses, Set = v => _settings.ShowBosses = v, Count = map?.Bosses.Sum(b => b.Points.Count) ?? 0,
             });
         }
@@ -590,6 +596,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "出生点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.SpawnPmc),
+                Group = points,
                 Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = map?.Spawns.Count ?? 0,
             });
         }
@@ -598,7 +605,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "转移点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
-                Icon = "transit",
+                Icon = "transit", Group = points,
                 Get = () => _settings.ShowTransits, Set = v => _settings.ShowTransits = v, Count = map?.Transits.Count ?? 0,
             });
         }
@@ -607,6 +614,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "BTR 站点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
+                Group = points,
                 Get = () => _settings.ShowBtrs, Set = v => _settings.ShowBtrs = v, Count = map?.Btrs.Count ?? 0,
             });
         }
@@ -615,6 +623,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "资源埋藏点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.CacheStroke),
+                Group = points,
                 Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = map?.Caches.Count ?? 0,
             });
         }
@@ -623,6 +632,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "危险区", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.MinefieldStroke),
+                Group = env,
                 Get = () => _settings.ShowHazards, Set = v => _settings.ShowHazards = v, Count = map?.Hazards.Count ?? 0,
             });
         }
@@ -631,6 +641,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "地名", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Label),
+                Group = env,
                 Get = () => _settings.ShowLabels, Set = v => _settings.ShowLabels = v, Count = map?.Labels.Count ?? 0,
             });
         }
@@ -645,6 +656,7 @@ public partial class MainWindow : Window
                 {
                     Label = label,
                     Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.QuestMarkerStroke),
+                    Group = items,
                     Get = () => !_settings.HiddenPoiKinds.Contains(kind),
                     Set = v =>
                     {
@@ -659,7 +671,10 @@ public partial class MainWindow : Window
         return rows;
     }
 
-    /// <summary>Re-render the docked legend from the current display state.</summary>
+    /// <summary>Re-render the docked legend from the current display state.
+    /// Card rows (whole-row click target, icon left, count pill right) under
+    /// group headings; closed categories fade to 40% opacity instead of an
+    /// empty checkbox.</summary>
     private void RebuildLegend()
     {
         LegendPanel.IsVisible = _settings.ShowLegend && _currentMap is not null;
@@ -667,55 +682,108 @@ public partial class MainWindow : Window
 
         var rows = CollectLegendRows();
         LegendItems.Children.Clear();
+        var lastGroup = "";
         foreach (var row in rows)
         {
-            var cb = new CheckBox
+            if (row.Group != lastGroup)
             {
-                IsChecked = row.Get(),
-                FontSize = 11.5,
-                Padding = new Thickness(6, 5),
-                MinHeight = 26,
-            };
-            cb.Click += (_, _) =>
-            {
-                row.Set(cb.IsChecked == true);
-                ApplyDisplayOptions();
-                Persist();
-            };
+                lastGroup = row.Group;
+                LegendItems.Children.Add(new TextBlock
+                {
+                    Text = lastGroup,
+                    FontSize = 9.5,
+                    FontWeight = FontWeight.SemiBold,
+                    LetterSpacing = 1.2,
+                    Foreground = Palette.Brush(Palette.TextMuted),
+                    Margin = new Thickness(2, 8, 0, 3),
+                });
+            }
 
-            var panel = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
+            var card = new Border
+            {
+                CornerRadius = new CornerRadius(6),
+                Padding = new Thickness(8, 6),
+                Background = Palette.Brush(Palette.CardAltBg),
+                MinHeight = 32,
+            };
+            var on = row.Get();
+            card.Opacity = on ? 1.0 : 0.4;
+
+            var panel = new Grid { ColumnDefinitions = new ColumnDefinitions("Auto,*,Auto") };
             var iconBitmap = row.Icon is null ? null : LoadLegendIcon(row.Icon);
+            Control icon;
             if (iconBitmap is not null)
             {
-                panel.Children.Add(new Image
+                icon = new Border
                 {
-                    Source = iconBitmap, Width = 18, Height = 18, Stretch = Stretch.Uniform,
-                    VerticalAlignment = VerticalAlignment.Center,
-                });
+                    // thin outline around the artwork so mixed icon styles sit
+                    // on one even baseline
+                    BorderBrush = Palette.Brush(Palette.BorderStrong),
+                    BorderThickness = new Thickness(1),
+                    CornerRadius = new CornerRadius(4),
+                    Padding = new Thickness(1),
+                    Child = new Image
+                    {
+                        Source = iconBitmap, Width = 17, Height = 17,
+                        Stretch = Stretch.Uniform,
+                    },
+                };
             }
             else
             {
-                panel.Children.Add(new Border
+                icon = new Border
                 {
-                    Width = 10, Height = 10, CornerRadius = new CornerRadius(5),
-                    Background = row.Swatch, VerticalAlignment = VerticalAlignment.Center,
-                });
+                    Width = 12, Height = 12, CornerRadius = new CornerRadius(6),
+                    Background = row.Swatch,
+                    BorderBrush = Palette.Brush(Palette.BorderStrong),
+                    BorderThickness = new Thickness(1),
+                    VerticalAlignment = VerticalAlignment.Center,
+                };
             }
-            panel.Children.Add(new TextBlock
+            Grid.SetColumn(icon, 0);
+            icon.VerticalAlignment = VerticalAlignment.Center;
+            panel.Children.Add(icon);
+
+            var label = new TextBlock
             {
-                Text = row.Label, FontSize = 11, VerticalAlignment = VerticalAlignment.Center,
-            });
+                Text = row.Label, FontSize = 11.5,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(8, 0, 0, 0),
+                TextTrimming = TextTrimming.CharacterEllipsis,
+            };
+            Grid.SetColumn(label, 1);
+            panel.Children.Add(label);
+
             if (row.Count > 0)
             {
-                panel.Children.Add(new TextBlock
+                var badge = new Border
                 {
-                    Text = row.Count.ToString(), FontSize = 9,
-                    Foreground = Palette.Brush(Palette.TextMuted),
+                    CornerRadius = new CornerRadius(8),
+                    Padding = new Thickness(7, 1),
+                    Background = Palette.Brush(Palette.ButtonBg),
                     VerticalAlignment = VerticalAlignment.Center,
-                });
+                    Child = new TextBlock
+                    {
+                        Text = row.Count.ToString(), FontSize = 9.5,
+                        Foreground = Palette.Brush(Palette.TextMuted),
+                    },
+                };
+                Grid.SetColumn(badge, 2);
+                panel.Children.Add(badge);
             }
-            cb.Content = panel;
-            LegendItems.Children.Add(cb);
+
+            card.Child = panel;
+            card.Cursor = new Cursor(StandardCursorType.Hand);
+            card.PointerEntered += (_, _) => card.Background = Palette.Brush(Palette.ListHoverBg);
+            card.PointerExited += (_, _) => card.Background = Palette.Brush(Palette.CardAltBg);
+            card.PointerReleased += (_, _) =>
+            {
+                row.Set(!row.Get());
+                RebuildLegend();   // re-render: opacity + badge states refresh
+                ApplyDisplayOptions();
+                Persist();
+            };
+            LegendItems.Children.Add(card);
         }
     }
 
