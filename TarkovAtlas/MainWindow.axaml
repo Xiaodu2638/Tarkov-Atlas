@@ -161,12 +161,13 @@
         </Border>
 
         <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
-          <!-- Legend: same toggles as the 显示 menu, as a docked panel. -->
-          <Border x:Name="LegendPanel" Grid.Column="0" Width="172" IsVisible="False"
+          <!-- Legend: same toggles as the 显示 menu, as a docked panel.
+               Width 190 + 22px rows: every artwork logo displays uncropped. -->
+          <Border x:Name="LegendPanel" Grid.Column="0" Width="190" IsVisible="False"
                   Background="{StaticResource PanelBg}" BorderBrush="{StaticResource DividerBg}"
                   BorderThickness="0,0,1,0" Padding="12,10">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-              <StackPanel x:Name="LegendItems" Spacing="2" />
+            <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Center">
+              <StackPanel x:Name="LegendItems" Spacing="6" />
             </ScrollViewer>
           </Border>
 

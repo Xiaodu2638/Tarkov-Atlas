@@ -642,8 +642,9 @@ public partial class MainWindow : Window
             var cb = new CheckBox
             {
                 IsChecked = row.Get(),
-                FontSize = 11,
-                Padding = new Thickness(4, 2),
+                FontSize = 11.5,
+                Padding = new Thickness(6, 5),
+                MinHeight = 26,
             };
             cb.Click += (_, _) =>
             {
@@ -658,7 +659,7 @@ public partial class MainWindow : Window
             {
                 panel.Children.Add(new Image
                 {
-                    Source = iconBitmap, Width = 16, Height = 16,
+                    Source = iconBitmap, Width = 18, Height = 18, Stretch = Stretch.Uniform,
                     VerticalAlignment = VerticalAlignment.Center,
                 });
             }
