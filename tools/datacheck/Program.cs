@@ -40,8 +40,10 @@ internal static class DataChecks
         var badEn = manifest.Maps.Where(m => m.NameEn.Length == 0 || m.NameEn.All(char.IsDigit)).ToList();
         Check("english names present", badEn.Count == 0, string.Join(",", badEn.Select(m => m.Key)));
 
-        // Projection must round-trip through the inverse for every map.
-        foreach (var map in manifest.Maps)
+        // Projection must round-trip through the inverse for every map. With a
+        // spline correction the mapping is intentionally non-invertible-by-affine,
+        // so only the plain-affine maps must round-trip exactly.
+        foreach (var map in manifest.Maps.Where(m => m.Spline is null))
         {
             var px = map.GameToImage(map.MinX, map.MinZ);
             var back = map.ImageToGame(px.X, px.Y);
@@ -50,8 +52,9 @@ internal static class DataChecks
 
             // Every corner must land inside the image bounds. Only meaningful for
             // an axis-aligned affine: a rotated image is a tilted rectangle, so
-            // the corners of its world-space bbox fall outside it by design.
-            if (Math.Abs(map.Affine[1]) < 1e-9 && Math.Abs(map.Affine[3]) < 1e-9)
+            // the corners of its world-space bbox fall outside it by design. The
+            // spline also warps the frame locally, so it skips this check too.
+            if (Math.Abs(map.Affine[1]) < 1e-9 && Math.Abs(map.Affine[3]) < 1e-9 && map.Spline is null)
             {
                 foreach (var (gx, gz) in new[] { (map.MinX, map.MinZ), (map.MaxX, map.MinZ), (map.MinX, map.MaxZ), (map.MaxX, map.MaxZ) })
                 {

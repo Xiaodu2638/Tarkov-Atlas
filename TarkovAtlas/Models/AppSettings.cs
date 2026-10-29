@@ -38,6 +38,10 @@ public sealed class AppSettings
 
     public bool ShowLabels { get; set; } = true;
     public bool ShowExtracts { get; set; } = true;
+    /// <summary>POI kinds to hide, as a JSON array (per-kind legend toggles).</summary>
+    public List<string> HiddenPoiKinds { get; set; } = new();
+    /// <summary>Whether the docked legend panel is visible on the map's left.</summary>
+    public bool ShowLegend { get; set; } = true;
     /// <summary>pmc | scav | shared | all</summary>
     public string ExtractFilter { get; set; } = "all";
     public bool ShowBosses { get; set; } = true;
@@ -100,6 +104,7 @@ public sealed class AppSettings
         OverlayZoom = Math.Clamp(OverlayZoom, 0.5, 12);
         if (OverlayAnchor is not ("top" or "middle" or "bottom")) OverlayAnchor = "middle";
         if (ExtractFilter is not ("all" or "pmc" or "scav" or "shared")) ExtractFilter = "all";
+    HiddenPoiKinds = HiddenPoiKinds.Distinct().ToList();
     }
 }
 

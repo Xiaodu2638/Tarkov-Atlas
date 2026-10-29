@@ -90,6 +90,7 @@ public partial class MainWindow : Window
             MapCountText.Text = $"{_repo.Maps.Count} 张";
             MapList.ItemsSource = _visibleMaps;
             ApplyMapFilter("");
+            MapView.PoiKindsHidden = _settings.HiddenPoiKinds;
             ApplyDisplayOptions();
 
             _suppressQuestEvents = true;
@@ -274,6 +275,7 @@ public partial class MainWindow : Window
                 if (_currentMap?.Key != map.Key) return;
                 MapView.SetMap(map, bitmap);
                 MapView.ClearFocusPin();
+                MapView.PoiKindsHidden = _settings.HiddenPoiKinds;
                 LoadFloorLayers(map);
                 _overlay?.SetMap(map, bitmap);
                 SyncOverlayFloor();
@@ -289,6 +291,7 @@ public partial class MainWindow : Window
         UpdatePinsForCurrentMap();
         RefreshQuestScope();
         SyncOverlayPlayer();
+        RebuildLegend();
 
         if (remember) RememberMap(map);
     }
@@ -534,6 +537,149 @@ public partial class MainWindow : Window
         MapView.Hazards = _currentMap?.Hazards ?? new List<HazardZone>();
         MapView.InvalidateVisual();
         _overlay?.ApplyDisplayOptions(_settings);
+        RebuildLegend();
+    }
+
+    // ------------------------------------------------------------------
+    // legend panel
+
+    /// <summary>One checkable row in the legend: swatch + label + count.</summary>
+    private sealed class LegendRow
+    {
+        public required string Label { get; init; }
+        public required IBrush Swatch { get; init; }
+        public required Func<bool> Get { get; init; }
+        public required Action<bool> Set { get; init; }
+        public int Count { get; init; }
+    }
+
+    /// <summary>POI kind → display name (kept in sync with build_data's kinds).</summary>
+    private static readonly Dictionary<string, string> PoiKindLabels = new()
+    {
+        ["钥匙"] = "钥匙",
+        ["解除陷阱"] = "密室陷阱",
+        ["喷灯"] = "BBQ-S43 喷灯",
+        ["阀门手轮"] = "阀门手轮",
+    };
+
+    private List<LegendRow>? _legendRows;
+
+    /// <summary>Collect the legend rows for the current map's display state.</summary>
+    private List<LegendRow> CollectLegendRows()
+    {
+        var rows = new List<LegendRow>
+        {
+            new()
+            {
+                Label = "撤离点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.ExtractPmc),
+                Get = () => _settings.ShowExtracts, Set = v => _settings.ShowExtracts = v, Count = _currentMap?.Extracts.Count ?? 0,
+            },
+            new()
+            {
+                Label = "Boss 刷点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Boss),
+                Get = () => _settings.ShowBosses, Set = v => _settings.ShowBosses = v, Count = _currentMap?.Bosses.Sum(b => b.Points.Count) ?? 0,
+            },
+            new()
+            {
+                Label = "出生点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.SpawnPmc),
+                Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = _currentMap?.Spawns.Count ?? 0,
+            },
+            new()
+            {
+                Label = "转移点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
+                Get = () => _settings.ShowTransits, Set = v => _settings.ShowTransits = v, Count = _currentMap?.Transits.Count ?? 0,
+            },
+            new()
+            {
+                Label = "资源埋藏点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.CacheStroke),
+                Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = _currentMap?.Caches.Count ?? 0,
+            },
+            new()
+            {
+                Label = "危险区", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.MinefieldStroke),
+                Get = () => _settings.ShowHazards, Set = v => _settings.ShowHazards = v, Count = _currentMap?.Hazards.Count ?? 0,
+            },
+            new()
+            {
+                Label = "地名", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Label),
+                Get = () => _settings.ShowLabels, Set = v => _settings.ShowLabels = v, Count = _currentMap?.Labels.Count ?? 0,
+            },
+        };
+
+        var map = _currentMap;
+        if (map is not null && map.Pois.Count > 0)
+        {
+            foreach (var group in map.Pois.GroupBy(p => p.Kind).OrderBy(g => g.Key, StringComparer.CurrentCulture))
+            {
+                var kind = group.Key;
+                var label = PoiKindLabels.GetValueOrDefault(kind, kind);
+                rows.Add(new LegendRow
+                {
+                    Label = label,
+                    Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.QuestMarkerStroke),
+                    Get = () => !_settings.HiddenPoiKinds.Contains(kind),
+                    Set = v =>
+                    {
+                        if (v) _settings.HiddenPoiKinds.Remove(kind);
+                        else if (!_settings.HiddenPoiKinds.Contains(kind)) _settings.HiddenPoiKinds.Add(kind);
+                        MapView.PoiKindsHidden = _settings.HiddenPoiKinds;
+                    },
+                    Count = group.Count(),
+                });
+            }
+        }
+        return rows;
+    }
+
+    /// <summary>Re-render the docked legend from the current display state.</summary>
+    private void RebuildLegend()
+    {
+        LegendPanel.IsVisible = _settings.ShowLegend && _currentMap is not null;
+        if (!LegendPanel.IsVisible) { _legendRows = null; return; }
+        if (_legendRows is not null && LegendItems.Children.Count > 0) return;
+
+        _legendRows = CollectLegendRows();
+        LegendItems.Children.Clear();
+        foreach (var row in _legendRows)
+        {
+            var cb = new CheckBox
+            {
+                IsChecked = row.Get(),
+                FontSize = 11,
+                Padding = new Thickness(4, 2),
+            };
+            cb.Click += (_, _) =>
+            {
+                row.Set(cb.IsChecked == true);
+                // Re-render: POI-kind toggles swap the whole row set, and the
+                // check state of every other row must stay in sync.
+                _legendRows = null;
+                ApplyDisplayOptions();
+                Persist();
+            };
+
+            var panel = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
+            panel.Children.Add(new Border
+            {
+                Width = 10, Height = 10, CornerRadius = new CornerRadius(5),
+                Background = row.Swatch, VerticalAlignment = VerticalAlignment.Center,
+            });
+            panel.Children.Add(new TextBlock
+            {
+                Text = row.Label, FontSize = 11, VerticalAlignment = VerticalAlignment.Center,
+            });
+            if (row.Count > 0)
+            {
+                panel.Children.Add(new TextBlock
+                {
+                    Text = row.Count.ToString(), FontSize = 9,
+                    Foreground = Palette.Brush(Palette.TextMuted),
+                    VerticalAlignment = VerticalAlignment.Center,
+                });
+            }
+            cb.Content = panel;
+            LegendItems.Children.Add(cb);
+        }
     }
 
     private void DisplayMenuButton_Click(object? sender, RoutedEventArgs e)
@@ -610,6 +756,12 @@ public partial class MainWindow : Window
         menu.Items.Add(ToggleItem("地名", _settings.ShowLabels, v =>
         {
             _settings.ShowLabels = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+        menu.Items.Add(ToggleItem("图例面板", _settings.ShowLegend, v =>
+        {
+            _settings.ShowLegend = v;
             ApplyDisplayOptions();
             Persist();
         }));

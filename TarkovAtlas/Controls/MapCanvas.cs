@@ -29,6 +29,26 @@ public sealed class MapDisplayOptions
 
 public sealed class MapCanvas : Control
 {
+    /// <summary>Legend swatch kinds, resolved to the same colours the canvas draws.</summary>
+    public enum SwatchKind
+    {
+        ExtractPmc, Boss, SpawnPmc, Transit, CacheStroke, MinefieldStroke, Label, QuestMarkerStroke,
+    }
+
+    /// <summary>Resolve a legend swatch colour (frozen, shared with the canvas).</summary>
+    public static IBrush PaletteBrush(SwatchKind kind) => kind switch
+    {
+        SwatchKind.ExtractPmc => Palette.Brush(Palette.ExtractPmc),
+        SwatchKind.Boss => Palette.Brush(Palette.Boss),
+        SwatchKind.SpawnPmc => Palette.Brush(Palette.SpawnPmc),
+        SwatchKind.Transit => Palette.Brush(Palette.Transit),
+        SwatchKind.CacheStroke => Palette.Brush(Palette.CacheStroke),
+        SwatchKind.MinefieldStroke => Palette.Brush(Palette.MinefieldStroke),
+        SwatchKind.Label => Palette.Brush(Palette.Label),
+        SwatchKind.QuestMarkerStroke => Palette.Brush(Palette.QuestMarkerStroke),
+        _ => Palette.Brush(Palette.Muted),
+    };
+
     private static readonly Typeface LabelTypeface = new("Microsoft YaHei UI");
 
     private static readonly IBrush LabelBrush = Palette.Brush(Palette.Label);
@@ -129,6 +149,8 @@ public sealed class MapCanvas : Control
     public MapDefinition? Map => _map;
     public double Zoom => _zoom;
     public bool Compact { get; set; }
+    /// <summary>POI kinds currently toggled off in the legend.</summary>
+    public IReadOnlyCollection<string> PoiKindsHidden { get; set; } = Array.Empty<string>();
     public IReadOnlyList<FloorLayerView> Layers { get; set; } = Array.Empty<FloorLayerView>();
     public IReadOnlyList<HazardZone> Hazards { get; set; } = Array.Empty<HazardZone>();
     public MapDisplayOptions Options { get; set; } = new();
@@ -698,6 +720,7 @@ public sealed class MapCanvas : Control
 
         foreach (var p in _map.Pois)
         {
+            if (PoiKindsHidden.Contains(p.Kind)) continue;
             var s = Project(p.X, p.Z);
             if (!OnScreen(s, 30)) continue;
 

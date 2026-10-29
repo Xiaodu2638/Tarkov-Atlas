@@ -160,31 +160,42 @@
           </Grid>
         </Border>
 
-        <Grid Grid.Row="1">
-          <controls:MapCanvas x:Name="MapView" />
-          <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14"
-                  Background="{StaticResource OverlayChromeBg}" BorderBrush="{StaticResource BorderStrong}" BorderThickness="1"
-                  CornerRadius="7" Padding="9,6" IsHitTestVisible="False">
-            <StackPanel Spacing="1">
-              <TextBlock x:Name="HoverCoordText" Text="移动到地图上查看坐标" FontSize="10.5"
-                         Foreground="{StaticResource TextSecondary}" />
-              <TextBlock x:Name="HoverExtraText" Text="" FontSize="9.5"
-                         Foreground="{StaticResource TextMuted}" />
-            </StackPanel>
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
+          <!-- Legend: same toggles as the 显示 menu, as a docked panel. -->
+          <Border x:Name="LegendPanel" Grid.Column="0" Width="172" IsVisible="False"
+                  Background="{StaticResource PanelBg}" BorderBrush="{StaticResource DividerBg}"
+                  BorderThickness="0,0,1,0" Padding="12,10">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+              <StackPanel x:Name="LegendItems" Spacing="2" />
+            </ScrollViewer>
           </Border>
 
-          <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="14"
-                  Background="{StaticResource OverlayChromeBg}" BorderBrush="{StaticResource BorderStrong}" BorderThickness="1"
-                  CornerRadius="7" Padding="10,7">
-            <StackPanel Orientation="Horizontal" Spacing="10">
-              <TextBlock x:Name="ZoomText" Text="100%" FontSize="10.5"
-                         Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" />
-              <Button x:Name="LocateLatestButton" Content="定位最新截图" Classes="ghost" Click="LocateLatestButton_Click"
-                      IsVisible="False" />
-              <TextBlock x:Name="PinCountText" Text="0 个截图点" FontSize="10"
-                         Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
-            </StackPanel>
-          </Border>
+          <Grid Grid.Column="1">
+            <controls:MapCanvas x:Name="MapView" />
+            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14"
+                    Background="{StaticResource OverlayChromeBg}" BorderBrush="{StaticResource BorderStrong}" BorderThickness="1"
+                    CornerRadius="7" Padding="9,6" IsHitTestVisible="False">
+              <StackPanel Spacing="1">
+                <TextBlock x:Name="HoverCoordText" Text="移动到地图上查看坐标" FontSize="10.5"
+                           Foreground="{StaticResource TextSecondary}" />
+                <TextBlock x:Name="HoverExtraText" Text="" FontSize="9.5"
+                           Foreground="{StaticResource TextMuted}" />
+              </StackPanel>
+            </Border>
+
+            <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="14"
+                    Background="{StaticResource OverlayChromeBg}" BorderBrush="{StaticResource BorderStrong}" BorderThickness="1"
+                    CornerRadius="7" Padding="10,7">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock x:Name="ZoomText" Text="100%" FontSize="10.5"
+                           Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" />
+                <Button x:Name="LocateLatestButton" Content="定位最新截图" Classes="ghost" Click="LocateLatestButton_Click"
+                        IsVisible="False" />
+                <TextBlock x:Name="PinCountText" Text="0 个截图点" FontSize="10"
+                           Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
+              </StackPanel>
+            </Border>
+          </Grid>
         </Grid>
 
         <Border Grid.Row="2" Background="{StaticResource HeaderBg}" BorderBrush="{StaticResource DividerBg}" BorderThickness="0,1,0,0"

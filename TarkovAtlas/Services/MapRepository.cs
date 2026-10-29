@@ -62,11 +62,41 @@ public sealed class MapRepository
         if (_maps.Count == 0)
             throw new InvalidDataException("mapdata.json 中没有地图。");
 
+        LoadMarkers();
         LoadLayers();
         LoadHazards();
     }
 
-    /// <summary>Attach per-floor artwork listed in layers/index.json.</summary>
+    /// <summary>
+    /// Attach per-map points from markers.json (the split marker file). Falls
+    /// back to inline mapdata markers when the file predates the split.
+    /// </summary>
+    private void LoadMarkers()
+    {
+        if (!File.Exists(AppPaths.MarkersPath)) return;
+        try
+        {
+            var data = JsonSerializer.Deserialize(File.ReadAllText(AppPaths.MarkersPath),
+                AppJsonContext.Default.MarkersManifest);
+            if (data is null) return;
+            foreach (var map in _maps)
+            {
+                if (!data.Maps.TryGetValue(map.Key, out var pts)) continue;
+                map.Extracts = pts.Extracts;
+                map.Bosses = pts.Bosses;
+                map.Spawns = pts.Spawns;
+                map.Transits = pts.Transits;
+                map.Caches = pts.Caches;
+                map.Pois = pts.Pois;
+            }
+        }
+        catch (Exception ex)
+        {
+            AppPaths.LogCrash(ex);
+        }
+    }
+
+    /// <summary>Attach per-map artwork from layers/index.json.</summary>
     private void LoadLayers()
     {
         try
@@ -80,6 +110,9 @@ public sealed class MapRepository
             {
                 if (index.TryGetValue(map.Key, out var layers) && layers.Count > 0)
                     map.Layers = layers.OrderBy(l => l.Order).ToList();
+                // The spline corrects the map's own affine, so it needs a
+                // reference to it once both are loaded.
+                if (map.Spline is not null) map.Spline.Affine = map.Affine;
             }
         }
         catch (Exception ex)

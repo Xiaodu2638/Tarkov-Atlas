@@ -38,4 +38,5 @@ namespace TarkovAtlas;
 [JsonSerializable(typeof(List<HazardZone>))]
 [JsonSerializable(typeof(Dictionary<string, List<MapLayer>>))]
 [JsonSerializable(typeof(Dictionary<string, List<HazardZone>>))]
+[JsonSerializable(typeof(MarkersManifest))]
 internal sealed partial class AppJsonContext : JsonSerializerContext;

@@ -15,10 +15,12 @@ public static class AppPaths
     public const string QuestDataFile = "quests.json";
     public const string StoryDataFile = "story.json";
     public const string HazardsFile = "hazards.json";
+    public const string MarkersFile = "markers.json";
     public const string LayersIndexFile = "index.json";
 
     public static string MapDataPath => Path.Combine(MapsDir, MapDataFile);
     public static string HazardsPath => Path.Combine(MapsDir, HazardsFile);
+    public static string MarkersPath => Path.Combine(MapsDir, MarkersFile);
     public static string LayersIndexPath => Path.Combine(MapsDir, "layers", LayersIndexFile);
 
     private static string? _dataDir;

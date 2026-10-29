@@ -50,6 +50,12 @@ public sealed class MapDefinition
     public int Height { get; set; }
     /// <summary>a,b,c,d,e,f: px = a*x + b*z + c; py = d*x + e*z + f.</summary>
     public double[] Affine { get; set; } = Array.Empty<double>();
+    /// <summary>
+    /// Optional thin-plate-spline correction over the affine: paired game and
+    /// image control points. When present the canvas warps the affine result so
+    /// locally-squeezed artwork (hand-calibrated maps) still lines up.
+    /// </summary>
+    public ThinPlateSpline? Spline { get; set; }
     /// <summary>minX, minZ, maxX, maxZ in game units.</summary>
     public double[] Bounds { get; set; } = Array.Empty<double>();
     /// <summary>
@@ -103,8 +109,14 @@ public sealed class MapDefinition
     public (double X, double Y) GameToImage(double x, double z)
     {
         if (Affine.Length != 6) return (0, 0);
-        return (Affine[0] * x + Affine[1] * z + Affine[2],
-                Affine[3] * x + Affine[4] * z + Affine[5]);
+        var p = (Affine[0] * x + Affine[1] * z + Affine[2],
+                 Affine[3] * x + Affine[4] * z + Affine[5]);
+        if (Spline is null) return p;
+        // The spline corrects the affine, so it needs the affine itself; the
+        // repository injects it after load, but headless consumers (datacheck)
+        // may construct maps directly.
+        Spline.Affine ??= Affine;
+        return Spline.Correct(p.Item1, p.Item2);
     }
 
     public (double X, double Z) ImageToGame(double px, double py)
@@ -146,7 +158,6 @@ public sealed class MapLayer
     /// <summary>Player Y range (game units) where this level is the right one.</summary>
     public double? MinHeight { get; set; }
     public double? MaxHeight { get; set; }
-
     public bool MatchesHeight(double y) =>
         (MinHeight is null || y >= MinHeight.Value) &&
         (MaxHeight is null || y <= MaxHeight.Value);
@@ -243,6 +254,151 @@ public sealed class PoiPoint
     public string Kind { get; set; } = "puzzle";
     /// <summary>Display label shown next to the dot.</summary>
     public string Text { get; set; } = "";
+}
+
+/// <summary>Per-map marker sets carried by markers.json (split from mapdata).</summary>
+public sealed class MapPoints
+{
+    public List<ExtractPoint> Extracts { get; set; } = new();
+    public List<BossSpawn> Bosses { get; set; } = new();
+    public List<SpawnPoint> Spawns { get; set; } = new();
+    public List<TransitPoint> Transits { get; set; } = new();
+    public List<CachePoint> Caches { get; set; } = new();
+    public List<PoiPoint> Pois { get; set; } = new();
+}
+
+/// <summary>Root of markers.json.</summary>
+public sealed class MarkersManifest
+{
+    public string GeneratedAt { get; set; } = "";
+    public Dictionary<string, MapPoints> Maps { get; set; } = new();
+}
+
+/// <summary>
+/// Thin-plate-spline correction: paired game and image control points. The
+/// canvas first applies the affine, then adds the TPS displacement so the
+/// mapping follows locally-squeezed artwork. Exact interpolation at the
+/// control points degrades gracefully to the affine between them.
+/// </summary>
+public sealed class ThinPlateSpline
+{
+    /// <summary>Control points in game coordinates.</summary>
+    public List<List<double>> GamePoints { get; set; } = new();
+    /// <summary>Matching control points in image pixels (the correction target).</summary>
+    public List<List<double>> ImgPoints { get; set; } = new();
+
+    [JsonIgnore] private double[,]? _w;
+    [JsonIgnore] private double[]? _a;
+    [JsonIgnore] private List<(double X, double Z)>? _pts;
+
+    private static double U(double r2)
+    {
+        if (r2 < 1e-12) return 0;
+        // TPS kernel U(r) = r^2 * log(r); work with r^2 directly.
+        return 0.5 * r2 * Math.Log(r2);
+    }
+
+    /// <summary>Solve the TPS system once (Lamé coefficients + affine part).</summary>
+    private void Solve()
+    {
+        if (_w is not null || GamePoints.Count == 0) return;
+        var pts = GamePoints.Select(p => (p[0], p[1])).ToList();
+        var tps = ImgPoints.Select(p => (p[0], p[1])).ToList();
+        int n = pts.Count;
+        // L = [[K, P], [P^T, 0]] where K_ij = U(|pi - pj|^2), P rows = [1, x, z].
+        int m = n + 3;
+        var L = new double[m, m];
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                double dx = pts[i].Item1 - pts[j].Item1;
+                double dz = pts[i].Item2 - pts[j].Item2;
+                L[i, j] = U(dx * dx + dz * dz);
+            }
+            L[i, n] = 1; L[i, n + 1] = pts[i].Item1; L[i, n + 2] = pts[i].Item2;
+        }
+        for (int j = 0; j < n; j++)
+        {
+            L[n, j] = 1; L[n + 1, j] = pts[j].Item1; L[n + 2, j] = pts[j].Item2;
+        }
+        // Targets: the DISPLACEMENT from the affine-projected point to the
+        // control point, so the spline corrects the affine rather than replacing it.
+        var rx = new double[m]; var ry = new double[m];
+        for (int i = 0; i < n; i++)
+        {
+            var proj = ProjectAffine(pts[i].Item1, pts[i].Item2);
+            rx[i] = tps[i].Item1 - proj.X;
+            ry[i] = tps[i].Item2 - proj.Y;
+        }
+        var wx = SolveLinear(L, rx);
+        var wy = SolveLinear(L, ry);
+        _w = new double[n, 2];
+        for (int i = 0; i < n; i++)
+        {
+            _w[i, 0] = wx[i];
+            _w[i, 1] = wy[i];
+        }
+        _a = new[] { wx[n], wx[n + 1], wx[n + 2], ry[n], ry[n + 1], ry[n + 2] };
+        _pts = pts;
+    }
+
+    private (double X, double Y) ProjectAffine(double x, double z)
+        => (Affine![0] * x + Affine[1] * z + Affine[2],
+            Affine[3] * x + Affine[4] * z + Affine[5]);
+
+    /// <summary>Owning map's affine, injected by the model when deserializing.</summary>
+    [JsonIgnore] internal double[]? Affine;
+
+    private static double[] SolveLinear(double[,] a, double[] b)
+    {
+        int m = b.Length;
+        var lu = (double[,])a.Clone();
+        var r = (double[])b.Clone();
+        for (int col = 0; col < m; col++)
+        {
+            int piv = col;
+            for (int row = col + 1; row < m; row++)
+                if (Math.Abs(lu[row, col]) > Math.Abs(lu[piv, col])) piv = row;
+            if (piv != col)
+            {
+                for (int k = 0; k < m; k++) (lu[col, k], lu[piv, k]) = (lu[piv, k], lu[col, k]);
+                (r[col], r[piv]) = (r[piv], r[col]);
+            }
+            for (int row = col + 1; row < m; row++)
+            {
+                double f = lu[row, col] / lu[col, col];
+                if (f == 0) continue;
+                for (int k = col; k < m; k++) lu[row, k] -= f * lu[col, k];
+                r[row] -= f * r[col];
+            }
+        }
+        var x = new double[m];
+        for (int row = m - 1; row >= 0; row--)
+        {
+            double s = r[row];
+            for (int k = row + 1; k < m; k++) s -= lu[row, k] * x[k];
+            x[row] = s / lu[row, row];
+        }
+        return x;
+    }
+
+    /// <summary>Correct an affine-projected image point with the spline displacement.</summary>
+    public (double X, double Y) Correct(double px, double py)
+    {
+        Solve();
+        if (_w is null || _a is null || _pts is null) return (px, py);
+        double dx = _a[0], dy = _a[3];
+        for (int i = 0; i < _pts.Count; i++)
+        {
+            double ddx = px - _pts[i].Item1;
+            double ddz = py - _pts[i].Item2;
+            double u = U(ddx * ddx + ddz * ddz);
+            dx += _w[i, 0] * u;
+            dy += _w[i, 1] * u;
+        }
+        return (px + dx, py + dy);
+    }
 }
 
 public sealed class GameMarker
