@@ -46,6 +46,8 @@ public sealed class AppSettings
     public string ExtractFilter { get; set; } = "all";
     public bool ShowBosses { get; set; } = true;
     public bool ShowSpawns { get; set; }
+    /// <summary>Master switch for tracked-task markers (trader avatars). The
+    /// user's saved file can still override this to false.</summary>
     public bool ShowQuestMarkers { get; set; } = true;
     public bool ShowTransits { get; set; }
     /// <summary>Draw buried stash / cache spots (物资埋藏点).</summary>

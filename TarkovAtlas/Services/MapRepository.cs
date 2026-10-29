@@ -174,11 +174,16 @@ public sealed class MapRepository
 
             _bitmapCache[map.Key] = bitmap;
             _cacheOrder.Enqueue(map.Key);
-            while (_cacheOrder.Count > 3)
+            while (_cacheOrder.Count > 4)
             {
                 var oldKey = _cacheOrder.Dequeue();
                 if (oldKey == map.Key || !_bitmapCache.Remove(oldKey, out var oldBitmap)) continue;
-                _ = Task.Delay(5000).ContinueWith(_ =>
+                // The main window and the overlay can still be painting the
+                // evicted bitmap: a 5 s grace only covered a few frames, and a
+                // fast map-switch burst left a live texture disposed under the
+                // renderer (NullReferenceException in DrawBitmapCropped). Give
+                // it a minute instead — eviction is a memory cap, not a race.
+                _ = Task.Delay(TimeSpan.FromMinutes(1)).ContinueWith(_ =>
                 {
                     try { oldBitmap.Dispose(); } catch { }
                 });
@@ -227,13 +232,15 @@ public sealed class MapRepository
 
             _layerCache[layer.Image] = bitmap;
             _layerOrder.Enqueue(layer.Image);
-            while (_layerOrder.Count > 3)
+            while (_layerOrder.Count > 4)
             {
                 var oldKey = _layerOrder.Dequeue();
                 if (oldKey == layer.Image || !_layerCache.Remove(oldKey, out var oldBitmap) || oldBitmap is null)
                     continue;
-                // The canvas may still be painting the evicted bitmap this frame.
-                _ = Task.Delay(5000).ContinueWith(_ =>
+                // Same grace as the base-map eviction: the canvas (main and/or
+                // overlay) may legitimately still hold this texture. One minute
+                // covers every realistic dwell; the cap still bounds memory.
+                _ = Task.Delay(TimeSpan.FromMinutes(1)).ContinueWith(_ =>
                 {
                     try { oldBitmap.Dispose(); } catch { }
                 });

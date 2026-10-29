@@ -723,6 +723,27 @@ public partial class MainWindow : Window
                 Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = map?.Caches.Count ?? 0,
             });
         }
+        // Tracked-task markers: the row is only offered once at least one task
+        // is tracked, so the toggle never reads as a broken no-op.
+        if (_quests.TrackedCount > 0)
+        {
+            var trackedCount = _quests.TrackedCount;
+            rows.Add(new()
+            {
+                Label = "任务标记", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.QuestMarkerStroke),
+                Group = points,
+                Get = () => _settings.ShowQuestMarkers, Set = v => { _settings.ShowQuestMarkers = v; SyncQuestMarkers(); },
+                Count = _currentMap is null ? 0 : _quests.BuildMarkers(_currentMap.Key).Count,
+                Choices = trackedCount > 0
+                    ? new[]
+                    {
+                        new LegendChoice { Key = "tracked", Label = $"追踪 {trackedCount}",
+                            IsSelected = () => true,
+                            Select = () => { if (QuestDrawer is { IsVisible: false }) ToggleQuestDrawer(); } },
+                    }
+                    : null,
+            });
+        }
         if (map is not null)
         {
             // Loot containers: one row per container category present on the map,

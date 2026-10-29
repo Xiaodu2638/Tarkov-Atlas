@@ -826,22 +826,34 @@ public sealed class MapCanvas : Control
     private void DrawBtrs(DrawingContext context)
     {
         if (_map is null || _map.Btrs.Count == 0 || _zoom < 0.9) return;
-        var r = Math.Clamp(6.0 * Math.Sqrt(_zoom), 5.5, 10);
+        var iconSide = Math.Clamp(20.0 * Math.Sqrt(_zoom), 16, 30);
+        var btrIcon = LoadCached("legend", "btr-model");
         var showLabel = !Compact && _zoom >= 1.1;
         foreach (var stop in _map.Btrs)
         {
             var s = Project(stop.X, stop.Z);
             if (!OnScreen(s, 30)) continue;
 
-            context.DrawEllipse(TransitFill, TransitPen, s, r, r);
-            // hub + 3 spokes = wheel
-            context.DrawLine(TransitPen, s, new Point(s.X + r * 0.7, s.Y - r * 0.4));
-            context.DrawLine(TransitPen, s, new Point(s.X - r * 0.7, s.Y - r * 0.4));
-            context.DrawLine(TransitPen, s, new Point(s.X, s.Y + r * 0.8));
+            // Same toolbox artwork as the legend row, ringed so it reads on the
+            // light rooftop areas too.
+            if (btrIcon is not null)
+            {
+                context.DrawEllipse(TransitFill, TransitPen, s, iconSide * 0.62, iconSide * 0.62);
+                context.DrawImage(btrIcon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
+            }
+            else
+            {
+                // Fallback wheel glyph when the artwork is missing.
+                var r = Math.Clamp(6.0 * Math.Sqrt(_zoom), 5.5, 10);
+                context.DrawEllipse(TransitFill, TransitPen, s, r, r);
+                context.DrawLine(TransitPen, s, new Point(s.X + r * 0.7, s.Y - r * 0.4));
+                context.DrawLine(TransitPen, s, new Point(s.X - r * 0.7, s.Y - r * 0.4));
+                context.DrawLine(TransitPen, s, new Point(s.X, s.Y + r * 0.8));
+            }
 
             if (!showLabel) continue;
             var label = Text(stop.Name, 10, TransitBrush);
-            var pos = new Point(s.X - label.Width / 2, s.Y + r + 3);
+            var pos = new Point(s.X - label.Width / 2, s.Y + iconSide / 2 + 3);
             context.DrawText(Text(stop.Name, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
             context.DrawText(label, pos);
         }
@@ -858,18 +870,55 @@ public sealed class MapCanvas : Control
         // Below this the dots smear into a carpet and the map stops reading.
         if (_zoom < 0.9) return;
 
-        var r = Math.Clamp(3.6 * MathF.Sqrt((float)_zoom), 2.6f, 5.0f);
+        // Same artwork the legend rows use, so what you toggle is what you see.
+        var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
         var hidden = Options.LootKindsHidden;
+        // Kind→bitmap resolved once per frame (6082 markers share ~20 kinds).
+        var iconCache = new Dictionary<string, Bitmap?>(StringComparer.OrdinalIgnoreCase);
         foreach (var item in _map.Loot)
         {
             if (hidden.Count > 0 && hidden.Contains(item.Kind)) continue;
             var s = Project(item.X, item.Z);
             if (!OnScreen(s, 20)) continue;
 
-            context.DrawEllipse(LootBrushFor(item.Kind),
-                CachedPen(MarkerShadow, 1.2), s, r, r);
+            if (!iconCache.TryGetValue(item.Kind, out var icon))
+            {
+                icon = LoadCached("legend", LootKindIconFor(item.Kind));
+                iconCache[item.Kind] = icon;
+            }
+            if (icon is not null)
+            {
+                context.DrawImage(icon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
+            }
+            else
+            {
+                context.DrawEllipse(LootBrushFor(item.Kind),
+                    CachedPen(MarkerShadow, 1.2), s, iconSide * 0.3, iconSide * 0.3);
+            }
         }
     }
+
+    /// <summary>Legend icon stem per loot kind — mirrors MainWindow.LootKindIcon
+    /// (kept in sync by datacheck: every stem must exist in Assets/legend).</summary>
+    private static string LootKindIconFor(string kind) => kind switch
+    {
+        "duffle-bag" => "loot-duffle-bag",
+        "drawer" or "filing-cabinet" => "loot-drawer",
+        "weapon-box" or "weapon-rack" or "plastic-suitcase" => "loot-weapon-box",
+        "toolbox" => "loot-toolbox",
+        "jacket" => "loot-jacket",
+        "pc-block" => "loot-pc-block",
+        "grenade-box" => "loot-grenade-box",
+        "dead-scav" or "civilian-body" or "scav-body" or "lab-technician-body" or "pmc-body" => "loot-dead-scav",
+        "technical-supply-crate" => "loot-technical-crate",
+        "medical-supply-crate" => "loot-medical-crate",
+        "medcase" or "medbag" => "loot-medbox",
+        "safe" or "bank-safe" or "cash-register" or "bank-cash-register" => "loot-safe",
+        "ration-supply-crate" => "loot-ration-crate",
+        "wooden-crate" or "wooden-ammo-box" => "loot-ammo-box",
+        "shturmans-stash" => "boss-shturman",
+        _ => "loot-toolbox",
+    };
 
     /// <summary>Fill colour per loot container kind (stable, distinguishable).</summary>
     public static IBrush LootBrushFor(string kind) => kind switch
@@ -895,22 +944,33 @@ public sealed class MapCanvas : Control
         if (_map is null || _zoom < 0.7) return;
         if (_map.Caches.Count == 0) return;
 
-        var r = Math.Clamp(5.2 * Math.Sqrt(_zoom), 4.5, 9);
+        var iconSide = Math.Clamp(19.0 * Math.Sqrt(_zoom), 15, 27);
+        var cacheIcon = LoadCached("legend", "loot-ammo-box");
         var showLabel = !Compact && _zoom >= 1.25;
         foreach (var c in _map.Caches)
         {
             var s = Project(c.X, c.Z);
             if (!OnScreen(s, 24)) continue;
 
-            context.DrawEllipse(CacheFill, CachePen, s, r, r);
-            // A single spade stroke: the marker has to read at tiny sizes.
-            context.DrawLine(CachePen,
-                new Point(s.X - r * 0.45, s.Y + r * 0.45),
-                new Point(s.X + r * 0.45, s.Y - r * 0.45));
+            // Legend parity: the buried-stash row shows the ammo-box artwork,
+            // so the map draws the same image (fallback = spade stroke).
+            if (cacheIcon is not null)
+            {
+                context.DrawEllipse(CacheFill, CachePen, s, iconSide * 0.55, iconSide * 0.55);
+                context.DrawImage(cacheIcon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
+            }
+            else
+            {
+                var r = Math.Clamp(5.2 * Math.Sqrt(_zoom), 4.5, 9);
+                context.DrawEllipse(CacheFill, CachePen, s, r, r);
+                context.DrawLine(CachePen,
+                    new Point(s.X - r * 0.45, s.Y + r * 0.45),
+                    new Point(s.X + r * 0.45, s.Y - r * 0.45));
+            }
 
             if (!showLabel) continue;
             var cacheLabel = Text("埋藏点", 9.5, CacheStroke);
-            var pos = new Point(s.X - cacheLabel.Width / 2, s.Y + r + 3);
+            var pos = new Point(s.X - cacheLabel.Width / 2, s.Y + iconSide / 2 + 3);
             context.DrawText(Text("埋藏点", 9.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
             context.DrawText(cacheLabel, pos);
         }
@@ -925,9 +985,11 @@ public sealed class MapCanvas : Control
     {
         if (_map is null || _map.Pois.Count == 0) return;
 
-        var r = Math.Clamp(5.0 * MathF.Sqrt((float)_zoom), 4.0f, 9.0f);
+        var iconSide = Math.Clamp(17.0 * Math.Sqrt(_zoom), 13, 24);
         var placed = new List<Rect>();
         var showLabel = !Compact && _zoom >= 0.85;
+        // Same artwork per kind as the legend's 道具 rows.
+        var iconCache = new Dictionary<string, Bitmap?>(StringComparer.OrdinalIgnoreCase);
 
         foreach (var p in _map.Pois)
         {
@@ -935,14 +997,26 @@ public sealed class MapCanvas : Control
             var s = Project(p.X, p.Z);
             if (!OnScreen(s, 30)) continue;
 
-            context.DrawEllipse(CacheFill, CachePen, s, r, r);
-            context.DrawLine(CachePen, new Point(s.X - r * 0.5, s.Y), new Point(s.X + r * 0.5, s.Y));
-            context.DrawLine(CachePen, new Point(s.X, s.Y - r * 0.5), new Point(s.X, s.Y + r * 0.5));
+            if (!iconCache.TryGetValue(p.Kind, out var icon))
+            {
+                icon = LoadCached("legend", PoiKindIconFor(p.Kind));
+                iconCache[p.Kind] = icon;
+            }
+            if (icon is not null)
+            {
+                context.DrawImage(icon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
+            }
+            else
+            {
+                context.DrawEllipse(CacheFill, CachePen, s, iconSide * 0.3, iconSide * 0.3);
+                context.DrawLine(CachePen, new Point(s.X - iconSide * 0.3, s.Y), new Point(s.X + iconSide * 0.3, s.Y));
+                context.DrawLine(CachePen, new Point(s.X, s.Y - iconSide * 0.3), new Point(s.X, s.Y + iconSide * 0.3));
+            }
 
             if (!showLabel || string.IsNullOrWhiteSpace(p.Text)) continue;
 
             var label = Text(p.Text, 10, CacheStroke);
-            var pos = new Point(s.X - label.Width / 2, s.Y + r + 2);
+            var pos = new Point(s.X - label.Width / 2, s.Y + iconSide / 2 + 2);
             var box = new Rect(pos.X - 2, pos.Y - 1, label.Width + 4, label.Height + 2);
             // Skip captions that would collide with one already drawn this
             // frame; the icon dot still marks the item.
@@ -953,6 +1027,15 @@ public sealed class MapCanvas : Control
             context.DrawText(label, pos);
         }
     }
+
+    /// <summary>Legend icon stem per POI kind — mirrors MainWindow.PoiKindIcon.</summary>
+    private static string PoiKindIconFor(string kind) => kind switch
+    {
+        "钥匙" => "key-cultist-1",
+        "解除陷阱" => "lock",
+        "喷灯" or "阀门手轮" => "loot-toolbox",
+        _ => "lock",
+    };
 
     private void DrawQuestMarkers(DrawingContext context)
     {
