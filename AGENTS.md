@@ -90,6 +90,7 @@ tools/
 - 每个 `MapDefinition` 带一个仿射矩阵：`px = a*x + b*z + c; py = d*x + e*z + f`，把游戏坐标映射到图片像素。
 - `MapCanvas.Project()` 是唯一投影入口，所有标记都走它。
 - `maps.json`（`build_assets.py` 产物）里的 affine **未经人工校正**，运行时以 `mapdata.json` 为准。两者不一致时先查原因，**不要直接覆盖**。
+- **底图必须上北下南**：图片帧 = 游戏坐标按 `coordinateToCardinalRotation` 旋转后，`px ∝ east`、`py ∝ -north`；SVG 再按 `(cardinal − coordinateRotation) mod 360` 转正，等比缩放后拉伸进 cardinal bounds 矩形（与 tarkov.dev 的 `L.svgOverlay` 一致）。11 张 `rot=180` 的图是恒等变换，工厂是唯一真正被转过的：竖版 5183×5600，底图只渲染 `Ground_Floor` 组（整张 SVG 四层叠在一起会看着像重影）。
 
 ### 4.2 渲染
 - `MapCanvas.Render()` 每次整帧重绘。性能红线：
@@ -147,6 +148,7 @@ tools/
   - 验收标准：`python tools/check_map_coverage.py icebreaker` 四条边距都 < 10%，标记落在内容区 ≥ 90%，然后把 `"icebreaker"` 从 `knownGeometryDefects` 移除。
   - **修之前注意**：`affine` 的 `e=32` 是对的（船体内容正好 25.6 m），改成 56 会把船体压到 14.6 m。
 - **海岸线楼层**：3 层已生成，内容区仍偏小，待重烘焙。
+- **实验室 / 迷宫底图**：仍走瓦片分支，被硬拉伸进 5600 宽画布（实验室 5600×7683、迷宫 5600×6027，上下有黑边、纵向约 17% 拉伸）。修法与工厂一致：cardinal 帧 + 等比缩放 + 按内容裁切，瓦片缓存在 `tools/tile-cache`。
 
 ---
 

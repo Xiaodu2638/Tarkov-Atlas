@@ -273,9 +273,9 @@ internal static class DataChecks
         }
 
         // ---- floor coverage regressions -----------------------------------
-        // The Lab and Interchange are the two maps users reported as missing
-        // levels. Both need a base-artwork entry plus their overlays.
-        foreach (var key in new[] { "the-lab", "interchange" })
+        // The Lab, Interchange and Factory are the maps users reported as
+        // missing levels. All need a base-artwork entry plus their overlays.
+        foreach (var key in new[] { "the-lab", "interchange", "factory" })
         {
             var ok = layerIndex is not null
                      && layerIndex.TryGetValue(key, out var floors)

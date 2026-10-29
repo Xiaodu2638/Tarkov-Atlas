@@ -390,16 +390,21 @@ public sealed class MapCanvas : Control
         // Zoomed out, the viewport covers a small slice of a 5600 px bitmap and
         // the rasteriser re-samples the whole texture every drag frame. Drawing
         // a pre-shrunk copy keeps pixels identical but makes panning smooth.
-        DrawBitmapCropped(context, PickDrawBitmap(_bitmap), dest, 1.0);
+        var baseBitmap = PickDrawBitmap(_bitmap);
+        var floor = Layers.FirstOrDefault(l => l.Bitmap is not null);
 
-        // Floor artwork is baked into the base image's pixel grid, so it can be
-        // stretched over exactly the same destination rectangle. Only the part
-        // intersecting the viewport is sampled: a full 8k Streets image draw is
-        // what made panning drag even when no marker was visible.
-        foreach (var layer in Layers)
+        // A floor overlay is a different deck, not a highlight: blending it
+        // over the ground floor at 75% left both wall sets visible at once,
+        // which read as a doubled/ghosted map. Dim the base, then draw the
+        // selected deck opaque on top.
+        if (floor is null)
         {
-            if (layer.Bitmap is null) continue;
-            DrawBitmapCropped(context, layer.Bitmap, dest, Compact ? 0.85 : 0.75);
+            DrawBitmapCropped(context, baseBitmap, dest, 1.0);
+        }
+        else
+        {
+            DrawBitmapCropped(context, baseBitmap, dest, Compact ? 0.30 : 0.35);
+            DrawBitmapCropped(context, floor.Bitmap!, dest, 1.0);
         }
 
         if (!Compact)

@@ -54,23 +54,30 @@
  ],
  "factory": [
   {
+   "name": "Ground Floor",
+   "image": "",
+   "order": 0,
+   "minHeight": -1.0,
+   "maxHeight": 3.0
+  },
+  {
    "name": "2nd Floor",
    "image": "layers/factory/0_2nd-floor.png",
-   "order": 0,
+   "order": 1,
    "minHeight": 3,
    "maxHeight": 6
   },
   {
    "name": "3rd Floor",
    "image": "layers/factory/1_3rd-floor.png",
-   "order": 1,
+   "order": 2,
    "minHeight": 6,
    "maxHeight": 10000
   },
   {
    "name": "Tunnels",
    "image": "layers/factory/2_tunnels.png",
-   "order": 2,
+   "order": 3,
    "minHeight": -10000,
    "maxHeight": -1
   }
