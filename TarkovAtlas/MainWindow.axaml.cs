@@ -430,7 +430,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>Push the currently selected floor (or all of them) to the canvas.</summary>
-    private void ApplySelectedFloor()
+    private async void ApplySelectedFloor()
     {
         if (_currentMap is null) { MapView.Layers = Array.Empty<FloorLayerView>(); return; }
 
@@ -443,8 +443,21 @@ public partial class MainWindow : Window
             return;
         }
 
-        // Load the PNG lazily (and memoise it inside the repository).
-        view.Bitmap ??= view.Source is null ? null : _repo.GetLayerBitmap(view.Source);
+        // Decode off the UI thread: icebreaker floors are 60-175 MB PNGs and
+        // synchronous decoding is what made rapid floor switching freeze.
+        if (view.Bitmap is null && view.Source is not null)
+        {
+            var request = view;
+            try
+            {
+                var bmp = await _repo.GetLayerBitmapAsync(request.Source);
+                if (view.Bitmap is null) view.Bitmap = bmp;
+            }
+            catch (Exception ex)
+            {
+                AppPaths.LogCrash(ex);
+            }
+        }
         MapView.Layers = new[] { view };
         MapView.InvalidateVisual();
     }

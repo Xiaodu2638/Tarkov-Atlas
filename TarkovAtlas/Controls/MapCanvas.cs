@@ -228,19 +228,20 @@ public sealed class MapCanvas : Control
     }
 
     /// <summary>Center on a game position while keeping the current zoom.</summary>
-        private void EnsureLayout()
+        /// <summary>The artwork rect the view fits, in image pixels.</summary>
+    private Rect FitBox() => _map is null || !_map.HasContent
+        ? new Rect(0, 0, _map?.Width ?? 1, _map?.Height ?? 1)
+        : new Rect(_map.ContentMinX, _map.ContentMinZ,
+            _map.ContentMaxX - _map.ContentMinX, _map.ContentMaxZ - _map.ContentMinZ);
+
+    private void EnsureLayout()
     {
         if (_map is null || Bounds.Width <= 1 || Bounds.Height <= 1) return;
         var pad = Compact ? 0 : 22;
         // Fit the drawn artwork, not the baked canvas: Icebreaker's hull fills a
         // fifth of its tile canvas, so fitting the canvas showed a tiny ship in
         // a black field.
-        var box = new Rect(0, 0, _map.Width, _map.Height);
-        if (_map.HasContent)
-        {
-            box = new Rect(_map.ContentMinX, _map.ContentMinZ,
-                _map.ContentMaxX - _map.ContentMinX, _map.ContentMaxZ - _map.ContentMinZ);
-        }
+        var box = FitBox();
         _fit = Math.Min((Bounds.Width - pad * 2) / Math.Max(1, box.Width),
                         (Bounds.Height - pad * 2) / Math.Max(1, box.Height));
         _fit = Math.Max(0.0001, _fit);
@@ -1023,11 +1024,14 @@ public sealed class MapCanvas : Control
         _zoom = Math.Clamp(_zoom * factor, 0.35, 32);
         EnsureLayout();
         var newScale = Scale;
-        var drawW = _map.Width * newScale;
-        var drawH = _map.Height * newScale;
+        var box = FitBox();
+        // Keep the image point under the cursor fixed. The pan is relative to
+        // the fitted artwork box, not the canvas centre: Reserve and Icebreaker
+        // have off-centre content rects, and a centre-based formula drifted the
+        // anchor on every wheel tick for those.
         _pan = new Vector(
-            screen.X - (Bounds.Width - drawW) / 2 - before.X * newScale,
-            screen.Y - (Bounds.Height - drawH) / 2 - before.Y * newScale);
+            screen.X - Bounds.Width / 2 - (box.X + box.Width / 2 - before.X) * newScale,
+            screen.Y - Bounds.Height / 2 - (box.Y + box.Height / 2 - before.Y) * newScale);
         InvalidateVisual();
         ViewChanged?.Invoke(this, EventArgs.Empty);
     }

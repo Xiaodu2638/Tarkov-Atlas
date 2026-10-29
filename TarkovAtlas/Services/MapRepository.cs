@@ -160,24 +160,35 @@ public sealed class MapRepository
     /// Floor images are 60-175 MB decoded, so the cache keeps the last few only.
     /// Icebreaker alone has 16 floors; keeping them all cost ~1.8 GB.
     /// </remarks>
-    public Bitmap? GetLayerBitmap(MapLayer layer)
+    public Bitmap? GetLayerBitmap(MapLayer layer) => GetLayerBitmapAsync(layer).GetAwaiter().GetResult();
+
+    /// <summary>Decode off the UI thread; the caller awaits and then paints.</summary>
+    public async Task<Bitmap?> GetLayerBitmapAsync(MapLayer layer)
     {
         if (string.IsNullOrWhiteSpace(layer.Image)) return null;
         lock (_gate)
         {
             if (_layerCache.TryGetValue(layer.Image, out var cached))
                 return cached;
+        }
 
-            var path = Path.Combine(AppPaths.MapsDir, layer.Image);
-            if (!File.Exists(path))
-            {
-                _layerCache[layer.Image] = null;
-                return null;
-            }
+        var path = Path.Combine(AppPaths.MapsDir, layer.Image);
+        if (!File.Exists(path))
+        {
+            lock (_gate) _layerCache[layer.Image] = null;
+            return null;
+        }
 
-            Bitmap bitmap;
-            using (var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-                bitmap = new Bitmap(stream);
+        // Decode without holding the gate: this runs on a worker and the UI
+        // stays responsive while a 60-175 MB PNG is read.
+        Bitmap bitmap;
+        using (var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            bitmap = await Task.Run(() => new Bitmap(stream)).ConfigureAwait(false);
+
+        lock (_gate)
+        {
+            if (_layerCache.TryGetValue(layer.Image, out var raced))
+                return raced ?? bitmap;
 
             _layerCache[layer.Image] = bitmap;
             _layerOrder.Enqueue(layer.Image);

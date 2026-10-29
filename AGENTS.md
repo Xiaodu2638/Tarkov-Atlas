@@ -147,7 +147,7 @@ tools/
 - **剧情坐标**：只对双重验证通过的地图输出 —— `customs`、`woods`、`shoreline`、`streets-of-tarkov`、`lighthouse`、`ground-zero`、`interchange`。其余地图只给「跳转到地图」，`hasCoordinates=false`。**宁可不标，也不编坐标。**
 - **商人**：任务列表显示英文原名（`TraderInfo.Name`），中文名只用于其它展示。`QuestService.ResolveTraderNames()` 同时填 `TraderDisplay` 和 `TraderSlug`，不出现 24 位十六进制 id。
 - **头像**：`Assets/bosses/`、`Assets/traders/`，来源 `https://www.eftarkov.com/uploads/{boss,trader}/<id>.webp`。`BossSpawn.AvatarSlug` 是唯一映射入口，`MapCanvas` 不得保留第二份表。
-- **楼层**：`layers/index.json`。空 `image` 是合法的「仅底图」层。部分楼层来自 SVG 分组（`svgLayer`）而非瓦片，修改 `build_layers.py` 时必须两种都支持。
+- **楼层**：`layers/index.json`。空 `image` 是合法的「仅底图」层——室外图（reserve / customs / shoreline / ground-zero / streets / icebreaker）**必须**有这个条目，否则默认选中第一层时整个室外底图会被压暗成 35%。部分楼层来自 SVG 分组（`svgLayer`）而非瓦片，修改 `build_layers.py` 时必须两种都支持。
 - **许可**：矢量图 CC BY-NC-SA 4.0（the-hideout/tarkov-dev-svg-maps），几何与任务 MIT（the-hideout/tarkov-dev）。与 Battlestate Games 无关，禁止商用，禁止作弊/雷达用途。
 
 ---
