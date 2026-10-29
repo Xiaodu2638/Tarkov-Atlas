@@ -82,6 +82,8 @@ public sealed class MapDefinition
     /// currently the Labyrinth chamber puzzle items (解谜道具).
     /// </summary>
     public List<PoiPoint> Pois { get; set; } = new();
+    /// <summary>BTR taxi stops (BTR 站点). Only maps the BTR serves carry these.</summary>
+    public List<BtrStop> Btrs { get; set; } = new();
     public List<MapLayer> Layers { get; set; } = new();
     /// <summary>Minefield / sniper zones, loaded from hazards.json.</summary>
     [JsonIgnore] public List<HazardZone> Hazards { get; set; } = new();
@@ -260,6 +262,14 @@ public sealed class PoiPoint
     public string Text { get; set; } = "";
 }
 
+/// <summary>A BTR taxi stop (BTR 站点): where the armoured cab picks up.</summary>
+public sealed class BtrStop
+{
+    public double X { get; set; }
+    public double Z { get; set; }
+    public string Name { get; set; } = "";
+}
+
 /// <summary>Per-map marker sets carried by markers.json (split from mapdata).</summary>
 public sealed class MapPoints
 {
@@ -269,6 +279,7 @@ public sealed class MapPoints
     public List<TransitPoint> Transits { get; set; } = new();
     public List<CachePoint> Caches { get; set; } = new();
     public List<PoiPoint> Pois { get; set; } = new();
+    public List<BtrStop> Btrs { get; set; } = new();
 }
 
 /// <summary>Root of markers.json.</summary>

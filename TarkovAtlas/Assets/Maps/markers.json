@@ -1012,7 +1012,8 @@
     }
    ],
    "caches": [],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "customs": {
    "extracts": [
@@ -3012,7 +3013,8 @@
      "kind": "buried-barrel-cache"
     }
    ],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "factory": {
    "extracts": [
@@ -3683,7 +3685,8 @@
     }
    ],
    "caches": [],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "woods": {
    "extracts": [
@@ -5757,7 +5760,49 @@
      "kind": "buried-barrel-cache"
     }
    ],
-   "pois": []
+   "pois": [],
+   "btrs": [
+    {
+     "x": 178.1,
+     "z": -718.51,
+     "name": "检查站"
+    },
+    {
+     "x": -175.84,
+     "z": -667.2,
+     "name": "木材堆"
+    },
+    {
+     "x": -94.28,
+     "z": -389.26,
+     "name": "车队"
+    },
+    {
+     "x": -2.15,
+     "z": -139.15,
+     "name": "邪教徒村"
+    },
+    {
+     "x": 240.12,
+     "z": -65.14,
+     "name": "老伐木场"
+    },
+    {
+     "x": -138.877,
+     "z": 243.119,
+     "name": "猎人的营地"
+    },
+    {
+     "x": -495.36,
+     "z": -262.64,
+     "name": "池塘"
+    },
+    {
+     "x": -633.21,
+     "z": 141.54,
+     "name": "医疗营地"
+    }
+   ]
   },
   "interchange": {
    "extracts": [
@@ -7501,7 +7546,8 @@
      "kind": "buried-barrel-cache"
     }
    ],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "shoreline": {
    "extracts": [
@@ -9466,7 +9512,8 @@
      "kind": "ground-cache"
     }
    ],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "reserve": {
    "extracts": [
@@ -10471,7 +10518,8 @@
     }
    ],
    "caches": [],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "the-lab": {
    "extracts": [
@@ -11105,7 +11153,8 @@
     }
    ],
    "caches": [],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "lighthouse": {
    "extracts": [
@@ -12239,7 +12288,8 @@
      "kind": "ground-cache"
     }
    ],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "streets-of-tarkov": {
    "extracts": [
@@ -14650,7 +14700,39 @@
      "kind": "buried-barrel-cache"
     }
    ],
-   "pois": []
+   "pois": [],
+   "btrs": [
+    {
+     "x": -146.502,
+     "z": 402.771,
+     "name": "电影院"
+    },
+    {
+     "x": -225.285,
+     "z": 236.344,
+     "name": "标记酒店"
+    },
+    {
+     "x": -4.03,
+     "z": 202.88,
+     "name": "Klimov 街北"
+    },
+    {
+     "x": 207.25,
+     "z": 248.83,
+     "name": "Klimov 街南"
+    },
+    {
+     "x": 126.23,
+     "z": 35.47,
+     "name": "工地"
+    },
+    {
+     "x": -125.01,
+     "z": 72.014,
+     "name": "滨海街 49 号"
+    }
+   ]
   },
   "the-labyrinth": {
    "extracts": [
@@ -15006,7 +15088,8 @@
      "x": 32.65,
      "z": 55.03
     }
-   ]
+   ],
+   "btrs": []
   },
   "terminal": {
    "extracts": [],
@@ -15310,7 +15393,8 @@
    ],
    "transits": [],
    "caches": [],
-   "pois": []
+   "pois": [],
+   "btrs": []
   },
   "icebreaker": {
    "extracts": [
@@ -15519,7 +15603,8 @@
    "spawns": [],
    "transits": [],
    "caches": [],
-   "pois": []
+   "pois": [],
+   "btrs": []
   }
  }
 }
