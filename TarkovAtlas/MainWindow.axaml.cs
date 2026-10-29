@@ -26,6 +26,7 @@ public partial class MainWindow : Window
     private readonly GlobalHotkeyService _hotkeys = new();
     private readonly OcrService _ocr = new();
     private readonly TaskGuideService _guides = new();
+    private readonly LocalGuideService _localGuides = new();
     // ObservableCollection, not List<T>: the ListBox is bound once and only sees
     // the items that exist at binding time, so a plain List left the sidebar
     // empty (the filter filled it afterwards without any change notification).
@@ -1350,6 +1351,16 @@ public partial class MainWindow : Window
 
         var caption = string.IsNullOrWhiteSpace(quest.Name) ? quest.Id : quest.Name;
 
+        // Bundled local guides first (hand-verified, offline); the remote wiki
+        // scrape is only a fallback for quests we could not map locally.
+        var local = _localGuides.GetLocalImages(quest.Id);
+        if (local.Count > 0)
+        {
+            var localViewer = new ImageViewerWindow("任务地点图 · " + caption, local);
+            localViewer.Show(this);
+            return;
+        }
+
         IReadOnlyList<string> images;
         try
         {
@@ -1380,24 +1391,32 @@ public partial class MainWindow : Window
         QuestDetailTitle.Text = quest.Title;
         QuestDetailMeta.Text = $"{quest.Trader}  ·  {quest.LevelText}  ·  {quest.MapsText}";
 
-        IReadOnlyList<string> images;
-        try
+        var local = _localGuides.GetLocalImages(quest.Id);
+        if (local.Count == 0)
         {
-            images = await _guides.GetLocationImagesAsync(quest.Id);
-        }
-        catch
-        {
-            images = Array.Empty<string>();
-        }
+            IReadOnlyList<string> images;
+            try
+            {
+                images = await _guides.GetLocationImagesAsync(quest.Id);
+            }
+            catch
+            {
+                images = Array.Empty<string>();
+            }
 
-        if (images.Count == 0)
-        {
-            ShowToast("这个任务没有地点图，已打开任务页");
-            OpenExternalUrl(WikiPageBase + quest.Id);
+            if (images.Count == 0)
+            {
+                ShowToast("这个任务没有地点图，已打开任务页");
+                OpenExternalUrl(WikiPageBase + quest.Id);
+                return;
+            }
+
+            var remoteViewer = new ImageViewerWindow("任务地点图 · " + quest.Title, images);
+            remoteViewer.Show(this);
             return;
         }
 
-        var viewer = new ImageViewerWindow("任务地点图 · " + quest.Title, images);
+        var viewer = new ImageViewerWindow("任务地点图 · " + quest.Title, local);
         viewer.Show(this);
     }
 
