@@ -935,16 +935,18 @@ public sealed class MapCanvas : Control
     };
 
     /// <summary>
-    /// Buried stash spots (物资埋藏点). These are dug up rather than looted in
-    /// the open, so they get a distinct amber "dig" glyph instead of the plain
-    /// loot dot. Cached as geometry like the hazard polygons.
+    /// Buried stash spots (物资埋藏点). Same ammo-box artwork as the legend row
+    /// (the amber ring was dropped: it doubled the marker's footprint and made
+    /// caches shout over every other icon).
     /// </summary>
     private void DrawCaches(DrawingContext context)
     {
         if (_map is null || _zoom < 0.7) return;
         if (_map.Caches.Count == 0) return;
 
-        var iconSide = Math.Clamp(19.0 * Math.Sqrt(_zoom), 15, 27);
+        // Match the loot-container icon size (16 * sqrt(zoom)) so caches don't
+        // read as a bigger class of marker than regular loot.
+        var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
         var cacheIcon = LoadCached("legend", "loot-ammo-box");
         var showLabel = !Compact && _zoom >= 1.25;
         foreach (var c in _map.Caches)
@@ -952,11 +954,8 @@ public sealed class MapCanvas : Control
             var s = Project(c.X, c.Z);
             if (!OnScreen(s, 24)) continue;
 
-            // Legend parity: the buried-stash row shows the ammo-box artwork,
-            // so the map draws the same image (fallback = spade stroke).
             if (cacheIcon is not null)
             {
-                context.DrawEllipse(CacheFill, CachePen, s, iconSide * 0.55, iconSide * 0.55);
                 context.DrawImage(cacheIcon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
             }
             else
