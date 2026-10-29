@@ -310,6 +310,20 @@ internal static class DataChecks
             Check($"boss points inside {map.Key}", stray == 0, stray.ToString());
         }
 
+        // ---- puzzle item points (解谜道具) --------------------------------
+        var labyrinth = manifest.Maps.FirstOrDefault(k => k.Key == "the-labyrinth");
+        Check("labyrinth puzzle items present",
+            labyrinth is not null && labyrinth.Pois.Count > 0,
+            labyrinth?.Pois.Count.ToString() ?? "no map");
+        if (labyrinth is not null)
+        {
+            var outOfBounds = labyrinth.Pois.Count(p => !labyrinth.Contains(p.X, p.Z, 1));
+            Check("labyrinth puzzle items inside map", outOfBounds == 0, outOfBounds.ToString());
+
+            var blank = labyrinth.Pois.Count(p => string.IsNullOrWhiteSpace(p.Text));
+            Check("labyrinth puzzle items labelled", blank == 0, blank.ToString());
+        }
+
         // Lighthouse: the mansion guards are rogues (exUsecFree), never a
         // "USEC" boss. The old aggregation emitted a boss literally called
         // USEC from five duplicate exUsecFree rows.

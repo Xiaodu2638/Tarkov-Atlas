@@ -13,17 +13,10 @@
         TransparencyLevelHint="Transparent"
         WindowStartupLocation="Manual">
   <!-- Borderless square cut-out centred on the player position. The window
-       follows the newest screenshot automatically; the bottom-right grip
-       resizes it and Ctrl+Alt+L toggles click-through. -->
+       follows the newest screenshot automatically; drag with the right mouse
+       button to move it, wheel to zoom, Ctrl+Alt+L toggles click-through. -->
   <Grid x:Name="Root" Background="Transparent">
     <controls:MapCanvas x:Name="OverlayMap" Compact="True" IsHitTestVisible="False" />
-    <Border x:Name="ResizeGrip" Width="18" Height="18"
-            HorizontalAlignment="Right" VerticalAlignment="Bottom"
-            Background="{StaticResource GripBg}" CornerRadius="6"
-            PointerPressed="ResizeGrip_PointerPressed">
-      <Path Data="M 12,3 L 3,12 M 15,7 L 7,15 M 16,12 L 12,16"
-            Stroke="{StaticResource GripStroke}" StrokeThickness="1.2" />
-    </Border>
     <TextBlock x:Name="HintText" Text=""
                HorizontalAlignment="Center" VerticalAlignment="Top"
                Margin="0,4,0,0" FontSize="9" Foreground="{StaticResource HintText}"

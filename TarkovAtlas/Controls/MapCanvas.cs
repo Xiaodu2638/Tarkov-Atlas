@@ -20,6 +20,8 @@ public sealed class MapDisplayOptions
     public bool ShowTransits { get; set; }
     /// <summary>Draw buried stash / cache spots (物资埋藏点).</summary>
     public bool ShowCaches { get; set; } = true;
+    /// <summary>Draw puzzle-item spawns (解谜道具); always on, no toggle.</summary>
+    public bool ShowPois { get; set; } = true;
     public bool ShowQuestMarkers { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
@@ -110,6 +112,14 @@ public sealed class MapCanvas : Control
     private Vector _panStart;
     private Point _lastPointer;
 
+    // Downscaled copy of the base artwork. Zoomed out, the viewport covers a
+    // small fraction of a 5600 px image and the rasteriser re-samples the whole
+    // texture every drag frame; drawing a pre-shrunk mip is the difference
+    // between smooth panning and visible stutter.
+    private Bitmap? _mipBitmap;
+    private Bitmap? _mipSource;
+    private double _mipFactor = 1;
+
     public MapCanvas()
     {
         ClipToBounds = true;
@@ -142,6 +152,12 @@ public sealed class MapCanvas : Control
         var changed = !ReferenceEquals(map, _map);
         _map = map;
         _bitmap = bitmap;
+        if (!ReferenceEquals(_mipSource, bitmap))
+        {
+            _mipBitmap = null;
+            _mipSource = null;
+            _mipFactor = 1;
+        }
         if (changed)
         {
             _zoom = 1;
@@ -312,6 +328,46 @@ public sealed class MapCanvas : Control
         return geometry;
     }
 
+    /// <summary>
+    /// Pick the bitmap to sample for the current zoom. Above ~0.5 screen px per
+    /// source px the native image is fine; below that the view is a downscale
+    /// anyway, so hand the rasteriser a pre-shrunk copy built once and cached
+    /// until the map changes.
+    /// </summary>
+    private Bitmap PickDrawBitmap(Bitmap source)
+    {
+        if (Scale >= 0.5) return source;
+
+        // Quantise to halves so the mip is rebuilt a couple of times per zoom
+        // gesture instead of on every frame.
+        var bucket = Scale < 0.25 ? 0.25 : 0.5;
+        if (ReferenceEquals(_mipSource, source) && _mipBitmap is not null
+            && Math.Abs(_mipFactor - bucket) < 0.001)
+            return _mipBitmap;
+
+        var w = Math.Max(1, (int)Math.Round(source.PixelSize.Width * bucket));
+        var h = Math.Max(1, (int)Math.Round(source.PixelSize.Height * bucket));
+        try
+        {
+            var rtb = new RenderTargetBitmap(new PixelSize(w, h), new Vector(96, 96));
+            using (var ctx = rtb.CreateDrawingContext())
+            {
+                ctx.DrawImage(source,
+                    new Rect(0, 0, source.PixelSize.Width, source.PixelSize.Height),
+                    new Rect(0, 0, w, h));
+            }
+            _mipBitmap?.Dispose();
+            _mipBitmap = rtb;
+            _mipSource = source;
+            _mipFactor = bucket;
+        }
+        catch
+        {
+            return source;
+        }
+        return _mipBitmap;
+    }
+
     public override void Render(DrawingContext context)
     {
         context.FillRectangle(Compact ? CompactBackground : CanvasBackground, new Rect(Bounds.Size));
@@ -330,7 +386,11 @@ public sealed class MapCanvas : Control
         EnsureLayout();
         _markerHits.Clear();
         var dest = new Rect(_origin.X, _origin.Y, _map.Width * Scale, _map.Height * Scale);
-        DrawBitmapCropped(context, _bitmap, dest, 1.0);
+
+        // Zoomed out, the viewport covers a small slice of a 5600 px bitmap and
+        // the rasteriser re-samples the whole texture every drag frame. Drawing
+        // a pre-shrunk copy keeps pixels identical but makes panning smooth.
+        DrawBitmapCropped(context, PickDrawBitmap(_bitmap), dest, 1.0);
 
         // Floor artwork is baked into the base image's pixel grid, so it can be
         // stretched over exactly the same destination rectangle. Only the part
@@ -349,6 +409,7 @@ public sealed class MapCanvas : Control
         if (Options.ShowSpawns) DrawSpawns(context);
         if (Options.ShowTransits) DrawTransits(context);
         if (Options.ShowCaches) DrawCaches(context);
+        if (Options.ShowPois) DrawPois(context);
         if (Options.ShowExtracts) DrawExtracts(context);
         if (Options.ShowBosses) DrawBosses(context);
         if (Options.ShowQuestMarkers) DrawQuestMarkers(context);
@@ -607,6 +668,43 @@ public sealed class MapCanvas : Control
             var pos = new Point(s.X - cacheLabel.Width / 2, s.Y + r + 3);
             context.DrawText(Text("埋藏点", 9.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
             context.DrawText(cacheLabel, pos);
+        }
+    }
+
+    /// <summary>
+    /// Puzzle items (解谜道具). Always drawn: they are the main reason to open
+    /// the Labyrinth map. Labels are de-overlapped, because dozens of identical
+    /// "钥匙"/"布偶" captions stacked into an unreadable block otherwise.
+    /// </summary>
+    private void DrawPois(DrawingContext context)
+    {
+        if (_map is null || _map.Pois.Count == 0) return;
+
+        var r = Math.Clamp(5.0 * MathF.Sqrt((float)_zoom), 4.0f, 9.0f);
+        var placed = new List<Rect>();
+        var showLabel = !Compact && _zoom >= 0.85;
+
+        foreach (var p in _map.Pois)
+        {
+            var s = Project(p.X, p.Z);
+            if (!OnScreen(s, 30)) continue;
+
+            context.DrawEllipse(CacheFill, CachePen, s, r, r);
+            context.DrawLine(CachePen, new Point(s.X - r * 0.5, s.Y), new Point(s.X + r * 0.5, s.Y));
+            context.DrawLine(CachePen, new Point(s.X, s.Y - r * 0.5), new Point(s.X, s.Y + r * 0.5));
+
+            if (!showLabel || string.IsNullOrWhiteSpace(p.Text)) continue;
+
+            var label = Text(p.Text, 10, CacheStroke);
+            var pos = new Point(s.X - label.Width / 2, s.Y + r + 2);
+            var box = new Rect(pos.X - 2, pos.Y - 1, label.Width + 4, label.Height + 2);
+            // Skip captions that would collide with one already drawn this
+            // frame; the icon dot still marks the item.
+            if (placed.Any(q => q.Intersects(box))) continue;
+            placed.Add(box);
+
+            context.DrawText(Text(p.Text, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+            context.DrawText(label, pos);
         }
     }
 

@@ -38,30 +38,19 @@ public partial class OverlayWindow : Window, IOverlayState
     private bool _locked;
     private bool _allowClose;
     private bool _suppressSettings;
-    private bool _resizing;
-    private Point _resizeStart;
-    private double _startWidth;
-    private double _startHeight;
+    private bool _dragging;
+    private Point _dragStart;
+    private PixelPoint _dragOrigin;
     private double _opacity = 0.9;
     private double _zoom = 2.4;
     private MapDefinition? _map;
     private ScreenshotInfo? _player;
 
-    /// <summary>
-    /// Hold this key and roll the mouse wheel to zoom the mini-map without
-    /// resizing the window. Focus stays on the player (or map centre) so the
-    /// view does not drift under the pointer.
-    /// </summary>
-    public Key ZoomModifier { get; set; } = Key.LeftAlt;
 
-    private bool _zoomModifierDown;
-
-
-    public OverlayWindow(MainWindow owner, AppSettings settings)    {
+    public OverlayWindow(MainWindow owner, AppSettings settings)
+    {
         _owner = owner;
         InitializeComponent();
-        var grip = ResizeGrip;
-        if (grip is not null) grip.Cursor = new Cursor(StandardCursorType.BottomRightCorner);
         Root.PointerPressed += OnRootPointerPressed;
         Root.PointerMoved += OnRootPointerMoved;
         Root.PointerReleased += OnRootPointerReleased;
@@ -227,14 +216,9 @@ public partial class OverlayWindow : Window, IOverlayState
     }
 
     /// <summary>
-    /// Mouse-wheel zoom for the floating map. Anchor the zoom on the cursor so
-    /// the spot under the pointer stays put, like the main map; resizing or a
-    /// fresh screenshot re-centres on the player again.
-    ///
-    /// Holding <see cref="ZoomModifier"/> switches to "zoom on the player": the
-    /// wheel scales the viewport around the newest screenshot position (or the
-    /// map centre when no screenshot was imported yet) and leaves the window
-    /// size untouched.
+    /// Mouse-wheel zoom for the floating map. Always anchors on the newest
+    /// player position (falling back to the map centre) so the view stays on the
+    /// player instead of drifting under the cursor.
     /// </summary>
     private void OnRootWheel(object? sender, PointerWheelEventArgs e)
     {
@@ -242,16 +226,9 @@ public partial class OverlayWindow : Window, IOverlayState
         var factor = e.Delta.Y > 0 ? 1.15 : 1 / 1.15;
         var before = OverlayMap.Zoom;
 
-        if (_zoomModifierDown || IsZoomModifierDown(e.KeyModifiers))
-        {
-            var anchorX = _player?.X ?? (_map is null ? 0 : (_map.MinX + _map.MaxX) / 2);
-            var anchorZ = _player?.Z ?? (_map is null ? 0 : (_map.MinZ + _map.MaxZ) / 2);
-            OverlayMap.ZoomAtGame(anchorX, anchorZ, factor);
-        }
-        else
-        {
-            OverlayMap.ZoomAtScreen(e.GetPosition(OverlayMap), factor);
-        }
+        var anchorX = _player?.X ?? (_map is null ? 0 : (_map.MinX + _map.MaxX) / 2);
+        var anchorZ = _player?.Z ?? (_map is null ? 0 : (_map.MinZ + _map.MaxZ) / 2);
+        OverlayMap.ZoomAtGame(anchorX, anchorZ, factor);
 
         _zoom = Math.Clamp(OverlayMap.Zoom, 0.5, 12);
         if (Math.Abs(_zoom - before) < 0.0001) return;
@@ -260,81 +237,40 @@ public partial class OverlayWindow : Window, IOverlayState
         e.Handled = true;
     }
 
-    private bool IsZoomModifierDown(KeyModifiers modifiers) => ZoomModifier switch
-    {
-        Key.LeftAlt or Key.RightAlt => modifiers.HasFlag(KeyModifiers.Alt),
-        Key.LeftCtrl or Key.RightCtrl => modifiers.HasFlag(KeyModifiers.Control),
-        Key.LeftShift or Key.RightShift => modifiers.HasFlag(KeyModifiers.Shift),
-        Key.LWin or Key.RWin => modifiers.HasFlag(KeyModifiers.Meta),
-        _ => modifiers.HasFlag(KeyModifiers.Alt),
-    };
-
-    protected override void OnKeyDown(KeyEventArgs e)
-    {
-        base.OnKeyDown(e);
-        if (e.Key == ZoomModifier) _zoomModifierDown = true;
-    }
-
-    protected override void OnKeyUp(KeyEventArgs e)
-    {
-        base.OnKeyUp(e);
-        if (e.Key == ZoomModifier) _zoomModifierDown = false;
-    }
-
     /// <summary>
-    /// Losing focus while the modifier is held would otherwise leave it latched,
-    /// silently hijacking every later wheel event.
+    /// Right-drag moves the floating window. It used to resize the window,
+    /// which fought with the wheel zoom and made the small map hard to place.
     /// </summary>
-    protected override void OnLostFocus(Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        base.OnLostFocus(e);
-        _zoomModifierDown = false;
-    }
-
     private void OnRootPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (_locked) return;
         var point = e.GetCurrentPoint(this);
         if (!point.Properties.IsRightButtonPressed) return;
-        _resizing = true;
-        _resizeStart = point.Position;
-        _startWidth = Width;
-        _startHeight = Height;
+        _dragging = true;
+        _dragStart = point.Position;
+        _dragOrigin = Position;
         e.Pointer.Capture(Root);
+        Cursor = new Cursor(StandardCursorType.SizeAll);
         e.Handled = true;
     }
 
     private void OnRootPointerMoved(object? sender, PointerEventArgs e)
     {
-        if (!_resizing) return;
+        if (!_dragging) return;
         var pos = e.GetPosition(this);
-        var delta = Math.Max(pos.X - _resizeStart.X, pos.Y - _resizeStart.Y);
-        var size = Math.Clamp(_startWidth + delta, MinWidth, 900);
-        Width = size;
-        Height = size;
+        Position = new PixelPoint(
+            _dragOrigin.X + (int)Math.Round(pos.X - _dragStart.X),
+            _dragOrigin.Y + (int)Math.Round(pos.Y - _dragStart.Y));
         e.Handled = true;
     }
 
     private void OnRootPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        if (!_resizing) return;
-        _resizing = false;
+        if (!_dragging) return;
+        _dragging = false;
+        Cursor = new Cursor(StandardCursorType.Hand);
         e.Pointer.Capture(null);
-        Recenter();
         RaiseSettingsChanged();
-        e.Handled = true;
-    }
-
-    private void ResizeGrip_PointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (_locked) return;
-        var point = e.GetCurrentPoint(this);
-        if (!point.Properties.IsLeftButtonPressed) return;
-        _resizing = true;
-        _resizeStart = point.Position;
-        _startWidth = Width;
-        _startHeight = Height;
-        e.Pointer.Capture(Root);
         e.Handled = true;
     }
 

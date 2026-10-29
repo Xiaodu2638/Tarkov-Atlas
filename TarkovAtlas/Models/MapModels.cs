@@ -63,6 +63,11 @@ public sealed class MapDefinition
     /// container types, which are the ones the game hides under the ground.
     /// </summary>
     public List<CachePoint> Caches { get; set; } = new();
+    /// <summary>
+    /// Named points of interest that are not extracts/bosses/loot tables —
+    /// currently the Labyrinth chamber puzzle items (解谜道具).
+    /// </summary>
+    public List<PoiPoint> Pois { get; set; } = new();
     public List<MapLayer> Layers { get; set; } = new();
     /// <summary>Minefield / sniper zones, loaded from hazards.json.</summary>
     [JsonIgnore] public List<HazardZone> Hazards { get; set; } = new();
@@ -212,6 +217,17 @@ public sealed class CachePoint
     public double Z { get; set; }
     /// <summary>buried-barrel-cache | ground-cache</summary>
     public string Kind { get; set; } = "ground-cache";
+}
+
+/// <summary>A labelled point of interest pinned on the map (e.g. 解谜道具).</summary>
+public sealed class PoiPoint
+{
+    public double X { get; set; }
+    public double Z { get; set; }
+    /// <summary>Short category slug, e.g. "puzzle".</summary>
+    public string Kind { get; set; } = "puzzle";
+    /// <summary>Display label shown next to the dot.</summary>
+    public string Text { get; set; } = "";
 }
 
 public sealed class GameMarker
