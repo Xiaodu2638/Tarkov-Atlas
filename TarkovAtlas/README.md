@@ -15,7 +15,7 @@
 - **中文地名**：地标名已本地化（红厂房、宿舍、伐木场、疗养院……），商店品牌名保留原文。
 - **按层显示**：地图上方下拉框可手动切层；开启「按高度自动切层」后，截图坐标的 y 值落到哪一层就自动切到哪一层。
   楼层图在构建阶段已 warp 到与底图完全相同的像素栅格，运行时只套同一个目标矩形，不会错位。
-  目前有楼层图的 6 张地图共 33 层：海关 4、工厂 3、储备站 5、中心区 3、实验室 2、破冰船 16。
+  目前有楼层图的 9 张地图共 46 层：海关 4、工厂 4（1 层仅底图）、储备站 5、中心区 3、立交桥 3、海岸线 3、实验室 3、塔科夫街区 5、破冰船 16。
 - **危险区**：雷区（红）/ 狙击区（橙）/ 其它危险区（紫）以半透明多边形叠加，可在「显示」菜单整体开关。
 
 ### 显示内容（工具栏「显示」菜单）
@@ -34,10 +34,10 @@
 
 ### 悬浮地图
 
-- **无边框正方形小窗**，默认停靠屏幕**右侧中间**，**中心始终跟随你最新的截图坐标**。
-- 可拖右下角缩放、`Ctrl+Alt+M` 显示/隐藏、`Ctrl+Alt+L` 锁定鼠标穿透。
+- **无边框正方形小窗**，默认停靠屏幕**右侧中间**（多显示器会记在离开时的那块屏上），**中心始终跟随你最新的截图坐标**。
+- 尺寸在设置里调，`Ctrl+Alt+M` 显示/隐藏、`Ctrl+Alt+L` 锁定鼠标穿透。
 - 透明度与缩放比例可在设置中调整。
-- 可用鼠标右键拖拽边缘缩放，尺寸/位置即时保存。
+- 鼠标右键拖拽移动窗口，位置即时保存。
 
 ### 任务
 
@@ -50,13 +50,13 @@
 - 「标记完成 / 取消」、全部 / 未完成 / 已完成筛选。
 - 任务识别：**任务页面截图 OCR**（Windows 自带离线 OCR + 模糊匹配），识别不全时直接在列表搜索勾选。
 - **Wiki 用大傻哥**：任务详情里的「打开 Wiki」指向 https://www.eftarkov.com/task/{id} ，
-  「任务地点图」在应用内的图片查看器中直接显示标注图 https://www.eftarkov.com/uploads/task/{id}.webp （支持滚轮缩放、拖拽平移），不需要另开浏览器。
+  「任务地点图」在应用内的图片查看器中直接显示攻略页里的 `/uploads/infoImg/…` 标注图（支持滚轮缩放、拖拽平移），不需要另开浏览器。这是运行时唯一的联网请求，取不到就只是没有图。
 
 ### 截图定位
 
 - 监听 `Documents\Escape from Tarkov\Screenshots`，从文件名解析 `x, y, z` 与四元数朝向。
 - 在地图上画出带编号的定位点与朝向箭头，点击可看文件名、时间、坐标。
-- **读完即删**：坐标写入后删除截图文件（设置中可关闭），不在截图目录留垃圾。
+- **可选清理**：默认关闭；打开后坐标写入完就把截图**移到回收站**（`SHFileOperation` + `FOF_ALLOWUNDO`，不是永久删除），不在截图目录留垃圾。
 
 ### 权限
 
@@ -77,10 +77,11 @@ av_libglesv2.dll
 libHarfBuzzSharp.dll
 libSkiaSharp.dll
 Assets/
-  Maps/         13 张地图 JPG + mapdata.json
-  traders/      13 个商人头像（任务标记用）
+  Maps/         13 张地图 JPG + mapdata.json + layers/ + hazards.json
+  bosses/       20 个 Boss 头像
+  traders/      16 个商人头像（任务标记用）
   quests.json   离线任务库
-Scripts/ocr.ps1 Windows OCR 桥接
+  story.json    剧情
 README.md  LICENSE  THIRD-PARTY-NOTICES.md
 ```
 
@@ -107,20 +108,24 @@ dotnet publish .\TarkovAtlas\TarkovAtlas.csproj -c Release -r win-x64 --self-con
 ```powershell
 # 1) 下载/烘焙底图（需要网络：tarkov.dev 与 GitHub）
 python tools\build_assets.py
-# 2) 合并官方中文名、撤离点、Boss、任务坐标
+# 2) 烘焙楼层图 + hazards.json
+python tools\build_layers.py
+# 3) 合并官方中文名、撤离点、Boss、任务坐标
 python tools\build_data.py
+# 4) 剧情
+python tools\build_story.py
 ```
 
-数据脚本读取 `research/` 下缓存的 tarkov.dev JSON API 快照，可离线重跑第 2 步。
+局部重建：`build_assets.py --only factory`、`build_layers.py --only factory`（其余地图条目合并保留）。数据脚本读取 `research/` 下缓存的 tarkov.dev JSON API 快照，瓦片缓存在 `tools/tile-cache/`，可离线重跑。
 
 ### 校验
 
 ```powershell
-dotnet run --project tools\datacheck   # 几何/投影/标记/本地化
-dotnet run --project tools\logiccheck  # 任务筛选/追踪/头像规则
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\check.ps1
 ```
 
-两个套件都必须输出 `ALL CHECKS PASSED`。
+依次跑三套：`datacheck`（几何/投影/标记/楼层/hazard/本地化）、`logiccheck`（任务筛选/追踪/头像规则）、`shotcheck`（截图解析与删除行为）。三套都要 `ALL … PASSED`。
+底图本身的覆盖率另有 `python tools\check_map_coverage.py`（13 张必须退出码 0）。
 
 ## 数据来源与许可
 
@@ -136,7 +141,7 @@ dotnet run --project tools\logiccheck  # 任务筛选/追踪/头像规则
 
 - 任务库是离线快照，新版本任务需要重新跑数据脚本或手动补充。
 - 底图为主楼层静态图，不随截图 `y` 值切换楼层（坐标会显示高度）。
-- 迷宫、破冰船等使用瓦片层，只含主层。
+- 迷宫没有楼层图；破冰船的 16 层来自上游 tile 层，层名沿用上游英文。
 - 截图文件名不含地图 ID；边界重叠时依赖日志或当前选中地图判断。
 - OCR 识别率受截图分辨率与语言包影响。
 - 无地图坐标的任务（纯击杀/交付类）会显示在每张地图的列表里，但排在所有本图任务之后。
@@ -158,10 +163,14 @@ TarkovAtlas/
   ImageViewerWindow.cs       应用内图片查看器（任务地点图）
   Services/                  战局日志监听、截图、OCR、热键、持久化、任务过滤
   Assets/Maps/               底图 + mapdata.json + layers/ + hazards.json
+  Assets/bosses/             Boss 头像
   Assets/traders/            商人头像
   Assets/quests.json         本地化任务库
+  Assets/story.json          剧情
 tools/
   build_assets.py            抓瓦片/渲染 SVG，输出官方朝向底图
+  build_layers.py            烘焙楼层 PNG + layers/index.json + hazards.json
   build_data.py              合并中文名与标记数据
-  datacheck/ logiccheck/     自动化校验
+  build_story.py             剧情
+  datacheck/ logiccheck/ shotcheck/   自动化校验
 ```

@@ -10,7 +10,7 @@ Tarkov Atlas —— 《逃离塔科夫》离线战术地图与任务助手（Win
 
 桌面端离线地图工具。玩家在副屏或窗口模式下跑游戏时，用一块不遮挡游戏、可交互的高清地图查撤离点、Boss 刷点、危险区，并把「这一局该做什么任务」直接标在图上。
 
-运行时**完全不联网**：底图、标记点、任务库全部打包进 `Assets/`。
+运行时**地图与任务数据全部离线**：底图、标记点、任务库打包进 `Assets/`。唯一的联网行为是任务详情里「任务地点图」按需抓取 `www.eftarkov.com` 的攻略图（`TaskGuideService`，只接受 https，失败只是没有图）。
 
 ---
 
@@ -93,6 +93,8 @@ tools/
 - `MapCanvas.Project()` 是唯一投影入口，所有标记都走它。
 - `maps.json`（`build_assets.py` 产物）里的 affine **未经人工校正**，运行时以 `mapdata.json` 为准。两者不一致时先查原因，**不要直接覆盖**。
 - **底图必须上北下南**：图片帧 = 游戏坐标按 `coordinateToCardinalRotation` 旋转后，`px ∝ east`、`py ∝ -north`；SVG 再按 `(cardinal − coordinateRotation) mod 360` 转正，等比缩放后拉伸进 cardinal bounds 矩形（与 tarkov.dev 的 `L.svgOverlay` 一致）。11 张 `rot=180` 的图是恒等变换，工厂是唯一真正被转过的：竖版 5183×5600，底图只渲染 `Ground_Floor` 组（整张 SVG 四层叠在一起会看着像重影）。
+- **`content` 决定取景，不是 `bounds`**：`build_assets.py` 的 `content_box()` 用「边框环众数色 + 12 灰阶」找出实际画出来的区域，经 `box_to_game()` 反算成游戏坐标写进 `mapdata.json` 的 `content`；`MapCanvas.EnsureLayout()` 按它做 fit + 居中，所以画布边缘的空白不会把地图缩成一小块。`bounds` 仍是整张图片的世界范围（`datacheck` 用它做一致性断言），两者别混。
+- **仿射必须各向同性**：世界单位是米、图片保持比例，所以 `|a| == |e|`。破冰船的上游 tile `transform` 是工厂的占位值（`sx=2.0, sy=3.5`），`uniform_transform()` 会在拼瓦片前统一成水平尺度；`sanitize_affine()` 在产物侧再兜一次底。数据里出现各向异性矩阵一律按 bug 处理。
 
 ### 4.2 渲染
 - `MapCanvas.Render()` 每次整帧重绘。性能红线：
@@ -150,12 +152,11 @@ tools/
 
 ## 7. 已知缺陷（当前不接受回归）
 
-- **破冰船**：图片没铺满画布（左 52.2% / 上 48.1% / 右 27.9% 是空背景），`bounds` 与图片内容区不一致，导致 158 个标记里 54 个悬在黑色空区。
-  - `datacheck` 中 `knownGeometryDefects` 放行 `icebreaker`，属**已知缺陷**，不是通过。
-  - 验收标准：`python tools/check_map_coverage.py icebreaker` 四条边距都 < 10%，标记落在内容区 ≥ 90%，然后把 `"icebreaker"` 从 `knownGeometryDefects` 移除。
-  - **修之前注意**：`affine` 的 `e=32` 是对的（船体内容正好 25.6 m），改成 56 会把船体压到 14.6 m。
 - **海岸线楼层**：3 层已生成，内容区仍偏小，待重烘焙。
-- **实验室 / 迷宫底图**：仍走瓦片分支，被硬拉伸进 5600 宽画布（实验室 5600×7683、迷宫 5600×6027，上下有黑边、纵向约 17% 拉伸）。修法与工厂一致：cardinal 帧 + 等比缩放 + 按内容裁切，瓦片缓存在 `tools/tile-cache`。
+- 历史缺陷（破冰船空背景、实验室/迷宫硬拉伸）已修复，**不要再退回**：
+  - 破冰船：`uniform_transform()` 修掉 1.75× 纵向拉伸，crop 原点改按画布帧计算，成品 4585×4270，船体占满画布。
+  - 实验室 / 迷宫：改走 SVG 分支（cardinal 帧 + 等比缩放 + 按内容裁切），实验室 5600×4082、迷宫 5204×5600。
+  - 验收口径：`python tools/check_map_coverage.py` 全 13 张退出码 0。有 `content` 的图按「content 与实测画面偏差 ≤ 3%」判，没有 `content` 的图仍按四边边距 < 10% + 标记落在画面内 ≥ 90% 判；背景色取**图片边框环**的众数（整图众数会把工厂判成误报）。`datacheck` 的 `knownGeometryDefects` 已清空，并新增「content 矩形必须落在画布内」断言。
 
 ---
 

@@ -63,15 +63,23 @@ internal static class DataChecks
         // ---- geometry consistency ------------------------------------------
         // The bitmap rectangle (via the affine) and the declared bounds must
         // describe the same world area, and every marker has to land inside both.
-        // icebreaker breaks this today, so it is a tracked defect (AGENTS.md §7):
-        // its failures print as KNOWN instead of failing the suite.
-        var knownGeometryDefects = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "icebreaker" };
+        var knownGeometryDefects = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var map in manifest.Maps)
         {
             var known = knownGeometryDefects.Contains(map.Key);
             var (dx, dz) = BoundsMismatch(map);
             Report(known, $"image rect matches bounds {map.Key}", dx <= 0.5 && dz <= 0.5,
                 $"{dx:0.0} m on x, {dz:0.0} m on z");
+
+            // The view fits Content, so a wrong rect would crop or letterbox the
+            // map. It must exist and stay inside the canvas.
+            var c0 = map.HasValidAffine ? map.GameToImage(map.ContentMinX, map.ContentMinZ) : default;
+            var c1 = map.HasValidAffine ? map.GameToImage(map.ContentMaxX, map.ContentMaxZ) : default;
+            var contentOk = map.HasContent
+                && Math.Min(c0.X, c1.X) >= -1 && Math.Min(c0.Y, c1.Y) >= -1
+                && Math.Max(c0.X, c1.X) <= map.Width + 1 && Math.Max(c0.Y, c1.Y) <= map.Height + 1;
+            Check($"content rect inside canvas {map.Key}", contentOk,
+                $"{c0.X:0},{c0.Y:0} .. {c1.X:0},{c1.Y:0} of {map.Width}x{map.Height}");
 
             var markers = new List<(double X, double Z)>();
             markers.AddRange(map.Extracts.Select(e => (e.X, e.Z)));

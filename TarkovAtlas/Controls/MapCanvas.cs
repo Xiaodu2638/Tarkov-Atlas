@@ -232,13 +232,23 @@ public sealed class MapCanvas : Control
     {
         if (_map is null || Bounds.Width <= 1 || Bounds.Height <= 1) return;
         var pad = Compact ? 0 : 22;
-        _fit = Math.Min((Bounds.Width - pad * 2) / _map.Width, (Bounds.Height - pad * 2) / _map.Height);
+        // Fit the drawn artwork, not the baked canvas: Icebreaker's hull fills a
+        // fifth of its tile canvas, so fitting the canvas showed a tiny ship in
+        // a black field.
+        var box = new Rect(0, 0, _map.Width, _map.Height);
+        if (_map.HasContent)
+        {
+            var p0 = _map.GameToImage(_map.ContentMinX, _map.ContentMinZ);
+            var p1 = _map.GameToImage(_map.ContentMaxX, _map.ContentMaxZ);
+            box = new Rect(Math.Min(p0.X, p1.X), Math.Min(p0.Y, p1.Y),
+                Math.Abs(p1.X - p0.X), Math.Abs(p1.Y - p0.Y));
+        }
+        _fit = Math.Min((Bounds.Width - pad * 2) / Math.Max(1, box.Width),
+                        (Bounds.Height - pad * 2) / Math.Max(1, box.Height));
         _fit = Math.Max(0.0001, _fit);
-        var drawW = _map.Width * _fit * _zoom;
-        var drawH = _map.Height * _fit * _zoom;
         _origin = new Point(
-            (Bounds.Width - drawW) / 2 + _pan.X,
-            (Bounds.Height - drawH) / 2 + _pan.Y);
+            Bounds.Width / 2 - (box.X + box.Width / 2) * Scale + _pan.X,
+            Bounds.Height / 2 - (box.Y + box.Height / 2) * Scale + _pan.Y);
     }
 
     private double Scale => _fit * _zoom;

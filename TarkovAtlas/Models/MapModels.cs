@@ -52,6 +52,12 @@ public sealed class MapDefinition
     public double[] Affine { get; set; } = Array.Empty<double>();
     /// <summary>minX, minZ, maxX, maxZ in game units.</summary>
     public double[] Bounds { get; set; } = Array.Empty<double>();
+    /// <summary>
+    /// minX, minZ, maxX, maxZ of the drawn artwork inside the baked canvas.
+    /// Some canvases are mostly empty (Icebreaker draws the hull on a fifth of
+    /// its tile canvas), so the view fits this rect instead of the bitmap.
+    /// </summary>
+    public double[] Content { get; set; } = Array.Empty<double>();
     public List<MapLabel> Labels { get; set; } = new();
     public List<ExtractPoint> Extracts { get; set; } = new();
     public List<BossSpawn> Bosses { get; set; } = new();
@@ -82,6 +88,13 @@ public sealed class MapDefinition
     [JsonIgnore] public double MinZ => Bounds.Length >= 4 ? Math.Min(Bounds[1], Bounds[3]) : 0;
     [JsonIgnore] public double MaxX => Bounds.Length >= 4 ? Math.Max(Bounds[0], Bounds[2]) : Width;
     [JsonIgnore] public double MaxZ => Bounds.Length >= 4 ? Math.Max(Bounds[1], Bounds[3]) : Height;
+
+    [JsonIgnore] public bool HasContent => Content.Length >= 4
+        && Math.Abs(Content[2] - Content[0]) > 0.01 && Math.Abs(Content[3] - Content[1]) > 0.01;
+    [JsonIgnore] public double ContentMinX => HasContent ? Math.Min(Content[0], Content[2]) : MinX;
+    [JsonIgnore] public double ContentMinZ => HasContent ? Math.Min(Content[1], Content[3]) : MinZ;
+    [JsonIgnore] public double ContentMaxX => HasContent ? Math.Max(Content[0], Content[2]) : MaxX;
+    [JsonIgnore] public double ContentMaxZ => HasContent ? Math.Max(Content[1], Content[3]) : MaxZ;
 
     public bool HasValidAffine => Affine.Length == 6 && Math.Abs(Affine[0] * Affine[4] - Affine[1] * Affine[3]) > 1e-9;
 

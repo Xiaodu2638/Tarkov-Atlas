@@ -69,7 +69,8 @@ if (Test-Path $target) { Remove-Item $target -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $target | Out-Null
 Get-ChildItem $result.Dir -File | Where-Object { $_.Extension -ne ".pdb" } |
     Copy-Item -Destination $target -Force
-foreach ($sub in @("Assets", "Scripts", "docs")) {
+# Scripts/ is embedded in the assembly (OcrService), so it is not shipped.
+foreach ($sub in @("Assets", "docs")) {
     $src = Join-Path $result.Dir $sub
     if (Test-Path $src) { Copy-Item $src $target -Recurse -Force }
 }
