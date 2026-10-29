@@ -85,8 +85,6 @@ public sealed class QuestService
                 display = trader.Name;
                 slug = trader.Slug;
             }
-            if (string.IsNullOrWhiteSpace(display) && TraderNames.TryGetValue(quest.Trader, out var known))
-                display = known;
             if (string.IsNullOrWhiteSpace(slug))
                 slug = display.Replace(".", "").Replace(" ", "-").ToLowerInvariant();
             if (string.IsNullOrWhiteSpace(display) && !TraderInfo.IsRawId(quest.Trader))
@@ -97,30 +95,14 @@ public sealed class QuestService
                 ? "未知商人"
                 : display;
             quest.TraderSlug = string.IsNullOrWhiteSpace(slug) ? "unknown" : slug;
+            // Built once here; the search box used to re-normalise every name on
+            // every keystroke.
+            quest.SearchKey = Normalize(quest.Name) + "\n" + Normalize(quest.NameEn);
         }
     }
 
-    /// <summary>Fallback names for trader ids that the bundled manifest may not list.</summary>
-    private static readonly Dictionary<string, string> TraderNames =
-        new(StringComparer.OrdinalIgnoreCase)
-        {
-            ["54cb50c76803fa8b248b4571"] = "Prapor",
-            ["54cb57776803fa99248b456e"] = "Therapist",
-            ["579dc571d53a0658a154fbec"] = "Fence",
-            ["58330581ace78e27b8b10cee"] = "Skier",
-            ["5935c25fb3acc3127c3d8cd9"] = "Peacekeeper",
-            ["5a7c2eca46aef81a7ca2145d"] = "Mechanic",
-            ["5ac3b934156ae10c4430e83c"] = "Ragman",
-            ["5c0647fdd443bc2504c2d371"] = "Jaeger",
-            ["638f541a29ffd1183d187f57"] = "Lightkeeper",
-            ["6617beeaa9cfa777ca915b7c"] = "Ref",
-            ["656f0f98d80a697f855d34b1"] = "BTR Driver",
-            ["68fe15910f29ba3fdbba9d54"] = "Taran",
-            ["68fe15990f29ba3fdbba9d55"] = "Radio Station",
-            ["688246518448b05efd61d461"] = "Mr. Kerman",
-            ["688246958448b05efd61d462"] = "Voevoda",
-            ["69e0d6cc77b63940375b9173"] = "Survivor",
-        };
+    /// <summary>Set when the progress file could not be read, so the UI can warn.</summary>
+    public string? LoadWarning { get; private set; }
 
     private void LoadProgress()
     {
@@ -136,6 +118,10 @@ public sealed class QuestService
         }
         catch (Exception ex)
         {
+            // Keep the damaged file instead of overwriting it on the next save.
+            try { File.Copy(AppPaths.QuestProgressFile, AppPaths.QuestProgressFile + ".bad", overwrite: true); }
+            catch { }
+            LoadWarning = "任务进度文件损坏，已备份为 quest-progress.json.bad，进度从零开始。";
             AppPaths.LogCrash(ex);
         }
     }
@@ -177,7 +163,7 @@ public sealed class QuestService
                 Tracked = _tracked.ToList(),
                 StoryDone = _storyDone.ToList(),
             };
-            File.WriteAllText(AppPaths.QuestProgressFile,
+            AppPaths.WriteAllTextAtomic(AppPaths.QuestProgressFile,
                 JsonSerializer.Serialize(data, AppJsonContext.Default.QuestProgressFile));
         }
         catch (Exception ex)
@@ -269,9 +255,7 @@ public sealed class QuestService
         if (quest.NameEn.Contains(raw, StringComparison.OrdinalIgnoreCase)) return true;
         if (TraderDisplay(quest).Contains(raw, StringComparison.OrdinalIgnoreCase)) return true;
         if (normalized.Length == 0) return false;
-        if (Normalize(quest.Name).Contains(normalized, StringComparison.Ordinal)) return true;
-        if (Normalize(quest.NameEn).Contains(normalized, StringComparison.Ordinal)) return true;
-        return false;
+        return quest.SearchKey.Contains(normalized, StringComparison.Ordinal);
     }
 
     private static string TraderDisplay(Quest quest) => quest.TraderDisplay;

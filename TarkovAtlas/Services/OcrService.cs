@@ -14,14 +14,30 @@ public sealed class OcrResult
 
 public sealed class OcrService
 {
+    /// <summary>Read Scripts/ocr.ps1 out of the assembly (see csproj EmbeddedResource).</summary>
+    private static string? LoadScript()
+    {
+        try
+        {
+            using var stream = typeof(OcrService).Assembly.GetManifestResourceStream("TarkovAtlas.Scripts.ocr.ps1");
+            if (stream is null) return null;
+            using var reader = new StreamReader(stream, Encoding.UTF8);
+            return reader.ReadToEnd();
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     public async Task<OcrResult> RecognizeAsync(string imagePath, CancellationToken token = default)
     {
         if (!File.Exists(imagePath))
             return new OcrResult { Ok = false, Error = "图片不存在: " + imagePath };
 
-        var script = Path.Combine(AppPaths.ScriptsDir, "ocr.ps1");
-        if (!File.Exists(script))
-            return new OcrResult { Ok = false, Error = "OCR 脚本缺失: " + script };
+        var script = LoadScript();
+        if (script is null)
+            return new OcrResult { Ok = false, Error = "OCR 脚本缺失（程序集资源）" };
 
         var powershell = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.Windows),
@@ -43,10 +59,11 @@ public sealed class OcrService
         psi.ArgumentList.Add("-NonInteractive");
         psi.ArgumentList.Add("-ExecutionPolicy");
         psi.ArgumentList.Add("Bypass");
-        psi.ArgumentList.Add("-File");
-        psi.ArgumentList.Add(script);
-        psi.ArgumentList.Add("-ImagePath");
-        psi.ArgumentList.Add(imagePath);
+        // -EncodedCommand (UTF-16LE base64) instead of -File: nothing on disk is
+        // executed, so a swapped Scripts\ocr.ps1 cannot run as administrator.
+        psi.ArgumentList.Add("-EncodedCommand");
+        psi.ArgumentList.Add(Convert.ToBase64String(Encoding.Unicode.GetBytes(script)));
+        psi.Environment["TARKOVATLAS_OCR_IMAGE"] = imagePath;
 
         try
         {

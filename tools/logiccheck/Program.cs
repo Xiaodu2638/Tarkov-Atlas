@@ -284,6 +284,24 @@ internal static class LogicChecks
         Check("every task trader has an avatar", missingSlugPng.Count == 0,
             string.Join(",", missingSlugPng));
 
+        // Search must work off the precomputed key: a task found by a Chinese
+        // substring and one found by its English name must both surface.
+        Check("search key precomputed", service.Quests.All(q => q.SearchKey.Length > 0));
+        var probeQuest = service.Quests.First(q => q.Name.Length > 2 && q.NameEn.Length > 2);
+        service.SetQuery(probeQuest.Name[..2]);
+        service.Apply();
+        Check("search finds task by Chinese name",
+            service.VisibleQuests.Any(r => r.Quest.Id == probeQuest.Id));
+        service.SetQuery(probeQuest.NameEn[..Math.Min(6, probeQuest.NameEn.Length)].ToLowerInvariant());
+        service.Apply();
+        Check("search finds task by English name",
+            service.VisibleQuests.Any(r => r.Quest.Id == probeQuest.Id));
+        service.SetQuery("");
+        service.Apply();
+
+        // Deleting the player's own screenshots must never be a default.
+        Check("screenshot deletion is opt-in", !new AppSettings().DeleteScreenshotsAfterScan);
+
         // Jump affordance: a task naming a map must expose the jump button even
         // when its objectives carry no typed coordinates.
         var mappedNoZones = service.Quests

@@ -30,7 +30,10 @@
 
   <ItemGroup>
     <None Update="Assets\**\*" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="Scripts\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <!-- OCR runs from an embedded resource: the install folder is user-writable
+         and this app is elevated, so executing a script from there was a
+         local privilege-escalation hole. -->
+    <EmbeddedResource Include="Scripts\ocr.ps1" />
     <None Update="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" />
     <None Update="README.md" CopyToOutputDirectory="PreserveNewest" />
     <None Update="LICENSE" CopyToOutputDirectory="PreserveNewest" />

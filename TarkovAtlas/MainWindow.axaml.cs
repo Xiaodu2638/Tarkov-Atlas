@@ -47,7 +47,7 @@ public partial class MainWindow : Window
     private bool _shuttingDown;
     private bool _suppressMapSelection;
     private bool _suppressQuestEvents;
-    private DispatcherTimer? _uiTimer;
+    private DispatcherTimer? _persistTimer;
     private DispatcherTimer? _toastTimer;
     private readonly string _defaultHint = "滚轮缩放  ·  左键拖拽  ·  双击放大  ·  0 复位";
 
@@ -67,6 +67,7 @@ public partial class MainWindow : Window
         MapView.CursorGameMoved += OnCursorGameMoved;
         MapView.PinClicked += OnPinClicked;
         MapView.MarkerClicked += OnMarkerClicked;
+        MapView.ViewChanged += (_, _) => UpdateZoomText();
         _quests.ProgressChanged += (_, _) => Dispatcher.UIThread.Post(() =>
         {
             RefreshQuestCounts();
@@ -118,9 +119,7 @@ public partial class MainWindow : Window
 
             StartServices();
 
-            _uiTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
-            _uiTimer.Tick += (_, _) => UpdateLiveUi();
-            _uiTimer.Start();
+            if (_quests.LoadWarning is not null) ShowToast(_quests.LoadWarning);
 
             if (_settings.OverlayVisibleOnStartup) ShowOverlay(true);
         }
@@ -278,6 +277,7 @@ public partial class MainWindow : Window
                 LoadFloorLayers(map);
                 _overlay?.SetMap(map, bitmap);
                 SyncOverlayFloor();
+                UpdateZoomText();
             }
             catch (Exception ex)
             {
@@ -296,7 +296,7 @@ public partial class MainWindow : Window
     private void RememberMap(MapDefinition map)
     {
         _settings.SelectedMap = map.Key;
-        _settingsService.Save(_settings);
+        Persist();
     }
 
     /// <summary>
@@ -455,13 +455,14 @@ public partial class MainWindow : Window
         {
             MapView.Pins = Array.Empty<ScreenshotInfo>();
             PinCountText.Text = "0 个截图点";
+            LocateLatestButton.IsVisible = false;
             return;
         }
 
         var pins = GetPins(_currentMap.Key);
         MapView.Pins = pins;
         MapView.ActivePin = GetLatestPin(_currentMap.Key);
-        PinCountText.Text = $"{pins.Count} 个截图点";
+        UpdatePinLabels();
         MapView.InvalidateVisual();
     }
 
@@ -618,8 +619,25 @@ public partial class MainWindow : Window
         return item;
     }
 
+    /// <summary>
+    /// Debounced save: the overlay raises this on every wheel notch and every
+    /// drag release, and a synchronous JSON write per notch stuttered.
+    /// </summary>
     private void Persist()
     {
+        if (_persistTimer is null)
+        {
+            _persistTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
+            _persistTimer.Tick += (_, _) => PersistNow();
+        }
+        _persistTimer.Stop();
+        _persistTimer.Start();
+    }
+
+    /// <summary>Write immediately (shutdown, and anything that must not be lost).</summary>
+    private void PersistNow()
+    {
+        _persistTimer?.Stop();
         _settingsService.Save(_settings);
     }
 
@@ -1345,10 +1363,11 @@ public partial class MainWindow : Window
         }
     }
 
-    private void UpdateLiveUi()
+    private void UpdateZoomText() => ZoomText.Text = $"{MapView.Zoom * 100:0}%";
+
+    private void UpdatePinLabels()
     {
         if (_currentMap is null) return;
-        ZoomText.Text = $"{MapView.Zoom * 100:0}%";
         LocateLatestButton.IsVisible = GetLatestPin(_currentMap.Key) is not null;
         PinCountText.Text = $"{GetPins(_currentMap.Key).Count} 个截图点";
     }
@@ -1356,20 +1375,22 @@ public partial class MainWindow : Window
     private void ShowToast(string message)
     {
         HintText.Text = message;
-        _toastTimer?.Stop();
-        _toastTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4.5) };
-        _toastTimer.Tick += (_, _) =>
+        if (_toastTimer is null)
         {
-            _toastTimer?.Stop();
-            HintText.Text = _defaultHint;
-        };
+            _toastTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4.5) };
+            _toastTimer.Tick += (_, _) =>
+            {
+                _toastTimer?.Stop();
+                HintText.Text = _defaultHint;
+            };
+        }
+        _toastTimer.Stop();
         _toastTimer.Start();
     }
 
     private void OnClosing(object? sender, WindowClosingEventArgs e)
     {
         _shuttingDown = true;
-        try { _uiTimer?.Stop(); } catch { }
         _settings.SelectedMap = _currentMap?.Key ?? _settings.SelectedMap;
         if (_overlay is not null)
         {
@@ -1379,7 +1400,7 @@ public partial class MainWindow : Window
             _overlay.AllowClose();
             _overlay.Close();
         }
-        Persist();
+        PersistNow();
         _hotkeys.Dispose();
         _logs.Dispose();
         _screenshots.Dispose();

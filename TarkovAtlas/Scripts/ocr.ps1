@@ -1,6 +1,8 @@
 param(
-    [Parameter(Mandatory = $true)]
-    [string]$ImagePath
+    # The app embeds this script and passes the path through the environment,
+    # so it never has to execute a file from the install folder.
+    [Parameter(Mandatory = $false)]
+    [string]$ImagePath = $env:TARKOVATLAS_OCR_IMAGE
 )
 
 $ErrorActionPreference = 'Stop'

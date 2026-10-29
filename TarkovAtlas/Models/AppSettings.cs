@@ -29,6 +29,12 @@ public sealed class AppSettings
     public double OverlayOffsetX { get; set; } = 16;
     public double OverlayOffsetY { get; set; }
     public bool OverlayLocked { get; set; }
+    /// <summary>
+    /// Last overlay position in screen pixels. Kept so the mini-map can live on a
+    /// second monitor; null means "derive it from OverlayAnchor on the primary".
+    /// </summary>
+    public int? OverlayScreenX { get; set; }
+    public int? OverlayScreenY { get; set; }
 
     public bool ShowLabels { get; set; } = true;
     public bool ShowExtracts { get; set; } = true;
@@ -51,8 +57,11 @@ public sealed class AppSettings
     public bool AutoSwitchMap { get; set; } = true;
     public bool ScanScreenshots { get; set; } = true;
     public bool ScanOnStartup { get; set; } = true;
-    /// <summary>Delete the screenshot file once its coordinates were imported.</summary>
-    public bool DeleteScreenshotsAfterScan { get; set; } = true;
+    /// <summary>
+    /// Move imported screenshots to the Recycle Bin. Off by default: the folder
+    /// holds the player's own pictures, so deleting is opt-in.
+    /// </summary>
+    public bool DeleteScreenshotsAfterScan { get; set; }
 
     public bool OverlayVisibleOnStartup { get; set; }
     public bool OverlayShowsWholeMap { get; set; }
@@ -74,8 +83,11 @@ public sealed class AppSettings
             OverlayOpacity = Math.Clamp(mini.OverlayOpacityValue, 0.25, 1.0);
             OverlayLocked = mini.IsLocked;
         }
-        if (!double.IsNaN(window.Position.X) && window.Position.X >= 0)
-            OverlayOffsetX = Math.Max(0, OverlayOffsetX);
+        if (window.IsVisible)
+        {
+            OverlayScreenX = window.Position.X;
+            OverlayScreenY = window.Position.Y;
+        }
     }
 
     public void Normalize()

@@ -120,6 +120,8 @@ public sealed class Quest
     [JsonIgnore] public string TraderDisplay { get; set; } = "";
     /// <summary>Avatar file stem for the giver (never an id).</summary>
     [JsonIgnore] public string TraderSlug { get; set; } = "";
+    /// <summary>Lowercase alphanumeric search key for Name + NameEn, built once at load.</summary>
+    [JsonIgnore] public string SearchKey { get; set; } = "";
     public int Level { get; set; }
     public string Wiki { get; set; } = "";
     public List<string> Prerequisites { get; set; } = new();

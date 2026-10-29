@@ -198,6 +198,13 @@ public sealed class ImageViewerWindow : Window
             return;
         }
 
+        // The url list is scraped from a remote page, so it is untrusted.
+        if (!IsHttps(_urls[_index]))
+        {
+            ShowError("只支持 https 图片地址");
+            return;
+        }
+
         try
         {
             _status.Text = "正在加载…";
@@ -241,8 +248,16 @@ public sealed class ImageViewerWindow : Window
         _status.Foreground = Palette.Brush(Palette.DangerText);
     }
 
+    private static bool IsHttps(string? url) =>
+        Uri.TryCreate(url, UriKind.Absolute, out var uri) && uri.Scheme == Uri.UriSchemeHttps;
+
     private void OpenInBrowser()
     {
+        if (!IsHttps(_urls[_index]))
+        {
+            ShowError("只支持 https 图片地址");
+            return;
+        }
         try
         {
             System.Diagnostics.Process.Start(

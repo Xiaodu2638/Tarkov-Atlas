@@ -37,7 +37,8 @@ internal static class ShotChecks
         Check("parses negative coords", n is not null && Math.Abs(n.X + 123.456) < 1e-6 && Math.Abs(n.Z - 890.25) < 1e-6,
             n is null ? "null" : $"{n.X},{n.Z}");
 
-        // Loose fallback for older/renamed files.
+        // Loose fallback for older/renamed files: parseable on request, but never
+        // imported by the folder scan and never deleted.
         var loose = Path.Combine(dir, "random 12.5, -3.25, 44.0 shot.png");
         File.WriteAllBytes(loose, new byte[] { 1 });
         var l = svc.Parse(loose);
@@ -48,9 +49,10 @@ internal static class ShotChecks
         File.WriteAllBytes(junk, new byte[] { 1 });
         Check("rejects unrelated names", svc.Parse(junk) is null);
 
-        // Scanning only returns parseable files.
+        // Scanning only returns files in the exact game format.
         var scanned = svc.Scan(dir);
-        Check("scan returns only valid shots", scanned.Count == 3, scanned.Count.ToString());
+        Check("scan returns only valid shots", scanned.Count == 2, scanned.Count.ToString());
+        Check("scan skips loose names", scanned.All(s => s.FileName != Path.GetFileName(loose)));
 
         // Read-then-delete removes the file.
         Check("file exists before import", File.Exists(path));
@@ -58,6 +60,9 @@ internal static class ShotChecks
         Check("delete after import succeeds", deleted);
         Check("file is gone", !File.Exists(path));
         Check("delete is idempotent", !svc.TryDeleteAfterImport(path));
+
+        // A loose-named file is the user's picture: never delete it.
+        Check("loose name is not deleted", !svc.TryDeleteAfterImport(loose) && File.Exists(loose));
 
         try { Directory.Delete(dir, true); } catch { }
 

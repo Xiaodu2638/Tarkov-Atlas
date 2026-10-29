@@ -197,12 +197,19 @@ public partial class SettingsWindow : Window
         Settings.OverlayOpacity = Math.Clamp(OpacitySlider.Value, 0.25, 1.0);
         Settings.OverlaySize = Math.Clamp(SizeSlider.Value, 120, 600);
         Settings.OverlayZoom = Math.Clamp(ZoomSlider.Value, 0.5, 8);
-        Settings.OverlayAnchor = AnchorBox.SelectedIndex switch
+        var anchor = AnchorBox.SelectedIndex switch
         {
             0 => "top",
             2 => "bottom",
             _ => "middle",
         };
+        if (anchor != Settings.OverlayAnchor)
+        {
+            // A new anchor only takes effect if the pinned position is dropped.
+            Settings.OverlayScreenX = null;
+            Settings.OverlayScreenY = null;
+        }
+        Settings.OverlayAnchor = anchor;
         Settings.OverlayLocked = LockedCheck.IsChecked == true;
         Settings.OverlayVisibleOnStartup = OverlayVisibleCheck.IsChecked == true;
         Settings.ShowExtracts = ExtractsCheck.IsChecked == true;

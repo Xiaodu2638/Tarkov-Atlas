@@ -20,8 +20,6 @@ public sealed class MapDisplayOptions
     public bool ShowTransits { get; set; }
     /// <summary>Draw buried stash / cache spots (物资埋藏点).</summary>
     public bool ShowCaches { get; set; } = true;
-    /// <summary>Draw puzzle-item spawns (解谜道具); always on, no toggle.</summary>
-    public bool ShowPois { get; set; } = true;
     public bool ShowQuestMarkers { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
@@ -32,7 +30,6 @@ public sealed class MapDisplayOptions
 public sealed class MapCanvas : Control
 {
     private static readonly Typeface LabelTypeface = new("Microsoft YaHei UI");
-    private static readonly Typeface MarkerTypeface = new("Microsoft YaHei UI");
 
     private static readonly IBrush LabelBrush = Palette.Brush(Palette.Label);
     private static readonly IBrush LabelShadow = Palette.Brush(Palette.LabelShadow);
@@ -146,6 +143,8 @@ public sealed class MapCanvas : Control
     private readonly List<(QuestMarker Marker, Rect Box)> _markerHits = new();
     private (double X, double Z, string Label)? _focusPin;
     public event EventHandler<(double X, double Z)>? CursorGameMoved;
+    /// <summary>Raised after the zoom level changed, so the UI can update its label.</summary>
+    public event EventHandler? ViewChanged;
 
     public void SetMap(MapDefinition? map, Bitmap? bitmap)
     {
@@ -178,14 +177,12 @@ public sealed class MapCanvas : Control
         _zoom = 1;
         _pan = default;
         InvalidateVisual();
+        ViewChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void ZoomIn() => ZoomAt(new Point(Bounds.Width / 2, Bounds.Height / 2), 1.3);
     public void ZoomOut() => ZoomAt(new Point(Bounds.Width / 2, Bounds.Height / 2), 1 / 1.3);
     public void SetZoom(double zoom) => ZoomAt(new Point(Bounds.Width / 2, Bounds.Height / 2), zoom / Math.Max(0.0001, _zoom));
-
-    /// <summary>Zoom around an explicit screen point (used by the floating map).</summary>
-    public void ZoomAtScreen(Point screen, double factor) => ZoomAt(screen, factor);
 
     /// <summary>
     /// While dragging, bilinear sampling is indistinguishable from HighQuality
@@ -208,6 +205,7 @@ public sealed class MapCanvas : Control
         var drawH = _map.Height * scale;
         _pan = new Vector(drawW / 2 - p.X * scale, drawH / 2 - p.Y * scale);
         InvalidateVisual();
+        ViewChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -414,7 +412,7 @@ public sealed class MapCanvas : Control
         if (Options.ShowSpawns) DrawSpawns(context);
         if (Options.ShowTransits) DrawTransits(context);
         if (Options.ShowCaches) DrawCaches(context);
-        if (Options.ShowPois) DrawPois(context);
+        DrawPois(context);
         if (Options.ShowExtracts) DrawExtracts(context);
         if (Options.ShowBosses) DrawBosses(context);
         if (Options.ShowQuestMarkers) DrawQuestMarkers(context);
@@ -766,8 +764,6 @@ public sealed class MapCanvas : Control
         }
     }
 
-    private Bitmap? LoadAvatar(string slug) => LoadCached("traders", slug);
-
     /// <summary>Load a portrait from Assets/{folder}/{slug}.png, memoised.</summary>
     private Bitmap? LoadCached(string folder, string slug)
     {
@@ -1025,6 +1021,7 @@ public sealed class MapCanvas : Control
             screen.X - (Bounds.Width - drawW) / 2 - before.X * newScale,
             screen.Y - (Bounds.Height - drawH) / 2 - before.Y * newScale);
         InvalidateVisual();
+        ViewChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

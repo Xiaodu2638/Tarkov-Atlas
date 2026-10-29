@@ -9,6 +9,7 @@ public sealed class MapRepository
     private readonly Dictionary<string, Bitmap> _bitmapCache = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, Bitmap?> _layerCache = new(StringComparer.OrdinalIgnoreCase);
     private readonly Queue<string> _cacheOrder = new();
+    private readonly Queue<string> _layerOrder = new();
     private readonly object _gate = new();
     private readonly List<MapDefinition> _maps = new();
 
@@ -152,7 +153,13 @@ public sealed class MapRepository
         }
     }
 
-    /// <summary>Load (and memoise) one floor overlay image. Null when missing.</summary>
+    /// <summary>
+    /// Load (and memoise) one floor overlay image. Null when missing.
+    /// </summary>
+    /// <remarks>
+    /// Floor images are 60-175 MB decoded, so the cache keeps the last few only.
+    /// Icebreaker alone has 16 floors; keeping them all cost ~1.8 GB.
+    /// </remarks>
     public Bitmap? GetLayerBitmap(MapLayer layer)
     {
         if (string.IsNullOrWhiteSpace(layer.Image)) return null;
@@ -173,6 +180,18 @@ public sealed class MapRepository
                 bitmap = new Bitmap(stream);
 
             _layerCache[layer.Image] = bitmap;
+            _layerOrder.Enqueue(layer.Image);
+            while (_layerOrder.Count > 3)
+            {
+                var oldKey = _layerOrder.Dequeue();
+                if (oldKey == layer.Image || !_layerCache.Remove(oldKey, out var oldBitmap) || oldBitmap is null)
+                    continue;
+                // The canvas may still be painting the evicted bitmap this frame.
+                _ = Task.Delay(5000).ContinueWith(_ =>
+                {
+                    try { oldBitmap.Dispose(); } catch { }
+                });
+            }
             return bitmap;
         }
     }

@@ -8,7 +8,6 @@ public static class AppPaths
     public static string BaseDir => AppContext.BaseDirectory;
     public static string AssetsDir => Path.Combine(BaseDir, "Assets");
     public static string MapsDir => Path.Combine(AssetsDir, "Maps");
-    public static string ScriptsDir => Path.Combine(BaseDir, "Scripts");
 
     // Asset file names live here so the loader and the build/check tools agree
     // on one spelling instead of repeating literals in several files.
@@ -77,6 +76,18 @@ public static class AppPaths
             // Never let diagnostics crash the app.
         }
     }
+
+    /// <summary>
+    /// Write through a temp file and swap, so a kill mid-write cannot leave a
+    /// truncated JSON behind. A truncated settings/progress file is silently
+    /// discarded on the next start, which loses the player's whole checklist.
+    /// </summary>
+    public static void WriteAllTextAtomic(string path, string contents)
+    {
+        var tmp = path + ".tmp";
+        File.WriteAllText(tmp, contents);
+        File.Move(tmp, path, overwrite: true);
+    }
 }
 
 public sealed class SettingsService
@@ -113,7 +124,7 @@ public sealed class SettingsService
             {
                 Directory.CreateDirectory(AppPaths.DataDir);
                 var json = JsonSerializer.Serialize(settings, AppJsonContext.Default.AppSettings);
-                File.WriteAllText(AppPaths.SettingsFile, json);
+                AppPaths.WriteAllTextAtomic(AppPaths.SettingsFile, json);
             }
             catch (Exception ex)
             {

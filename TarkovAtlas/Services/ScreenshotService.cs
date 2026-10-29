@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using TarkovAtlas.Models;
 
@@ -25,7 +26,7 @@ public sealed class ScreenshotService : IDisposable
 
     public static readonly string[] Extensions = { ".png", ".jpg", ".jpeg", ".bmp" };
 
-    public ScreenshotInfo? Parse(string path)
+    public ScreenshotInfo? Parse(string path, bool strictOnly = false)
     {
         try
         {
@@ -50,6 +51,10 @@ public sealed class ScreenshotService : IDisposable
             }
             else
             {
+                // A loose match on a hand-renamed file is fine for a one-off
+                // import, but never for the folder scan: "IMG_1,2,3.png" is not
+                // a screenshot and must not become a pin (or be deleted).
+                if (strictOnly) return null;
                 var loose = LoosePattern.Match(name);
                 if (!loose.Success) return null;
                 x = Num(loose.Groups["x"].Value);
@@ -113,7 +118,7 @@ public sealed class ScreenshotService : IDisposable
 
             foreach (var file in files)
             {
-                var info = Parse(file.FullName);
+                var info = Parse(file.FullName, strictOnly: true);
                 if (info is not null) result.Add(info);
             }
         }
@@ -125,23 +130,58 @@ public sealed class ScreenshotService : IDisposable
     }
 
     /// <summary>
-    /// Delete a screenshot once its coordinates were imported so the folder does
-    /// not fill with junk. Coordinates live entirely in the file name, so the
-    /// image itself is no longer needed.
+    /// Move a screenshot to the Recycle Bin once its coordinates were imported,
+    /// so the folder does not fill with junk. Opt-in only (the settings default
+    /// is off) and the file must carry the exact game-format name, because
+    /// anything else in that folder belongs to the user.
     /// </summary>
     public bool TryDeleteAfterImport(string path)
     {
         try
         {
             if (!File.Exists(path)) return false;
-            File.Delete(path);
-            return true;
+            if (!StrictPattern.IsMatch(Path.GetFileNameWithoutExtension(path))) return false;
+            return MoveToRecycleBin(path);
         }
         catch (Exception ex)
         {
             AppPaths.LogCrash(ex);
             return false;
         }
+    }
+
+    private const uint FoDelete = 3;
+    private const ushort FofSilent = 0x0004;
+    private const ushort FofNoConfirmation = 0x0010;
+    private const ushort FofAllowUndo = 0x0040;
+    private const ushort FofNoErrorUi = 0x0400;
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    private struct ShFileOpStruct
+    {
+        public IntPtr hwnd;
+        public uint wFunc;
+        public string pFrom;
+        public string? pTo;
+        public ushort fFlags;
+        public int fAnyOperationsAborted;
+        public IntPtr hNameMappings;
+        public string? lpszProgressTitle;
+    }
+
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+    private static extern int SHFileOperation(ref ShFileOpStruct op);
+
+    /// <summary>Delete through the shell so the file lands in the Recycle Bin.</summary>
+    private static bool MoveToRecycleBin(string path)
+    {
+        var op = new ShFileOpStruct
+        {
+            wFunc = FoDelete,
+            pFrom = path + "\0\0",
+            fFlags = FofAllowUndo | FofNoConfirmation | FofSilent | FofNoErrorUi,
+        };
+        return SHFileOperation(ref op) == 0 && op.fAnyOperationsAborted == 0 && !File.Exists(path);
     }
 
     public void StartWatching(string directory, Action<ScreenshotInfo> onNew)
@@ -183,7 +223,7 @@ public sealed class ScreenshotService : IDisposable
             {
                 // Let the game finish writing the PNG before reading its metadata.
                 await Task.Delay(450);
-                var info = Parse(e.FullPath);
+                var info = Parse(e.FullPath, strictOnly: true);
                 if (info is not null) _onNew?.Invoke(info);
             }
             catch (Exception ex)

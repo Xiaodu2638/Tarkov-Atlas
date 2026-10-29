@@ -101,19 +101,34 @@ public partial class OverlayWindow : Window, IOverlayState
 
     private void PlaceWindow(AppSettings settings)
     {
-        var screen = Screens.Primary;
+        // Restore the exact position (so the mini-map can stay on a second
+        // monitor); fall back to the anchor preset on the primary screen.
+        var saved = settings.OverlayScreenX is int sx && settings.OverlayScreenY is int sy
+            ? new PixelPoint(sx, sy)
+            : (PixelPoint?)null;
+        var screen = (saved is { } point ? Screens.ScreenFromPoint(point) : null) ?? Screens.Primary;
         var area = screen?.WorkingArea ?? new PixelRect(0, 0, 1920, 1080);
         var scaling = screen?.Scaling ?? 1.0;
         var w = (int)Math.Round(Width * scaling);
         var h = (int)Math.Round(Height * scaling);
 
-        var x = area.Right - w - (int)Math.Round(settings.OverlayOffsetX * scaling);
-        var y = settings.OverlayAnchor switch
+        int x, y;
+        if (saved is { } pos)
         {
-            "top" => area.Y + (int)Math.Round(settings.OverlayOffsetY * scaling),
-            "bottom" => area.Bottom - h - (int)Math.Round(settings.OverlayOffsetY * scaling),
-            _ => area.Y + (area.Height - h) / 2 + (int)Math.Round(settings.OverlayOffsetY * scaling),
-        };
+            x = pos.X;
+            y = pos.Y;
+        }
+        else
+        {
+            x = area.Right - w - (int)Math.Round(settings.OverlayOffsetX * scaling);
+            y = settings.OverlayAnchor switch
+            {
+                "top" => area.Y + (int)Math.Round(settings.OverlayOffsetY * scaling),
+                "bottom" => area.Bottom - h - (int)Math.Round(settings.OverlayOffsetY * scaling),
+                _ => area.Y + (area.Height - h) / 2 + (int)Math.Round(settings.OverlayOffsetY * scaling),
+            };
+        }
+
         x = Math.Clamp(x, area.X, Math.Max(area.X, area.Right - w));
         y = Math.Clamp(y, area.Y, Math.Max(area.Y, area.Bottom - h));
         Position = new PixelPoint(x, y);

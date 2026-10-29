@@ -63,6 +63,11 @@ public sealed partial class TaskGuideService
                 ? raw
                 : "https://www.eftarkov.com" + (raw.StartsWith('/') ? raw : "/" + raw);
 
+            // Only ever hand an https URL to the downloader / shell. The list
+            // comes from a remote page, so it is untrusted input.
+            if (!Uri.TryCreate(absolute, UriKind.Absolute, out var uri)
+                || uri.Scheme != Uri.UriSchemeHttps) continue;
+
             if (seen.Add(absolute)) result.Add(absolute);
         }
 
