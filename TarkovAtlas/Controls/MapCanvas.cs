@@ -500,6 +500,7 @@ public sealed class MapCanvas : Control
         if (Options.ShowHazards) DrawHazards(context);
         if (Options.ShowSpawns) DrawSpawns(context);
         if (Options.ShowTransits) DrawTransits(context);
+        DrawBtrs(context);
         if (Options.ShowCaches) DrawCaches(context);
         DrawPois(context);
         if (Options.ShowExtracts) DrawExtracts(context);
@@ -734,6 +735,34 @@ public sealed class MapCanvas : Control
             var s = Project(t.X, t.Z);
             if (!OnScreen(s, 30)) continue;
             context.DrawRectangle(TransitFill, TransitPen, new Rect(s.X - 5, s.Y - 5, 10, 10));
+        }
+    }
+
+    /// <summary>
+    /// BTR taxi stops (BTR 站点). A wheel glyph: ring plus three spokes, so it
+    /// reads apart from the transit square at a glance.
+    /// </summary>
+    private void DrawBtrs(DrawingContext context)
+    {
+        if (_map is null || _map.Btrs.Count == 0 || _zoom < 0.9) return;
+        var r = Math.Clamp(6.0 * Math.Sqrt(_zoom), 5.5, 10);
+        var showLabel = !Compact && _zoom >= 1.1;
+        foreach (var stop in _map.Btrs)
+        {
+            var s = Project(stop.X, stop.Z);
+            if (!OnScreen(s, 30)) continue;
+
+            context.DrawEllipse(TransitFill, TransitPen, s, r, r);
+            // hub + 3 spokes = wheel
+            context.DrawLine(TransitPen, s, new Point(s.X + r * 0.7, s.Y - r * 0.4));
+            context.DrawLine(TransitPen, s, new Point(s.X - r * 0.7, s.Y - r * 0.4));
+            context.DrawLine(TransitPen, s, new Point(s.X, s.Y + r * 0.8));
+
+            if (!showLabel) continue;
+            var label = Text(stop.Name, 10, TransitBrush);
+            var pos = new Point(s.X - label.Width / 2, s.Y + r + 3);
+            context.DrawText(Text(stop.Name, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+            context.DrawText(label, pos);
         }
     }
 
