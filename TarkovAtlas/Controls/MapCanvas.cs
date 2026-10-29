@@ -535,6 +535,9 @@ public sealed class MapCanvas : Control
         if (_map is null || _zoom < 0.55) return;
         var size = Math.Clamp(6.5 * Math.Sqrt(_zoom), 5.5, 11);
         var diamond = Diamond(size);
+        // Toolbox artwork icons (PMC/SCAV/通用撤离点) replace the plain diamond
+        // once the zoom shows them at a readable size.
+        var iconSide = Math.Clamp(22.0 * Math.Sqrt(_zoom), 18, 34);
         foreach (var e in _map.Extracts)
         {
             if (!ExtractVisible(e)) continue;
@@ -543,13 +546,22 @@ public sealed class MapCanvas : Control
 
             var brush = e.Faction == "scav" ? ExtractScav : e.Faction == "shared" ? ExtractShared : ExtractPmc;
             var pen = e.Faction == "scav" ? ExtractScavPen : e.Faction == "shared" ? ExtractSharedPen : ExtractPmcPen;
-            using (context.PushTransform(Matrix.CreateTranslation(s.X, s.Y)))
-                context.DrawGeometry(ExtractFill, pen, diamond);
+            var icon = LoadCached("legend", e.Faction == "scav" ? "extract-scav"
+                : e.Faction == "shared" ? "extract-shared" : "extract-pmc");
+            if (icon is not null)
+            {
+                context.DrawImage(icon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
+            }
+            else
+            {
+                using (context.PushTransform(Matrix.CreateTranslation(s.X, s.Y)))
+                    context.DrawGeometry(ExtractFill, pen, diamond);
+            }
 
             if (_zoom >= 1.15 && !Compact)
             {
                 var label = Text(e.Name, 10.5, brush);
-                var pos = new Point(s.X - label.Width / 2, s.Y + size + 3);
+                var pos = new Point(s.X - label.Width / 2, s.Y + iconSide / 2 + 3);
                 context.DrawText(Text(e.Name, 10.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
                 context.DrawText(label, pos);
             }
@@ -754,11 +766,16 @@ public sealed class MapCanvas : Control
     private void DrawTransits(DrawingContext context)
     {
         if (_map is null || _zoom < 0.9) return;
+        var iconSide = Math.Clamp(22.0 * Math.Sqrt(_zoom), 18, 32);
+        var transitIcon = LoadCached("legend", "transit");
         foreach (var t in _map.Transits)
         {
             var s = Project(t.X, t.Z);
             if (!OnScreen(s, 30)) continue;
-            context.DrawRectangle(TransitFill, TransitPen, new Rect(s.X - 5, s.Y - 5, 10, 10));
+            if (transitIcon is not null)
+                context.DrawImage(transitIcon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
+            else
+                context.DrawRectangle(TransitFill, TransitPen, new Rect(s.X - 5, s.Y - 5, 10, 10));
         }
     }
 

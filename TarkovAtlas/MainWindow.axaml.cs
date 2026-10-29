@@ -544,6 +544,8 @@ public partial class MainWindow : Window
     {
         public required string Label { get; init; }
         public required IBrush Swatch { get; init; }
+        /// <summary>Toolbox artwork icon (Assets/legend/{Icon}.png); wins over the swatch dot when set.</summary>
+        public string? Icon { get; init; }
         public required Func<bool> Get { get; init; }
         public required Action<bool> Set { get; init; }
         public int Count { get; init; }
@@ -566,6 +568,7 @@ public partial class MainWindow : Window
             new()
             {
                 Label = "撤离点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.ExtractPmc),
+                Icon = "extract-pmc",
                 Get = () => _settings.ShowExtracts, Set = v => _settings.ShowExtracts = v, Count = _currentMap?.Extracts.Count ?? 0,
             },
             new()
@@ -581,6 +584,7 @@ public partial class MainWindow : Window
             new()
             {
                 Label = "转移点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
+                Icon = "transit",
                 Get = () => _settings.ShowTransits, Set = v => _settings.ShowTransits = v, Count = _currentMap?.Transits.Count ?? 0,
             },
             new()
@@ -649,11 +653,23 @@ public partial class MainWindow : Window
             };
 
             var panel = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
-            panel.Children.Add(new Border
+            var iconBitmap = row.Icon is null ? null : LoadLegendIcon(row.Icon);
+            if (iconBitmap is not null)
             {
-                Width = 10, Height = 10, CornerRadius = new CornerRadius(5),
-                Background = row.Swatch, VerticalAlignment = VerticalAlignment.Center,
-            });
+                panel.Children.Add(new Image
+                {
+                    Source = iconBitmap, Width = 16, Height = 16,
+                    VerticalAlignment = VerticalAlignment.Center,
+                });
+            }
+            else
+            {
+                panel.Children.Add(new Border
+                {
+                    Width = 10, Height = 10, CornerRadius = new CornerRadius(5),
+                    Background = row.Swatch, VerticalAlignment = VerticalAlignment.Center,
+                });
+            }
             panel.Children.Add(new TextBlock
             {
                 Text = row.Label, FontSize = 11, VerticalAlignment = VerticalAlignment.Center,
@@ -670,6 +686,29 @@ public partial class MainWindow : Window
             cb.Content = panel;
             LegendItems.Children.Add(cb);
         }
+    }
+
+    private Dictionary<string, Bitmap?> _legendIconCache = new(StringComparer.OrdinalIgnoreCase);
+
+    private Bitmap? LoadLegendIcon(string stem)
+    {
+        if (_legendIconCache.TryGetValue(stem, out var cached)) return cached;
+        Bitmap? bmp = null;
+        try
+        {
+            var path = Path.Combine(AppContext.BaseDirectory, "Assets", "legend", stem + ".png");
+            if (File.Exists(path))
+            {
+                using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                bmp = new Bitmap(stream);
+            }
+        }
+        catch
+        {
+            bmp = null;
+        }
+        _legendIconCache[stem] = bmp;
+        return bmp;
     }
 
     private void DisplayMenuButton_Click(object? sender, RoutedEventArgs e)
