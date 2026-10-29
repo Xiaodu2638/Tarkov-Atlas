@@ -195,6 +195,8 @@ public sealed class MapCanvas : Control
         _floorMipBitmap = null;
         _floorMipSource = null;
         _floorMipFactor = 1;
+        _floorMipFailed = null;
+        _mipFailed = null;
         if (changed)
         {
             _zoom = 1;
@@ -400,10 +402,18 @@ public sealed class MapCanvas : Control
     /// until the map changes. <paramref name="isFloor"/> selects the mip slot:
     /// base and floor overlay are cached separately so drawing a deck does not
     /// invalidate the base mip every frame.
+    /// Hysteresis: the switch-back threshold sits below the build threshold so
+    /// a zoom right at the boundary cannot flip slots every frame (that flip
+    /// showed as flicker on multi-deck maps).
     /// </summary>
+    private const double MipBuildScale = 0.5;
+    private const double MipDropScale = 0.42;
+
     private Bitmap PickDrawBitmap(Bitmap source, bool isFloor = false)
     {
-        if (Scale >= 0.5) return source;
+        if (Scale >= MipBuildScale) return source;
+        // Below the drop threshold the downscale is cheap enough at full res.
+        if (isFloor && Scale < MipDropScale) return source;
 
         var mipSource = isFloor ? _floorMipSource : _mipSource;
         var mipBitmap = isFloor ? _floorMipBitmap : _mipBitmap;
@@ -444,10 +454,18 @@ public sealed class MapCanvas : Control
         }
         catch
         {
+            // Mip build failed: fall back to the full image for THIS slot only,
+            // and remember the failure so we do not retry every frame.
+            if (isFloor) _floorMipFailed = source;
+            else _mipFailed = source;
             return source;
         }
-        return _mipBitmap;
+        return isFloor ? _floorMipBitmap! : _mipBitmap!;
     }
+
+    /// <summary>Sources whose mip build failed — never retried.</summary>
+    private Bitmap? _mipFailed;
+    private Bitmap? _floorMipFailed;
 
     public override void Render(DrawingContext context)
     {
@@ -471,14 +489,16 @@ public sealed class MapCanvas : Control
         // Zoomed out, the viewport covers a small slice of a 5600 px bitmap and
         // the rasteriser re-samples the whole texture every drag frame. Drawing
         // a pre-shrunk copy keeps pixels identical but makes panning smooth.
-        var baseBitmap = PickDrawBitmap(_bitmap);
         var floor = Layers.FirstOrDefault(l => l.Bitmap is not null);
+        var baseBitmap = PickDrawBitmap(_bitmap);
         // The selected deck is drawn opaque over a dimmed base, so the base
         // pixels below it are invisible — resampling BOTH full-size textures
         // per drag frame was the main cost on multi-deck maps (Factory,
         // Customs, Streets vs single-bitmap Woods). Floor overlays get the
         // same pre-shrunk mip treatment as the base.
-        var floorBitmap = floor is null ? null : PickDrawBitmap(floor.Bitmap!, isFloor: true);
+        var floorBitmap = floor is null || _floorMipFailed == floor.Bitmap
+            ? floor?.Bitmap
+            : PickDrawBitmap(floor.Bitmap!, isFloor: true);
 
         // A floor overlay is a different deck, not a highlight: blending it
         // over the ground floor at 75% left both wall sets visible at once,
