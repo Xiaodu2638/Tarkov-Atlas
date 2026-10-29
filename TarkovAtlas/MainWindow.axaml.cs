@@ -1420,10 +1420,10 @@ public partial class MainWindow : Window
         // (see RefreshQuestRowStates), so the list keeps its scroll position.
 
         // A task often scatters several zones across one map; mark every one of
-        // them and centre on the first so nothing needs a second search.
+        // them and centre on the group so nothing needs a second search.
         var zones = quest.ObjectivesFor(target.Key)
             .SelectMany(o => o.Zones)
-            .Where(z => z.Map == target.Key)
+            .Where(z => string.Equals(z.Map, target.Key, StringComparison.OrdinalIgnoreCase))
             .ToList();
         if (zones.Count > 0)
         {
@@ -1433,12 +1433,15 @@ public partial class MainWindow : Window
                 .Select((z, i) => (z.X, z.Z, i == 0 ? quest.Title : ""))
                 .ToList();
             MapView.SetFocusPins(pins);
+            ShowToast($"已跳转到 {target.DisplayName}" + (pins.Count > 1 ? $"（{pins.Count} 个任务点）" : ""));
         }
         else
         {
+            // Task names the map but carries no coordinates (hand-in / kill
+            // tasks) — say so instead of silently doing nothing.
             MapView.ClearFocusPin();
+            ShowToast($"已跳转到 {target.DisplayName}（该任务没有具体地点坐标）");
         }
-        ShowToast($"已跳转到 {target.DisplayName}" + (zones.Count > 1 ? $"（{zones.Count} 个任务点）" : ""));
     }
 
     /// <summary>Jump to the map (and calibrated marker) of one story objective.</summary>

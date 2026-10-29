@@ -266,10 +266,10 @@ public sealed class MapCanvas : Control
 
     /// <summary>
     /// Mark every objective zone of one jump at once. The view centres on the
-    /// first pin; the remaining ones stay highlighted so nothing is missed when
-    /// a task scatters its objectives across one map.
+    /// centroid of all pins and picks a zoom that fits the whole group, so a
+    /// task with several far-apart points is readable in one jump.
     /// </summary>
-    public void SetFocusPins(IReadOnlyList<(double X, double Z, string Label)> pins, double zoom = 3.2)
+    public void SetFocusPins(IReadOnlyList<(double X, double Z, string Label)> pins, double zoom = 0)
     {
         if (pins.Count == 0)
         {
@@ -278,7 +278,31 @@ public sealed class MapCanvas : Control
         }
         _focusPins = pins.ToList();
         _focusPin = (pins[0].X, pins[0].Z, pins[0].Label);
-        FocusOn(pins[0].X, pins[0].Z, zoom);
+
+        // Centroid of the group (not the first point) so the whole group frames.
+        var cx = pins.Average(p => p.X);
+        var cz = pins.Average(p => p.Z);
+
+        if (zoom <= 0 && _map is not null && _fit > 0 && Bounds.Width > 1 && Bounds.Height > 1)
+        {
+            // Largest half-extent from the centroid, in game metres.
+            var spread = pins.Max(p => Math.Sqrt((p.X - cx) * (p.X - cx) + (p.Z - cz) * (p.Z - cz)));
+            spread = Math.Max(spread, 25.0);
+            // pixels per metre at zoom 1 = _fit * |affine a|
+            var pxPerMetre1 = Math.Abs(_map.Affine[0]) * _fit;
+            if (pxPerMetre1 > 1e-9)
+            {
+                var targetPxPerMetre = (Math.Min(Bounds.Width, Bounds.Height) * 0.45) / spread;
+                zoom = Math.Clamp(targetPxPerMetre / pxPerMetre1, 0.5, 12);
+            }
+            else
+            {
+                zoom = 3.2;
+            }
+        }
+        if (zoom <= 0) zoom = 3.2;
+
+        FocusOn(cx, cz, zoom);
     }
 
     public void ClearFocusPin()

@@ -537,8 +537,40 @@
      ]
     },
     {
+     "text": "在海岸线找到第一辆载有UN失踪货物的卡车",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -234.49,
+       "z": -164.42
+      },
+      {
+       "map": "shoreline",
+       "x": -234.49,
+       "z": -164.42
+      }
+     ]
+    },
+    {
      "text": "使用MS2000指示器标记第二辆UN卡车",
      "type": "mark",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -596.26,
+       "z": 475.53
+      },
+      {
+       "map": "shoreline",
+       "x": -596.26,
+       "z": 475.53
+      }
+     ]
+    },
+    {
+     "text": "在海岸线找到第二辆载有UN失踪货物的卡车",
+     "type": "visit",
      "zones": [
       {
        "map": "shoreline",
@@ -1242,7 +1274,19 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到埋藏地点",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -542.37,
+       "z": -203.87
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6746053b5b555b53460d9896",
@@ -1632,7 +1676,24 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到化工厂前安全副官的住处",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 487.89,
+       "z": -139.85
+      },
+      {
+       "map": "customs",
+       "x": 487.89,
+       "z": -139.85
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "597a0b2986f77426d66c0633",
@@ -2081,6 +2142,17 @@
        "z": -31.87
       }
      ]
+    },
+    {
+     "text": "在工厂找到有气体分析仪的房间",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 40.29,
+       "z": -11.64
+      }
+     ]
     }
    ]
   },
@@ -2243,6 +2315,116 @@
        "map": "streets-of-tarkov",
        "x": 83.02,
        "z": -30.5
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区的Klimov大街找到第一批ATM机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 97.42,
+       "z": -22.25
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 商场内找到第一台 ATM 机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -148.57,
+       "z": -62.75
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区的Klimov大街找到第一台ATM机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 83.02,
+       "z": -30.5
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 大街找到第三台ATM机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 8.29,
+       "z": 5.15
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 商场内找到第二台 ATM 机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -113.87,
+       "z": -12.51
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 商场内找到第三台 ATM 机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -166.48,
+       "z": -3.38
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 大街找到第一批 ATM 机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -160.19,
+       "z": -47.81
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 大街找到第二台ATM机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 0.45,
+       "z": -18.79
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 商场内找到第二批 ATM 机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -35.2,
+       "z": -69.98
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区 Klimov 商场内找到第三批 ATM 机",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -53.58,
+       "z": -69.35
       }
      ]
     }
@@ -2478,10 +2660,33 @@
    "level": 45,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hobby_Club",
    "maps": [
+    "reserve",
     "customs"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在储备站找到格鲁哈的车间",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 45.47,
+       "z": -117.47
+      }
+     ]
+    },
+    {
+     "text": "找到被抢货物所在的检查站",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 584.28,
+       "z": 5.02
+      }
+     ]
+    },
     {
      "text": "在海关指定位置藏匿 AK-50 枪身主体",
      "type": "plantItem",
@@ -2606,6 +2811,17 @@
        "map": "reserve",
        "x": -119.75,
        "z": 171.79
+      }
+     ]
+    },
+    {
+     "text": "找到开启地堡出口的开关",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -117.22,
+       "z": 22.4
       }
      ]
     }
@@ -5432,7 +5648,24 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "设法进入宿舍214房间",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 176.42,
+       "z": 184.25
+      },
+      {
+       "map": "customs",
+       "x": 176.42,
+       "z": 184.25
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "639135e8c115f907b14700aa",
@@ -5665,6 +5898,28 @@
        "z": 51.33
       }
      ]
+    },
+    {
+     "text": "在中心区的 TerraGroup 大楼停车场找到 USEC PMC的踪迹",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": -21.01,
+       "z": -25.1
+      }
+     ]
+    },
+    {
+     "text": "在中心区的 TerraGroup 总部内找到实验室科学家",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": -60.45,
+       "z": 27.42
+      }
+     ]
     }
    ]
   },
@@ -5679,7 +5934,40 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到信使的尸体",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 27.49,
+       "z": -110.2
+      },
+      {
+       "map": "customs",
+       "x": 27.49,
+       "z": -110.2
+      }
+     ]
+    },
+    {
+     "text": "在海关找到信使藏匿货物的地点",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 368.89,
+       "z": -49.89
+      },
+      {
+       "map": "customs",
+       "x": 368.89,
+       "z": -49.89
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "657315ddab5a49b71f098853",
@@ -6057,6 +6345,83 @@
       {
        "map": "customs",
        "x": 65.16,
+       "z": -47.69
+      }
+     ]
+    },
+    {
+     "text": "在海关找到第一批 TerraGroup 特殊货物",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 147.94,
+       "z": -67.8
+      }
+     ]
+    },
+    {
+     "text": "在海关找到第二批 TerraGroup 特殊货物",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": -184.33,
+       "z": -132.6
+      }
+     ]
+    },
+    {
+     "text": "在海关找到第三批 TerraGroup 特殊货物",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 60.26,
+       "z": -66.22
+      }
+     ]
+    },
+    {
+     "text": "在海关找到第四批 TerraGroup 特殊货物",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 115.56,
+       "z": -38.55
+      }
+     ]
+    },
+    {
+     "text": "在海关找到第五批 TerraGroup 特殊货物",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 103.07,
+       "z": -65.35
+      }
+     ]
+    },
+    {
+     "text": "在海关找到第六批 TerraGroup 特殊货物",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 66.58,
+       "z": -60.27
+      }
+     ]
+    },
+    {
+     "text": "在海关找到第七批 TerraGroup 特殊货物",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 65.1,
        "z": -47.69
       }
      ]
@@ -8983,9 +9348,23 @@
    "trader": "54cb50c76803fa8b248b4571",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Bad_Rep_Evidence",
-   "maps": [],
+   "maps": [
+    "factory"
+   ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "设法进入工厂办公区三楼的上锁房间",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 30.13,
+       "z": 38.89
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "63a88045abf76d719f42d715",
@@ -9468,6 +9847,17 @@
        "z": 52.42
       }
      ]
+    },
+    {
+     "text": "在塔科夫街区找到Prapor朋友的公寓",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 131.43,
+       "z": 232.37
+      }
+     ]
     }
    ]
   },
@@ -9518,7 +9908,40 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到急救员的车",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 579.37,
+       "z": -1.82
+      },
+      {
+       "map": "customs",
+       "x": 579.37,
+       "z": -1.82
+      }
+     ]
+    },
+    {
+     "text": "进入海关双层宿舍楼的114房间",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 235.48,
+       "z": 160.07
+      },
+      {
+       "map": "customs",
+       "x": 235.48,
+       "z": 160.07
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "59675d6c86f7740a842fc482",
@@ -9531,7 +9954,19 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林找到上锁的地堡",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 443.010376,
+       "z": 67.66608
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66aba85403e0ee3101042877",
@@ -9553,6 +9988,17 @@
        "map": "the-lab",
        "x": -127.06,
        "z": -309.28
+      }
+     ]
+    },
+    {
+     "text": "在同场战局中找到实验室通往塔科夫街区的道路",
+     "type": "visit",
+     "zones": [
+      {
+       "map": "the-lab",
+       "x": -169.96,
+       "z": -419.24
       }
      ]
     },
@@ -10842,7 +11288,8 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Hot_Wheels",
    "maps": [
-    "reserve"
+    "reserve",
+    "customs"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10854,6 +11301,107 @@
        "map": "reserve",
        "x": 100.4,
        "z": 27.71
+      }
+     ]
+    },
+    {
+     "text": "尽快达成主要任务",
+     "type": "plantItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 377.28,
+       "z": 20.87
+      },
+      {
+       "map": "customs",
+       "x": 117.62,
+       "z": -85.58
+      },
+      {
+       "map": "customs",
+       "x": 317.76,
+       "z": -191.18
+      },
+      {
+       "map": "customs",
+       "x": 573.08,
+       "z": -89.95
+      },
+      {
+       "map": "customs",
+       "x": 6.04,
+       "z": -98.7
+      },
+      {
+       "map": "customs",
+       "x": 343.13,
+       "z": -158.93
+      },
+      {
+       "map": "customs",
+       "x": 557.52,
+       "z": -0.95
+      },
+      {
+       "map": "customs",
+       "x": -176.7,
+       "z": -209.03
+      },
+      {
+       "map": "customs",
+       "x": -279.06,
+       "z": -141.9
+      },
+      {
+       "map": "customs",
+       "x": 43.82,
+       "z": -157.24
+      },
+      {
+       "map": "customs",
+       "x": 113.24,
+       "z": -94.7
+      },
+      {
+       "map": "customs",
+       "x": 21.94,
+       "z": 96.8
+      },
+      {
+       "map": "customs",
+       "x": 96.38,
+       "z": -86.8
+      },
+      {
+       "map": "customs",
+       "x": -226.73,
+       "z": -89.03
+      },
+      {
+       "map": "customs",
+       "x": 92.34,
+       "z": -152
+      },
+      {
+       "map": "customs",
+       "x": 67.26,
+       "z": -142.79
+      },
+      {
+       "map": "customs",
+       "x": -203.24,
+       "z": -188.28
+      },
+      {
+       "map": "customs",
+       "x": -254.82,
+       "z": -91.26
+      },
+      {
+       "map": "customs",
+       "x": -226.13,
+       "z": -91.69
       }
      ]
     }
