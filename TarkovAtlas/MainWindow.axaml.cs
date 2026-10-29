@@ -1246,12 +1246,26 @@ public partial class MainWindow : Window
         // ProgressChanged already re-synced the row states without re-sorting
         // (see RefreshQuestRowStates), so the list keeps its scroll position.
 
-        var first = quest.ObjectivesFor(target.Key).SelectMany(o => o.Zones).FirstOrDefault(z => z.Map == target.Key);
-        if (first is not null)
-            MapView.SetFocusPin(first.X, first.Z, quest.Title, focus: true);
+        // A task often scatters several zones across one map; mark every one of
+        // them and centre on the first so nothing needs a second search.
+        var zones = quest.ObjectivesFor(target.Key)
+            .SelectMany(o => o.Zones)
+            .Where(z => z.Map == target.Key)
+            .ToList();
+        if (zones.Count > 0)
+        {
+            var seen = new HashSet<(int, int)>();
+            var pins = zones
+                .Where(z => seen.Add(((int)Math.Round(z.X), (int)Math.Round(z.Z))))
+                .Select((z, i) => (z.X, z.Z, i == 0 ? quest.Title : ""))
+                .ToList();
+            MapView.SetFocusPins(pins);
+        }
         else
+        {
             MapView.ClearFocusPin();
-        ShowToast($"已跳转到 {target.DisplayName}");
+        }
+        ShowToast($"已跳转到 {target.DisplayName}" + (zones.Count > 1 ? $"（{zones.Count} 个任务点）" : ""));
     }
 
     /// <summary>Jump to the map (and calibrated marker) of one story objective.</summary>

@@ -164,6 +164,12 @@ public sealed class MapCanvas : Control
 
     private readonly List<(QuestMarker Marker, Rect Box)> _markerHits = new();
     private (double X, double Z, string Label)? _focusPin;
+    /// <summary>
+    /// Extra objective pins for a task jump: a single quest can have several
+    /// zones on one map, so the view marks all of them and centres on the
+    /// first. Each entry is labelled 1/2/3… in draw order.
+    /// </summary>
+    private List<(double X, double Z, string Label)>? _focusPins;
     public event EventHandler<(double X, double Z)>? CursorGameMoved;
     /// <summary>Raised after the zoom level changed, so the UI can update its label.</summary>
     public event EventHandler? ViewChanged;
@@ -187,6 +193,7 @@ public sealed class MapCanvas : Control
             _circleCache.Clear();
             _markerHits.Clear();
             _focusPin = null;
+            _focusPins = null;
             Hazards = map?.Hazards ?? new List<HazardZone>();
             _hazardCache = null;
             _hazardCacheMap = null;
@@ -238,14 +245,33 @@ public sealed class MapCanvas : Control
     public void SetFocusPin(double gameX, double gameZ, string label, bool focus = false, double zoom = 3.2)
     {
         _focusPin = (gameX, gameZ, label ?? "");
+        _focusPins = null;
         if (focus) FocusOn(gameX, gameZ, zoom);
         else InvalidateVisual();
     }
 
+    /// <summary>
+    /// Mark every objective zone of one jump at once. The view centres on the
+    /// first pin; the remaining ones stay highlighted so nothing is missed when
+    /// a task scatters its objectives across one map.
+    /// </summary>
+    public void SetFocusPins(IReadOnlyList<(double X, double Z, string Label)> pins, double zoom = 3.2)
+    {
+        if (pins.Count == 0)
+        {
+            ClearFocusPin();
+            return;
+        }
+        _focusPins = pins.ToList();
+        _focusPin = (pins[0].X, pins[0].Z, pins[0].Label);
+        FocusOn(pins[0].X, pins[0].Z, zoom);
+    }
+
     public void ClearFocusPin()
     {
-        if (_focusPin is null) return;
+        if (_focusPin is null && _focusPins is null) return;
         _focusPin = null;
+        _focusPins = null;
         InvalidateVisual();
     }
 
@@ -900,7 +926,25 @@ public sealed class MapCanvas : Control
 
     private void DrawFocusPin(DrawingContext context)
     {
-        if (_map is null || _focusPin is not { } pin) return;
+        if (_map is null) return;
+
+        // Secondary objective pins of the same jump: same crosshair styling,
+        // but numbered instead of labelled so they never fight for space.
+        if (_focusPins is { Count: > 1 })
+        {
+            for (var i = 1; i < _focusPins.Count; i++)
+            {
+                var (px, pz, _) = _focusPins[i];
+                var ps = Project(px, pz);
+                if (!OnScreen(ps, 80)) continue;
+                context.DrawEllipse(FocusHalo, null, ps, 13, 13);
+                context.DrawEllipse(null, AccentPen, ps, 8, 8);
+                var num = Text((i + 1).ToString(CultureInfo.InvariantCulture), 9, QuestLabelBrush);
+                context.DrawText(num, new Point(ps.X - num.Width / 2, ps.Y - num.Height / 2));
+            }
+        }
+
+        if (_focusPin is not { } pin) return;
         var s = Project(pin.X, pin.Z);
         if (!OnScreen(s, 80)) return;
 
