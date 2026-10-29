@@ -607,6 +607,38 @@ public partial class MainWindow : Window
         _ => kind,
     };
 
+    /// <summary>Icon stem for each loot container kind (Assets/legend/*.png).</summary>
+    private static string LootKindIcon(string kind) => kind switch
+    {
+        "duffle-bag" => "loot-duffle-bag",
+        "drawer" or "filing-cabinet" => "loot-drawer",
+        "weapon-box" or "weapon-rack" => "loot-weapon-box",
+        "toolbox" => "loot-toolbox",
+        "jacket" => "loot-jacket",
+        "pc-block" => "loot-pc-block",
+        "grenade-box" => "loot-grenade-box",
+        "dead-scav" or "civilian-body" or "scav-body"
+            or "lab-technician-body" or "pmc-body" => "loot-dead-scav",
+        "technical-supply-crate" => "loot-technical-crate",
+        "medical-supply-crate" => "loot-medical-crate",
+        "medcase" or "medbag" => "loot-medbox",
+        "safe" or "bank-safe" or "cash-register" or "bank-cash-register" => "loot-safe",
+        "ration-supply-crate" => "loot-ration-crate",
+        "wooden-crate" or "wooden-ammo-box" => "loot-ammo-box",
+        "plastic-suitcase" => "loot-weapon-box",
+        _ => "loot-toolbox",
+    };
+
+    /// <summary>Icon stem for a POI kind (Assets/legend/*.png); null = dot only.</summary>
+    private static string? PoiKindIcon(string kind) => kind switch
+    {
+        "钥匙" => "key-cultist-1",
+        "解除陷阱" => "lock",
+        "喷灯" => "loot-toolbox",
+        "阀门手轮" => "loot-toolbox",
+        _ => null,
+    };
+
     /// <summary>Collect the legend rows for the current map's display state.</summary>
     private List<LegendRow> CollectLegendRows()
     {
@@ -647,6 +679,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "Boss 刷点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Boss),
+                Icon = "boss-shturman",
                 Group = points,
                 Get = () => _settings.ShowBosses, Set = v => _settings.ShowBosses = v, Count = map?.Bosses.Sum(b => b.Points.Count) ?? 0,
             });
@@ -656,6 +689,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "出生点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.SpawnPmc),
+                Icon = "loot-dead-scav",
                 Group = points,
                 Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = map?.Spawns.Count ?? 0,
             });
@@ -674,6 +708,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "BTR 站点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
+                Icon = "btr-model",
                 Group = points,
                 Get = () => _settings.ShowBtrs, Set = v => _settings.ShowBtrs = v, Count = map?.Btrs.Count ?? 0,
             });
@@ -683,6 +718,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "资源埋藏点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.CacheStroke),
+                Icon = "loot-ammo-box",
                 Group = points,
                 Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = map?.Caches.Count ?? 0,
             });
@@ -701,6 +737,7 @@ public partial class MainWindow : Window
                 {
                     Label = LootKindLabel(kind),
                     Swatch = MapCanvas.LootBrushFor(kind),
+                    Icon = LootKindIcon(kind),
                     Group = loot,
                     Get = () => !_settings.HiddenLootKinds.Contains(k),
                     Set = v =>
@@ -717,6 +754,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "危险区", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.MinefieldStroke),
+                Icon = "hazard",
                 Group = env,
                 Get = () => _settings.ShowHazards, Set = v => _settings.ShowHazards = v, Count = map?.Hazards.Count ?? 0,
             });
@@ -726,6 +764,7 @@ public partial class MainWindow : Window
             rows.Add(new()
             {
                 Label = "地名", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Label),
+                Icon = "label",
                 Group = env,
                 Get = () => _settings.ShowLabels, Set = v => _settings.ShowLabels = v, Count = map?.Labels.Count ?? 0,
             });
@@ -741,6 +780,7 @@ public partial class MainWindow : Window
                 {
                     Label = label,
                     Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.QuestMarkerStroke),
+                    Icon = PoiKindIcon(kind),
                     Group = items,
                     Get = () => !_settings.HiddenPoiKinds.Contains(kind),
                     Set = v =>

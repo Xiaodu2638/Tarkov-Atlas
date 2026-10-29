@@ -958,14 +958,14 @@ public sealed class MapCanvas : Control
     {
         if (_map is null || QuestMarkers.Count == 0) return;
 
-        // Below this zoom hundreds of avatars overlap into an unreadable carpet
-        // and each one costs a texture draw. Show small dots instead; the hit
-        // targets and tooltips still work.
-        var detailed = _zoom >= 0.55;
-        var radius = detailed ? (Compact ? 11.0 : Math.Clamp(11 * Math.Sqrt(_zoom), 10, 16)) : 4.5;
+        // Tracked tasks only — a handful of markers at most — so the avatar is
+        // drawn at every zoom ("常驻") instead of degrading to a dot when the
+        // user zooms out and losing the task on the map.
+        var radius = Compact ? 11.0 : Math.Clamp(11 * Math.Sqrt(_zoom), 10, 16);
         // Task names ride along with the avatar from the moment the avatar is
         // drawn — a bare portrait does not tell the user WHICH task it marks.
-        var showName = detailed && !Compact;
+        // At far zoom the names stack into noise, so keep those gated.
+        var showName = !Compact && _zoom >= 0.55;
         var seen = new HashSet<(string Quest, int X, int Y)>();
         foreach (var marker in QuestMarkers)
         {
@@ -977,11 +977,6 @@ public sealed class MapCanvas : Control
                 continue;
 
             _markerHits.Add((marker, new Rect(s.X - radius, s.Y - radius, radius * 2, radius * 2)));
-            if (!detailed)
-            {
-                context.DrawEllipse(DotBrush, null, s, radius, radius);
-                continue;
-            }
 
             context.DrawEllipse(MarkerShadow, null, new Point(s.X + 1, s.Y + 2), radius + 1, radius + 1);
             context.DrawEllipse(QuestMarkerFill, QuestMarkerPen, s, radius, radius);
