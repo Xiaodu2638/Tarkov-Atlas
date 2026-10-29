@@ -349,7 +349,13 @@ public partial class MainWindow : Window
                 preferred = views.FirstOrDefault(v => v.MatchesHeight(_lastPlayerY));
 
             if (preferred is null && _settings.SelectedLayer.TryGetValue(map.Key, out var saved))
-                preferred = views.FirstOrDefault(v => v.Name == saved);
+            {
+                // A stale saved pick ("2nd Floor" remembered before the Ground
+                // entry existed) must not shadow the real ground floor.
+                var savedView = views.FirstOrDefault(v => v.Name == saved);
+                if (savedView is not null && savedView.Source?.Image is not "")
+                    preferred = savedView;
+            }
 
             preferred ??= views.FirstOrDefault();
 
