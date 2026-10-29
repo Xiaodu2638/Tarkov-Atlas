@@ -566,7 +566,29 @@ public sealed class MapCanvas : Control
         foreach (var boss in _map.Bosses)
         {
             var showLabel = !Compact && _zoom >= 0.85 && labelled.Add(boss.Mob);
-            foreach (var point in boss.Points)
+            // Bosses roam (三狗 patrols the whole compound). Instead of one
+            // portrait per spawn point, cluster the raw points, draw ONE
+            // avatar at the cluster centre and a translucent patrol range
+            // circle around it covering all its points.
+            var pts = boss.Points;
+            if (pts.Count == 0) continue;
+            var cx = pts.Average(p => p.X);
+            var cz = pts.Average(p => p.Z);
+            var radiusGame = pts.Max(p => Math.Sqrt((p.X - cx) * (p.X - cx) + (p.Z - cz) * (p.Z - cz)));
+            // range never smaller than the avatar itself
+            const double minRangeM = 24.0;
+            var rangeM = Math.Max(radiusGame, minRangeM);
+
+            var centre = Project(cx, cz);
+            if (OnScreen(centre, 160))
+            {
+                var rangePx = rangeM * Math.Abs(_map.Affine[0]) * Scale;
+                var rangeBrush = _bossRangeCache ??= Palette.Brush(Palette.BossHalo);
+                context.DrawEllipse(rangeBrush, null, centre, rangePx, rangePx);
+                context.DrawEllipse(null, BossRingPen, centre, rangePx, rangePx);
+            }
+
+            foreach (var point in pts)
             {
                 var s = Project(point.X, point.Z);
                 if (!OnScreen(s, 40)) continue;
@@ -611,6 +633,8 @@ public sealed class MapCanvas : Control
             }
         }
     }
+
+    private IBrush? _bossRangeCache;
 
     private static readonly IBrush CanvasBackground = Palette.Brush(Palette.HazardGlyph);
     private static readonly IBrush CompactBackground = Palette.Brush(Palette.CompactBg);
