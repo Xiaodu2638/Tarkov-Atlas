@@ -201,10 +201,38 @@ public sealed class ImageViewerWindow : Window
             return;
         }
 
-        // The url list is scraped from a remote page, so it is untrusted.
-        if (!IsHttps(_urls[_index]))
+        var source = _urls[_index];
+
+        // Local guide files load straight from disk; remote urls keep the
+        // https-only rule (the list used to be scraped from a web page).
+        if (File.Exists(source))
         {
-            ShowError("只支持 https 图片地址");
+            try
+            {
+                _status.Text = "正在加载…";
+                _status.Foreground = Palette.Brush(Palette.TextSecondary);
+                _prev.IsEnabled = _index > 0;
+                _next.IsEnabled = _index < _urls.Count - 1;
+                _pager.Text = _urls.Count > 1 ? $"{_index + 1} / {_urls.Count}" : "";
+
+                await using var stream = File.OpenRead(source);
+                _bitmap = new Bitmap(stream);
+                _image.Source = _bitmap;
+                _zoom = 1;
+                ApplyZoom();
+                FitToViewport();
+                _status.Text = $"{_bitmap.PixelSize.Width} × {_bitmap.PixelSize.Height}  ·  滚轮缩放  ·  拖拽平移";
+            }
+            catch (Exception ex)
+            {
+                ShowError("加载失败：" + ex.Message);
+            }
+            return;
+        }
+
+        if (!IsHttps(source))
+        {
+            ShowError("只支持 https 图片地址或本地文件");
             return;
         }
 
@@ -216,7 +244,7 @@ public sealed class ImageViewerWindow : Window
             _next.IsEnabled = _index < _urls.Count - 1;
             _pager.Text = _urls.Count > 1 ? $"{_index + 1} / {_urls.Count}" : "";
 
-            using var response = await Http.GetAsync(_urls[_index]);
+            using var response = await Http.GetAsync(source);
             if (!response.IsSuccessStatusCode)
             {
                 ShowError($"加载失败：HTTP {(int)response.StatusCode}");
@@ -263,19 +291,17 @@ public sealed class ImageViewerWindow : Window
 
     private void OpenInBrowser()
     {
-        if (!IsHttps(_urls[_index]))
-        {
-            ShowError("只支持 https 图片地址");
-            return;
-        }
+        var source = _urls[_index];
         try
         {
+            // Local files open in the system image viewer, remote ones in the
+            // default browser.
             System.Diagnostics.Process.Start(
-                new System.Diagnostics.ProcessStartInfo { FileName = _urls[_index], UseShellExecute = true });
+                new System.Diagnostics.ProcessStartInfo { FileName = source, UseShellExecute = true });
         }
         catch (Exception ex)
         {
-            ShowError("无法打开浏览器：" + ex.Message);
+            ShowError("无法打开：" + ex.Message);
         }
     }
 
