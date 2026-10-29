@@ -131,6 +131,7 @@ tools/
 7. **别 `git clean -xdf`**：会连 `research/` 和 `tools/*.py` 管线一起删掉。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
 9. **`assets.tarkov.dev` 返回 403**；GitHub 与 fandom wiki 可访问。
+10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。给某张图加 SVG 分支前，先对比 `viewBox` 的宽高比和 cardinal bounds 的宽高比；不一致就走瓦片分支。
 
 两个大文件：`MainWindow.axaml.cs`（约 1.2k 行，所有 UI 交互：地图切换、楼层、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1k 行，全部绘制）。改行为先在这两处找，不要去 Models 里猜。
 
@@ -155,7 +156,7 @@ tools/
 - **海岸线楼层**：3 层已生成，内容区仍偏小，待重烘焙。
 - 历史缺陷（破冰船空背景、实验室/迷宫硬拉伸）已修复，**不要再退回**：
   - 破冰船：`uniform_transform()` 修掉 1.75× 纵向拉伸，crop 原点改按画布帧计算，成品 4585×4270，船体占满画布。
-  - 实验室 / 迷宫：改走 SVG 分支（cardinal 帧 + 等比缩放 + 按内容裁切），实验室 5600×4082、迷宫 5204×5600。
+  - 实验室 / 迷宫：实验室改走 SVG 分支（cardinal 帧 + 等比缩放 + 按内容裁切），5600×4082；**迷宫必须走瓦片分支**（3602×3873，`TILE_MAPS`）。`Labyrinth.svg` 的 viewBox 比画面本身大，按 bounds 拉伸后每个标记都偏出房间，试过就知道（3/7 落在画面内）。
   - 验收口径：`python tools/check_map_coverage.py` 全 13 张退出码 0。有 `content` 的图按「content 与实测画面偏差 ≤ 3%」判，没有 `content` 的图仍按四边边距 < 10% + 标记落在画面内 ≥ 90% 判；背景色取**图片边框环**的众数（整图众数会把工厂判成误报）。`datacheck` 的 `knownGeometryDefects` 已清空，并新增「content 矩形必须落在画布内」断言。
 
 ---
