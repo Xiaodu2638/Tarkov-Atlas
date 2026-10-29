@@ -783,6 +783,9 @@ public sealed class MapCanvas : Control
         // targets and tooltips still work.
         var detailed = _zoom >= 0.55;
         var radius = detailed ? (Compact ? 11.0 : Math.Clamp(11 * Math.Sqrt(_zoom), 10, 16)) : 4.5;
+        // Task names ride along with the avatar from the moment the avatar is
+        // drawn — a bare portrait does not tell the user WHICH task it marks.
+        var showName = detailed && !Compact;
         var seen = new HashSet<(string Quest, int X, int Y)>();
         foreach (var marker in QuestMarkers)
         {
@@ -817,11 +820,13 @@ public sealed class MapCanvas : Control
                 context.DrawText(txt, new Point(s.X - txt.Width / 2, s.Y - txt.Height / 2));
             }
 
-            if (_zoom >= 1.6 && !Compact)
+            if (showName)
             {
-                var txt = Text(marker.QuestName, 10, QuestLabelBrush);
-                var pos = new Point(s.X - txt.Width / 2, s.Y + radius + 2);
-                context.DrawText(Text(marker.QuestName, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+                // Avatar left, task name right of it, vertically centred —
+                // readable at every zoom where the avatar itself is visible.
+                var txt = Text(marker.QuestName, 10.5, QuestLabelBrush);
+                var pos = new Point(s.X + radius + 4, s.Y - txt.Height / 2);
+                context.DrawText(Text(marker.QuestName, 10.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
                 context.DrawText(txt, pos);
             }
         }
