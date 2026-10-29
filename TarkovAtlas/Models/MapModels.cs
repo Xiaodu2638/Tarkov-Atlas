@@ -237,6 +237,8 @@ public sealed class TransitPoint
 {
     public double X { get; set; }
     public double Z { get; set; }
+    /// <summary>Destination map key ("reserve"); empty when unknown.</summary>
+    public string Dest { get; set; } = "";
 }
 
 /// <summary>
