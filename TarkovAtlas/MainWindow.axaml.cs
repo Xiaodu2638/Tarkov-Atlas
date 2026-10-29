@@ -25,7 +25,6 @@ public partial class MainWindow : Window
     private readonly GameLogService _logs = new();
     private readonly GlobalHotkeyService _hotkeys = new();
     private readonly OcrService _ocr = new();
-    private readonly TaskGuideService _guides = new();
     private readonly LocalGuideService _localGuides = new();
     // ObservableCollection, not List<T>: the ListBox is bound once and only sees
     // the items that exist at binding time, so a plain List left the sidebar
@@ -1351,36 +1350,22 @@ public partial class MainWindow : Window
 
         var caption = string.IsNullOrWhiteSpace(quest.Name) ? quest.Id : quest.Name;
 
-        // Bundled local guides first (hand-verified, offline); the remote wiki
-        // scrape is only a fallback for quests we could not map locally.
+        // Bundled local guides only: the toolbox assets are hand-verified and
+        // the wiki scrape has proven unreliable (wrong/cover images), so no
+        // network fallback when the quest ships with local artwork.
         var local = _localGuides.GetLocalImages(quest.Id);
         if (local.Count > 0)
         {
-            var localViewer = new ImageViewerWindow("任务地点图 · " + caption, local);
-            localViewer.Show(this);
+            var viewer = new ImageViewerWindow("任务地点图 · " + caption, local);
+            viewer.Show(this);
             return;
         }
 
-        IReadOnlyList<string> images;
-        try
-        {
-            ShowToast("正在获取任务地点图…");
-            images = await _guides.GetLocationImagesAsync(quest.Id);
-        }
-        catch
-        {
-            images = Array.Empty<string>();
-        }
-
-        if (images.Count == 0)
-            images = new[] { WikiImageBase + quest.Id + ".webp" };
-
-        var viewer = new ImageViewerWindow("任务地点图 · " + caption, images);
-        viewer.Show(this);
+        ShowToast("这个任务没有本地地点图");
     }
 
     /// <summary>Clicking a quest marker opens that task's guide pictures.</summary>
-    private async void OnMarkerClicked(object? sender, QuestMarker marker)
+    private void OnMarkerClicked(object? sender, QuestMarker marker)
     {
         if (marker is null || string.IsNullOrWhiteSpace(marker.QuestId)) return;
 
@@ -1391,28 +1376,11 @@ public partial class MainWindow : Window
         QuestDetailTitle.Text = quest.Title;
         QuestDetailMeta.Text = $"{quest.Trader}  ·  {quest.LevelText}  ·  {quest.MapsText}";
 
+        // Local guides only — same policy as the task-detail button.
         var local = _localGuides.GetLocalImages(quest.Id);
         if (local.Count == 0)
         {
-            IReadOnlyList<string> images;
-            try
-            {
-                images = await _guides.GetLocationImagesAsync(quest.Id);
-            }
-            catch
-            {
-                images = Array.Empty<string>();
-            }
-
-            if (images.Count == 0)
-            {
-                ShowToast("这个任务没有地点图，已打开任务页");
-                OpenExternalUrl(WikiPageBase + quest.Id);
-                return;
-            }
-
-            var remoteViewer = new ImageViewerWindow("任务地点图 · " + quest.Title, images);
-            remoteViewer.Show(this);
+            ShowToast("这个任务没有本地地点图");
             return;
         }
 
