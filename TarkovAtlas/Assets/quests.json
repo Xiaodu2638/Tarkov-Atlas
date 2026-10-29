@@ -39,6 +39,17 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "取得有关 Sanitar 工作的情报物品",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "the-lab",
+       "x": -133.0114,
+       "z": -335.2083
+      }
+     ]
+    },
+    {
      "text": "在实验室找到 Sanitar 的工作室",
      "type": "visit",
      "zones": [
@@ -73,7 +84,34 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区找到并获取挂号信",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 39.475,
+       "z": 113.47099
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 42.395695,
+       "z": 118.768196
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 39.234997,
+       "z": 117.6931
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 36.107998,
+       "z": 126.599
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5d6fb2c086f77449da599c24",
@@ -193,7 +231,24 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林找到并获取 Prapor 的包裹",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -612.7649,
+       "z": 136.13657
+      },
+      {
+       "map": "woods",
+       "x": -619.19604,
+       "z": 127.90881
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "596a1e6c86f7741ddc2d3206",
@@ -266,6 +321,17 @@
        "z": 164.8
       }
      ]
+    },
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 183.096085,
+       "z": 164.0104
+      }
+     ]
     }
    ]
   },
@@ -276,9 +342,23 @@
    "trader": "6617beeaa9cfa777ca915b7c",
    "level": 10,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Decisions%2C_Decisions",
-   "maps": [],
+   "maps": [
+    "customs"
+   ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 183.096085,
+       "z": 164.0104
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "666314bf1cd52e3d040a2e78",
@@ -291,7 +371,79 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线的木屋内找到并获取硬盘",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": 329.95728,
+       "z": -143.7411
+      },
+      {
+       "map": "shoreline",
+       "x": 286.66602,
+       "z": -176.1002
+      },
+      {
+       "map": "shoreline",
+       "x": 207.40076,
+       "z": 100.21301
+      },
+      {
+       "map": "shoreline",
+       "x": 283.93066,
+       "z": -182.97021
+      },
+      {
+       "map": "shoreline",
+       "x": 324.36182,
+       "z": -145.42566
+      },
+      {
+       "map": "shoreline",
+       "x": 290.54077,
+       "z": -40.20999
+      },
+      {
+       "map": "shoreline",
+       "x": 200.07935,
+       "z": 101.413025
+      },
+      {
+       "map": "shoreline",
+       "x": 356.91577,
+       "z": -102.371796
+      },
+      {
+       "map": "shoreline",
+       "x": 198.78613,
+       "z": 99.03204
+      },
+      {
+       "map": "shoreline",
+       "x": -527.06055,
+       "z": 405.39777
+      },
+      {
+       "map": "shoreline",
+       "x": 290.49097,
+       "z": -38.983994
+      },
+      {
+       "map": "shoreline",
+       "x": 357.51904,
+       "z": -108.451096
+      },
+      {
+       "map": "shoreline",
+       "x": 323.6604,
+       "z": -81.6693
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5ae4495086f77443c122bc40",
@@ -348,7 +500,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线后山碉堡内找到疗养院封闭区域的钥匙",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -152.349976,
+       "z": -301.219
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "675c1cf4a757ddd00404f0a3",
@@ -457,7 +621,19 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区取得记载有人口数据的记录",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 80.18001,
+       "z": 143.7027
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6179aff8f57fb279792c60a1",
@@ -674,6 +850,17 @@
        "z": 9.7
       }
      ]
+    },
+    {
+     "text": "取得Jaeger的加密留言",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -257.1476,
+       "z": 7.9998
+      }
+     ]
     }
    ]
   },
@@ -760,7 +947,19 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区的车行办公室找到数字存储装置",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 66.800995,
+       "z": 303.143
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "639136fa9444fb141f4e6eee",
@@ -782,6 +981,22 @@
        "map": "streets-of-tarkov",
        "x": -67.75,
        "z": 65.88
+      }
+     ]
+    },
+    {
+     "text": "取得观察结果",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -70.079,
+       "z": 69.437
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -65.262,
+       "z": 66.363
       }
      ]
     }
@@ -809,7 +1024,19 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林锯木厂小屋里取得机密文件夹0052",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -3.322,
+       "z": -81.1259
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5b478ff486f7744d184ecbbf",
@@ -818,9 +1045,28 @@
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Supplements",
-   "maps": [],
+   "maps": [
+    "customs"
+   ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到并获取化学品容器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 88.985306,
+       "z": -143.67578
+      },
+      {
+       "map": "customs",
+       "x": 91.58272,
+       "z": -158.77757
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5ac3477486f7741d651d6885",
@@ -1285,6 +1531,27 @@
        "z": -203.87
       }
      ]
+    },
+    {
+     "text": "在森林的旧锯木厂找到并获取 AK-50 护木",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -544.42566,
+       "z": -204.0365
+      },
+      {
+       "map": "woods",
+       "x": -549.10596,
+       "z": -200.84
+      },
+      {
+       "map": "woods",
+       "x": -547.692,
+       "z": -198.267
+      }
+     ]
     }
    ]
   },
@@ -1626,7 +1893,19 @@
     "factory"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在工厂提取破损罐体中的化学品样本",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": -5.05500031,
+       "z": 18.5820026
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "67af4c1a6c3ebfd8e6034916",
@@ -1663,7 +1942,19 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔度假村区域找到并获取游荡者的物资箱",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -122.063,
+       "z": 95.027
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5979f9ba86f7740f6c3fe9f2",
@@ -1677,6 +1968,27 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关取得任何关于安全副官生平的信息",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 487.27258,
+       "z": -138.6152
+      },
+      {
+       "map": "customs",
+       "x": 485.8996,
+       "z": -140.5882
+      },
+      {
+       "map": "customs",
+       "x": 498.5496,
+       "z": -141.5012
+      }
+     ]
+    },
     {
      "text": "在海关找到化工厂前安全副官的住处",
      "type": "visit",
@@ -1706,7 +2018,30 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到任何有助于调查的证据",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 194.2243,
+       "z": 171.0656
+      }
+     ]
+    },
+    {
+     "text": "在海关找到任何有助于调查的信息",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 194.7797,
+       "z": 173.1325
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "597a0e5786f77426d66c0636",
@@ -1719,7 +2054,29 @@
     "factory"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在工厂取得装有化学品的注射器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 26.326584,
+       "z": 36.763622
+      },
+      {
+       "map": "factory",
+       "x": 25.56231,
+       "z": 38.48874
+      },
+      {
+       "map": "factory",
+       "x": 23.249971,
+       "z": 39.403866
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "597a0f5686f774273b74f676",
@@ -1830,10 +2187,47 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Secrets_of_Polikhim",
    "maps": [
+    "customs",
     "factory"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关实验楼的医疗实验室找到并获取精密工具",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 88.46846,
+       "z": -142.76546
+      },
+      {
+       "map": "customs",
+       "x": 92.35701,
+       "z": -161.4822
+      },
+      {
+       "map": "customs",
+       "x": 88.0565,
+       "z": -146.9258
+      },
+      {
+       "map": "customs",
+       "x": 76.28398,
+       "z": -151.6633
+      },
+      {
+       "map": "customs",
+       "x": 87.87459,
+       "z": -162.60088
+      },
+      {
+       "map": "customs",
+       "x": 81.09361,
+       "z": -152.63136
+      }
+     ]
+    },
     {
      "text": "在工厂的实验室储藏间藏匿精密工具",
      "type": "plantQuestItem",
@@ -1947,7 +2341,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线疗养院西楼的房间内找到任何关于 TerraGroup 研究的文件",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -218.02002,
+       "z": -86.09
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5a68665c86f774255929b4c7",
@@ -1961,6 +2367,17 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "提取血液样本",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -94.25195,
+       "z": 218.992981
+      }
+     ]
+    },
     {
      "text": "在森林找到那辆曾属于疗养院医疗服务负责人的车",
      "type": "visit",
@@ -2039,10 +2456,22 @@
    "level": 37,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Health_Care_Privacy_-_Part_6",
    "maps": [
+    "factory",
     "the-lab"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在工厂找到死亡的工人，并获取他们的血液样本",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": -19.4730015,
+       "z": -52.22601
+      }
+     ]
+    },
     {
      "text": "在实验室将血液样本藏匿在 Sanitar 的办公室里",
      "type": "plantQuestItem",
@@ -2118,7 +2547,19 @@
     "factory"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在工厂找到直升机飞行日志",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 26.2490044,
+       "z": -3.60200047
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "59689ee586f7740d1570bbd5",
@@ -2488,6 +2929,27 @@
        "z": -76.36
       }
      ]
+    },
+    {
+     "text": "在“渴死鬼”的藏身处找到信息",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -203.14978,
+       "z": -76.56938
+      },
+      {
+       "map": "shoreline",
+       "x": -198.71509,
+       "z": -74.49104
+      },
+      {
+       "map": "shoreline",
+       "x": -201.39575,
+       "z": -79.43288
+      }
+     ]
     }
    ]
   },
@@ -2666,6 +3128,27 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "在储备站找到并获取 AK-50 枪管",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 40.606384,
+       "z": -125.85956
+      },
+      {
+       "map": "reserve",
+       "x": 55.599854,
+       "z": -116.45944
+      },
+      {
+       "map": "reserve",
+       "x": 62.03839,
+       "z": -108.80054
+      }
+     ]
+    },
+    {
      "text": "在储备站找到格鲁哈的车间",
      "type": "visit",
      "zones": [
@@ -2673,6 +3156,17 @@
        "map": "reserve",
        "x": 45.47,
        "z": -117.47
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫一处检查站找到并获取 AK-50 防尘盖",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 582.0181,
+       "z": 5.894165
       }
      ]
     },
@@ -2849,7 +3343,29 @@
     "icebreaker"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在破冰船上找到并获取核反应单元控制日志",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "icebreaker",
+       "x": 3.636709,
+       "z": 26.824934
+      },
+      {
+       "map": "icebreaker",
+       "x": 8.011011,
+       "z": -17.998869
+      },
+      {
+       "map": "icebreaker",
+       "x": 4.8218656,
+       "z": -17.56198
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6179b3bdc7560e13d23eeb8d",
@@ -2862,7 +3378,30 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔污水处理厂找到并获取水泵运行数据",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -111.0176,
+       "z": -750.147034
+      }
+     ]
+    },
+    {
+     "text": "在灯塔污水处理厂找到并获取泵站运行数据",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 53.2094955,
+       "z": -638.8754
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5969f90786f77420d2328015",
@@ -3103,7 +3642,49 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区的城市博物馆找到并获取纪念钥匙",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 246.69151,
+       "z": 47.761
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 243.3352,
+       "z": 52.953503
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 248.3334,
+       "z": 55.362602
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 248.9992,
+       "z": 53.766003
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 245.67201,
+       "z": 50.760002
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 247.70201,
+       "z": 58.834
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 242.953,
+       "z": 55.2452
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "639135e0fa894f0a866afde6",
@@ -3125,6 +3706,22 @@
        "map": "streets-of-tarkov",
        "x": 92.96,
        "z": 320.38
+      }
+     ]
+    },
+    {
+     "text": "取得装有毒品样本的容器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 95.8846,
+       "z": 319.08118
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 91.192,
+       "z": 323.2334
       }
      ]
     }
@@ -3149,10 +3746,32 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Butcher",
    "maps": [
+    "ground-zero",
     "streets-of-tarkov"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在中心区找到并获取化学品容器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": 78.571,
+       "z": 100.85899
+      },
+      {
+       "map": "ground-zero",
+       "x": 78.8748,
+       "z": 96.33389
+      },
+      {
+       "map": "ground-zero",
+       "x": 80.1339,
+       "z": 96.27539
+      }
+     ]
+    },
     {
      "text": "在塔科夫街区将化学容器放置藏匿在警察局",
      "type": "plantQuestItem",
@@ -3177,7 +3796,30 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线找到并获取 Sanitar 的手术包",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -314.594971,
+       "z": 480.1722
+      }
+     ]
+    },
+    {
+     "text": "在海岸线别墅区找到并获取 Sanitar 的检眼镜",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": 99.45056,
+       "z": 107.002594
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5bc4776586f774512d07cf05",
@@ -3315,10 +3957,32 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Order_From_Outside",
    "maps": [
+    "reserve",
     "woods"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在储备站的机电仓库找到并获取电子干扰器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -68.68298,
+       "z": 32.394012
+      },
+      {
+       "map": "reserve",
+       "x": -66.87903,
+       "z": 29.537018
+      },
+      {
+       "map": "reserve",
+       "x": -71.63098,
+       "z": 23.136017
+      }
+     ]
+    },
     {
      "text": "将该装置藏匿在森林的指定位置",
      "type": "plantQuestItem",
@@ -3343,7 +4007,41 @@
     "reserve"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在储备站指挥地堡的办公室内取得第一份军事文件",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -114.36499,
+       "z": 27.3590088
+      }
+     ]
+    },
+    {
+     "text": "在储备站指挥地堡的办公室内取得第二份军事文件",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -114.18103,
+       "z": 39.7880249
+      }
+     ]
+    },
+    {
+     "text": "在储备站指挥地堡的大厅内取得第三份军事文件",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -121.867004,
+       "z": 38.6560059
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "60e71c11d54b755a3b53eb65",
@@ -3661,6 +4359,17 @@
        "z": 164.8
       }
      ]
+    },
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 183.096085,
+       "z": 164.0104
+      }
+     ]
     }
    ]
   },
@@ -3686,6 +4395,27 @@
        "z": 396.47
       }
      ]
+    },
+    {
+     "text": "找到线人的日记",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -129.309,
+       "z": 392.5885
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -132.2276,
+       "z": 397.61707
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -127.914,
+       "z": 397.04297
+      }
+     ]
     }
    ]
   },
@@ -3701,6 +4431,17 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "找到并获取线人的情报文件夹",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -115.694664,
+       "z": 88.8879852
+      }
+     ]
+    },
     {
      "text": "在灯塔找到失事的直升机",
      "type": "visit",
@@ -3734,6 +4475,17 @@
        "map": "lighthouse",
        "x": 353.11,
        "z": 547.82
+      }
+     ]
+    },
+    {
+     "text": "在房间内找到并获取装有航班路线的军用机械硬盘",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 352.6155,
+       "z": 545.5324
       }
      ]
     }
@@ -3783,6 +4535,27 @@
        "z": 26.86
       }
      ]
+    },
+    {
+     "text": "在商店中找到并获取酒瓶",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": 130.274,
+       "z": 23.691
+      },
+      {
+       "map": "ground-zero",
+       "x": 119.667,
+       "z": 22.886
+      },
+      {
+       "map": "ground-zero",
+       "x": 129.716,
+       "z": 25.152
+      }
+     ]
     }
    ]
   },
@@ -3797,7 +4570,34 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区的白鲸餐厅找到并获取有关烹饪的秘密信息",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -26.149,
+       "z": -56.0783
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -42.788002,
+       "z": -66.412
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -41.380898,
+       "z": -42.932404
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -29.297,
+       "z": -70.153
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "69ce1cfb298a6529b30d712b",
@@ -3823,7 +4623,34 @@
     "factory"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在工厂的TerraGroup仓库找到化学品容器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": -22.717655,
+       "z": 48.669617
+      },
+      {
+       "map": "factory",
+       "x": -18.40426,
+       "z": 46.692566
+      },
+      {
+       "map": "factory",
+       "x": -23.265278,
+       "z": 44.83158
+      },
+      {
+       "map": "factory",
+       "x": -21.713234,
+       "z": 44.430035
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "67af4c17f4f1fb58a907f8f6",
@@ -3945,6 +4772,17 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "取得任何有关第二部分货物运输的信息",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -340.984,
+       "z": -88.627
+      }
+     ]
+    },
+    {
      "text": "在海岸线疗养院找到蓝色水桶所在的房间",
      "type": "visit",
      "zones": [
@@ -3990,7 +4828,19 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区取得财务记录",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -177.12001,
+       "z": 227.1259
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "608a768d82e40b3c727fd17d",
@@ -4039,7 +4889,39 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林指定交货点取得包裹",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -57.89441,
+       "z": -501.51794
+      },
+      {
+       "map": "woods",
+       "x": -54.61438,
+       "z": -494.30518
+      },
+      {
+       "map": "woods",
+       "x": -51.343384,
+       "z": -500.9088
+      },
+      {
+       "map": "woods",
+       "x": -59.948486,
+       "z": -491.684
+      },
+      {
+       "map": "woods",
+       "x": -54.814087,
+       "z": -495.8171
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5d6fbc2886f77449d825f9d3",
@@ -4297,7 +5179,34 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关车库区找到并获取经过改装的工具套件",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": -319.97205,
+       "z": -178.6625
+      },
+      {
+       "map": "customs",
+       "x": -316.35687,
+       "z": -179.94904
+      },
+      {
+       "map": "customs",
+       "x": -318.4618,
+       "z": -175.95013
+      },
+      {
+       "map": "customs",
+       "x": -316.70236,
+       "z": -178.13792
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5c12452c86f7744b83469073",
@@ -4334,7 +5243,34 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到并获取货运班组的日志",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 93.2574,
+       "z": -61.865417
+      },
+      {
+       "map": "customs",
+       "x": 90.44954,
+       "z": -57.470688
+      },
+      {
+       "map": "customs",
+       "x": 96.90181,
+       "z": -64.52138
+      },
+      {
+       "map": "customs",
+       "x": 95.282974,
+       "z": -59.045044
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66058cb7c7f3584787181476",
@@ -4414,7 +5350,41 @@
     "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在立交桥取得Goshan货物清单",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -76.48059,
+       "z": -157.719238
+      }
+     ]
+    },
+    {
+     "text": "在立交桥取得OLI货物清单",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": 38.0084229,
+       "z": 147.143677
+      }
+     ]
+    },
+    {
+     "text": "在立交桥取得IDEA货物清单",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -1.99902344,
+       "z": -292.8999
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6672d9def1c88688a707d042",
@@ -4498,6 +5468,27 @@
        "z": 224.86
       }
      ]
+    },
+    {
+     "text": "找到并获取经理的日志",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": 89.392,
+       "z": 224.972
+      },
+      {
+       "map": "ground-zero",
+       "x": 86.822205,
+       "z": 226.09749
+      },
+      {
+       "map": "ground-zero",
+       "x": 88.976,
+       "z": 225.284
+      }
+     ]
     }
    ]
   },
@@ -4520,10 +5511,22 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Delivery_From_the_Past",
    "maps": [
+    "customs",
     "factory"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在位于海关关口的Tarcone公司主管办公室内找到一个保险盒",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": -202.8806,
+       "z": -102.4012
+      }
+     ]
+    },
     {
      "text": "将包裹藏匿在工厂 3 号门旁的二层铁皮休息室内",
      "type": "plantQuestItem",
@@ -4732,6 +5735,17 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "找到并获取 Jaeger 的相册",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -226.552,
+       "z": -87.571
+      }
+     ]
+    },
+    {
      "text": "在疗养院找到Jaeger的海景房间",
      "type": "visit",
      "zones": [
@@ -4802,7 +5816,29 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区找到并获取救护车急救员的手机",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 157.91998,
+       "z": 455.95703
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 311.462,
+       "z": 413.36804
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 223.6565,
+       "z": 369.44104
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "60e71bb4e456d449cd47ca75",
@@ -4881,10 +5917,42 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/One_Less_Loose_End",
    "maps": [
+    "factory",
     "woods"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在工厂找到实验室日志",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 28.99989,
+       "z": -17.564314
+      },
+      {
+       "map": "factory",
+       "x": 29.25024,
+       "z": -31.707458
+      },
+      {
+       "map": "factory",
+       "x": 26.57465,
+       "z": -35.983276
+      },
+      {
+       "map": "factory",
+       "x": 25.849241,
+       "z": -19.104244
+      },
+      {
+       "map": "factory",
+       "x": 29.309954,
+       "z": -28.936857
+      }
+     ]
+    },
     {
      "text": "在森林的旧锯木厂中藏匿日志",
      "type": "plantQuestItem",
@@ -5152,7 +6220,30 @@
     "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在立交桥取得服装设计手册（一）",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": 20.2713623,
+       "z": -4.425293
+      }
+     ]
+    },
+    {
+     "text": "在立交桥取得服装设计手册（二）",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -31.44458,
+       "z": -136.191284
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6179b5b06e9dd54ac275e409",
@@ -5361,10 +6452,38 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Snatch",
    "maps": [
+    "lighthouse",
     "reserve"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在灯塔的游荡者基地找到伪造的情报",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 32.03167,
+       "z": -454.48978
+      },
+      {
+       "map": "lighthouse",
+       "x": 21.277908,
+       "z": -445.48795
+      }
+     ]
+    },
+    {
+     "text": "在储备站的维修中心里找到原始情报",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 102.242981,
+       "z": 65.56604
+      }
+     ]
+    },
     {
      "text": "将伪造的情报藏匿在BMP-2下方以完成调包",
      "type": "plantQuestItem",
@@ -5459,6 +6578,52 @@
        "z": -357.84
       }
      ]
+    },
+    {
+     "text": "在实验室的主管办公室里找到加密磁带",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "the-lab",
+       "x": -178.30911,
+       "z": -344.88052
+      },
+      {
+       "map": "the-lab",
+       "x": -160.83812,
+       "z": -340.5346
+      },
+      {
+       "map": "the-lab",
+       "x": -169.11845,
+       "z": -342.1145
+      },
+      {
+       "map": "the-lab",
+       "x": -161.39708,
+       "z": -346.8847
+      },
+      {
+       "map": "the-lab",
+       "x": -163.07448,
+       "z": -342.11642
+      },
+      {
+       "map": "the-lab",
+       "x": -170.75114,
+       "z": -343.6096
+      },
+      {
+       "map": "the-lab",
+       "x": -178.46817,
+       "z": -343.61017
+      },
+      {
+       "map": "the-lab",
+       "x": -167.89156,
+       "z": -343.64188
+      }
+     ]
     }
    ]
   },
@@ -5543,6 +6708,32 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "取得装有显卡的包裹",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": -202.591,
+       "z": -98.431
+      },
+      {
+       "map": "customs",
+       "x": -201.84921,
+       "z": -102.94797
+      },
+      {
+       "map": "customs",
+       "x": -204.38757,
+       "z": -98.63279
+      },
+      {
+       "map": "customs",
+       "x": -200.80325,
+       "z": -100.563126
+      }
+     ]
+    },
+    {
      "text": "在海关找到罚没品仓库",
      "type": "visit",
      "zones": [
@@ -5593,7 +6784,19 @@
     "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在立交桥取得OLI货运路线文件",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": 86.60339,
+       "z": 120.860718
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "60e71b9bbd90872cb85440f3",
@@ -5650,6 +6853,17 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "在海关宿舍203房间取得高价值物品",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 178.07,
+       "z": 148.702
+      }
+     ]
+    },
+    {
      "text": "设法进入宿舍214房间",
      "type": "visit",
      "zones": [
@@ -5678,7 +6892,34 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "取得塔科夫街区 Concordia 公寓区停车场车辆进出情况的相关数据",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 213.23589,
+       "z": 410.32123
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 208.7273,
+       "z": 408.63458
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 208.443,
+       "z": 412.14648
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 210.5096,
+       "z": 407.50043
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5ae449c386f7744bde357697",
@@ -5920,6 +7161,27 @@
        "z": 27.42
       }
      ]
+    },
+    {
+     "text": "找到并获取科学家的硬盘",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": -12.356882,
+       "z": 49.026344
+      },
+      {
+       "map": "ground-zero",
+       "x": -11.949866,
+       "z": 49.585052
+      },
+      {
+       "map": "ground-zero",
+       "x": -12.127326,
+       "z": 48.043213
+      }
+     ]
     }
    ]
   },
@@ -5935,6 +7197,17 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关找到并获取被藏匿的高价值货物",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 367.6828,
+       "z": -50.5712
+      }
+     ]
+    },
     {
      "text": "在海关找到信使的尸体",
      "type": "visit",
@@ -6553,6 +7826,42 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在迷宫内找到并获取特殊的储存模块",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "the-labyrinth",
+       "x": -8.0034485,
+       "z": 30.262415
+      },
+      {
+       "map": "the-labyrinth",
+       "x": -4.6923904,
+       "z": 36.09659
+      },
+      {
+       "map": "the-labyrinth",
+       "x": -10.467064,
+       "z": 22.710201
+      },
+      {
+       "map": "the-labyrinth",
+       "x": -5.4125657,
+       "z": 27.037369
+      },
+      {
+       "map": "the-labyrinth",
+       "x": -9.512562,
+       "z": 26.163725
+      },
+      {
+       "map": "the-labyrinth",
+       "x": -11.049734,
+       "z": 25.961308
+      }
+     ]
+    },
     {
      "text": "在迷宫的组装车间内安放一枚手榴弹",
      "type": "plantItem",
@@ -7256,7 +8565,19 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔找到并获取线人的公文包",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 139.195068,
+       "z": -129.871185
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6179afd0bca27a099552e040",
@@ -7477,7 +8798,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线取得疗养院房客名单",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -267.220947,
+       "z": -145.576
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5a27bc6986f7741c7358402b",
@@ -7490,7 +8823,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线找到关于Artyom工作的信息",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -358.954956,
+       "z": -76.994
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5a27bc8586f7741b543d8ea4",
@@ -7666,7 +9011,19 @@
     "reserve"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在储备站取得MBT综合导航模块",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 99.78601,
+       "z": 59.1600342
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66ab970848ddbe9d4a0c49a8",
@@ -7770,11 +9127,43 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Price_of_Independence",
    "maps": [
+    "customs",
     "reserve",
     "lighthouse"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关找到并获取控告信",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 264.34637,
+       "z": -75.3349
+      },
+      {
+       "map": "customs",
+       "x": 268.5923,
+       "z": -73.78987
+      },
+      {
+       "map": "customs",
+       "x": 271.05127,
+       "z": -72.37828
+      },
+      {
+       "map": "customs",
+       "x": 269.86456,
+       "z": -77.52385
+      },
+      {
+       "map": "customs",
+       "x": 263.97394,
+       "z": -76.90471
+      }
+     ]
+    },
     {
      "text": "将信件藏匿在储备站驻军总部的三楼",
      "type": "plantQuestItem",
@@ -7818,11 +9207,43 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Price_of_Independence",
    "maps": [
+    "customs",
     "reserve",
     "lighthouse"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关找到并获取控告信",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 264.34637,
+       "z": -75.3349
+      },
+      {
+       "map": "customs",
+       "x": 268.5923,
+       "z": -73.78987
+      },
+      {
+       "map": "customs",
+       "x": 271.05127,
+       "z": -72.37828
+      },
+      {
+       "map": "customs",
+       "x": 269.86456,
+       "z": -77.52385
+      },
+      {
+       "map": "customs",
+       "x": 263.97394,
+       "z": -76.90471
+      }
+     ]
+    },
     {
      "text": "将信件藏匿在储备站驻军总部的三楼",
      "type": "plantQuestItem",
@@ -8502,7 +9923,30 @@
     "reserve"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在储备站取得第一份医学报告",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -59.0209961,
+       "z": -36.1919861
+      }
+     ]
+    },
+    {
+     "text": "在储备站取得第二份医学报告",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -80.47601,
+       "z": -30.7659912
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5ae4490786f7744ca822adcc",
@@ -8875,7 +10319,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线疗养院东楼的计算机中心找到可能包含情报的物品",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -285.103027,
+       "z": -89.3500061
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5a27bb5986f7741dfb660900",
@@ -8944,7 +10400,34 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到并获取 Skier 的钱包",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 50.02237,
+       "z": -57.845093
+      },
+      {
+       "map": "customs",
+       "x": 46.575928,
+       "z": -57.778732
+      },
+      {
+       "map": "customs",
+       "x": 46.778778,
+       "z": -58.13228
+      },
+      {
+       "map": "customs",
+       "x": 44.590317,
+       "z": -58.400833
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5c0be5fc86f774467a116593",
@@ -8979,7 +10462,39 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区的 TerraGroup 办公室找到并获取红色瓶装神秘原料",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 41.592,
+       "z": -53.944992
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 58.483997,
+       "z": -72.764984
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -28.5096,
+       "z": -117.110794
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -27.506,
+       "z": -109.47299
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -41.1733,
+       "z": -110.08528
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a5ccda873f06065630d61b0",
@@ -9095,10 +10610,37 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Simple_Side_Job",
    "maps": [
+    "reserve",
     "woods"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在储备站军医院楼顶找到并获取 Lightkeeper 的货箱",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -78.15442,
+       "z": -35.22699
+      },
+      {
+       "map": "reserve",
+       "x": -83.632996,
+       "z": -28.823975
+      },
+      {
+       "map": "reserve",
+       "x": -75.83002,
+       "z": -28.669983
+      },
+      {
+       "map": "reserve",
+       "x": -57.940002,
+       "z": -40.610992
+      }
+     ]
+    },
     {
      "text": "将货物藏匿在森林的 Scav 小屋",
      "type": "plantQuestItem",
@@ -9219,7 +10761,19 @@
     "reserve"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在储备站找到装有 T-90M 车长控制面板的包裹",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": -88.065,
+       "z": 151.055
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "67a097379f2068e74603c6ac",
@@ -9241,9 +10795,29 @@
    "trader": "58330581ace78e27b8b10cee",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Vitamins",
-   "maps": [],
+   "maps": [
+    "factory",
+    "shoreline"
+   ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在工厂找到并获取化学品容器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 29.285004,
+       "z": -21.469002
+      },
+      {
+       "map": "shoreline",
+       "x": -186.06189,
+       "z": -86.1152039
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5c0d4c12d09282029f539173",
@@ -9339,7 +10913,39 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海岸线找到并获取 Prapor 的货物",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -320.0194,
+       "z": 483.55634
+      },
+      {
+       "map": "shoreline",
+       "x": -310.60645,
+       "z": 484.37933
+      },
+      {
+       "map": "shoreline",
+       "x": -327.75842,
+       "z": 490.1643
+      },
+      {
+       "map": "shoreline",
+       "x": -315.52246,
+       "z": 478.8883
+      },
+      {
+       "map": "shoreline",
+       "x": -320.92346,
+       "z": 490.2173
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5967530a86f77462ba22226b",
@@ -9349,10 +10955,22 @@
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Bad_Rep_Evidence",
    "maps": [
+    "customs",
     "factory"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关工棚中取得0031号机密文件夹",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 204.073,
+       "z": 12.3975
+      }
+     ]
+    },
     {
      "text": "设法进入工厂办公区三楼的上锁房间",
      "type": "visit",
@@ -9529,7 +11147,19 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关取得青铜怀表",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 102.2964,
+       "z": -5.9064
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6179b3a12153c15e937d52bc",
@@ -9647,7 +11277,39 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林找到并获取 RPG 弹药包裹",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 344.3452,
+       "z": 233.94592
+      },
+      {
+       "map": "woods",
+       "x": 406.67554,
+       "z": 228.49396
+      },
+      {
+       "map": "woods",
+       "x": 409.43433,
+       "z": 240.53363
+      },
+      {
+       "map": "woods",
+       "x": 361.62598,
+       "z": 201.54868
+      },
+      {
+       "map": "woods",
+       "x": 368.36108,
+       "z": 251.69794
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "671a59e43d73dac1360765cc",
@@ -9858,6 +11520,32 @@
        "z": 232.37
       }
      ]
+    },
+    {
+     "text": "收集任何与 Prapor 朋友下落有关的信息",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 249.29099,
+       "z": 57.7654
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 245.60138,
+       "z": 57.9813
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 247.16199,
+       "z": 51.082
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 245.89398,
+       "z": 55.196
+      }
+     ]
     }
    ]
   },
@@ -9909,6 +11597,17 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关找到装有设备的箱子",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 239.183,
+       "z": 160.595
+      }
+     ]
+    },
     {
      "text": "在海关找到急救员的车",
      "type": "visit",
@@ -10057,7 +11756,8 @@
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Sisyphus",
    "maps": [
     "reserve",
-    "lighthouse"
+    "lighthouse",
+    "woods"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10080,6 +11780,28 @@
        "map": "lighthouse",
        "x": -16.62,
        "z": -823.72
+      }
+     ]
+    },
+    {
+     "text": "在森林 ZB-014 地堡内找到并获取第一个走私者货箱",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 444.3379,
+       "z": 66.867004
+      }
+     ]
+    },
+    {
+     "text": "在森林 USEC 检查站小屋后方找到并获取第二个走私者货箱",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 243.68091,
+       "z": -80.478
       }
      ]
     }
@@ -10226,7 +11948,19 @@
     "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在立交桥找到并获取丢失的武器箱",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": 137.963,
+       "z": 268.126
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6573397ef3f8344c4575cd87",
@@ -10248,6 +11982,27 @@
        "map": "streets-of-tarkov",
        "x": -58.32,
        "z": 457.86
+      }
+     ]
+    },
+    {
+     "text": "找到并获取塔科夫地区的不动产交易记录",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -66.813,
+       "z": 459.4482
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -41.541817,
+       "z": 455.14572
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -66.81177,
+       "z": 453.45218
       }
      ]
     }
@@ -10371,7 +12126,34 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到并获取 TerraGroup 货运清单",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 90.80946,
+       "z": -54.595688
+      },
+      {
+       "map": "customs",
+       "x": 89.91673,
+       "z": -58.057663
+      },
+      {
+       "map": "customs",
+       "x": 90.65941,
+       "z": -56.366837
+      },
+      {
+       "map": "customs",
+       "x": 90.26784,
+       "z": -59.860718
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "666314b696a9349baa021bac",
@@ -10384,7 +12166,19 @@
     "the-lab"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在实验室找到并获取特殊版本的 LEDX 皮肤透照仪",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "the-lab",
+       "x": -173.7443,
+       "z": -374.4323
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66058cb22cee99303f1ba067",
@@ -10617,6 +12411,32 @@
        "map": "the-labyrinth",
        "x": 17,
        "z": 6.5
+      }
+     ]
+    },
+    {
+     "text": "找到并获取任何酷刑折磨的证据",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "the-labyrinth",
+       "x": 13.811146,
+       "z": 3.1006217
+      },
+      {
+       "map": "the-labyrinth",
+       "x": 12.337366,
+       "z": 19.364975
+      },
+      {
+       "map": "the-labyrinth",
+       "x": 12.568995,
+       "z": 11.800928
+      },
+      {
+       "map": "the-labyrinth",
+       "x": 17.567907,
+       "z": 6.3015003
       }
      ]
     }
@@ -11009,7 +12829,19 @@
     "factory"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在工厂找到死去的信使，并获取信件",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "factory",
+       "x": -19.9610023,
+       "z": 21.9430027
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "596760e186f7741e11214d58",
@@ -11046,6 +12878,17 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "在海关宿舍 303 房间找到并获取镀金 Zibbo 打火机",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 180.8072,
+       "z": 150.0781
+      }
+     ]
+    },
+    {
      "text": "在海关宿舍 303 房间藏匿一个普通 Zibbo 打火机",
      "type": "plantItem",
      "zones": [
@@ -11080,7 +12923,30 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林找到并获取第一个电机控制器",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 233.843018,
+       "z": -71.10199
+      }
+     ]
+    },
+    {
+     "text": "在森林找到并获取第一个单轴光纤陀螺仪",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 56.7149658,
+       "z": -50.3070068
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "666314c10aa5c7436c00908c",
@@ -11168,6 +13034,17 @@
        "map": "lighthouse",
        "x": -247.56,
        "z": -328.26
+      }
+     ]
+    },
+    {
+     "text": "找到写给Jaeger的留言",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -248.4343,
+       "z": -328.300323
       }
      ]
     }
@@ -11465,6 +13342,62 @@
        "z": 151.46
       }
      ]
+    },
+    {
+     "text": "找到并获取带有刻字的吉他拨片",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 44.6515,
+       "z": 149.32391
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 36.493984,
+       "z": 157.48001
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 40.601604,
+       "z": 153.7631
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 42.913,
+       "z": 152.35751
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 34.95802,
+       "z": 152.32729
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 36.995472,
+       "z": 153.30731
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 44.3447,
+       "z": 151.7695
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 42.291004,
+       "z": 148.51831
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 41.052006,
+       "z": 154.98201
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 36.349213,
+       "z": 148.5618
+      }
+     ]
     }
    ]
   },
@@ -11479,7 +13412,59 @@
     "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在立交桥找到并获取特殊版本的游戏杂志",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": 8.725121,
+       "z": -18.523008
+      },
+      {
+       "map": "interchange",
+       "x": 26.164429,
+       "z": 0.66467285
+      },
+      {
+       "map": "interchange",
+       "x": 18.42624,
+       "z": -3.7190084
+      },
+      {
+       "map": "interchange",
+       "x": 19.517511,
+       "z": -12.575807
+      },
+      {
+       "map": "interchange",
+       "x": 16.287987,
+       "z": -12.538616
+      },
+      {
+       "map": "interchange",
+       "x": 14.628261,
+       "z": -4.792009
+      },
+      {
+       "map": "interchange",
+       "x": 14.321921,
+       "z": -2.4580088
+      },
+      {
+       "map": "interchange",
+       "x": 30.47102,
+       "z": -19.500854
+      },
+      {
+       "map": "interchange",
+       "x": 18.86084,
+       "z": -5.540009
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6573382e557ff128bf3da536",
@@ -11537,6 +13522,28 @@
        "map": "shoreline",
        "x": -553.09,
        "z": -127.68
+      }
+     ]
+    },
+    {
+     "text": "在第二架坠毁的无人机上找到SAS硬盘",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": 81.4337158,
+       "z": -166.845
+      }
+     ]
+    },
+    {
+     "text": "在第一架坠毁的无人机上找到SAS硬盘",
+     "type": "findQuestItem",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -552.9468,
+       "z": -128.2434
       }
      ]
     },
