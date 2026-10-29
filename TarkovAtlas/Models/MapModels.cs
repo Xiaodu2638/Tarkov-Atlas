@@ -212,6 +212,10 @@ public sealed class BossSpawn
                 "vsrf" or "vsrfsniper" => "ruaf",
                 "blackdivision" or "pmcbotblackdiv" => "black-division",
                 "bossbullyblackdiv" => "black-division-icebreaker",
+                // Zryachiy (Lightkeeper's island guard boss); portrait bundled
+                // as zryachiy.png. Must come before the generic bossZ* rule —
+                // which would produce "zryachiy" anyway, but stay explicit.
+                "bosszryachiy" => "zryachiy",
                 _ when mob.StartsWith("boss", StringComparison.OrdinalIgnoreCase) =>
                     mob[4..].Replace("_", "-").ToLowerInvariant(),
                 _ => mob.Replace("_", "-").ToLowerInvariant(),
