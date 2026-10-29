@@ -863,6 +863,8 @@ public sealed class MapCanvas : Control
     /// Loot container markers (物资点). Sourced from tarkov.dev's lootContainer
     /// table; each kind (weapon-box, safe, jacket, drawer, medcase, ...) has its
     /// own colour and can be switched off individually from the legend.
+    /// Zoom-tiered density: at far zoom one icon per ~room, the closer you get
+    /// the more of the pile shows through, until everything is drawn.
     /// </summary>
     private void DrawLoot(DrawingContext context)
     {
@@ -873,13 +875,35 @@ public sealed class MapCanvas : Control
         // Same artwork the legend rows use, so what you toggle is what you see.
         var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
         var hidden = Options.LootKindsHidden;
+
+        // Density tiers in *game metres*. A grid cell of `tier` metres keeps at
+        // most one marker per cell per frame; zooming in halves the cell twice
+        // (3.5 m → 7 m → off), so the full set only appears when icons no
+        // longer overlap. Cell size is a compromise: 7 m keeps buildings
+        // readable at overview zoom, and the 3.5 m tier is fine enough that
+        // only true same-spot duplicates collapse.
+        var tier = _zoom >= 2.6 ? 0.0   // everything
+                 : _zoom >= 1.6 ? 3.5   // near-full detail
+                 : 7.0;                 // overview: one per room-ish area
+
         // Kind→bitmap resolved once per frame (6082 markers share ~20 kinds).
         var iconCache = new Dictionary<string, Bitmap?>(StringComparer.OrdinalIgnoreCase);
+        // Cell → kind seen: one marker per cell keeps the *variety* (a safe
+        // next to a drawer both survive) instead of hiding everything behind
+        // whichever dot sorts first.
+        var seen = tier > 0 ? new HashSet<(int, int, string)>() : null;
         foreach (var item in _map.Loot)
         {
             if (hidden.Count > 0 && hidden.Contains(item.Kind)) continue;
             var s = Project(item.X, item.Z);
             if (!OnScreen(s, 20)) continue;
+
+            if (seen is not null)
+            {
+                var cx = (int)Math.Floor(item.X / tier);
+                var cz = (int)Math.Floor(item.Z / tier);
+                if (!seen.Add((cx, cz, item.Kind))) continue;
+            }
 
             if (!iconCache.TryGetValue(item.Kind, out var icon))
             {
