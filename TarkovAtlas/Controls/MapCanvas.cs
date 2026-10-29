@@ -863,36 +863,28 @@ public sealed class MapCanvas : Control
     /// Loot container markers (物资点). Sourced from tarkov.dev's lootContainer
     /// table; each kind (weapon-box, safe, jacket, drawer, medcase, ...) has its
     /// own colour and can be switched off individually from the legend.
-    /// Zoom-tiered density: far out the map shows one representative marker per
-    /// area, zooming in reveals more of the pile, and past 2.6x everything is
-    /// drawn.
+    /// Only rendered at 4x zoom and beyond: at smaller scales the icons always
+    /// clotted into noise no matter how they were thinned, so they stay hidden
+    /// entirely until the user is close enough for room-level reading.
     /// </summary>
     private void DrawLoot(DrawingContext context)
     {
         if (_map is null || _map.Loot.Count == 0) return;
-        // Below this the dots smear into a carpet and the map stops reading.
-        if (_zoom < 0.9) return;
+        const double lootZoomGate = 4.0;
+        if (_zoom < lootZoomGate) return;
 
         // Same artwork the legend rows use, so what you toggle is what you see.
         var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
         var hidden = Options.LootKindsHidden;
 
-        // Density tiers in *game metres*. Grid cells keep at most one marker:
-        // overview = one per cell across ALL kinds (a sparse, representative
-        // preview), the two closer tiers dedupe per kind so a safe next to a
-        // drawer both survive, and past 2.6x nothing is collapsed.
-        var tier = _zoom >= 2.6 ? 0.0
-                 : _zoom >= 1.6 ? 3.5
-                 : _zoom >= 1.15 ? 7.0
-                 : 12.0;
-        var onePerCell = _zoom < 1.15;
-
         // Kind→bitmap resolved once per frame (6082 markers share ~20 kinds).
         var iconCache = new Dictionary<string, Bitmap?>(StringComparer.OrdinalIgnoreCase);
-        var seen = tier > 0 && !onePerCell ? new HashSet<(int, int, string)>() : null;
-
-        void DrawOne(LootPoint item, Point s)
+        foreach (var item in _map.Loot)
         {
+            if (hidden.Count > 0 && hidden.Contains(item.Kind)) continue;
+            var s = Project(item.X, item.Z);
+            if (!OnScreen(s, 20)) continue;
+
             if (!iconCache.TryGetValue(item.Kind, out var icon))
             {
                 icon = LoadCached("legend", LootKindIconFor(item.Kind));
@@ -907,46 +899,6 @@ public sealed class MapCanvas : Control
                 context.DrawEllipse(LootBrushFor(item.Kind),
                     CachedPen(MarkerShadow, 1.2), s, iconSide * 0.3, iconSide * 0.3);
             }
-        }
-
-        // Overview tier: pre-select the marker nearest each cell centre — the
-        // positional representative of that cluster of containers.
-        if (onePerCell)
-        {
-            var best = new Dictionary<(int, int), (double D2, LootPoint Item, Point S)>();
-            foreach (var item in _map.Loot)
-            {
-                if (hidden.Count > 0 && hidden.Contains(item.Kind)) continue;
-                var cx = (int)Math.Floor(item.X / tier);
-                var cz = (int)Math.Floor(item.Z / tier);
-                var centreX = (cx + 0.5) * tier;
-                var centreZ = (cz + 0.5) * tier;
-                var d2 = (item.X - centreX) * (item.X - centreX) + (item.Z - centreZ) * (item.Z - centreZ);
-                if (best.TryGetValue((cx, cz), out var cur) && !(d2 < cur.D2)) continue;
-                best[(cx, cz)] = (d2, item, Project(item.X, item.Z));
-            }
-            foreach (var (_, item, s) in best.Values)
-            {
-                if (!OnScreen(s, 20)) continue;
-                DrawOne(item, s);
-            }
-            return;
-        }
-
-        foreach (var item in _map.Loot)
-        {
-            if (hidden.Count > 0 && hidden.Contains(item.Kind)) continue;
-            var s = Project(item.X, item.Z);
-            if (!OnScreen(s, 20)) continue;
-
-            if (seen is not null)
-            {
-                var cx = (int)Math.Floor(item.X / tier);
-                var cz = (int)Math.Floor(item.Z / tier);
-                if (!seen.Add((cx, cz, item.Kind))) continue;
-            }
-
-            DrawOne(item, s);
         }
     }
 
