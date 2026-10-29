@@ -29,9 +29,9 @@ dotnet run --project tools/logiccheck -c Release
 dotnet run --project tools/shotcheck  -c Release
 ```
 
-产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 21.6 MB 原生 exe，整个目录约 85 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`、`Scripts/`）。
+产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 21.6 MB 原生 exe，整个目录约 87 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`、`Scripts/`）。脚本同时打一个同名 zip；`-NoAot` 跳过 AOT，`-OutputRoot <dir>` 换输出目录。
 
-构建与自检会强制把 `TEMP`/`TMP`、`NUGET_PACKAGES`、`DOTNET_CLI_HOME` 指到仓库内（`.tmp/`、`.nuget-packages/`、`.dotnet-home/`），不写主机。**不要裸跑 `dotnet publish`**，会污染 `%TEMP%` 且可能锁住 `bin/`。
+构建与自检会强制把 `TEMP`/`TMP`、`NUGET_PACKAGES`、`DOTNET_CLI_HOME` 指到仓库内（`.tmp/`、`.nuget-packages/`、`.dotnet-home/`），不写主机。**不要裸跑 `dotnet publish`**，会污染 `%TEMP%` 且可能锁住 `bin/`。上面「单独跑某套」的 `dotnet run` **不做**这套重定向（只有 `check.ps1` 会）：要么直接用 `check.ps1`，要么在同一个 shell 里先导出这几个变量。
 
 ---
 
@@ -41,6 +41,7 @@ dotnet run --project tools/shotcheck  -c Release
 TarkovAtlas/                    应用主体（C# / Avalonia）
   Program.cs                    入口（STAThread + Avalonia AppBuilder）
   App.axaml(.cs)                应用与样式
+  AppJsonContext.cs             源生成的 JSON 上下文（反射已禁用，新类型必须登记）
   MainWindow.axaml(.cs)         主窗口：地图列表、任务抽屉、设置、日志监听
   OverlayWindow.axaml(.cs)      悬浮小窗（置顶、可拖动、滚轮缩放）
   SettingsWindow.axaml(.cs)     设置界面
@@ -78,6 +79,7 @@ tools/
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
   build_data.py                 合并 API → quests.json / mapdata.json
   build_story.py               剧情 → story.json
+  check_map_coverage.py        底图内容区覆盖率自检（第 7 节验收标准用它）
 ```
 
 `tools/*.py`、`tools/pyext/`、`tools/pylibs/`、`research/` 全部**不进 git**（见 `.gitignore`），只存在于开发机。`app` 的构建和运行都不碰 Python。
@@ -108,6 +110,8 @@ tools/
 
 ### 4.4 数据管线（本机，不进 git）
 - 顺序：`build_assets.py` → `build_layers.py` → `build_data.py` → `build_story.py`。
+- 局部重建：`build_assets.py --only factory`、`build_layers.py --only factory`。其余地图的 manifest 条目和楼层索引会合并保留，不会清空。
+- 两个 build 脚本都靠本机 headless Edge 栅格化 SVG；已下载瓦片在 `tools/tile-cache/`，瓦片类地图可离线重跑。
 - 外部依赖：`tools/pyext`（Pillow）、`tools/pylibs`（numpy、requests）。重建：
   `python -m pip install --target tools/pylibs pillow numpy requests`
 - 上游快照放在 `research/`：`api-maps.json`（tarkov.dev）、`svg-maps/tarkov-dev-svg-maps-main`（矢量图）、`orient-ref`（朝向参考）。
@@ -116,14 +120,17 @@ tools/
 
 ## 5. 约束与已知的坑
 
-1. **一切留在工作区内。** 不写 `%APPDATA%`、`%TEMP%`、全局 git config、全局 pip。测试/便携运行用 `TARKOVATLAS_DATA_DIR` 重定向应用状态。
-2. **管理员清单**：`app.manifest` 内嵌 `requireAdministrator`（全局热键需要）。副作用是**非交互 shell 里启动 exe 会卡在 UAC**；自动化验证请用非提权构建（`-p:ApplicationManifest=`），并按 PID 定位窗口后再截图。同时务必先清掉残留实例——否则截到的是旧窗口，而且哈希会完全一致。
-3. **构建**必须设 `AVALONIA_TELEMETRY_OPTOUT=1`，否则 Avalonia 遥测写日志失败会让整个 build 以误导性的 MSB4018 崩掉。
-4. **`dotnet publish` 的输出目录被占用会锁住 `bin\Release\...`**；用暂存目录或 `-p:OutputPath=`。
-5. **不要加 NuGet 外网依赖**：只能用 `.nuget-packages` 里的离线缓存。
-6. **别 `git clean -xdf`**：会连 `research/` 和 `tools/*.py` 管线一起删掉。
-7. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。
-8. **`assets.tarkov.dev` 返回 403**；GitHub 与 fandom wiki 可访问。
+1. **一切留在工作区内。** 不写 `%APPDATA%`、`%TEMP%`、全局 git config、全局 pip。测试项目和非提权构建用 `TARKOVATLAS_DATA_DIR` 重定向应用状态（提权版见下一条）。
+2. **管理员清单**：`app.manifest` 内嵌 `requireAdministrator`（全局热键需要）。副作用是**非交互 shell 里启动 exe 会卡在 UAC**；自动化验证请用非提权构建（`-p:ApplicationManifest=`），并按 PID 定位窗口后再截图。同时务必先清掉残留实例——否则截到的是旧窗口，而且哈希会完全一致。另外 UAC 提权**不继承父进程环境变量**，所以发布版 exe 永远读 `%APPDATA%\TarkovAtlas\settings.json`，`TARKOVATLAS_DATA_DIR` 对它无效；要用干净配置验证，先备份挪走那份 settings.json，验完还原。
+3. **构建**必须设 `AVALONIA_TELEMETRY_OPTOUT=1`，否则 Avalonia 遥测写日志失败会让整个 build 以误导性的 MSB4018 崩掉。`build.ps1` / `tools/check.ps1` 已经设好，只有绕过脚本直接跑 `dotnet build|publish` 时才需要自己设。
+4. **JSON 走源生成**（`JsonSerializerIsReflectionEnabledByDefault=false`）：新增要序列化/反序列化的类型必须加进 `AppJsonContext.cs` 的 `[JsonSerializable]` 列表，否则 NativeAOT 下要等到运行时才炸。
+5. **`dotnet publish` 的输出目录被占用会锁住 `bin\Release\...`**；用暂存目录或 `-p:OutputPath=`。
+6. **不要加 NuGet 外网依赖**：只能用 `.nuget-packages` 里的离线缓存。
+7. **别 `git clean -xdf`**：会连 `research/` 和 `tools/*.py` 管线一起删掉。
+8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
+9. **`assets.tarkov.dev` 返回 403**；GitHub 与 fandom wiki 可访问。
+
+两个大文件：`MainWindow.axaml.cs`（约 1.2k 行，所有 UI 交互：地图切换、楼层、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1k 行，全部绘制）。改行为先在这两处找，不要去 Models 里猜。
 
 ---
 
