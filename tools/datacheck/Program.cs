@@ -48,14 +48,19 @@ internal static class DataChecks
             var ok = Math.Abs(back.X - map.MinX) < 0.5 && Math.Abs(back.Z - map.MinZ) < 0.5;
             Check($"affine roundtrip {map.Key}", ok, $"{back.X:0.0},{back.Z:0.0} vs {map.MinX:0.0},{map.MinZ:0.0}");
 
-            // Every corner must land inside the image bounds.
-            foreach (var (gx, gz) in new[] { (map.MinX, map.MinZ), (map.MaxX, map.MinZ), (map.MinX, map.MaxZ), (map.MaxX, map.MaxZ) })
+            // Every corner must land inside the image bounds. Only meaningful for
+            // an axis-aligned affine: a rotated image is a tilted rectangle, so
+            // the corners of its world-space bbox fall outside it by design.
+            if (Math.Abs(map.Affine[1]) < 1e-9 && Math.Abs(map.Affine[3]) < 1e-9)
             {
-                var p = map.GameToImage(gx, gz);
-                var inside = p.X >= -1 && p.Y >= -1 && p.X <= map.Width + 1 && p.Y <= map.Height + 1;
-                if (!inside)
+                foreach (var (gx, gz) in new[] { (map.MinX, map.MinZ), (map.MaxX, map.MinZ), (map.MinX, map.MaxZ), (map.MaxX, map.MaxZ) })
                 {
-                    Check($"corner inside image {map.Key}", false, $"{gx:0},{gz:0} -> {p.X:0},{p.Y:0} of {map.Width}x{map.Height}");
+                    var p = map.GameToImage(gx, gz);
+                    var inside = p.X >= -1 && p.Y >= -1 && p.X <= map.Width + 1 && p.Y <= map.Height + 1;
+                    if (!inside)
+                    {
+                        Check($"corner inside image {map.Key}", false, $"{gx:0},{gz:0} -> {p.X:0},{p.Y:0} of {map.Width}x{map.Height}");
+                    }
                 }
             }
         }
@@ -72,14 +77,12 @@ internal static class DataChecks
                 $"{dx:0.0} m on x, {dz:0.0} m on z");
 
             // The view fits Content, so a wrong rect would crop or letterbox the
-            // map. It must exist and stay inside the canvas.
-            var c0 = map.HasValidAffine ? map.GameToImage(map.ContentMinX, map.ContentMinZ) : default;
-            var c1 = map.HasValidAffine ? map.GameToImage(map.ContentMaxX, map.ContentMaxZ) : default;
+            // map. It is a pixel rect and must exist inside the canvas.
             var contentOk = map.HasContent
-                && Math.Min(c0.X, c1.X) >= -1 && Math.Min(c0.Y, c1.Y) >= -1
-                && Math.Max(c0.X, c1.X) <= map.Width + 1 && Math.Max(c0.Y, c1.Y) <= map.Height + 1;
+                && map.ContentMinX >= -1 && map.ContentMinZ >= -1
+                && map.ContentMaxX <= map.Width + 1 && map.ContentMaxZ <= map.Height + 1;
             Check($"content rect inside canvas {map.Key}", contentOk,
-                $"{c0.X:0},{c0.Y:0} .. {c1.X:0},{c1.Y:0} of {map.Width}x{map.Height}");
+                $"{map.ContentMinX:0},{map.ContentMinZ:0} .. {map.ContentMaxX:0},{map.ContentMaxZ:0} of {map.Width}x{map.Height}");
 
             var markers = new List<(double X, double Z)>();
             markers.AddRange(map.Extracts.Select(e => (e.X, e.Z)));
@@ -499,12 +502,18 @@ internal static class DataChecks
     /// <summary>How far the image rectangle, mapped back to game space, misses the declared bounds.</summary>
     private static (double Dx, double Dz) BoundsMismatch(MapDefinition map)
     {
-        var first = map.ImageToGame(0, 0);
-        var second = map.ImageToGame(map.Width, map.Height);
-        var dx = Math.Max(Math.Abs(Math.Min(first.X, second.X) - map.MinX),
-                          Math.Abs(Math.Max(first.X, second.X) - map.MaxX));
-        var dz = Math.Max(Math.Abs(Math.Min(first.Z, second.Z) - map.MinZ),
-                          Math.Abs(Math.Max(first.Z, second.Z) - map.MaxZ));
+        // All four corners: with a rotated affine the diagonal pair does not
+        // cover the image rect, so the game-space extent needs every corner.
+        var xs = new List<double>();
+        var zs = new List<double>();
+        foreach (var (px, py) in new[] { (0.0, 0.0), (map.Width, 0.0), (0.0, map.Height), (map.Width, map.Height) })
+        {
+            var g = map.ImageToGame(px, py);
+            xs.Add(g.X);
+            zs.Add(g.Z);
+        }
+        var dx = Math.Max(Math.Abs(xs.Min() - map.MinX), Math.Abs(xs.Max() - map.MaxX));
+        var dz = Math.Max(Math.Abs(zs.Min() - map.MinZ), Math.Abs(zs.Max() - map.MaxZ));
         return (dx, dz);
     }
 

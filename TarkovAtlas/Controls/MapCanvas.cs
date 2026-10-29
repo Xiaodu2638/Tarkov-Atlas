@@ -238,10 +238,8 @@ public sealed class MapCanvas : Control
         var box = new Rect(0, 0, _map.Width, _map.Height);
         if (_map.HasContent)
         {
-            var p0 = _map.GameToImage(_map.ContentMinX, _map.ContentMinZ);
-            var p1 = _map.GameToImage(_map.ContentMaxX, _map.ContentMaxZ);
-            box = new Rect(Math.Min(p0.X, p1.X), Math.Min(p0.Y, p1.Y),
-                Math.Abs(p1.X - p0.X), Math.Abs(p1.Y - p0.Y));
+            box = new Rect(_map.ContentMinX, _map.ContentMinZ,
+                _map.ContentMaxX - _map.ContentMinX, _map.ContentMaxZ - _map.ContentMinZ);
         }
         _fit = Math.Min((Bounds.Width - pad * 2) / Math.Max(1, box.Width),
                         (Bounds.Height - pad * 2) / Math.Max(1, box.Height));

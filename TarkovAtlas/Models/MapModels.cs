@@ -53,9 +53,11 @@ public sealed class MapDefinition
     /// <summary>minX, minZ, maxX, maxZ in game units.</summary>
     public double[] Bounds { get; set; } = Array.Empty<double>();
     /// <summary>
-    /// minX, minZ, maxX, maxZ of the drawn artwork inside the baked canvas.
-    /// Some canvases are mostly empty (Icebreaker draws the hull on a fifth of
-    /// its tile canvas), so the view fits this rect instead of the bitmap.
+    /// left, top, right, bottom of the drawn artwork inside the baked canvas,
+    /// in pixels. Some canvases are mostly empty (Icebreaker draws the hull on a
+    /// fifth of its tile canvas), so the view fits this rect instead of the bitmap.
+    /// Pixels rather than game coordinates because a rotated affine cannot map an
+    /// axis-aligned artwork rect to an axis-aligned world rect.
     /// </summary>
     public double[] Content { get; set; } = Array.Empty<double>();
     public List<MapLabel> Labels { get; set; } = new();
@@ -91,10 +93,10 @@ public sealed class MapDefinition
 
     [JsonIgnore] public bool HasContent => Content.Length >= 4
         && Math.Abs(Content[2] - Content[0]) > 0.01 && Math.Abs(Content[3] - Content[1]) > 0.01;
-    [JsonIgnore] public double ContentMinX => HasContent ? Math.Min(Content[0], Content[2]) : MinX;
-    [JsonIgnore] public double ContentMinZ => HasContent ? Math.Min(Content[1], Content[3]) : MinZ;
-    [JsonIgnore] public double ContentMaxX => HasContent ? Math.Max(Content[0], Content[2]) : MaxX;
-    [JsonIgnore] public double ContentMaxZ => HasContent ? Math.Max(Content[1], Content[3]) : MaxZ;
+    [JsonIgnore] public double ContentMinX => HasContent ? Math.Min(Content[0], Content[2]) : 0;
+    [JsonIgnore] public double ContentMinZ => HasContent ? Math.Min(Content[1], Content[3]) : 0;
+    [JsonIgnore] public double ContentMaxX => HasContent ? Math.Max(Content[0], Content[2]) : Width;
+    [JsonIgnore] public double ContentMaxZ => HasContent ? Math.Max(Content[1], Content[3]) : Height;
 
     public bool HasValidAffine => Affine.Length == 6 && Math.Abs(Affine[0] * Affine[4] - Affine[1] * Affine[3]) > 1e-9;
 

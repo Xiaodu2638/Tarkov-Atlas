@@ -92,8 +92,9 @@ tools/
 - 每个 `MapDefinition` 带一个仿射矩阵：`px = a*x + b*z + c; py = d*x + e*z + f`，把游戏坐标映射到图片像素。
 - `MapCanvas.Project()` 是唯一投影入口，所有标记都走它。
 - `maps.json`（`build_assets.py` 产物）里的 affine **未经人工校正**，运行时以 `mapdata.json` 为准。两者不一致时先查原因，**不要直接覆盖**。
-- **底图必须上北下南**：图片帧 = 游戏坐标按 `coordinateToCardinalRotation` 旋转后，`px ∝ east`、`py ∝ -north`；SVG 再按 `(cardinal − coordinateRotation) mod 360` 转正，等比缩放后拉伸进 cardinal bounds 矩形（与 tarkov.dev 的 `L.svgOverlay` 一致）。11 张 `rot=180` 的图是恒等变换，工厂是唯一真正被转过的：竖版 5183×5600，底图只渲染 `Ground_Floor` 组（整张 SVG 四层叠在一起会看着像重影）。
-- **`content` 决定取景，不是 `bounds`**：`build_assets.py` 的 `content_box()` 用「边框环众数色 + 12 灰阶」找出实际画出来的区域，经 `box_to_game()` 反算成游戏坐标写进 `mapdata.json` 的 `content`；`MapCanvas.EnsureLayout()` 按它做 fit + 居中，所以画布边缘的空白不会把地图缩成一小块。`bounds` 仍是整张图片的世界范围（`datacheck` 用它做一致性断言），两者别混。
+- **底图必须上北下南**：图片帧 = 游戏坐标按 `coordinateToCardinalRotation` 旋转后，`px ∝ east`、`py ∝ -north`；SVG 再按 `(cardinal − coordinateRotation) mod 360` 转正（`svg_turn()`），等比缩放后拉伸进 cardinal bounds 矩形（与 tarkov.dev 的 `L.svgOverlay` 一致）。11 张图 `turn=0`，reserve 是 15.2°（`svg_canvas()` 绕中心转完再裁回原帧，否则地图会缩在黑角里），其余都在 90° 的整数倍上。
+- **SVG 底图只渲染地面层组**：这些 SVG 把各层叠在一个文件里，整份渲染会重影（工厂四层、海关/立交桥/地面零区/街区/实验室都一样）。`ground_group()` 取 `Ground_Level` → `Ground_Floor` → `First_Level`，其余层是楼层选择器里的 `svgLayer`。工厂竖版 5183×5600。
+- **`content` 是像素矩形，不是游戏坐标**：`build_assets.py` 的 `content_box()` 用「边框环众数色 + 12 灰阶」找出实际画出来的区域，直接把像素框写进 `mapdata.json` 的 `content`；`MapCanvas.EnsureLayout()` 按它做 fit + 居中，所以画布边缘的空白不会把地图缩成一小块。像素是因为旋转后的仿射无法把轴对齐的图画框映射成轴对齐的世界矩形。`bounds` 仍是整张图片的世界范围（`datacheck` 用它做一致性断言），两者别混。
 - **仿射必须各向同性**：世界单位是米、图片保持比例，所以 `|a| == |e|`。破冰船的上游 tile `transform` 是工厂的占位值（`sx=2.0, sy=3.5`），`uniform_transform()` 会在拼瓦片前统一成水平尺度；`sanitize_affine()` 在产物侧再兜一次底。数据里出现各向异性矩阵一律按 bug 处理。
 
 ### 4.2 渲染
@@ -131,7 +132,7 @@ tools/
 7. **别 `git clean -xdf`**：会连 `research/` 和 `tools/*.py` 管线一起删掉。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
 9. **`assets.tarkov.dev` 返回 403**；GitHub 与 fandom wiki 可访问。
-10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。给某张图加 SVG 分支前，先对比 `viewBox` 的宽高比和 cardinal bounds 的宽高比；不一致就走瓦片分支。
+10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按 SVG 自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
 
 两个大文件：`MainWindow.axaml.cs`（约 1.2k 行，所有 UI 交互：地图切换、楼层、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1k 行，全部绘制）。改行为先在这两处找，不要去 Models 里猜。
 
@@ -156,8 +157,8 @@ tools/
 - **海岸线楼层**：3 层已生成，内容区仍偏小，待重烘焙。
 - 历史缺陷（破冰船空背景、实验室/迷宫硬拉伸）已修复，**不要再退回**：
   - 破冰船：`uniform_transform()` 修掉 1.75× 纵向拉伸，crop 原点改按画布帧计算，成品 4585×4270，船体占满画布。
-  - 实验室 / 迷宫：实验室改走 SVG 分支（cardinal 帧 + 等比缩放 + 按内容裁切），5600×4082；**迷宫必须走瓦片分支**（3602×3873，`TILE_MAPS`）。`Labyrinth.svg` 的 viewBox 比画面本身大，按 bounds 拉伸后每个标记都偏出房间，试过就知道（3/7 落在画面内）。
-  - 验收口径：`python tools/check_map_coverage.py` 全 13 张退出码 0。有 `content` 的图按「content 与实测画面偏差 ≤ 3%」判，没有 `content` 的图仍按四边边距 < 10% + 标记落在画面内 ≥ 90% 判；背景色取**图片边框环**的众数（整图众数会把工厂判成误报）。`datacheck` 的 `knownGeometryDefects` 已清空，并新增「content 矩形必须落在画布内」断言。
+  - 实验室 / 迷宫：实验室底图 = `First_Level` 组（5600×4082），两层楼（`Second Level` / `Technical`）走 `SVG_FLOOR_ALIASES` 映射到 SVG 组 `Second_Level` / `Technical_Level`——上游只给瓦片，那套瓦片是旧版照片风底图，叠在矢量底图上像两张地图；**迷宫必须走瓦片分支**（3602×3873，`TILE_MAPS`）。`Labyrinth.svg` 的 viewBox 比画面本身大，按 bounds 拉伸后每个标记都偏出房间，试过就知道（3/7 落在画面内）。
+  - 验收口径：`python tools/check_map_coverage.py` 全 13 张退出码 0。有 `content` 的图按「content 与实测画面偏差 ≤ 3%」判，没有 `content` 的图仍按四边边距 < 10% + 标记落在画面内 ≥ 90% 判；背景色取**图片边框环**的众数（整图众数会把工厂判成误报），边框环本身不是深色底（码头的水面铺满画布）时按「画布已铺满」处理。`datacheck` 的 `knownGeometryDefects` 已清空，并新增「content 矩形必须落在画布内」断言；旋转仿射（reserve）跳过「bounds 角点必须在画面内」那条——那是轴对齐前提。
 
 ---
 
