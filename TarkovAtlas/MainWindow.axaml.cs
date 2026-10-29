@@ -552,8 +552,19 @@ public partial class MainWindow : Window
         public required Func<bool> Get { get; init; }
         public required Action<bool> Set { get; init; }
         public int Count { get; init; }
-        /// <summary>Group heading the row renders under (点位 / 环境 / 道具).</summary>
+        /// <summary>Group heading the row renders under (点位 / 物资 / 环境 / 道具).</summary>
         public required string Group { get; init; }
+        /// <summary>Nested mutually-exclusive choices rendered under the row.</summary>
+        public IReadOnlyList<LegendChoice>? Choices { get; init; }
+    }
+
+    /// <summary>A mutually-exclusive sub-option of a legend row.</summary>
+    private sealed class LegendChoice
+    {
+        public required string Key { get; init; }
+        public required string Label { get; init; }
+        public required Func<bool> IsSelected { get; init; }
+        public required Action Select { get; init; }
     }
 
     /// <summary>POI kind → display name (kept in sync with build_data's kinds).</summary>
@@ -568,6 +579,7 @@ public partial class MainWindow : Window
     /// <summary>Chinese display label for a loot container normalizedName.</summary>
     private static string LootKindLabel(string kind) => kind switch
     {
+        "duffle-bag" => "旅行包",
         "weapon-box" => "武器箱",
         "weapon-rack" => "武器架",
         "jacket" => "夹克",
@@ -613,6 +625,21 @@ public partial class MainWindow : Window
                 Label = "撤离点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.ExtractPmc),
                 Icon = "extract-pmc", Group = points,
                 Get = () => _settings.ShowExtracts, Set = v => _settings.ShowExtracts = v, Count = map?.Extracts.Count ?? 0,
+                Choices = new[]
+                {
+                    new LegendChoice { Key = "all", Label = "全部",
+                        IsSelected = () => _settings.ExtractFilter == "all",
+                        Select = () => { _settings.ExtractFilter = "all"; ApplyDisplayOptions(); Persist(); } },
+                    new LegendChoice { Key = "pmc", Label = "PMC",
+                        IsSelected = () => _settings.ExtractFilter == "pmc",
+                        Select = () => { _settings.ExtractFilter = "pmc"; ApplyDisplayOptions(); Persist(); } },
+                    new LegendChoice { Key = "scav", Label = "Scav",
+                        IsSelected = () => _settings.ExtractFilter == "scav",
+                        Select = () => { _settings.ExtractFilter = "scav"; ApplyDisplayOptions(); Persist(); } },
+                    new LegendChoice { Key = "shared", Label = "共享",
+                        IsSelected = () => _settings.ExtractFilter == "shared",
+                        Select = () => { _settings.ExtractFilter = "shared"; ApplyDisplayOptions(); Persist(); } },
+                },
             });
         }
         if (map is null || map.Bosses.Count > 0)
@@ -632,30 +659,6 @@ public partial class MainWindow : Window
                 Group = points,
                 Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = map?.Spawns.Count ?? 0,
             });
-        }
-        if (map is not null)
-        {
-            // Loot containers: one row per container category present on the map,
-            // so e.g. weapon boxes can be shown while jackets stay hidden.
-            foreach (var group in map.Loot.GroupBy(l => l.Kind).OrderByDescending(g => g.Count()))
-            {
-                var kind = group.Key;
-                var count = group.Count();
-                if (count < 3) continue;  // single stray containers are noise
-                rows.Add(new()
-                {
-                    Label = LootKindLabel(kind),
-                    Swatch = MapCanvas.LootBrushFor(kind),
-                    Group = loot,
-                    Get = () => !_settings.HiddenLootKinds.Contains(kind),
-                    Set = v =>
-                    {
-                        if (v) _settings.HiddenLootKinds.Remove(kind);
-                        else if (!_settings.HiddenLootKinds.Contains(kind)) _settings.HiddenLootKinds.Add(kind);
-                    },
-                    Count = count,
-                });
-            }
         }
         if (map is null || map.Transits.Count > 0)
         {
@@ -693,16 +696,17 @@ public partial class MainWindow : Window
                 var kind = group.Key;
                 var count = group.Count();
                 if (count < 3) continue;  // single stray containers are noise
+                var k = kind;
                 rows.Add(new()
                 {
                     Label = LootKindLabel(kind),
                     Swatch = MapCanvas.LootBrushFor(kind),
                     Group = loot,
-                    Get = () => !_settings.HiddenLootKinds.Contains(kind),
+                    Get = () => !_settings.HiddenLootKinds.Contains(k),
                     Set = v =>
                     {
-                        if (v) _settings.HiddenLootKinds.Remove(kind);
-                        else if (!_settings.HiddenLootKinds.Contains(kind)) _settings.HiddenLootKinds.Add(kind);
+                        if (v) _settings.HiddenLootKinds.Remove(k);
+                        else if (!_settings.HiddenLootKinds.Contains(k)) _settings.HiddenLootKinds.Add(k);
                     },
                     Count = count,
                 });
@@ -865,6 +869,46 @@ public partial class MainWindow : Window
                 Persist();
             };
             LegendItems.Children.Add(card);
+
+            // Nested mutually-exclusive choices (e.g. 撤离点类型) render as a
+            // compact chip row directly under the parent card.
+            if (row.Choices is { Count: > 0 } choices)
+            {
+                var chips = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Spacing = 4,
+                    Margin = new Thickness(10, 2, 0, 2),
+                };
+                foreach (var choice in choices)
+                {
+                    var selected = choice.IsSelected();
+                    var chip = new Border
+                    {
+                        CornerRadius = new CornerRadius(9),
+                        Padding = new Thickness(9, 2),
+                        Background = selected
+                            ? Palette.Brush(Palette.Accent)
+                            : Palette.Brush(Palette.ButtonBg),
+                        Cursor = new Cursor(StandardCursorType.Hand),
+                        Child = new TextBlock
+                        {
+                            Text = choice.Label,
+                            FontSize = 9.5,
+                            Foreground = selected
+                                ? Palette.Brush(Palette.TextOnAccent)
+                                : Palette.Brush(Palette.TextSecondary),
+                        },
+                    };
+                    chip.PointerReleased += (_, _) =>
+                    {
+                        choice.Select();
+                        RebuildLegend();
+                    };
+                    chips.Children.Add(chip);
+                }
+                LegendItems.Children.Add(chips);
+            }
         }
     }
 
@@ -891,98 +935,13 @@ public partial class MainWindow : Window
         return bmp;
     }
 
+    /// <summary>Top-right "图例" button: toggles the docked legend on/off.
+    /// Every marker switch now lives inside the legend itself.</summary>
     private void DisplayMenuButton_Click(object? sender, RoutedEventArgs e)
     {
-        var menu = new ContextMenu();
-        menu.Items.Add(ToggleItem("撤离点", _settings.ShowExtracts, v =>
-        {
-            _settings.ShowExtracts = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-
-        var faction = new MenuItem { Header = "撤离点类型" };
-        foreach (var (key, label) in new[]
-                 {
-                     ("all", "全部（PMC + Scav）"), ("pmc", "仅 PMC / 共享"),
-                     ("scav", "仅 Scav / 共享"), ("shared", "仅共享撤离"),
-                 })
-        {
-            var item = new MenuItem
-            {
-                Header = label,
-                ToggleType = MenuItemToggleType.Radio,
-                IsChecked = _settings.ExtractFilter == key,
-            };
-            item.Click += (_, _) =>
-            {
-                _settings.ExtractFilter = key;
-                ApplyDisplayOptions();
-                Persist();
-            };
-            faction.Items.Add(item);
-        }
-        menu.Items.Add(faction);
-
-        menu.Items.Add(ToggleItem("Boss 刷点", _settings.ShowBosses, v =>
-        {
-            _settings.ShowBosses = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-        menu.Items.Add(ToggleItem("出生点", _settings.ShowSpawns, v =>
-        {
-            _settings.ShowSpawns = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-        menu.Items.Add(ToggleItem("转移点", _settings.ShowTransits, v =>
-        {
-            _settings.ShowTransits = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-        menu.Items.Add(ToggleItem("物资埋藏点", _settings.ShowCaches, v =>
-        {
-            _settings.ShowCaches = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-        menu.Items.Add(ToggleItem("任务地点标记", _settings.ShowQuestMarkers, v =>
-        {
-            _settings.ShowQuestMarkers = v;
-            ApplyDisplayOptions();
-            SyncQuestMarkers();
-            Persist();
-        }));
-        menu.Items.Add(ToggleMenuItem("危险区（雷区 / 狙击区 / 其他）", _settings.ShowHazards, v =>
-        {
-            _settings.ShowHazards = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-        menu.Items.Add(new Separator());
-        menu.Items.Add(ToggleItem("地名", _settings.ShowLabels, v =>
-        {
-            _settings.ShowLabels = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-        menu.Items.Add(ToggleItem("BTR 站点", _settings.ShowBtrs, v =>
-        {
-            _settings.ShowBtrs = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-        menu.Items.Add(ToggleItem("图例面板", _settings.ShowLegend, v =>
-        {
-            _settings.ShowLegend = v;
-            ApplyDisplayOptions();
-            Persist();
-        }));
-
-        if (sender is Control anchor)
-            menu.Open(anchor);
+        _settings.ShowLegend = !_settings.ShowLegend;
+        ApplyDisplayOptions();
+        Persist();
     }
 
     /// <summary>Same as <see cref="ToggleItem"/> but keeps the menu open on click.</summary>

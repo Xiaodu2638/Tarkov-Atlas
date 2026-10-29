@@ -151,7 +151,7 @@
                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                       Click="ZoomInButton_Click" ToolTip.Tip="放大" />
               <Button Content="复位" Click="ResetViewButton_Click" ToolTip.Tip="适应窗口（Home）" />
-              <Button Content="显示" Click="DisplayMenuButton_Click" ToolTip.Tip="选择地图上显示的内容" />
+              <Button Content="图例" Click="DisplayMenuButton_Click" ToolTip.Tip="显示 / 隐藏左侧图例（各类标记开关都在图例里）" />
               <ComboBox x:Name="LayerComboBox" Width="120" IsVisible="False"
                         SelectionChanged="LayerComboBox_SelectionChanged"
                         ToolTip.Tip="切换楼层" />
