@@ -530,6 +530,8 @@ public partial class MainWindow : Window
             ShowQuestMarkers = _settings.ShowQuestMarkers,
             ShowHazards = _settings.ShowHazards,
             ShowBtrs = _settings.ShowBtrs,
+            ShowLoot = _settings.ShowLoot,
+            LootKindsHidden = _settings.HiddenLootKinds,
         };
         MapView.Hazards = _currentMap?.Hazards ?? new List<HazardZone>();
         MapView.InvalidateVisual();
@@ -563,6 +565,36 @@ public partial class MainWindow : Window
         ["阀门手轮"] = "阀门手轮",
     };
 
+    /// <summary>Chinese display label for a loot container normalizedName.</summary>
+    private static string LootKindLabel(string kind) => kind switch
+    {
+        "weapon-box" => "武器箱",
+        "weapon-rack" => "武器架",
+        "jacket" => "夹克",
+        "drawer" => "抽屉",
+        "filing-cabinet" => "档案柜",
+        "safe" => "保险箱",
+        "bank-safe" => "银行保险柜",
+        "medcase" => "医疗箱",
+        "medbag" => "医疗包",
+        "toolbox" => "工具箱",
+        "wooden-crate" => "木箱",
+        "wooden-ammo-box" => "弹药箱",
+        "grenade-box" => "手榴弹箱",
+        "dead-scav" => "尸体(Scav)",
+        "civilian-body" => "尸体(平民)",
+        "pmc-body" => "尸体(PMC)",
+        "cash-register" => "收银机",
+        "bank-cash-register" => "银行收银机",
+        "plastic-suitcase" => "塑料手提箱",
+        "technical-supply-crate" => "技术物资箱",
+        "medical-supply-crate" => "医疗物资箱",
+        "ration-supply-crate" => "配给物资箱",
+        "pc-block" => "电脑机箱",
+        "shturmans-stash" => "Shturman 藏匿点",
+        _ => kind,
+    };
+
     /// <summary>Collect the legend rows for the current map's display state.</summary>
     private List<LegendRow> CollectLegendRows()
     {
@@ -570,6 +602,7 @@ public partial class MainWindow : Window
         const string points = "点位";
         const string env = "环境";
         const string items = "道具";
+        const string loot = "物资";
         // Only offer toggles for marker sets this map actually has — a BTR
         // toggle on The Lab or a cache toggle on Factory is dead weight.
         var rows = new List<LegendRow>();
@@ -600,6 +633,30 @@ public partial class MainWindow : Window
                 Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = map?.Spawns.Count ?? 0,
             });
         }
+        if (map is not null)
+        {
+            // Loot containers: one row per container category present on the map,
+            // so e.g. weapon boxes can be shown while jackets stay hidden.
+            foreach (var group in map.Loot.GroupBy(l => l.Kind).OrderByDescending(g => g.Count()))
+            {
+                var kind = group.Key;
+                var count = group.Count();
+                if (count < 3) continue;  // single stray containers are noise
+                rows.Add(new()
+                {
+                    Label = LootKindLabel(kind),
+                    Swatch = MapCanvas.LootBrushFor(kind),
+                    Group = loot,
+                    Get = () => !_settings.HiddenLootKinds.Contains(kind),
+                    Set = v =>
+                    {
+                        if (v) _settings.HiddenLootKinds.Remove(kind);
+                        else if (!_settings.HiddenLootKinds.Contains(kind)) _settings.HiddenLootKinds.Add(kind);
+                    },
+                    Count = count,
+                });
+            }
+        }
         if (map is null || map.Transits.Count > 0)
         {
             rows.Add(new()
@@ -626,6 +683,30 @@ public partial class MainWindow : Window
                 Group = points,
                 Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = map?.Caches.Count ?? 0,
             });
+        }
+        if (map is not null)
+        {
+            // Loot containers: one row per container category present on the map,
+            // so e.g. weapon boxes can be shown while jackets stay hidden.
+            foreach (var group in map.Loot.GroupBy(l => l.Kind).OrderByDescending(g => g.Count()))
+            {
+                var kind = group.Key;
+                var count = group.Count();
+                if (count < 3) continue;  // single stray containers are noise
+                rows.Add(new()
+                {
+                    Label = LootKindLabel(kind),
+                    Swatch = MapCanvas.LootBrushFor(kind),
+                    Group = loot,
+                    Get = () => !_settings.HiddenLootKinds.Contains(kind),
+                    Set = v =>
+                    {
+                        if (v) _settings.HiddenLootKinds.Remove(kind);
+                        else if (!_settings.HiddenLootKinds.Contains(kind)) _settings.HiddenLootKinds.Add(kind);
+                    },
+                    Count = count,
+                });
+            }
         }
         if (map is null || map.Hazards.Count > 0)
         {

@@ -102,6 +102,17 @@ public static class Palette
     public static readonly Color FocusHalo = Color.Parse("#44D6A84B");
     public static readonly Color HazardGlyph = Color.Parse("#0A0F15");
 
+    // Loot container marker colours (物资点) — one per container category.
+    public static readonly Color LootWeapon = Color.Parse("#E0B24A");
+    public static readonly Color LootJacket = Color.Parse("#8AC77A");
+    public static readonly Color LootDrawer = Color.Parse("#9A8BD6");
+    public static readonly Color LootSafe = Color.Parse("#E08A5A");
+    public static readonly Color LootMedical = Color.Parse("#6FC3E0");
+    public static readonly Color LootTool = Color.Parse("#C7A16B");
+    public static readonly Color LootCrate = Color.Parse("#B08A62");
+    public static readonly Color LootBody = Color.Parse("#8C9AA6");
+    public static readonly Color LootOther = Color.Parse("#9E9E9E");
+
     public static readonly Color MinefieldFill = Color.Parse("#33E0523D");
     public static readonly Color MinefieldStroke = Color.Parse("#CCE0523D");
     public static readonly Color SniperFill = Color.Parse("#33E0A23D");

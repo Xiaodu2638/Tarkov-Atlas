@@ -84,6 +84,8 @@ public sealed class MapDefinition
     public List<PoiPoint> Pois { get; set; } = new();
     /// <summary>BTR taxi stops (BTR 站点). Only maps the BTR serves carry these.</summary>
     public List<BtrStop> Btrs { get; set; } = new();
+    /// <summary>Lootable containers (物资点): weapon boxes, safes, jackets, ...</summary>
+    public List<LootPoint> Loot { get; set; } = new();
     public List<MapLayer> Layers { get; set; } = new();
     /// <summary>Minefield / sniper zones, loaded from hazards.json.</summary>
     [JsonIgnore] public List<HazardZone> Hazards { get; set; } = new();
@@ -274,6 +276,18 @@ public sealed class BtrStop
     public string Name { get; set; } = "";
 }
 
+/// <summary>
+/// One lootable container (物资点): a weapon box, safe, jacket, drawer, med case,
+/// ... The <see cref="Kind"/> is the raw tarkov.dev normalizedName so the legend
+/// can group them into toggles without a second lookup table.
+/// </summary>
+public sealed class LootPoint
+{
+    public double X { get; set; }
+    public double Z { get; set; }
+    public string Kind { get; set; } = "";
+}
+
 /// <summary>Per-map marker sets carried by markers.json (split from mapdata).</summary>
 public sealed class MapPoints
 {
@@ -284,6 +298,7 @@ public sealed class MapPoints
     public List<CachePoint> Caches { get; set; } = new();
     public List<PoiPoint> Pois { get; set; } = new();
     public List<BtrStop> Btrs { get; set; } = new();
+    public List<LootPoint> Loot { get; set; } = new();
 }
 
 /// <summary>Root of markers.json.</summary>

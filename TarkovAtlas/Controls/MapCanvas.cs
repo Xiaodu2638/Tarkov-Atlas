@@ -20,6 +20,10 @@ public sealed class MapDisplayOptions
     public bool ShowTransits { get; set; }
     /// <summary>Draw buried stash / cache spots (物资埋藏点).</summary>
     public bool ShowCaches { get; set; } = true;
+    /// <summary>Loot container kinds currently toggled off in the legend.</summary>
+    public IReadOnlyCollection<string> LootKindsHidden { get; set; } = Array.Empty<string>();
+    /// <summary>Master switch for loot container markers (物资点).</summary>
+    public bool ShowLoot { get; set; } = true;
     public bool ShowQuestMarkers { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
@@ -547,6 +551,7 @@ public sealed class MapCanvas : Control
         if (Options.ShowSpawns) DrawSpawns(context);
         if (Options.ShowTransits) DrawTransits(context);
         if (Options.ShowBtrs) DrawBtrs(context);
+        if (Options.ShowLoot) DrawLoot(context);
         if (Options.ShowCaches) DrawCaches(context);
         DrawPois(context);
         if (Options.ShowExtracts) DrawExtracts(context);
@@ -841,6 +846,44 @@ public sealed class MapCanvas : Control
             context.DrawText(label, pos);
         }
     }
+
+    /// <summary>
+    /// Loot container markers (物资点). Sourced from tarkov.dev's lootContainer
+    /// table; each kind (weapon-box, safe, jacket, drawer, medcase, ...) has its
+    /// own colour and can be switched off individually from the legend.
+    /// </summary>
+    private void DrawLoot(DrawingContext context)
+    {
+        if (_map is null || _map.Loot.Count == 0) return;
+        // Below this the dots smear into a carpet and the map stops reading.
+        if (_zoom < 0.9) return;
+
+        var r = Math.Clamp(3.6 * MathF.Sqrt((float)_zoom), 2.6f, 5.0f);
+        var hidden = Options.LootKindsHidden;
+        foreach (var item in _map.Loot)
+        {
+            if (hidden.Count > 0 && hidden.Contains(item.Kind)) continue;
+            var s = Project(item.X, item.Z);
+            if (!OnScreen(s, 20)) continue;
+
+            context.DrawEllipse(LootBrushFor(item.Kind),
+                CachedPen(MarkerShadow, 1.2), s, r, r);
+        }
+    }
+
+    /// <summary>Fill colour per loot container kind (stable, distinguishable).</summary>
+    public static IBrush LootBrushFor(string kind) => kind switch
+    {
+        "weapon-box" or "weapon-rack" => Palette.Brush(Palette.LootWeapon),
+        "jacket" => Palette.Brush(Palette.LootJacket),
+        "drawer" or "filing-cabinet" => Palette.Brush(Palette.LootDrawer),
+        "safe" or "bank-safe" => Palette.Brush(Palette.LootSafe),
+        "medcase" or "medbag" => Palette.Brush(Palette.LootMedical),
+        "toolbox" => Palette.Brush(Palette.LootTool),
+        "wooden-crate" or "wooden-ammo-box" => Palette.Brush(Palette.LootCrate),
+        "dead-scav" or "civilian-body" or "pmc-body" => Palette.Brush(Palette.LootBody),
+        _ => Palette.Brush(Palette.LootOther),
+    };
 
     /// <summary>
     /// Buried stash spots (物资埋藏点). These are dug up rather than looted in

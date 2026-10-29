@@ -50,6 +50,10 @@ public sealed class AppSettings
     public bool ShowTransits { get; set; }
     /// <summary>Draw buried stash / cache spots (物资埋藏点).</summary>
     public bool ShowCaches { get; set; } = true;
+    /// <summary>Loot container sub-kinds the user has switched off in the legend.</summary>
+    public List<string> HiddenLootKinds { get; set; } = new();
+    /// <summary>Master switch for loot container markers (物资点).</summary>
+    public bool ShowLoot { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
     public bool ShowBtrs { get; set; } = true;

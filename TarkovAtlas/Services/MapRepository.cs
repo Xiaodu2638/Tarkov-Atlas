@@ -89,6 +89,7 @@ public sealed class MapRepository
                 map.Caches = pts.Caches;
                 map.Pois = pts.Pois;
                 map.Btrs = pts.Btrs;
+                map.Loot = pts.Loot;
             }
         }
         catch (Exception ex)
