@@ -23,6 +23,8 @@ public sealed class MapDisplayOptions
     public bool ShowQuestMarkers { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
+    /// <summary>Draw BTR taxi stops (BTR 站点).</summary>
+    public bool ShowBtrs { get; set; } = true;
 
     public MapDisplayOptions Clone() => (MapDisplayOptions)MemberwiseClone();
 }
@@ -520,7 +522,7 @@ public sealed class MapCanvas : Control
         if (Options.ShowHazards) DrawHazards(context);
         if (Options.ShowSpawns) DrawSpawns(context);
         if (Options.ShowTransits) DrawTransits(context);
-        DrawBtrs(context);
+        if (Options.ShowBtrs) DrawBtrs(context);
         if (Options.ShowCaches) DrawCaches(context);
         DrawPois(context);
         if (Options.ShowExtracts) DrawExtracts(context);

@@ -529,6 +529,7 @@ public partial class MainWindow : Window
             ShowCaches = _settings.ShowCaches,
             ShowQuestMarkers = _settings.ShowQuestMarkers,
             ShowHazards = _settings.ShowHazards,
+            ShowBtrs = _settings.ShowBtrs,
         };
         MapView.Hazards = _currentMap?.Hazards ?? new List<HazardZone>();
         MapView.InvalidateVisual();
@@ -586,6 +587,11 @@ public partial class MainWindow : Window
                 Label = "转移点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
                 Icon = "transit",
                 Get = () => _settings.ShowTransits, Set = v => _settings.ShowTransits = v, Count = _currentMap?.Transits.Count ?? 0,
+            },
+            new()
+            {
+                Label = "BTR 站点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
+                Get = () => _settings.ShowBtrs, Set = v => _settings.ShowBtrs = v, Count = _currentMap?.Btrs.Count ?? 0,
             },
             new()
             {
@@ -786,6 +792,12 @@ public partial class MainWindow : Window
         menu.Items.Add(ToggleItem("地名", _settings.ShowLabels, v =>
         {
             _settings.ShowLabels = v;
+            ApplyDisplayOptions();
+            Persist();
+        }));
+        menu.Items.Add(ToggleItem("BTR 站点", _settings.ShowBtrs, v =>
+        {
+            _settings.ShowBtrs = v;
             ApplyDisplayOptions();
             Persist();
         }));

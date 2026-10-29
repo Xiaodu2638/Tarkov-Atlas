@@ -52,6 +52,7 @@ public sealed class AppSettings
     public bool ShowCaches { get; set; } = true;
     /// <summary>Draw minefield / sniper danger polygons.</summary>
     public bool ShowHazards { get; set; } = true;
+    public bool ShowBtrs { get; set; } = true;
     /// <summary>Selected building level per map key ("" = automatic by player Y).</summary>
     public Dictionary<string, string> SelectedLayer { get; set; } = new();
     /// <summary>Switch the level automatically from the player's Y coordinate.</summary>
