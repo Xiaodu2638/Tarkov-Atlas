@@ -323,9 +323,9 @@
                     <Grid Grid.Row="3" ColumnDefinitions="*,*,*" ColumnSpacing="6">
                       <Button Grid.Column="0" Content="标记完成 / 取消" HorizontalAlignment="Stretch"
                               HorizontalContentAlignment="Center" Click="ToggleSelectedQuestButton_Click" />
-                      <Button Grid.Column="1" Content="任务地点图" HorizontalAlignment="Stretch"
+                      <Button Grid.Column="1" x:Name="OpenQuestMapImageButton" Content="任务地点图" HorizontalAlignment="Stretch"
                               HorizontalContentAlignment="Center" Click="OpenQuestMapImageButton_Click"
-                              ToolTip.Tip="在大傻哥 wiki 打开该任务的地点标注图" />
+                              ToolTip.Tip="查看该任务的本地地点标注图" />
                       <Button Grid.Column="2" Content="打开 Wiki" HorizontalAlignment="Stretch"
                               HorizontalContentAlignment="Center" Click="OpenWikiButton_Click"
                               ToolTip.Tip="打开大傻哥（eftarkov.com）任务页" />

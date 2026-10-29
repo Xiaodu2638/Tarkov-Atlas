@@ -1317,12 +1317,14 @@ public partial class MainWindow : Window
             QuestDetailTitle.Text = "选择一个任务";
             QuestDetailMeta.Text = "";
             QuestObjectiveList.ItemsSource = null;
+            SetQuestMapButtonState(null);
             return;
         }
 
         _selectedQuest = row.Quest;
         QuestDetailTitle.Text = row.Title;
         QuestDetailMeta.Text = $"{row.Giver}  ·  {row.LevelText}  ·  {row.MapsText}";
+        SetQuestMapButtonState(row.Quest);
         QuestObjectiveList.ItemsSource = row.Quest.Objectives
             .Select(o =>
             {
@@ -1331,6 +1333,21 @@ public partial class MainWindow : Window
                 return prefix + o.Text;
             })
             .ToList();
+    }
+
+    /// <summary>Enable the 任务地点图 button only when the quest ships local
+    /// artwork; the tooltip says why it is disabled (or how many pages). No
+    /// click-to-discover.</summary>
+    private void SetQuestMapButtonState(Quest? quest)
+    {
+        if (OpenQuestMapImageButton is null) return;
+        var has = quest is not null && _localGuides.HasLocalImages(quest.Id);
+        OpenQuestMapImageButton.IsEnabled = has;
+        ToolTip.SetTip(OpenQuestMapImageButton, quest is null
+            ? "先选择一个任务"
+            : has
+                ? "查看该任务的地点标注图"
+                : "该任务没有本地地点图");
     }
 
     private string MapName(string key) => _repo.FindByKey(key)?.DisplayName ?? key;
@@ -1531,6 +1548,7 @@ public partial class MainWindow : Window
         _selectedQuest = quest;
         QuestDetailTitle.Text = quest.Title;
         QuestDetailMeta.Text = $"{quest.Trader}  ·  {quest.LevelText}  ·  {quest.MapsText}";
+        SetQuestMapButtonState(quest);
 
         // Local guides only — same policy as the task-detail button.
         var local = _localGuides.GetLocalImages(quest.Id);

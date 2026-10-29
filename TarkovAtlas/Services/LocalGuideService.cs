@@ -13,6 +13,40 @@ public sealed class LocalGuideService
 {
     private static string Root => Path.Combine(AppPaths.AssetsDir, "guides");
 
+    private HashSet<string>? _questIdsWithGuides;
+
+    /// <summary>One-time scan of Assets/guides; O(1) lookups afterwards.</summary>
+    private HashSet<string> QuestIdsWithGuides
+    {
+        get
+        {
+            if (_questIdsWithGuides is not null) return _questIdsWithGuides;
+            var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            try
+            {
+                if (Directory.Exists(Root))
+                {
+                    foreach (var dir in Directory.EnumerateDirectories(Root))
+                    {
+                        // a folder only counts when it actually ships pages
+                        if (Directory.EnumerateFiles(dir, "*.webp").Any())
+                            set.Add(Path.GetFileName(dir));
+                    }
+                }
+            }
+            catch
+            {
+                // unreadable tree = no guides; the button then disables
+            }
+            _questIdsWithGuides = set;
+            return set;
+        }
+    }
+
+    /// <summary>Whether the quest ships with local guide pages (no I/O).</summary>
+    public bool HasLocalImages(string questId) =>
+        !string.IsNullOrWhiteSpace(questId) && QuestIdsWithGuides.Contains(questId);
+
     /// <summary>Bundled guide pages for a quest, absolute paths in page order.</summary>
     public IReadOnlyList<string> GetLocalImages(string questId)
     {
