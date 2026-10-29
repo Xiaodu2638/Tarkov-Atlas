@@ -1019,19 +1019,16 @@ public sealed class MapCanvas : Control
     private void ZoomAt(Point screen, double factor)
     {
         if (_map is null) return;
-        EnsureLayout();
+        // Anchor invariant: the image point under the cursor stays under the
+        // cursor. The required origin after zoom is screen - before * newScale;
+        // _pan is the offset from the default (fit-box-centred) origin, and
+        // origin moves 1:1 with _pan, so shift _pan by the origin difference.
         var before = ScreenToImage(screen);
         _zoom = Math.Clamp(_zoom * factor, 0.35, 32);
         EnsureLayout();
-        var newScale = Scale;
-        var box = FitBox();
-        // Keep the image point under the cursor fixed. The pan is relative to
-        // the fitted artwork box, not the canvas centre: Reserve and Icebreaker
-        // have off-centre content rects, and a centre-based formula drifted the
-        // anchor on every wheel tick for those.
-        _pan = new Vector(
-            screen.X - Bounds.Width / 2 - (box.X + box.Width / 2 - before.X) * newScale,
-            screen.Y - Bounds.Height / 2 - (box.Y + box.Height / 2 - before.Y) * newScale);
+        var required = new Vector(screen.X - before.X * Scale, screen.Y - before.Y * Scale);
+        _pan += required - _origin;
+        EnsureLayout();
         InvalidateVisual();
         ViewChanged?.Invoke(this, EventArgs.Empty);
     }
