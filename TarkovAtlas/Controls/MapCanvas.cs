@@ -136,6 +136,11 @@ public sealed class MapCanvas : Control
     private Bitmap? _mipBitmap;
     private Bitmap? _mipSource;
     private double _mipFactor = 1;
+    /// <summary>Mip of the floor overlay; swapped whenever the base mip swaps
+    /// so a deck change rebuilds both together.</summary>
+    private Bitmap? _floorMipBitmap;
+    private Bitmap? _floorMipSource;
+    private double _floorMipFactor = 1;
 
     public MapCanvas()
     {
@@ -185,6 +190,11 @@ public sealed class MapCanvas : Control
             _mipSource = null;
             _mipFactor = 1;
         }
+        // Floor decks change with the layer combo, not just with the map; the
+        // floor mip slot has to drop its stale source whenever the map changes.
+        _floorMipBitmap = null;
+        _floorMipSource = null;
+        _floorMipFactor = 1;
         if (changed)
         {
             _zoom = 1;
@@ -387,18 +397,24 @@ public sealed class MapCanvas : Control
     /// Pick the bitmap to sample for the current zoom. Above ~0.5 screen px per
     /// source px the native image is fine; below that the view is a downscale
     /// anyway, so hand the rasteriser a pre-shrunk copy built once and cached
-    /// until the map changes.
+    /// until the map changes. <paramref name="isFloor"/> selects the mip slot:
+    /// base and floor overlay are cached separately so drawing a deck does not
+    /// invalidate the base mip every frame.
     /// </summary>
-    private Bitmap PickDrawBitmap(Bitmap source)
+    private Bitmap PickDrawBitmap(Bitmap source, bool isFloor = false)
     {
         if (Scale >= 0.5) return source;
+
+        var mipSource = isFloor ? _floorMipSource : _mipSource;
+        var mipBitmap = isFloor ? _floorMipBitmap : _mipBitmap;
+        var mipFactor = isFloor ? _floorMipFactor : _mipFactor;
 
         // Quantise to halves so the mip is rebuilt a couple of times per zoom
         // gesture instead of on every frame.
         var bucket = Scale < 0.25 ? 0.25 : 0.5;
-        if (ReferenceEquals(_mipSource, source) && _mipBitmap is not null
-            && Math.Abs(_mipFactor - bucket) < 0.001)
-            return _mipBitmap;
+        if (ReferenceEquals(mipSource, source) && mipBitmap is not null
+            && Math.Abs(mipFactor - bucket) < 0.001)
+            return mipBitmap;
 
         var w = Math.Max(1, (int)Math.Round(source.PixelSize.Width * bucket));
         var h = Math.Max(1, (int)Math.Round(source.PixelSize.Height * bucket));
@@ -411,10 +427,20 @@ public sealed class MapCanvas : Control
                     new Rect(0, 0, source.PixelSize.Width, source.PixelSize.Height),
                     new Rect(0, 0, w, h));
             }
-            _mipBitmap?.Dispose();
-            _mipBitmap = rtb;
-            _mipSource = source;
-            _mipFactor = bucket;
+            if (isFloor)
+            {
+                _floorMipBitmap?.Dispose();
+                _floorMipBitmap = rtb;
+                _floorMipSource = source;
+                _floorMipFactor = bucket;
+            }
+            else
+            {
+                _mipBitmap?.Dispose();
+                _mipBitmap = rtb;
+                _mipSource = source;
+                _mipFactor = bucket;
+            }
         }
         catch
         {
@@ -447,6 +473,12 @@ public sealed class MapCanvas : Control
         // a pre-shrunk copy keeps pixels identical but makes panning smooth.
         var baseBitmap = PickDrawBitmap(_bitmap);
         var floor = Layers.FirstOrDefault(l => l.Bitmap is not null);
+        // The selected deck is drawn opaque over a dimmed base, so the base
+        // pixels below it are invisible — resampling BOTH full-size textures
+        // per drag frame was the main cost on multi-deck maps (Factory,
+        // Customs, Streets vs single-bitmap Woods). Floor overlays get the
+        // same pre-shrunk mip treatment as the base.
+        var floorBitmap = floor is null ? null : PickDrawBitmap(floor.Bitmap!, isFloor: true);
 
         // A floor overlay is a different deck, not a highlight: blending it
         // over the ground floor at 75% left both wall sets visible at once,
@@ -459,7 +491,7 @@ public sealed class MapCanvas : Control
         else
         {
             DrawBitmapCropped(context, baseBitmap, dest, Compact ? 0.30 : 0.35);
-            DrawBitmapCropped(context, floor.Bitmap!, dest, 1.0);
+            DrawBitmapCropped(context, floorBitmap!, dest, 1.0);
         }
 
         if (!Compact)
