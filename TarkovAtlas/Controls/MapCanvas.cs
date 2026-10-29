@@ -654,12 +654,17 @@ public sealed class MapCanvas : Control
     private void DrawSpawns(DrawingContext context)
     {
         if (_map is null || _zoom < 1.2) return;
+        // Spawn clusters (Woods/Customs pour dozens of rings on one field) read
+        // as noise at a glance. Shrink the dots and thin the ring so a dense
+        // group blends into a soft texture instead of a row of bright circles;
+        // the legend swatch stays the reference colour.
+        var r = Math.Clamp(2.2 * Math.Sqrt(_zoom), 2.0, 3.4);
         foreach (var sp in _map.Spawns)
         {
             var s = Project(sp.X, sp.Z);
             if (!OnScreen(s, 20)) continue;
             var pen = sp.Side == "scav" ? SpawnScavPen : SpawnPmcPen;
-            context.DrawEllipse(SpawnFill, pen, s, 4, 4);
+            context.DrawEllipse(SpawnFill, pen, s, r, r);
         }
     }
 

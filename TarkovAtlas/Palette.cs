@@ -72,8 +72,8 @@ public static class Palette
     public static readonly Color ExtractShared = Color.Parse("#67B2E8");
     public static readonly Color Boss = Color.Parse("#E06052");
     public static readonly Color BossHalo = Color.Parse("#33E06052");
-    public static readonly Color SpawnPmc = Color.Parse("#7FA8E0");
-    public static readonly Color SpawnScav = Color.Parse("#D08A5A");
+    public static readonly Color SpawnPmc = Color.Parse("#667FA8E0");
+    public static readonly Color SpawnScav = Color.Parse("#66D08A5A");
     public static readonly Color Transit = Color.Parse("#B07FD8");
     public static readonly Color CacheFill = Color.Parse("#CC3A2A12");
     public static readonly Color CacheStroke = Color.Parse("#F2C98A");
@@ -94,7 +94,7 @@ public static class Palette
     public static readonly Color PinStroke = Color.Parse("#FFF3DF");
     public static readonly Color PinShadow = Color.Parse("#33000000");
     public static readonly Color ExtractFill = Color.Parse("#CC0A0F15");
-    public static readonly Color SpawnFill = Color.Parse("#66222830");
+    public static readonly Color SpawnFill = Color.Parse("#33222830");
     public static readonly Color TransitFill = Color.Parse("#CC0A0F15");
     public static readonly Color BossEmptyStroke = Color.Parse("#FFE8DF");
     public static readonly Color BossInitial = Color.Parse("#171207");

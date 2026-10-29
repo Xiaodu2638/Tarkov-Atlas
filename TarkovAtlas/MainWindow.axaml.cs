@@ -68,11 +68,7 @@ public partial class MainWindow : Window
         MapView.PinClicked += OnPinClicked;
         MapView.MarkerClicked += OnMarkerClicked;
         MapView.ViewChanged += (_, _) => UpdateZoomText();
-        _quests.ProgressChanged += (_, _) => Dispatcher.UIThread.Post(() =>
-        {
-            RefreshQuestCounts();
-            SyncQuestMarkers();
-        });
+        _quests.ProgressChanged += (_, _) => Dispatcher.UIThread.Post(RefreshQuestRowStates);
     }
 
     private async void OnOpened(object? sender, EventArgs e)
@@ -562,8 +558,6 @@ public partial class MainWindow : Window
         ["阀门手轮"] = "阀门手轮",
     };
 
-    private List<LegendRow>? _legendRows;
-
     /// <summary>Collect the legend rows for the current map's display state.</summary>
     private List<LegendRow> CollectLegendRows()
     {
@@ -635,12 +629,11 @@ public partial class MainWindow : Window
     private void RebuildLegend()
     {
         LegendPanel.IsVisible = _settings.ShowLegend && _currentMap is not null;
-        if (!LegendPanel.IsVisible) { _legendRows = null; return; }
-        if (_legendRows is not null && LegendItems.Children.Count > 0) return;
+        if (!LegendPanel.IsVisible) { LegendItems.Children.Clear(); return; }
 
-        _legendRows = CollectLegendRows();
+        var rows = CollectLegendRows();
         LegendItems.Children.Clear();
-        foreach (var row in _legendRows)
+        foreach (var row in rows)
         {
             var cb = new CheckBox
             {
@@ -651,9 +644,6 @@ public partial class MainWindow : Window
             cb.Click += (_, _) =>
             {
                 row.Set(cb.IsChecked == true);
-                // Re-render: POI-kind toggles swap the whole row set, and the
-                // check state of every other row must stay in sync.
-                _legendRows = null;
                 ApplyDisplayOptions();
                 Persist();
             };
@@ -1094,14 +1084,26 @@ public partial class MainWindow : Window
         RefreshQuestScope();
     }
 
-    /// <summary>Recompute the quest list for the current map + search + filter.</summary>
-    private void RefreshQuestScope()
+    /// <summary>Recompute the quest list for the current map + search + filter.
+    /// <paramref name="deferSort"/> keeps the current row order and selection
+    /// when the call comes from a jump (the tracked sort would scroll the list
+    /// away from the row the user just clicked).</summary>
+    private void RefreshQuestScope(bool deferSort = false)
     {
         if (_currentMap is null) return;
         var query = QuestSearchBox.Text ?? "";
         _quests.SetMap(_currentMap.Key, _settings.QuestFollowsMap);
         _quests.SetQuery(query);
         _quests.SetFilter(Math.Clamp(QuestFilterBox.SelectedIndex, 0, 2));
+        if (deferSort)
+        {
+            // Keep row order: just re-bind tracking/completion state.
+            foreach (var row in _quests.VisibleQuests)
+                row.RefreshState(_quests.IsCompleted(row.Id), _quests.IsTracked(row.Id));
+            RefreshQuestCounts();
+            SyncQuestMarkers();
+            return;
+        }
         _quests.Apply();
         RefreshQuestCounts();
         SyncQuestMarkers();
@@ -1143,6 +1145,18 @@ public partial class MainWindow : Window
             ? _quests.BuildMarkers(_currentMap.Key)
             : Array.Empty<QuestMarker>();
         MapView.InvalidateVisual();
+    }
+
+    /// <summary>Row-level refresh after a progress change so the checkbox
+    /// states stay truthful without re-sorting the list out from under the
+    /// user's cursor. The full sort re-runs on the next map/filter/search
+    /// change (see <see cref="RefreshQuestScope"/>).</summary>
+    private void RefreshQuestRowStates()
+    {
+        foreach (var row in _quests.VisibleQuests)
+            row.RefreshState(_quests.IsCompleted(row.Id), _quests.IsTracked(row.Id));
+        RefreshQuestCounts();
+        SyncQuestMarkers();
     }
 
     private void QuestList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -1191,7 +1205,6 @@ public partial class MainWindow : Window
         if (sender is not Control { Tag: string questId }) return;
         var quest = _quests.FindById(questId);
         if (quest is null) return;
-
         var maps = quest.ZoneMaps
             .Select(_repo.FindByKey)
             .Where(m => m is not null)
@@ -1229,7 +1242,9 @@ public partial class MainWindow : Window
 
         await NavigateToAsync(target, remember: true);
         if (!_quests.IsTracked(quest.Id)) _quests.SetTracked(quest.Id, true);
-        RefreshQuestScope();
+
+        // ProgressChanged already re-synced the row states without re-sorting
+        // (see RefreshQuestRowStates), so the list keeps its scroll position.
 
         var first = quest.ObjectivesFor(target.Key).SelectMany(o => o.Zones).FirstOrDefault(z => z.Map == target.Key);
         if (first is not null)

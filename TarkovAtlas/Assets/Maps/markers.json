@@ -1242,7 +1242,7 @@
      ]
     },
     {
-     "name": "Knight",
+     "name": "三狗",
      "mob": "bossKnight",
      "chance": 0.2,
      "points": [
@@ -3853,7 +3853,7 @@
      ]
     },
     {
-     "name": "Knight",
+     "name": "三狗",
      "mob": "bossKnight",
      "chance": 0.2,
      "points": [
@@ -7672,7 +7672,7 @@
      ]
     },
     {
-     "name": "Knight",
+     "name": "三狗",
      "mob": "bossKnight",
      "chance": 0.2,
      "points": [
@@ -11196,7 +11196,7 @@
    ],
    "bosses": [
     {
-     "name": "Knight",
+     "name": "三狗",
      "mob": "bossKnight",
      "chance": 0.2,
      "points": [

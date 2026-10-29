@@ -200,6 +200,25 @@ public sealed class QuestRow : INotifyPropertyChanged
         _onTrackedChanged = onTrackedChanged;
     }
 
+    /// <summary>
+    /// Re-sync the check states from the service without raising the change
+    /// callbacks. Used when the list must not re-sort (jump keeps scroll).
+    /// </summary>
+    public void RefreshState(bool isCompleted, bool isTracked)
+    {
+        if (_isCompleted != isCompleted)
+        {
+            _isCompleted = isCompleted;
+            OnPropertyChanged(nameof(IsCompleted));
+            OnPropertyChanged(nameof(StatusText));
+        }
+        if (_isTracked != isTracked)
+        {
+            _isTracked = isTracked;
+            OnPropertyChanged(nameof(IsTracked));
+        }
+    }
+
     public Quest Quest { get; }
     public string Id => Quest.Id;
     public string Title => Quest.Title;
