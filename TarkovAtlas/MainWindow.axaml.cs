@@ -564,53 +564,77 @@ public partial class MainWindow : Window
     /// <summary>Collect the legend rows for the current map's display state.</summary>
     private List<LegendRow> CollectLegendRows()
     {
-        var rows = new List<LegendRow>
+        var map = _currentMap;
+        // Only offer toggles for marker sets this map actually has — a BTR
+        // toggle on The Lab or a cache toggle on Factory is dead weight.
+        var rows = new List<LegendRow>();
+        if (map is null || map.Extracts.Count > 0)
         {
-            new()
+            rows.Add(new()
             {
                 Label = "撤离点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.ExtractPmc),
                 Icon = "extract-pmc",
-                Get = () => _settings.ShowExtracts, Set = v => _settings.ShowExtracts = v, Count = _currentMap?.Extracts.Count ?? 0,
-            },
-            new()
+                Get = () => _settings.ShowExtracts, Set = v => _settings.ShowExtracts = v, Count = map?.Extracts.Count ?? 0,
+            });
+        }
+        if (map is null || map.Bosses.Count > 0)
+        {
+            rows.Add(new()
             {
                 Label = "Boss 刷点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Boss),
-                Get = () => _settings.ShowBosses, Set = v => _settings.ShowBosses = v, Count = _currentMap?.Bosses.Sum(b => b.Points.Count) ?? 0,
-            },
-            new()
+                Get = () => _settings.ShowBosses, Set = v => _settings.ShowBosses = v, Count = map?.Bosses.Sum(b => b.Points.Count) ?? 0,
+            });
+        }
+        if (map is null || map.Spawns.Count > 0)
+        {
+            rows.Add(new()
             {
                 Label = "出生点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.SpawnPmc),
-                Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = _currentMap?.Spawns.Count ?? 0,
-            },
-            new()
+                Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = map?.Spawns.Count ?? 0,
+            });
+        }
+        if (map is null || map.Transits.Count > 0)
+        {
+            rows.Add(new()
             {
                 Label = "转移点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
                 Icon = "transit",
-                Get = () => _settings.ShowTransits, Set = v => _settings.ShowTransits = v, Count = _currentMap?.Transits.Count ?? 0,
-            },
-            new()
+                Get = () => _settings.ShowTransits, Set = v => _settings.ShowTransits = v, Count = map?.Transits.Count ?? 0,
+            });
+        }
+        if (map is null || map.Btrs.Count > 0)
+        {
+            rows.Add(new()
             {
                 Label = "BTR 站点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Transit),
-                Get = () => _settings.ShowBtrs, Set = v => _settings.ShowBtrs = v, Count = _currentMap?.Btrs.Count ?? 0,
-            },
-            new()
+                Get = () => _settings.ShowBtrs, Set = v => _settings.ShowBtrs = v, Count = map?.Btrs.Count ?? 0,
+            });
+        }
+        if (map is null || map.Caches.Count > 0)
+        {
+            rows.Add(new()
             {
                 Label = "资源埋藏点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.CacheStroke),
-                Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = _currentMap?.Caches.Count ?? 0,
-            },
-            new()
+                Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = map?.Caches.Count ?? 0,
+            });
+        }
+        if (map is null || map.Hazards.Count > 0)
+        {
+            rows.Add(new()
             {
                 Label = "危险区", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.MinefieldStroke),
-                Get = () => _settings.ShowHazards, Set = v => _settings.ShowHazards = v, Count = _currentMap?.Hazards.Count ?? 0,
-            },
-            new()
+                Get = () => _settings.ShowHazards, Set = v => _settings.ShowHazards = v, Count = map?.Hazards.Count ?? 0,
+            });
+        }
+        if (map is null || map.Labels.Count > 0)
+        {
+            rows.Add(new()
             {
                 Label = "地名", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.Label),
-                Get = () => _settings.ShowLabels, Set = v => _settings.ShowLabels = v, Count = _currentMap?.Labels.Count ?? 0,
-            },
-        };
+                Get = () => _settings.ShowLabels, Set = v => _settings.ShowLabels = v, Count = map?.Labels.Count ?? 0,
+            });
+        }
 
-        var map = _currentMap;
         if (map is not null && map.Pois.Count > 0)
         {
             foreach (var group in map.Pois.GroupBy(p => p.Kind).OrderBy(g => g.Key, StringComparer.CurrentCulture))
