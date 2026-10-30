@@ -240,6 +240,14 @@ public sealed class MapCanvas : Control
         RenderOptions.SetBitmapInterpolationMode(this,
             interactive ? BitmapInterpolationMode.LowQuality : BitmapInterpolationMode.HighQuality);
 
+    /// <summary>
+    /// Screen point (control-relative) that <see cref="FocusOn"/> lands the game
+    /// position on. The mini-map sets this to the mouse cursor after a wheel zoom
+    /// so a fresh screenshot re-pins the player to the spot the user was looking
+    /// at instead of snapping back to the middle. Null = control centre.
+    /// </summary>
+    public Point? FocusAnchor { get; set; }
+
     /// <summary>Center the view on a game position at the given zoom.</summary>
     public void FocusOn(double gameX, double gameZ, double zoom = 3.2)
     {
@@ -248,9 +256,12 @@ public sealed class MapCanvas : Control
         _zoom = Math.Clamp(zoom, 0.35, 32);
         var p = _map.GameToImage(gameX, gameZ);
         var scale = _fit * _zoom;
-        var drawW = _map.Width * scale;
-        var drawH = _map.Height * scale;
-        _pan = new Vector(drawW / 2 - p.X * scale, drawH / 2 - p.Y * scale);
+        var anchor = FocusAnchor ?? new Point(Bounds.Width / 2, Bounds.Height / 2);
+        // Screen(p) = W/2 + (p - boxCentre)*scale + pan  =>  solve for pan.
+        var box = FitBox();
+        _pan = new Vector(
+            anchor.X - Bounds.Width / 2 - (p.X - (box.X + box.Width / 2)) * scale,
+            anchor.Y - Bounds.Height / 2 - (p.Y - (box.Y + box.Height / 2)) * scale);
         InvalidateVisual();
         ViewChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -1407,16 +1418,12 @@ public sealed class MapCanvas : Control
     }
 
     /// <summary>
-    /// Zoom while keeping a game position under the centre of the control.
-    /// The mini-map uses this so rolling the wheel with the modifier held
-    /// scales around the player instead of an arbitrary cursor spot.
+    /// Wheel zoom anchored on an explicit control point. The mini-map routes its
+    /// wheel gesture through this (its canvas is hit-test-invisible, so the
+    /// built-in handler never fires), keeping the map spot under the cursor
+    /// fixed instead of snapping the view back to the player.
     /// </summary>
-    public void ZoomAtGame(double gameX, double gameZ, double factor)
-    {
-        if (_map is null) return;
-        _zoom = Math.Clamp(_zoom * factor, 0.35, 32);
-        FocusOn(gameX, gameZ, _zoom);
-    }
+    public void ZoomAtPoint(Point screen, double factor) => ZoomAt(screen, factor);
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {

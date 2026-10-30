@@ -152,6 +152,10 @@ public partial class OverlayWindow : Window, IOverlayState
     {
         _player = pin;
         OverlayMap.ActivePin = pin;
+        // A fresh player coordinate means the user wants to see where they are:
+        // drop the cursor zoom anchor so Recenter aligns the player back to the
+        // middle of the cut-out. Zoom gestures in between keep their anchor.
+        OverlayMap.FocusAnchor = null;
         Recenter();
     }
 
@@ -231,9 +235,11 @@ public partial class OverlayWindow : Window, IOverlayState
     }
 
     /// <summary>
-    /// Mouse-wheel zoom for the floating map. Always anchors on the newest
-    /// player position (falling back to the map centre) so the view stays on the
-    /// player instead of drifting under the cursor.
+    /// Mouse-wheel zoom for the floating map, anchored on the cursor: the map
+    /// spot under the pointer stays under it (like the main window), instead of
+    /// the old behaviour that snapped the view back onto the player every tick.
+    /// The cursor position is kept as the re-centre anchor, so the next
+    /// screenshot still aligns the player onto the spot the user was looking at.
     /// </summary>
     private void OnRootWheel(object? sender, PointerWheelEventArgs e)
     {
@@ -241,11 +247,13 @@ public partial class OverlayWindow : Window, IOverlayState
         var factor = e.Delta.Y > 0 ? 1.15 : 1 / 1.15;
         var before = OverlayMap.Zoom;
 
-        var anchorX = _player?.X ?? (_map is null ? 0 : (_map.MinX + _map.MaxX) / 2);
-        var anchorZ = _player?.Z ?? (_map is null ? 0 : (_map.MinZ + _map.MaxZ) / 2);
-        OverlayMap.ZoomAtGame(anchorX, anchorZ, factor);
+        var pos = e.GetPosition(OverlayMap);
+        OverlayMap.ZoomAtPoint(pos, factor);
+        OverlayMap.FocusAnchor = pos;
 
-        _zoom = Math.Clamp(OverlayMap.Zoom, 0.5, 12);
+        // Track the canvas zoom exactly: FocusOn below must keep whatever level
+        // the user scrolled to, or the next screenshot would snap the view.
+        _zoom = OverlayMap.Zoom;
         if (Math.Abs(_zoom - before) < 0.0001) return;
         HintText.Text = _map is null ? "" : _map.DisplayName;
         RaiseSettingsChanged();
