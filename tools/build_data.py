@@ -318,6 +318,12 @@ def main() -> None:
     poi_path = ROOT / "tools" / "poi.json"
     pois = json.loads(poi_path.read_text(encoding="utf-8")) if poi_path.exists() else {}
 
+    # BTR stops the tarkov.dev API does not expose for every map (the
+    # Lighthouse btrStops list is empty upstream). Hand-curated, same pattern
+    # as poi.json above.
+    btr_path = ROOT / "tools" / "btr.json"
+    btr_extra = json.loads(btr_path.read_text(encoding="utf-8")) if btr_path.exists() else {}
+
     out_maps = []
     for entry in manifest["maps"]:
         key = entry["key"]
@@ -344,6 +350,7 @@ def main() -> None:
                            "size": lab.get("size", 100)})
 
         extracts, bosses, spawns, transits, loot = [], [], [], [], []
+        btrs = []
         caches = []
         if api:
             bx0, bz0, bx1, bz1 = (entry["bounds"] if "bounds" in entry else (0, 0, 0, 0))
@@ -419,6 +426,13 @@ def main() -> None:
                 dest = id_to_key.get(t.get("map", ""), "")
                 transits.append({"x": pos["x"], "z": pos["z"], "dest": dest})
 
+            for s in api.get("btrStops", []) or []:
+                if "x" not in s:
+                    continue
+                raw_name = s.get("name") or ""
+                btrs.append({"x": s["x"], "z": s["z"],
+                             "name": maps_zh.get(raw_name, raw_name)})
+
             # Buried caches: the lootContainer table lists every loose container
             # on the map, so keep only the two the game actually buries. The
             # entry id is looked up in the global lootContainers definition table.
@@ -438,6 +452,14 @@ def main() -> None:
                     caches.append({"x": pos["x"], "z": pos["z"], "kind": kind})
                 else:
                     loot.append({"x": pos["x"], "z": pos["z"], "kind": kind})
+
+        # Hand table (upstream btrStops is empty for the Lighthouse). Entries
+        # only land where the API has nothing nearby, so an upstream addition
+        # is never shadowed by a stale pin.
+        for extra in btr_extra.get(key, []):
+            if any(abs(b["x"] - extra["x"]) < 25 and abs(b["z"] - extra["z"]) < 25 for b in btrs):
+                continue
+            btrs.append({"x": extra["x"], "z": extra["z"], "name": extra["name"]})
 
         meta = META.get(key, (key, "", "", ""))
         players = api.get("players") if api else entry.get("players", "")
@@ -526,6 +548,7 @@ def main() -> None:
             "bosses": bosses,
             "spawns": spawns,
             "transits": transits,
+            "btrs": btrs,
             "caches": caches,
             "loot": keep_loot,
             "pois": pois.get(key, []),
@@ -614,6 +637,7 @@ def main() -> None:
         "bosses": m["bosses"],
         "spawns": m["spawns"],
         "transits": m["transits"],
+        "btrs": m["btrs"],
         "caches": m["caches"],
         "loot": m["loot"],
         "pois": m["pois"],

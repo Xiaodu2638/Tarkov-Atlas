@@ -72,6 +72,18 @@ internal static class DataChecks
         // The bitmap rectangle (via the affine) and the declared bounds must
         // describe the same world area, and every marker has to land inside both.
         var knownGeometryDefects = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        // Maps the tarkov.dev API serves container loot for (terminal has no
+        // container table, icebreaker's loot lives on the decks not modelled
+        // here). Buried caches only exist on six maps.
+        var LootMaps = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "ground-zero", "customs", "factory", "woods", "interchange", "shoreline",
+            "reserve", "the-lab", "lighthouse", "streets-of-tarkov", "the-labyrinth",
+        };
+        var CacheMaps = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "customs", "woods", "interchange", "shoreline", "lighthouse", "streets-of-tarkov",
+        };
         foreach (var map in manifest.Maps)
         {
             var known = knownGeometryDefects.Contains(map.Key);
@@ -92,6 +104,32 @@ internal static class DataChecks
             markers.AddRange(map.Spawns.Select(s => (s.X, s.Z)));
             markers.AddRange(map.Bosses.SelectMany(b => b.Points).Select(p => (p.X, p.Z)));
             markers.AddRange(map.Transits.Select(t => (t.X, t.Z)));
+            markers.AddRange(map.Btrs.Select(b => (b.X, b.Z)));
+
+            // The legend only offers a BTR row when the map has stops, so a
+            // pipeline regression that drops the data silently removes the
+            // toggle. The BTR serves exactly these three maps in 1.3.
+            if (map.Key is "woods" or "lighthouse" or "streets-of-tarkov")
+            {
+                Check($"btr stops present {map.Key}", map.Btrs.Count > 0,
+                    $"{map.Btrs.Count} stops");
+                Check($"btr stop names {map.Key}",
+                    map.Btrs.All(b => !string.IsNullOrWhiteSpace(b.Name)));
+            }
+
+            // Same class of regression bit loot/caches once (an indentation
+            // slip zeroed every map and the suite stayed green): maps the API
+            // actually serves must never come out of the pipeline empty.
+            if (LootMaps.Contains(map.Key))
+            {
+                Check($"loot spots present {map.Key}", map.Loot.Count > 0,
+                    $"{map.Loot.Count} spots");
+            }
+            if (CacheMaps.Contains(map.Key))
+            {
+                Check($"buried caches present {map.Key}", map.Caches.Count > 0,
+                    $"{map.Caches.Count} caches");
+            }
 
             // A few assets legitimately sit just past the edge (factory has 7).
             const int allowedOutliers = 8;

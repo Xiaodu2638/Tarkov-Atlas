@@ -94,6 +94,7 @@ tools/
   check_map_coverage.py         底图内容区覆盖率自检（第 7 节验收标准用它）
   capture_docs.py               驱动 dist 产物重拍 docs/ 四张界面截图
   poi.json                      手工维护的 POI 表（迷宫解谜道具）
+  btr.json                      手工维护的 BTR 站点表（灯塔上游 btrStops 为空；API 有数据的地图不覆盖）
   tile-cache/                   瓦片下载缓存（git 忽略）
 research/                       管线输入，全部进 git
   api/                          tarkov.dev API 快照（maps/tasks/traders + *.zh.json）
