@@ -99,7 +99,6 @@ public sealed class MapCanvas : Control
     private static readonly IBrush PlayerPanelBorder = Palette.Brush(Palette.PlayerPanelBorder);
     private static readonly IBrush QuestLabelBrush = Palette.Brush(Palette.QuestLabel);
     private static readonly IBrush FocusHalo = Palette.Brush(Palette.FocusHalo);
-    private static readonly IBrush DotBrush = Palette.Brush(Palette.Dot);
 
     private static readonly Pen ExtractPmcPen = new(ExtractPmc, 2);
     private static readonly Pen ExtractScavPen = new(ExtractScav, 2);

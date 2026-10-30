@@ -17,7 +17,6 @@ public sealed class GameLogService : IDisposable
         @"(?:Load location|Loading location|location\s*[:=])\s*['""]?([A-Za-z0-9_\-]+)",
         RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
-    private readonly object _gate = new();
     private CancellationTokenSource? _cts;
     private string? _logFile;
     private long _position;

@@ -1592,10 +1592,6 @@ public partial class MainWindow : Window
     }
 
     /// <summary>大傻哥 (eftarkov.com) task page: /task/{id}.</summary>
-    private const string WikiBase = "https://www.eftarkov.com/task/";
-
-    /// <summary>Task location artwork lives under /uploads/task/{id}.webp.</summary>
-    private const string WikiImageBase = "https://www.eftarkov.com/uploads/task/";
     private const string WikiPageBase = "https://www.eftarkov.com/task/";
 
     private void OpenWikiButton_Click(object? sender, RoutedEventArgs e) => OpenQuestPage();
