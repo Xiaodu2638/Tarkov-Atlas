@@ -22,7 +22,14 @@ public sealed class ScreenshotInfo
     public string MapKey { get; set; } = "";
     public DateTime CapturedAt { get; set; }
     public DateTime FileTime { get; set; }
+    public DateTime CreatedUtc { get; set; }
     public bool MapWasGuessed { get; set; }
+
+    /// <summary>Identity of one capture instance: name carries every
+    /// coordinate, creation time distinguishes a later file that reuses the
+    /// same (minute-precision) name. Stable while the game streams the PNG,
+    /// unlike FileTime.</summary>
+    public string ImportToken => $"{FilePath}|{CreatedUtc.Ticks}";
 
     public string DisplayName => $"{X:0.0}, {Y:0.0}, {Z:0.0}";
     public string TimeText => CapturedAt == default ? FileTime.ToString("MM-dd HH:mm") : CapturedAt.ToString("MM-dd HH:mm");

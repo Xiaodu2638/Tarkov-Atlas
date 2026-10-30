@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using TarkovAtlas.Models;
 using TarkovAtlas.Services;
 
 // Screenshot filename parsing + "read then delete" behaviour.
@@ -65,58 +66,58 @@ internal static class ShotChecks
         // A loose-named file is the user's picture: never delete it.
         Check("loose name is not deleted", !svc.TryDeleteAfterImport(loose) && File.Exists(loose));
 
-        // Import ledger: same path+time is one import; a SAME name coming back
-        // with a newer write time is a fresh capture (minute-precision names
-        // plus delete-after-import) and must import again.
+        // Import ledger (path + creation time identity): a capture is fresh
+        // once; more bytes appended under the SAME token never re-fire (the
+        // old FileTime-based key churned every poll while the game streamed
+        // the PNG, which is what made pins jump and the folder feel dead).
         var ledger = new ScreenshotImportLedger();
-        var t1 = new DateTime(2026, 10, 30, 17, 45, 0);
-        var t2 = t1.AddMinutes(1);
+        var t1 = new DateTime(2026, 10, 30, 9, 45, 45, DateTimeKind.Utc);
         var shot = Path.Combine(dir, "2026-10-30[17-45]_1.0, 2.0, 3.0_0, 0, 0, 1_5.0 (0).png");
-        Check("ledger: new path imports", ledger.ShouldImport(shot, t1));
-        ledger.MarkImported(shot, t1);
-        Check("ledger: same path+time skipped", !ledger.ShouldImport(shot, t1));
-        Check("ledger: same path newer time imports", ledger.ShouldImport(shot, t2));
-        ledger.MarkImported(shot, t2);
-        Check("ledger: other path imports",
-            ledger.ShouldImport(shot + "-2.png", t1));
+        ScreenshotInfo ShotAt(DateTime created) =>
+            new() { FilePath = shot, FileName = Path.GetFileName(shot), CreatedUtc = created, FileTime = created };
+        Check("ledger: new capture is fresh", ledger.ShouldImport(ShotAt(t1)));
+        ledger.MarkImported(ShotAt(t1));
+        Check("ledger: same token skipped", !ledger.ShouldImport(ShotAt(t1)));
+        var t2 = t1.AddSeconds(30);
+        Check("ledger: recreated name is fresh", ledger.ShouldImport(ShotAt(t2)));
 
-        // Delete grace: the constant exists and is short enough that the
-        // folder visibly clears, but long enough to outlive the game's own
-        // write handle (the whole point of deferring deletion).
-        Check("delete grace is 3s", ScreenshotService.DeleteGrace == TimeSpan.FromSeconds(3),
-            ScreenshotService.DeleteGrace.ToString());
+        var diffLedger = new ScreenshotImportLedger();
+        var one = new[] { ShotAt(t1) };
+        Check("diff: first pass yields fresh", diffLedger.Diff(one).Count == 1);
+        Check("diff: second pass is quiet", diffLedger.Diff(one).Count == 0);
+        Check("diff: new token yields fresh", diffLedger.Diff(new[] { ShotAt(t2) }).Count == 1);
+        Check("diff: vanished file forgotten", diffLedger.Diff(Array.Empty<ScreenshotInfo>()).Count == 0);
+        Check("diff: name back after vanish yields fresh", diffLedger.Diff(one).Count == 1);
 
-        // Stability wait: a quiet file is reported stable (after ~StableWindow);
-        // a file that keeps growing is never reported stable.
-        var grow = Path.Combine(dir, "2026-10-30[17-46]_4.0, 5.0, 6.0_0, 0, 0, 1_5.0.png");
-        File.WriteAllBytes(grow, new byte[1024]);
-        var sw = Stopwatch.StartNew();
-        var stable = await ScreenshotService_TestHook.WaitUntilStableForTest(grow);
-        sw.Stop();
-        Check("stability: quiet file becomes stable", stable, $"{sw.ElapsedMilliseconds}ms");
-
-        var busy = Path.Combine(dir, "2026-10-30[17-47]_7.0, 8.0, 9.0_0, 0, 0, 1_5.0.png");
-        File.WriteAllBytes(busy, new byte[1024]);
-        var cts = new CancellationTokenSource();
-        var writer = Task.Run(async () =>
+        // End-to-end watcher: the file appears -> callback within one poll;
+        // the game keeps streaming bytes -> still exactly one callback.
+        var watchDir = Path.Combine(dir, "watch");
+        Directory.CreateDirectory(watchDir);
+        var received = new List<ScreenshotInfo>();
+        var wsvc = new ScreenshotService();
+        wsvc.StartWatching(watchDir, i => { lock (received) received.Add(i); });
+        var live = Path.Combine(watchDir, "2026-10-30[19-00]_10.5, 1.0, -20.25_0, 0, 0, 1_12.0.png");
+        File.WriteAllBytes(live, new byte[1024]);
+        var got = false;
+        var wait = Stopwatch.StartNew();
+        for (var i = 0; i < 40 && !got; i++)
         {
-            while (!cts.IsCancellationRequested)
-            {
-                try
-                {
-                    using var fs = new FileStream(busy, FileMode.Append, FileAccess.Write, FileShare.Read);
-                    fs.Write(new byte[4096]);
-                    fs.Flush();
-                    await Task.Delay(300, cts.Token);
-                }
-                catch (OperationCanceledException) { break; }
-                catch (IOException) { break; }
-            }
-        });
-        var stableWhileGrowing = await ScreenshotService_TestHook.WaitUntilStableForTest(busy);
-        cts.Cancel();
-        try { await writer; } catch { }
-        Check("stability: growing file never stable", !stableWhileGrowing);
+            await Task.Delay(100);
+            lock (received) got = received.Count > 0;
+        }
+        wait.Stop();
+        Check("watcher: new capture arrives fast", got, $"+{wait.ElapsedMilliseconds}ms");
+        for (var i = 0; i < 10; i++)
+        {
+            using var fs = new FileStream(live, FileMode.Append, FileAccess.Write, FileShare.Read);
+            fs.Write(new byte[256]);
+            await Task.Delay(150);
+        }
+        await Task.Delay(1500);
+        int finalCount;
+        lock (received) finalCount = received.Count;
+        Check("watcher: one callback per capture", finalCount == 1, $"{finalCount} callbacks");
+        wsvc.Dispose();
 
         try { Directory.Delete(dir, true); } catch { }
 

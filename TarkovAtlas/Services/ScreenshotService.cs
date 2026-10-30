@@ -5,34 +5,53 @@ using TarkovAtlas.Models;
 namespace TarkovAtlas.Services;
 
 /// <summary>
-/// Import de-duplication keyed by path + write time. The game screenshot name
-/// only has minute precision, and with delete-after-import the SAME name
-/// returns later as a brand-new capture, so a newer FileTime must import
-/// again; the same FileTime (e.g. a second watcher event for one write) is
-/// skipped.
+/// Import de-duplication keyed on a per-capture identity token
+/// (path + creation time). The game screenshot name carries the coordinates
+/// and has only minute precision, so identity must distinguish a later file
+/// that reuses the same name. Creation time is fixed at file creation —
+/// unlike FileTime it does not churn while the game streams the PNG, so one
+/// capture emits exactly once and there is no write-stability game at all.
 /// </summary>
 public sealed class ScreenshotImportLedger
 {
-    private readonly Dictionary<string, DateTime> _seen = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, string> _seen = new(StringComparer.OrdinalIgnoreCase);
+    private readonly object _gate = new();
 
-    public bool ShouldImport(string path, DateTime fileTime) =>
-        !_seen.TryGetValue(path, out var seen) || seen != fileTime;
-
-    public void MarkImported(string path, DateTime fileTime) => _seen[path] = fileTime;
-}
-
-/// <summary>Test seam: expose the private stability wait to the check tools.</summary>
-public static class ScreenshotService_TestHook
-{
-    public static Task<bool> WaitUntilStableForTest(string path)
+    /// <summary>Has this capture instance not been imported yet? A screenshot
+    /// that is overwritten/recreated under the same name has a new token.</summary>
+    public bool ShouldImport(ScreenshotInfo info)
     {
-        // Invoke the private static via a tiny reflection shim so the service
-        // keeps its surface clean.
-        var m = typeof(ScreenshotService)
-            .GetMethod("WaitUntilStableAsync",
-                       System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        return (Task<bool>?)m?.Invoke(null, new object[] { path })
-            ?? Task.FromResult(false);
+        lock (_gate)
+        {
+            return !_seen.TryGetValue(info.FilePath, out var seen) || seen != info.ImportToken;
+        }
+    }
+
+    public void MarkImported(ScreenshotInfo info)
+    {
+        lock (_gate) _seen[info.FilePath] = info.ImportToken;
+    }
+
+    /// <summary>Entries never seen under their identity, oldest capture first.
+    /// Paths that vanished (we deleted after import, or the user cleaned up)
+    /// are forgotten, so a name reused by the game counts as fresh.</summary>
+    public List<ScreenshotInfo> Diff(IEnumerable<ScreenshotInfo> current)
+    {
+        lock (_gate)
+        {
+            var next = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var fresh = new List<ScreenshotInfo>();
+            foreach (var c in current)
+            {
+                next[c.FilePath] = c.ImportToken;
+                if (!_seen.TryGetValue(c.FilePath, out var seen) || seen != c.ImportToken)
+                    fresh.Add(c);
+            }
+            _seen.Clear();
+            foreach (var kv in next) _seen[kv.Key] = kv.Value;
+            fresh.Sort((a, b) => a.CreatedUtc.CompareTo(b.CreatedUtc));
+            return fresh;
+        }
     }
 }
 
@@ -50,20 +69,19 @@ public sealed class ScreenshotService : IDisposable
         @"(?<x>-?\d+(?:\.\d+)?),\s*(?<y>-?\d+(?:\.\d+)?),\s*(?<z>-?\d+(?:\.\d+)?)",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
-    private FileSystemWatcher? _watcher;
+    private Timer? _poll;
     private Action<ScreenshotInfo>? _onNew;
-    private readonly object _gate = new();
+    private string? _directory;
+    private readonly ScreenshotImportLedger _emitted = new();
 
-    // The game streams a multi-MB PNG in stretches that can pause over a
-    // second, and fires watcher events all the way. Waiting for this much
-    // quiet before parsing keeps half-written files out; the debounce loop
-    // re-checks on every new event, so a longer write just re-runs the wait.
-    internal static readonly TimeSpan StableWindow = TimeSpan.FromMilliseconds(1200);
-    internal static readonly TimeSpan StableTimeout = TimeSpan.FromSeconds(15);
+    /// <summary>How often the watched folder is re-listed. The screenshot NAME
+    /// carries every coordinate and exists the moment the game creates the
+    /// file, so there is nothing to wait for beyond noticing it: 600 ms is
+    /// imperceptible and cheap (one directory listing, no file reads).</summary>
+    public static readonly TimeSpan PollInterval = TimeSpan.FromMilliseconds(600);
 
-    /// <summary>Grace period before an imported screenshot is deleted. Deleting
-    /// right away raced the game's own write handle and let the next capture
-    /// reuse the same name, which then looked like a lost screenshot.</summary>
+    /// <summary>Grace period before an imported screenshot is deleted (the
+    /// game may still hold the file open right after creating it).</summary>
     public static readonly TimeSpan DeleteGrace = TimeSpan.FromSeconds(3);
 
     public static readonly string[] Extensions = { ".png", ".jpg", ".jpeg", ".bmp" };
@@ -119,6 +137,7 @@ public sealed class ScreenshotService : IDisposable
                 Qw = qw,
                 CapturedAt = captured,
                 FileTime = File.GetLastWriteTime(path),
+                CreatedUtc = File.GetCreationTimeUtc(path),
             };
             info.HeadingDegrees = ComputeHeading(qx, qy, qz, qw);
             return info;
@@ -200,18 +219,32 @@ public sealed class ScreenshotService : IDisposable
         StopWatching();
         _onNew = onNew;
         if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory)) return;
+        _directory = directory;
+        // Seed the ledger with what is already on disk: importing the whole
+        // backlog on every (re)start would flood the map with old pins.
+        lock (_emitted)
+        {
+            _emitted.Diff(Scan(directory));
+        }
+        _poll = new Timer(_ => PollOnce(), null, PollInterval, PollInterval);
+    }
 
+    private void PollOnce()
+    {
+        var dir = _directory;
+        var cb = _onNew;
+        if (dir is null || cb is null) return;
         try
         {
-            _watcher = new FileSystemWatcher(directory)
+            List<ScreenshotInfo> fresh;
+            lock (_emitted)
             {
-                IncludeSubdirectories = false,
-                NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.CreationTime,
-                EnableRaisingEvents = true,
-            };
-            _watcher.Created += OnFile;
-            _watcher.Changed += OnFile;
-            _watcher.Renamed += OnRenamed;
+                // Newest 64 files only: a live capture is always the newest,
+                // and the ledger diff is per-path, so an older backlog entry
+                // that never mattered cannot displace one.
+                fresh = _emitted.Diff(Scan(dir, limit: 64));
+            }
+            foreach (var info in fresh) cb(info);
         }
         catch (Exception ex)
         {
@@ -219,112 +252,12 @@ public sealed class ScreenshotService : IDisposable
         }
     }
 
-    private void OnRenamed(object sender, RenamedEventArgs e) => OnFile(sender, e);
-
-    private void OnFile(object sender, FileSystemEventArgs e)
-    {
-        if (!Extensions.Contains(Path.GetExtension(e.FullPath), StringComparer.OrdinalIgnoreCase)) return;
-
-        // The game writes a multi-MB PNG in stretches that can pause for more
-        // than a second, and it keeps ONE watcher thread busy with successive
-        // events. Instead of racing it per-event, coalesce: remember the path
-        // and let a single debouncer pick it up once the write has settled.
-        var path = e.FullPath;
-        lock (_gate)
-        {
-            _pending[path] = DateTime.UtcNow;
-        }
-        _debounce ??= Task.Run(DebounceLoop);
-    }
-
-    private readonly Dictionary<string, DateTime> _pending = new(StringComparer.OrdinalIgnoreCase);
-
-    private Task? _debounce;
-
-    /// <summary>Single consumer: wait for every pending path's write to settle
-    /// (no size/mtime change for <see cref="StableWindow"/>, 8 s cap), then
-    /// hand it over once. Coalesces the event storm Unity produces.</summary>
-    private async Task DebounceLoop()
-    {
-        while (true)
-        {
-            string[] batch;
-            lock (_gate)
-            {
-                if (_pending.Count == 0) { _debounce = null; return; }
-                batch = _pending.Keys.ToArray();
-            }
-
-            foreach (var path in batch)
-            {
-                if (!await WaitUntilStableAsync(path)) continue;
-                ScreenshotInfo? info = null;
-                try { info = Parse(path, strictOnly: true); }
-                catch { /* gone mid-parse: drop, next event re-adds */ }
-                if (info is not null) _onNew?.Invoke(info);
-                lock (_gate) _pending.Remove(path);
-            }
-
-            await Task.Delay(200);
-        }
-    }
-
-    /// <summary>Poll size + LastWriteTime until both stop changing for
-    /// <see cref="StableWindow"/>. False on timeout or if the file vanished
-    /// (the game can rename or clean it up). Every new watcher event for the
-    /// path resets the wait, so an ongoing write is never reported stable.</summary>
-    private static async Task<bool> WaitUntilStableAsync(string path)
-    {
-        var deadline = DateTime.UtcNow + StableTimeout;
-        var lastSize = -1L;
-        var lastWrite = DateTime.MinValue;
-        var stableSince = DateTime.UtcNow;
-
-        while (DateTime.UtcNow < deadline)
-        {
-            FileInfo fi;
-            try
-            {
-                fi = new FileInfo(path);
-                fi.Refresh();
-            }
-            catch (IOException)
-            {
-                return false;
-            }
-            if (!fi.Exists) return false;
-
-            var size = fi.Length;
-            var write = fi.LastWriteTimeUtc;
-            if (size != lastSize || write != lastWrite)
-            {
-                lastSize = size;
-                lastWrite = write;
-                stableSince = DateTime.UtcNow;
-            }
-            else if (size > 0 && DateTime.UtcNow - stableSince >= StableWindow)
-            {
-                return true;
-            }
-
-            await Task.Delay(200);
-        }
-        return false;
-    }
-
     public void StopWatching()
     {
-        if (_watcher is null) return;
-        try
-        {
-            _watcher.EnableRaisingEvents = false;
-            _watcher.Created -= OnFile;
-            _watcher.Changed -= OnFile;
-            _watcher.Renamed -= OnRenamed;
-            _watcher.Dispose();
-        }
-        catch { }
-        _watcher = null;
+        var t = _poll;
+        _poll = null;
+        _directory = null;
+        try { t?.Dispose(); } catch { }
     }
 
     public void Dispose() => StopWatching();

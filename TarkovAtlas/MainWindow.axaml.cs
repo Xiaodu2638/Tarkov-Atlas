@@ -1147,11 +1147,9 @@ public partial class MainWindow : Window
         info.MapWasGuessed = true;
     }
 
-    private bool ShouldImportScreenshot(ScreenshotInfo info) =>
-        _knownShots.ShouldImport(info.FilePath, info.FileTime);
+    private bool ShouldImportScreenshot(ScreenshotInfo info) => _knownShots.ShouldImport(info);
 
-    private void MarkScreenshotImported(ScreenshotInfo info) =>
-        _knownShots.MarkImported(info.FilePath, info.FileTime);
+    private void MarkScreenshotImported(ScreenshotInfo info) => _knownShots.MarkImported(info);
 
     private void AddScreenshotInternal(ScreenshotInfo info)
     {
