@@ -36,6 +36,8 @@ python tools/update_data.py --selftest # 离线自测快照重塑/翻译展平
 
 改了代码要做任何运行时验证之前**先重跑 `build.ps1`**：验证脚本打的是 `dist/` 里的 exe，代码提交了但 dist 没重发，测到的就是旧版本（曾把「功能正常」误判成「左键拖拽没反应」）。
 
+重发布 `dist` 前先确认没有 TarkovAtlas 实例在运行：提权实例会锁住 `TarkovAtlas.exe` / `av_libglesv2.dll` / zip，`build.ps1` 打包到一半才报 `PermissionDenied`。
+
 产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 20 MB 原生 exe，整个目录约 263 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`；`Scripts/ocr.ps1` 已内嵌进 exe，不随包分发）。脚本同时打一个同名 zip；`-NoAot` 跳过 AOT，`-OutputRoot <dir>` 换输出目录。
 
 构建与自检会强制把 `TEMP`/`TMP`、`NUGET_PACKAGES`、`DOTNET_CLI_HOME` 指到仓库内（`.tmp/`、`.nuget-packages/`、`.dotnet-home/`），不写主机。**不要裸跑 `dotnet publish`**，会污染 `%TEMP%` 且可能锁住 `bin/`。上面「单独跑某套」的 `dotnet run` **不做**这套重定向（只有 `check.ps1` 会）：要么直接用 `check.ps1`，要么在同一个 shell 里先导出这几个变量。
@@ -63,12 +65,14 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     MapRepository.cs            加载 mapdata.json、按需加载楼层位图
     QuestService.cs             任务库、剧情、进度读写
     SettingsService.cs          AppPaths（含 TARKOVATLAS_DATA_DIR 重定向）
-    ScreenshotService.cs        截图目录监听与解析
+    ScreenshotService.cs        截图定位：600ms 轮询目录 + 台账 diff（见 4.5）
+    GameLogParsing.cs           战局日志纯解析（无注册表/UI 依赖，logiccheck 直接链接）
     GameLogService.cs           游戏日志监听、地图自动识别（兼容 1.3 会话目录与旧扁平布局）
     HotkeyService.cs            全局热键（Win32 低级键盘钩子）
     OcrService.cs               截图 OCR
   Assets/
     maps/mapdata.json           运行时地图清单（唯一可信来源）
+    maps/markers.json           运行时标记点（撤离/Boss/出生/转移/BTR/埋藏/物资/道具；管线拆分产物，mapdata 里不再有内联标记）
     maps/*.jpg                  13 张底图（最长边 5600 px）
     maps/layers/index.json      楼层图索引
     maps/layers/<key>/*.png     楼层叠加图（与底图共用像素网格）
@@ -83,8 +87,8 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
 tools/
   check.ps1                     三套自检入口
   datacheck/                    数据层断言（地图几何、标记、任务、楼层、hazard）
-  logiccheck/                   服务层断言（QuestService、剧情、商人、跳转）
-  shotcheck/                    截图解析与删除行为
+  logiccheck/                   服务层断言（QuestService、剧情、商人、跳转、战局日志解析）
+  shotcheck/                    截图解析、导入台账、轮询 watcher、latest-wins pin
   build_all.py                  管线入口（按依赖顺序跑完下面四步）
   build_assets.py               渲染 SVG（迷宫 warp 进解析栅格）→ 生成底图 + maps.json
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
@@ -150,6 +154,13 @@ docs/                           界面截图（README 引用）
   `python -m pip install --target tools/pylibs pillow numpy requests`
 - 上游快照放在 `research/`：`api/`（tarkov.dev API）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。
 
+### 4.5 战局识别与截图定位
+- **截图文件名就是全部数据**：`2026-10-30[19-51]_x, y, z_qx, qy, qz, qw_游戏内秒.png`，坐标与朝向在文件**创建**那刻就完整；PNG 字节还在流式写入（几 MB、可停顿 >1 s）。所以定位**不要**依赖写入完成信号：`ScreenshotService` 用 600 ms 目录轮询 + `ScreenshotImportLedger` 对上次快照做 diff，只解析文件名。任何「等文件稳定」的做法都被证明会误判（半成品导入 → pin 跳；事件被吞 → 看着像没反应）。
+- **台账身份 = 路径 + 创建时间**（`ScreenshotInfo.ImportToken`）：创建时间在写入全程不变，故一次截图恰好回调一次；同名重建（分钟精度 + 删除后复用）算新截图。FileTime 不能当键，它在写入期间一直变。
+- **pin 语义是「我现在在哪」**：`ScreenshotService.RememberLatest` 每张地图只保留最新一个点，扫描时按时间从旧到新导入，留下的是最新的。
+- **1.3.0.0 日志布局**：`Logs/log_<时间戳>_<版本>/` 每局一个子目录，application 通道是目录内 `<时间戳> application_NNN.log`（顶层不再有扁平 `application*.log`）。`GameLogParsing.FindApplicationLog` 同时认新旧两种布局；文件名里的通道名是**最后一个空格后**的 token。
+- **1.3 的战局标记行**只剩 `scene preset path:... rcid:<id>.scenespreset.asset`（每次进战局都打，rcid 是 bundle 名如 `factory_day` / `Shopping_Mall`）与 `[Transit] ... Locations:<id> ->`；旧的 `Load location:` 已消失。新增 id 一律加进 `MapRepository.LocationToMap`，未知 rcid（大厅/菜单场景）必须跳过——这是唯一的防误触发手段。
+
 ---
 
 ## 5. 约束与已知的坑
@@ -172,6 +183,9 @@ docs/                           界面截图（README 引用）
     - 低权限 shell 给提权实例合成的鼠标事件会被 UIPI 静默吞掉（画面零像素变化 ≠ 功能坏了）；判据：`Get-Process TarkovAtlas` 的 `Path` 读不到即提权实例，先让用户手动退出再测。
     - 验证脚本要与 app 同 DPI 感知（`SetProcessDpiAwareness(2)`），否则 `mouse_event` 的绝对坐标被虚拟化，跟手率永远算不满。
 15. **悬浮窗拖窗不用 DIP 增量**：`e.GetPosition` 是相对已移动的窗口的，负反馈导致窗口只跟到光标位移的 40–73%；`GetCursorPos`（物理像素，与 `Window.Position` 同系）+ 按下时抓取偏移才 100% 跟手。`BeginMoveDrag` 只认左键，右键无效。
+16. **数据管线缩进陷阱**：`build_data.py` 里曾有一段 12 空格的代码被 8 空格的 `for` 头吞成循环体，12 张地图的 loot/caches 静默清零而三套自检照样全绿（当时没有非空断言）。改完 `build_*.py` 重跑后，必须 diff 产物：`git diff` 之外，用 Python 按 `maps.<key>.<field>` 逐字段对比 HEAD 版本，确认**只有预期字段变化**。datacheck 现已有 BTR/loot/caches 逐图非空断言兜底，但只覆盖已知类别。
+17. **推送 / 发布的网络路径**：本机 `github.com:443` 直连不通（`api.github.com` 通）。git push 走 v2rayN 混合端口的 HTTP 代理 `-c http.proxy=http://127.0.0.1:10808`；`socks5h://` scheme 会 Connection reset，别用。代理没开时 push 秒败，先探端口再推。
+18. **历史已用 git filter-repo 清理过**（第三方工具箱、含个人路径的 HANDOVER.md），`.git` 约 474 MB。绝不能再把 `工具箱*/` 或任何本机路径提交进来；`.gitignore` 已挡住，改 ignore 规则时留意。
 
 两个大文件：`MainWindow.axaml.cs`（约 1.9k 行，所有 UI 交互：地图切换、楼层、图例、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1.6k 行，全部绘制 + 指针手势）。改行为先在这两处找，不要去 Models 里猜。悬浮窗的手势在 `OverlayWindow.axaml.cs`（画布 `IsHitTestVisible=false`，事件由窗口层转发给 `MapCanvas.Begin/Move/EndHostPan`）。
 
@@ -183,6 +197,7 @@ docs/                           界面截图（README 引用）
 
 - **Boss / 刷点**：上游同一个 `mob` 会按刷点变体重复出现，必须按 `mob` 合并（`chance` 取最大，`points` 0.1 m 去重取并集）。显示名见 `BOSS_ZH`：`exUsecFree/ExUsec → 游荡者`（**不是「流氓」**）、`PmcBot → 掠夺者`、`vsRF/vsRFSniper → 俄军/俄军狙击手`、`blackDivision/pmcBotBlackDiv/bossBullyBlackDiv → 黑色军团`、`sectantPriest → 邪教徒祭司`。不要出现 `PMC` / `Boss` 这类占位名。
 - **出生点**：只保留 `categories` 含 `player` 的点。
+- **BTR 站点**：森林 8 / 街区 6 取上游 `btrStops`（站名查 `maps.zh` 的 `Trading/Dialog/PlayerTaxi/...` 键）；灯塔上游为空，用人工表 `tools/btr.json`（10-29 交互地图标定）。人工表只在该图 API 无数据处补位。共 22 站，图例行按数据存在与否显示，数据丢了整行就没了。
 - **Shturman**：唯一的人工筛选 `BOSS_ZONE_FILTER["woods"]["bossKojaniy"] = (10, -3, 250)`；上游 `ZoneWoodCutter` 混进了 USEC Camp / Scav Town 方向的点。**只删远点，不新增任何点。**
 - **剧情**：中文标题/目标来自 `https://www.eftarkov.com/storyline/<id>` 的抓取（`research/story/zh-raw.json`），不是机器翻译；章节映射在 `tools/build_story.py`。
 - **剧情坐标**：只对双重验证通过的地图输出 —— `customs`、`woods`、`shoreline`、`streets-of-tarkov`、`lighthouse`、`ground-zero`、`interchange`。其余地图只给「跳转到地图」，`hasCoordinates=false`。**宁可不标，也不编坐标。**
@@ -212,3 +227,5 @@ docs/                           界面截图（README 引用）
 - `MapCanvas` 是性能关键路径：新增绘制要素必须复用画笔/文本缓存，且不得在平移时触发整图重采样。
 - 同一份映射只保留一处（例如头像 slug），避免两处表漂移。
 - 提交前 `git status --short` 必须干净。
+- **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ GitHub API PATCH 移动 `v1.0.0` tag → `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
+- **官方已下线任务的剔除**：tarkov.dev 快照滞后于游戏版本，判断以 eftarkov.com 为准——`/task?q=<名>` 返回 0 且详情页被退回列表页 = 已下线（对照一个已知存在的任务 id 验行为）。确认后直接改快照 `research/api/tasks.json` + `tasks.zh.json`（删任务对象与其专属 zh 键，共享键保留）→ `build_data.py` 重建 → 核对 `git grep <id>` 无残留。
