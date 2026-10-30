@@ -52,13 +52,14 @@ public sealed class ScreenshotService : IDisposable
 
     private FileSystemWatcher? _watcher;
     private Action<ScreenshotInfo>? _onNew;
-    private readonly HashSet<string> _recent = new(StringComparer.OrdinalIgnoreCase);
     private readonly object _gate = new();
 
-    // The game creates the file and then streams a multi-MB PNG into it, firing
-    // Changed the whole way, so "Created" alone often catches a 0-byte file.
-    private static readonly TimeSpan StableWindow = TimeSpan.FromMilliseconds(700);
-    private static readonly TimeSpan StableTimeout = TimeSpan.FromSeconds(8);
+    // The game streams a multi-MB PNG in stretches that can pause over a
+    // second, and fires watcher events all the way. Waiting for this much
+    // quiet before parsing keeps half-written files out; the debounce loop
+    // re-checks on every new event, so a longer write just re-runs the wait.
+    internal static readonly TimeSpan StableWindow = TimeSpan.FromMilliseconds(1200);
+    internal static readonly TimeSpan StableTimeout = TimeSpan.FromSeconds(15);
 
     /// <summary>Grace period before an imported screenshot is deleted. Deleting
     /// right away raced the game's own write handle and let the next capture
@@ -223,38 +224,55 @@ public sealed class ScreenshotService : IDisposable
     private void OnFile(object sender, FileSystemEventArgs e)
     {
         if (!Extensions.Contains(Path.GetExtension(e.FullPath), StringComparer.OrdinalIgnoreCase)) return;
+
+        // The game writes a multi-MB PNG in stretches that can pause for more
+        // than a second, and it keeps ONE watcher thread busy with successive
+        // events. Instead of racing it per-event, coalesce: remember the path
+        // and let a single debouncer pick it up once the write has settled.
+        var path = e.FullPath;
         lock (_gate)
         {
-            if (!_recent.Add(e.FullPath)) return;
+            _pending[path] = DateTime.UtcNow;
         }
+        _debounce ??= Task.Run(DebounceLoop);
+    }
 
-        _ = Task.Run(async () =>
+    private readonly Dictionary<string, DateTime> _pending = new(StringComparer.OrdinalIgnoreCase);
+
+    private Task? _debounce;
+
+    /// <summary>Single consumer: wait for every pending path's write to settle
+    /// (no size/mtime change for <see cref="StableWindow"/>, 8 s cap), then
+    /// hand it over once. Coalesces the event storm Unity produces.</summary>
+    private async Task DebounceLoop()
+    {
+        while (true)
         {
-            try
+            string[] batch;
+            lock (_gate)
             {
-                // Wait until the game finished streaming the PNG (size and write
-                // time stop changing) instead of a fixed delay: a big screenshot
-                // takes longer than 450 ms and a half-written file silently
-                // dropped the pin.
-                if (!await WaitUntilStableAsync(e.FullPath)) return;
-                var info = Parse(e.FullPath, strictOnly: true);
+                if (_pending.Count == 0) { _debounce = null; return; }
+                batch = _pending.Keys.ToArray();
+            }
+
+            foreach (var path in batch)
+            {
+                if (!await WaitUntilStableAsync(path)) continue;
+                ScreenshotInfo? info = null;
+                try { info = Parse(path, strictOnly: true); }
+                catch { /* gone mid-parse: drop, next event re-adds */ }
                 if (info is not null) _onNew?.Invoke(info);
+                lock (_gate) _pending.Remove(path);
             }
-            catch (Exception ex)
-            {
-                AppPaths.LogCrash(ex);
-            }
-            finally
-            {
-                await Task.Delay(1200);
-                lock (_gate) _recent.Remove(e.FullPath);
-            }
-        });
+
+            await Task.Delay(200);
+        }
     }
 
     /// <summary>Poll size + LastWriteTime until both stop changing for
     /// <see cref="StableWindow"/>. False on timeout or if the file vanished
-    /// (the game can rename or clean it up).</summary>
+    /// (the game can rename or clean it up). Every new watcher event for the
+    /// path resets the wait, so an ongoing write is never reported stable.</summary>
     private static async Task<bool> WaitUntilStableAsync(string path)
     {
         var deadline = DateTime.UtcNow + StableTimeout;
@@ -264,8 +282,16 @@ public sealed class ScreenshotService : IDisposable
 
         while (DateTime.UtcNow < deadline)
         {
-            var fi = new FileInfo(path);
-            fi.Refresh();
+            FileInfo fi;
+            try
+            {
+                fi = new FileInfo(path);
+                fi.Refresh();
+            }
+            catch (IOException)
+            {
+                return false;
+            }
             if (!fi.Exists) return false;
 
             var size = fi.Length;
@@ -281,7 +307,7 @@ public sealed class ScreenshotService : IDisposable
                 return true;
             }
 
-            await Task.Delay(150);
+            await Task.Delay(200);
         }
         return false;
     }

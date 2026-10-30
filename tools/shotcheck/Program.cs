@@ -6,7 +6,7 @@ internal static class ShotChecks
 {
     private static int _failures;
 
-    public static int Main()
+    public static async Task<int> Main()
     {
         var svc = new ScreenshotService();
         var dir = Path.Combine(AppContext.BaseDirectory, "shot-test");
@@ -86,27 +86,43 @@ internal static class ShotChecks
         Check("delete grace is 3s", ScreenshotService.DeleteGrace == TimeSpan.FromSeconds(3),
             ScreenshotService.DeleteGrace.ToString());
 
-        // Stability wait: a file that stops growing is reported stable; a file
-        // that keeps growing is not imported half-written.
+        // Stability wait: a quiet file is reported stable (after ~StableWindow);
+        // a file that keeps growing is never reported stable.
         var grow = Path.Combine(dir, "2026-10-30[17-46]_4.0, 5.0, 6.0_0, 0, 0, 1_5.0.png");
-        using (var f = File.Create(grow))
+        File.WriteAllBytes(grow, new byte[1024]);
+        var sw = Stopwatch.StartNew();
+        var stable = await ScreenshotService_TestHook.WaitUntilStableForTest(grow);
+        sw.Stop();
+        Check("stability: quiet file becomes stable", stable, $"{sw.ElapsedMilliseconds}ms");
+
+        var busy = Path.Combine(dir, "2026-10-30[17-47]_7.0, 8.0, 9.0_0, 0, 0, 1_5.0.png");
+        File.WriteAllBytes(busy, new byte[1024]);
+        var cts = new CancellationTokenSource();
+        var writer = Task.Run(async () =>
         {
-            f.Write(new byte[1024]);
-            f.Flush();
-            var sw = Stopwatch.StartNew();
-            var stable = ScreenshotService_TestHook.WaitUntilStableForTest(grow)
-                .GetAwaiter().GetResult();
-            sw.Stop();
-            // Nothing else writes it, so it becomes stable after ~StableWindow.
-            Check("stability: quiet file becomes stable", stable, $"{sw.ElapsedMilliseconds}ms");
-        }
+            while (!cts.IsCancellationRequested)
+            {
+                try
+                {
+                    using var fs = new FileStream(busy, FileMode.Append, FileAccess.Write, FileShare.Read);
+                    fs.Write(new byte[4096]);
+                    fs.Flush();
+                    await Task.Delay(300, cts.Token);
+                }
+                catch (OperationCanceledException) { break; }
+                catch (IOException) { break; }
+            }
+        });
+        var stableWhileGrowing = await ScreenshotService_TestHook.WaitUntilStableForTest(busy);
+        cts.Cancel();
+        try { await writer; } catch { }
+        Check("stability: growing file never stable", !stableWhileGrowing);
 
         try { Directory.Delete(dir, true); } catch { }
 
         Console.WriteLine(_failures == 0 ? "\nALL SCREENSHOT CHECKS PASSED" : $"\n{_failures} SCREENSHOT CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;
     }
-
     private static void Check(string name, bool ok, string? detail = null)
     {
         if (!ok) _failures++;
