@@ -221,7 +221,6 @@ BOSS_ZH = {
     "bossKnight": "三狗",
     "bossWedge": "Wedge",
     "bossWedgeLab": "Wedge",
-    "bossScourgeEventLab": "Scourge",
     "sectantPriest": "邪教徒祭司",
     "blackDivision": "黑色军团",
     "pmcBotBlackDiv": "黑色军团",
@@ -253,6 +252,12 @@ BOSS_ZH = {
 BOSS_ZONE_FILTER = {
     "woods": {"bossKojaniy": (10.0, -3.0, 120.0)},
 }
+
+# Mobs the upstream API still ships but that no longer spawn in the live game.
+# bossScourgeEventLab: the one-off "Scourge" lab event boss; the event ended and
+# the snapshot still lists it, which drew a boss marker with no portrait art on
+# The Lab. The snapshot itself is left as upstream truth; drop it here.
+BOSS_DROP_MOBS = {"bossScourgeEventLab"}
 
 
 def CleanEnglishName(raw: str, zh_title: str) -> str:
@@ -366,6 +371,8 @@ def main() -> None:
                 })
             for b in api.get("bosses", []):
                 mob = b.get("mob") or ""
+                if mob in BOSS_DROP_MOBS:
+                    continue
                 positions = []
                 for loc in b.get("spawnLocations", []):
                     for p in loc.get("positions", []):
