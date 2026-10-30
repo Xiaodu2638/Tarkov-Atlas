@@ -148,10 +148,20 @@ dotnet run --project tools/shotcheck  -c Release
 管线脚本在 `tools/`，输入在 `research/`，产物写入 `TarkovAtlas/Assets/`。
 
 ```powershell
-python tools/build_all.py                  # 一次跑完整条
-python tools/build_all.py --only factory   # 只重建一张地图的底图与楼层
-python tools/build_all.py --skip-quests    # 只重建美术
+python tools/update_data.py                  # 一键：重拉 API 快照 -> build_all -> 门禁 -> 等你审 diff
+python tools/update_data.py --dry-run        # 只拉快照看 research/api 的 diff，回滚不构建
+python tools/update_data.py --no-fetch       # 跳过联网，只跑 build_all + 门禁
+python tools/update_data.py --selftest       # 离线自测快照重塑/翻译展平逻辑
+
+python tools/build_all.py                    # 一次跑完整条（不联网）
+python tools/build_all.py --only factory     # 只重建一张地图的底图与楼层
+python tools/build_all.py --skip-quests      # 只重建美术
 ```
+
+`update_data.py` 是联网更新入口：拉 `api.tarkov.dev` GraphQL 快照（en+zh）覆盖
+`research/api/`，再依次跑 `build_all.py` 与门禁（`check.ps1` +
+`check_map_coverage.py`）。**它从不自动提交**——跑完打印 `git diff --stat` 让人
+先审快照再决定提交；任何一步失败自动把快照回滚，不留半成品。
 
 分步执行时按依赖顺序：
 
