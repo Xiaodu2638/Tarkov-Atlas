@@ -27,9 +27,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/check.ps1
 dotnet run --project tools/datacheck  -c Release
 dotnet run --project tools/logiccheck -c Release
 dotnet run --project tools/shotcheck  -c Release
+
+# 联网更新数据（重拉快照 -> build_all -> 门禁；从不自动提交，失败自动回滚快照）
+python tools/update_data.py            # 全流程
+python tools/update_data.py --dry-run  # 只 diff 快照并回滚
+python tools/update_data.py --selftest # 离线自测快照重塑/翻译展平
 ```
 
-产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 22 MB 原生 exe，整个目录约 265 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`、`Scripts/`）。脚本同时打一个同名 zip；`-NoAot` 跳过 AOT，`-OutputRoot <dir>` 换输出目录。
+改了代码要做任何运行时验证之前**先重跑 `build.ps1`**：验证脚本打的是 `dist/` 里的 exe，代码提交了但 dist 没重发，测到的就是旧版本（曾把「功能正常」误判成「左键拖拽没反应」）。
+
+产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 20 MB 原生 exe，整个目录约 263 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`；`Scripts/ocr.ps1` 已内嵌进 exe，不随包分发）。脚本同时打一个同名 zip；`-NoAot` 跳过 AOT，`-OutputRoot <dir>` 换输出目录。
 
 构建与自检会强制把 `TEMP`/`TMP`、`NUGET_PACKAGES`、`DOTNET_CLI_HOME` 指到仓库内（`.tmp/`、`.nuget-packages/`、`.dotnet-home/`），不写主机。**不要裸跑 `dotnet publish`**，会污染 `%TEMP%` 且可能锁住 `bin/`。上面「单独跑某套」的 `dotnet run` **不做**这套重定向（只有 `check.ps1` 会）：要么直接用 `check.ps1`，要么在同一个 shell 里先导出这几个变量。
 
@@ -43,7 +50,7 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
   App.axaml(.cs)                应用与样式
   AppJsonContext.cs             源生成的 JSON 上下文（反射已禁用，新类型必须登记）
   MainWindow.axaml(.cs)         主窗口：地图列表、任务抽屉、设置、日志监听
-  OverlayWindow.axaml(.cs)      悬浮小窗（置顶、可拖动、滚轮缩放）
+  OverlayWindow.axaml(.cs)      悬浮小窗（置顶；左键拖图平移、右键拖窗、滚轮以光标为锚缩放）
   SettingsWindow.axaml(.cs)     设置界面
   Controls/MapCanvas.cs         自绘地图控件（全部要素手绘，性能关键路径）
   Models/
@@ -81,9 +88,11 @@ tools/
   build_all.py                  管线入口（按依赖顺序跑完下面四步）
   build_assets.py               渲染 SVG（迷宫 warp 进解析栅格）→ 生成底图 + maps.json
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
-  build_data.py                 合并 API → mapdata.json / quests.json / 商人头像
+  build_data.py                 合并 API → mapdata.json / markers.json / quests.json
   build_story.py                剧情 → story.json
+  update_data.py                联网更新入口：重拉 research/api 快照 -> build_all -> 门禁（可回滚）
   check_map_coverage.py         底图内容区覆盖率自检（第 7 节验收标准用它）
+  capture_docs.py               驱动 dist 产物重拍 docs/ 四张界面截图
   poi.json                      手工维护的 POI 表（迷宫解谜道具）
   tile-cache/                   瓦片下载缓存（git 忽略）
 research/                       管线输入，全部进 git
@@ -145,22 +154,27 @@ docs/                           界面截图（README 引用）
 ## 5. 约束与已知的坑
 
 1. **一切留在工作区内。** 不写 `%APPDATA%`、`%TEMP%`、全局 git config、全局 pip。测试项目和非提权构建用 `TARKOVATLAS_DATA_DIR` 重定向应用状态（提权版见下一条）。
-2. **管理员清单**：`app.manifest` 内嵌 `requireAdministrator`（全局热键需要）。副作用是**非交互 shell 里启动 exe 会卡在 UAC**；自动化验证请用非提权构建（`-p:ApplicationManifest=`），并按 PID 定位窗口后再截图。同时务必先清掉残留实例——否则截到的是旧窗口，而且哈希会完全一致。另外 UAC 提权**不继承父进程环境变量**，所以发布版 exe 永远读 `%APPDATA%\TarkovAtlas\settings.json`，`TARKOVATLAS_DATA_DIR` 对它无效；要用干净配置验证，先备份挪走那份 settings.json，验完还原。
+2. **管理员清单**：`app.manifest` 内嵌 `requireAdministrator`（全局热键需要）。副作用是**非交互 shell 里启动 exe 会卡在 UAC**；自动化验证请用非提权构建（`-p:ApplicationManifest=`，改完须先删 `TarkovAtlas/obj`，apphost 会增量缓存旧 manifest），并按 PID 定位窗口后再截图。同时务必先清掉残留实例——否则截到的是旧窗口，而且哈希会完全一致。另外 UAC 提权**不继承父进程环境变量**，所以发布版 exe 永远读 `%APPDATA%\TarkovAtlas\settings.json`，`TARKOVATLAS_DATA_DIR` 对它无效；要用干净配置验证，先备份挪走那份 settings.json，验完还原。
 3. **构建**必须设 `AVALONIA_TELEMETRY_OPTOUT=1`，否则 Avalonia 遥测写日志失败会让整个 build 以误导性的 MSB4018 崩掉。`build.ps1` / `tools/check.ps1` 已经设好，只有绕过脚本直接跑 `dotnet build|publish` 时才需要自己设。
 4. **JSON 走源生成**（`JsonSerializerIsReflectionEnabledByDefault=false`）：新增要序列化/反序列化的类型必须加进 `AppJsonContext.cs` 的 `[JsonSerializable]` 列表，否则 NativeAOT 下要等到运行时才炸。
 5. **`dotnet publish` 的输出目录被占用会锁住 `bin\Release\...`**；用暂存目录或 `-p:OutputPath=`。
 6. **不要加 NuGet 外网依赖**：只能用 `.nuget-packages` 里的离线缓存。
 7. **别 `git clean -xdf`**：会连 `research/` 的矢量源一起删掉（`tools/pyext`、`tools/pylibs`、`tools/tile-cache` 也会没）。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
-9. **`assets.tarkov.dev` 返回 403**；GitHub 与 fandom wiki 可访问。
+9. **上游端点现状（实测）**：`assets.tarkov.dev` 403；`api.tarkov.dev/graphql` 可用但间歇 422 "GraphQL server unavailable"（update_data.py 按退避重试处理）；`data.tarkov.dev` 在本机连 DNS 都不解析。GitHub 与 fandom wiki 可访问。真实拉取若持续失败，换网络环境重跑，不要改脚本硬编码假数据。
 10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
 11. **冰破船的层必须用与底图相同的渲染身份**：`research/svg/icebreaker/*.svg` 共享同一 viewBox（`1000 1500 3000 5400`），每个文件里只有 `display:block` 的那个组是有效内容。必须按**与底图完全相同的目标尺寸与 `turn`** 渲染（`bake_svg_layer` 已如此），任何裁剪/二次缩放都会重新引入错位。
 12. **`render_svg()` 的 `only_layer` 只允许隐藏顶层组**：这些 SVG 把每层作为根 `<svg>` 的直接子 `<g>`，层内还有 `Floor` / `Wall` / `Stairs` 等嵌套组。早期用 `^  <g` 缩进正则匹配顶层组，文件被压成单行后匹配数为 0，「隐藏其它层」静默失效、整份文档全被渲染；后来改成匹配任意 `<g id>` 又把**层内**的嵌套组一起隐藏，底图直接变成纯背景色。现在统一走 `top_level_group_ids()`（`ElementTree` 解析，只取根节点的直接子组）。新增地图的层过滤必须复用它，不要再用正则猜缩进。
 13. **重建底图后必须目视/数值确认不是纯色**：`render_svg()` 只检查 PNG 大于 1 KB，空背景也能过。改完渲染路径先跑 `python tools/build_assets.py --only <key>`，用 PIL 数一下 distinct colors（正常底图上万，纯背景是 1），再跑 `check_map_coverage.py`。
+14. **UI 自动化验证的三个连环坑**（`tools/capture_docs.py` 已把这些都绕开，改它或写新脚本时注意）：
+    - 单实例互斥（`TarkovAtlas_SingleInstance`）：已有实例在跑时，新启动的进程只会激活旧窗口就退出——测到的行为是**旧那个进程**的。
+    - 低权限 shell 给提权实例合成的鼠标事件会被 UIPI 静默吞掉（画面零像素变化 ≠ 功能坏了）；判据：`Get-Process TarkovAtlas` 的 `Path` 读不到即提权实例，先让用户手动退出再测。
+    - 验证脚本要与 app 同 DPI 感知（`SetProcessDpiAwareness(2)`），否则 `mouse_event` 的绝对坐标被虚拟化，跟手率永远算不满。
+15. **悬浮窗拖窗不用 DIP 增量**：`e.GetPosition` 是相对已移动的窗口的，负反馈导致窗口只跟到光标位移的 40–73%；`GetCursorPos`（物理像素，与 `Window.Position` 同系）+ 按下时抓取偏移才 100% 跟手。`BeginMoveDrag` 只认左键，右键无效。
 
-两个大文件：`MainWindow.axaml.cs`（约 1.2k 行，所有 UI 交互：地图切换、楼层、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1k 行，全部绘制）。改行为先在这两处找，不要去 Models 里猜。
+两个大文件：`MainWindow.axaml.cs`（约 1.9k 行，所有 UI 交互：地图切换、楼层、图例、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1.6k 行，全部绘制 + 指针手势）。改行为先在这两处找，不要去 Models 里猜。悬浮窗的手势在 `OverlayWindow.axaml.cs`（画布 `IsHitTestVisible=false`，事件由窗口层转发给 `MapCanvas.Begin/Move/EndHostPan`）。
 
-运行 `tools/*.py` 前不要 `pip install` 到全局：脚本自己把 `tools/pyext`、`tools/pylibs` 插到 `sys.path` 前面，用的是仓库内的 Pillow/numpy/requests。缺依赖就装到 `tools/pylibs`（见 4.4 节命令）。`research/` 与 `tools/*.py` 都不进 git，管线改动只存在于本机。
+运行 `tools/*.py` 前不要 `pip install` 到全局：脚本自己把 `tools/pyext`、`tools/pylibs` 插到 `sys.path` 前面，用的是仓库内的 Pillow/numpy/requests。缺依赖就装到 `tools/pylibs`（见 4.4 节命令）。
 
 ---
 
