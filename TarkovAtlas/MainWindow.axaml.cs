@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
@@ -50,6 +51,7 @@ public partial class MainWindow : Window
     private bool _shuttingDown;
     private bool _suppressMapSelection;
     private bool _suppressQuestEvents;
+    private TrayIcon? _tray;
     private DispatcherTimer? _persistTimer;
     private DispatcherTimer? _toastTimer;
     private readonly string _defaultHint = "滚轮缩放  ·  左键拖拽  ·  双击放大  ·  0 复位";
@@ -118,6 +120,7 @@ public partial class MainWindow : Window
             }
 
             StartServices();
+            InitTrayIcon();
 
             if (_quests.LoadWarning is not null) ShowToast(_quests.LoadWarning);
 
@@ -1876,7 +1879,17 @@ public partial class MainWindow : Window
 
     private void OnClosing(object? sender, WindowClosingEventArgs e)
     {
-        _shuttingDown = true;
+        // × minimizes to the tray instead of exiting; real exit is the tray
+        // menu's 退出 (or a platform Exit()). On that path CancelClose is
+        // false and the teardown below runs as before.
+        if (!_shuttingDown)
+        {
+            e.Cancel = true;
+            WindowState = WindowState.Minimized;
+            Hide();
+            return;
+        }
+
         _settings.SelectedMap = _currentMap?.Key ?? _settings.SelectedMap;
         if (_overlay is not null)
         {
@@ -1886,10 +1899,56 @@ public partial class MainWindow : Window
             _overlay.AllowClose();
             _overlay.Close();
         }
+        _tray?.Dispose();
+        _tray = null;
         PersistNow();
         _hotkeys.Dispose();
         _logs.Dispose();
         _screenshots.Dispose();
         _quests.FlushProgress();
+    }
+
+    /// <summary>Tray icon: click restores the window, menu has 打开 / 退出.</summary>
+    private void InitTrayIcon()
+    {
+        try
+        {
+            var iconPath = Path.Combine(AppPaths.AssetsDir, "TarkovAtlas.ico");
+            var appIcon = File.Exists(iconPath) ? new WindowIcon(iconPath) : null;
+            _tray = new TrayIcon { Icon = appIcon, ToolTipText = "Tarkov Atlas", IsVisible = true };
+            _tray.Clicked += (_, _) => RestoreFromTray();
+
+            var menu = new NativeMenu();
+            var open = new NativeMenuItem("打开");
+            open.Click += (_, _) => RestoreFromTray();
+            var quit = new NativeMenuItem("退出");
+            quit.Click += (_, _) => ExitApplication();
+            menu.Add(open);
+            menu.Add(new NativeMenuItemSeparator());
+            menu.Add(quit);
+            _tray.Menu = menu;
+        }
+        catch (Exception ex)
+        {
+            AppPaths.LogCrash(ex);   // tray is optional; never block startup
+        }
+    }
+
+    private void RestoreFromTray()
+    {
+        Show();
+        WindowState = WindowState.Normal;
+        Activate();
+    }
+
+    private void ExitApplication()
+    {
+        _shuttingDown = true;
+        Close();
+        if (Application.Current?.ApplicationLifetime
+            is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
     }
 }
