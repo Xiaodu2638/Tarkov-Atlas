@@ -900,11 +900,11 @@ public sealed class MapCanvas : Control
             var s = Project(stop.X, stop.Z);
             if (!OnScreen(s, 30)) continue;
 
-            // Same toolbox artwork as the legend row, ringed so it reads on the
-            // light rooftop areas too.
+            // Bare icon (same artwork as the legend row); no backing ring —
+            // the transit-coloured halo around it read as a highlight that
+            // wasn't asked for.
             if (btrIcon is not null)
             {
-                context.DrawEllipse(TransitFill, TransitPen, s, iconSide * 0.62, iconSide * 0.62);
                 context.DrawImage(btrIcon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
             }
             else
