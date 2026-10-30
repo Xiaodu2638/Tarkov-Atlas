@@ -1174,64 +1174,6 @@
    "objectives": []
   },
   {
-   "id": "5ac346cf86f7741d63233a02",
-   "name": "信号 - 3",
-   "nameEn": "Signal - Part 3",
-   "trader": "5a7c2eca46aef81a7ca2145d",
-   "level": 15,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Signal_-_Part_3",
-   "maps": [
-    "shoreline"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在海岸线的指定地点放置第一个信号干扰器",
-     "type": "mark",
-     "zones": [
-      {
-       "map": "shoreline",
-       "x": -483.81,
-       "z": 248.83
-      }
-     ]
-    },
-    {
-     "text": "在海岸线的指定地点放置第二个信号干扰器",
-     "type": "mark",
-     "zones": [
-      {
-       "map": "shoreline",
-       "x": -230.55,
-       "z": -92.39
-      }
-     ]
-    },
-    {
-     "text": "在海岸线的指定地点放置第三个信号干扰器",
-     "type": "mark",
-     "zones": [
-      {
-       "map": "shoreline",
-       "x": -708.72,
-       "z": 90.59
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "5ac346e886f7741d6118b99b",
-   "name": "信号 - 4",
-   "nameEn": "Signal - Part 4",
-   "trader": "5a7c2eca46aef81a7ca2145d",
-   "level": 15,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Signal_-_Part_4",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5c1234c286f77406fa13baeb",
    "name": "借刀杀人",
    "nameEn": "Setup",
@@ -1773,56 +1715,6 @@
    ],
    "prerequisites": [],
    "objectives": []
-  },
-  {
-   "id": "64e7b99017ab941a6f7bf9d7",
-   "name": "出警 - 商场",
-   "nameEn": "Gendarmerie - Mall Cop",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 36,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Gendarmerie_-_Mall_Cop",
-   "maps": [
-    "streets-of-tarkov"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在塔科夫街区的 Stylobate 大楼附近使用手枪消灭任意目标",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -97.2,
-       "z": -10.7
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "64e7b9a4aac4cd0a726562cb",
-   "name": "出警 - 检票",
-   "nameEn": "Gendarmerie - Tickets, Please",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 36,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Gendarmerie_-_Tickets%2C_Please",
-   "maps": [
-    "streets-of-tarkov"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在塔科夫街区的Rodina影院建筑附近使用冲锋枪击杀任意敌对目标",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -180.4,
-       "z": 399.5
-      }
-     ]
-    }
-   ]
   },
   {
    "id": "669fa39ee749756c920d02c8",
@@ -2540,17 +2432,6 @@
    ]
   },
   {
-   "id": "596a204686f774576d4c95de",
-   "name": "卫生标准 - 2",
-   "nameEn": "Sanitary Standards - Part 2",
-   "trader": "54cb57776803fa99248b456e",
-   "level": 8,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Sanitary_Standards_-_Part_2",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "66b38c7bf85b8bf7250f9cb6",
    "name": "危机四伏塔科夫",
    "nameEn": "Rough Tarkov",
@@ -2586,19 +2467,6 @@
      ]
     }
    ]
-  },
-  {
-   "id": "63ab180c87413d64ae0ac20a",
-   "name": "危险之路",
-   "nameEn": "Dangerous Road",
-   "trader": "54cb57776803fa99248b456e",
-   "level": 15,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Dangerous_Road",
-   "maps": [
-    "streets-of-tarkov"
-   ],
-   "prerequisites": [],
-   "objectives": []
   },
   {
    "id": "6a7af2e48fddc3979d0510b8",
@@ -3357,17 +3225,6 @@
    "objectives": []
   },
   {
-   "id": "5ac3479086f7742880308199",
-   "name": "圈内人",
-   "nameEn": "Insider",
-   "trader": "5a7c2eca46aef81a7ca2145d",
-   "level": 12,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Insider",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "64e7b9bffd30422ed03dad38",
    "name": "地区巡逻",
    "nameEn": "District Patrol",
@@ -3470,86 +3327,6 @@
      ]
     }
    ]
-  },
-  {
-   "id": "5ede567cfa6dc072ce15d6e3",
-   "name": "地堡 - 2",
-   "nameEn": "The Bunker - Part 2",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 21,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Bunker_-_Part_2",
-   "maps": [
-    "reserve"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "找到通往军医院的密闭门（白主教）",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": -90.31,
-       "z": -5.15
-      }
-     ]
-    },
-    {
-     "text": "找到通往学院大楼的两扇密闭门中的一个（黑主教）",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": -144.25,
-       "z": 6.19
-      }
-     ]
-    },
-    {
-     "text": "找到通往1号军营的两扇密闭门中的一个（黑兵）",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": -149.41,
-       "z": 50
-      }
-     ]
-    },
-    {
-     "text": "找到通往2号军营的两扇密闭门中的一个（白兵）",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": -107.01,
-       "z": 77.49
-      }
-     ]
-    },
-    {
-     "text": "找到通往空中管制中心大楼的密闭门（白王）",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": -73,
-       "z": 29.99
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "5c0bdb5286f774166e38eed4",
-   "name": "坚如燧石",
-   "nameEn": "Flint",
-   "trader": "58330581ace78e27b8b10cee",
-   "level": 35,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Flint",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
   },
   {
    "id": "69c26c07683c9831020018c7",
@@ -3804,19 +3581,6 @@
    "level": 17,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_4",
    "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "5bc4826c86f774106d22d88b",
-   "name": "塔科夫神射手 - 5",
-   "nameEn": "The Tarkov Shooter - Part 5",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 17,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Tarkov_Shooter_-_Part_5",
-   "maps": [
-    "customs"
-   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4866,17 +4630,6 @@
    ]
   },
   {
-   "id": "5d6fbc2886f77449d825f9d3",
-   "name": "导师",
-   "nameEn": "Mentor",
-   "trader": "5935c25fb3acc3127c3d8cd9",
-   "level": 37,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Mentor",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5c10f94386f774227172c572",
    "name": "小事大帮忙",
    "nameEn": "Small Things, Big Help",
@@ -5062,31 +4815,6 @@
    ]
   },
   {
-   "id": "6179acbdc760af5ad2053585",
-   "name": "小菜一碟 - 2",
-   "nameEn": "Easy Job - Part 2",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 21,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Easy_Job_-_Part_2",
-   "maps": [
-    "lighthouse"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "消灭灯塔污水处理厂直升机周围的任意敌人",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -51.17,
-       "z": -573.21
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "639136f086e646067c176a8b",
    "name": "屋顶战神",
    "nameEn": "Kings of the Rooftops",
@@ -5151,17 +4879,6 @@
    ]
   },
   {
-   "id": "5c12452c86f7744b83469073",
-   "name": "左右逢源",
-   "nameEn": "Perfect Mediator",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 35,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Perfect_Mediator",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5968eb3186f7741dde183a4d",
    "name": "带血的水",
    "nameEn": "Blood in the Water",
@@ -5173,46 +4890,6 @@
    ],
    "prerequisites": [],
    "objectives": []
-  },
-  {
-   "id": "675c04f4db8807b75d0f38e8",
-   "name": "平易近人",
-   "nameEn": "Closer to the People",
-   "trader": "54cb57776803fa99248b456e",
-   "level": 0,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Closer_to_the_People",
-   "maps": [
-    "customs"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在海关找到并获取货运班组的日志",
-     "type": "findQuestItem",
-     "zones": [
-      {
-       "map": "customs",
-       "x": 93.2574,
-       "z": -61.865417
-      },
-      {
-       "map": "customs",
-       "x": 90.44954,
-       "z": -57.470688
-      },
-      {
-       "map": "customs",
-       "x": 96.90181,
-       "z": -64.52138
-      },
-      {
-       "map": "customs",
-       "x": 95.282974,
-       "z": -59.045044
-      }
-     ]
-    }
-   ]
   },
   {
    "id": "66058cb7c7f3584787181476",
@@ -6201,17 +5878,6 @@
    "objectives": []
   },
   {
-   "id": "5b47876e86f7744d1c353205",
-   "name": "战争之血 - 2",
-   "nameEn": "The Blood of War - Part 2",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 23,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Blood_of_War_-_Part_2",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "69ce204c8702b378f9091e4b",
    "name": "战争从未改变",
    "nameEn": "War Never Changes",
@@ -6694,17 +6360,6 @@
    ]
   },
   {
-   "id": "5ac3460c86f7742880308185",
-   "name": "挖矿 - 2",
-   "nameEn": "Farming - Part 2",
-   "trader": "5a7c2eca46aef81a7ca2145d",
-   "level": 12,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Farming_-_Part_2",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5ac346a886f7744e1b083d67",
    "name": "捕鼠计划",
    "nameEn": "Rat Hunting",
@@ -6956,17 +6611,6 @@
      ]
     }
    ]
-  },
-  {
-   "id": "59c93e8e86f7742a406989c4",
-   "name": "收买人心",
-   "nameEn": "Loyalty Buyout",
-   "trader": "58330581ace78e27b8b10cee",
-   "level": 9,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Loyalty_Buyout",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
   },
   {
    "id": "5c51aac186f77432ea65c552",
@@ -7650,28 +7294,6 @@
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Old_Patterns",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "596a101f86f7741ddb481582",
-   "name": "暗中破坏",
-   "nameEn": "Kind of Sabotage",
-   "trader": "58330581ace78e27b8b10cee",
-   "level": 0,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Kind_of_Sabotage",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "5ae449a586f7744bde357696",
-   "name": "暗度陈仓",
-   "nameEn": "No Fuss Needed",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 0,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/No_Fuss_Needed",
    "maps": [],
    "prerequisites": [],
    "objectives": []
@@ -9142,86 +8764,6 @@
    ]
   },
   {
-   "id": "6745cbee909d2013670a4a55",
-   "name": "独立的代价",
-   "nameEn": "The Price of Independence",
-   "trader": "656f0f98d80a697f855d34b1",
-   "level": 0,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Price_of_Independence",
-   "maps": [
-    "customs",
-    "reserve",
-    "lighthouse"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在海关找到并获取控告信",
-     "type": "findQuestItem",
-     "zones": [
-      {
-       "map": "customs",
-       "x": 264.34637,
-       "z": -75.3349
-      },
-      {
-       "map": "customs",
-       "x": 268.5923,
-       "z": -73.78987
-      },
-      {
-       "map": "customs",
-       "x": 271.05127,
-       "z": -72.37828
-      },
-      {
-       "map": "customs",
-       "x": 269.86456,
-       "z": -77.52385
-      },
-      {
-       "map": "customs",
-       "x": 263.97394,
-       "z": -76.90471
-      }
-     ]
-    },
-    {
-     "text": "将信件藏匿在储备站驻军总部的三楼",
-     "type": "plantQuestItem",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": -127.39,
-       "z": -20.96
-      }
-     ]
-    },
-    {
-     "text": "在灯塔火车站仓库发射一枚黄色信号弹",
-     "type": "useItem",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -5.75,
-       "z": -872.31
-      }
-     ]
-    },
-    {
-     "text": "在灯塔码头发射一枚黄色信号弹",
-     "type": "useItem",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": 148.91,
-       "z": -154.7
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "5d25e2b486f77409de05bba0",
    "name": "猎人之路 - 周边安全",
    "nameEn": "The Huntsman Path - Secured Perimeter",
@@ -9670,17 +9212,6 @@
    "objectives": []
   },
   {
-   "id": "5d25e2a986f77409dd5cdf2a",
-   "name": "生存者之路 - 战地军医",
-   "nameEn": "The Survivalist Path - Combat Medic",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 17,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/The_Survivalist_Path_-_Combat_Medic",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5eaaaa7c93afa0558f3b5a1c",
    "name": "生存者之路 - 瘾君子",
    "nameEn": "The Survivalist Path - Junkie",
@@ -9765,17 +9296,6 @@
    "objectives": []
   },
   {
-   "id": "5ae448a386f7744d3730fff0",
-   "name": "生意至上",
-   "nameEn": "Only Business",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 15,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Only_Business",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "6744a728352b4da8e003eda9",
    "name": "电池换新",
    "nameEn": "Battery Change",
@@ -9793,63 +9313,6 @@
    "trader": "656f0f98d80a697f855d34b1",
    "level": 0,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Battery_Change",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "5a03173786f77451cb427172",
-   "name": "疗养之旅 - 2",
-   "nameEn": "Spa Tour - Part 2",
-   "trader": "5935c25fb3acc3127c3d8cd9",
-   "level": 12,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Spa_Tour_-_Part_2",
-   "maps": [
-    "shoreline"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在海岸线的疗养院使用 MS2000 指示器标记直升机",
-     "type": "mark",
-     "zones": [
-      {
-       "map": "shoreline",
-       "x": -250.5,
-       "z": -48.28
-      },
-      {
-       "map": "shoreline",
-       "x": -250.5,
-       "z": -48.28
-      }
-     ]
-    },
-    {
-     "text": "在海岸线使用 MS2000 指示器标记通往直升机的安全通道",
-     "type": "mark",
-     "zones": [
-      {
-       "map": "shoreline",
-       "x": -280.55,
-       "z": -41.31
-      },
-      {
-       "map": "shoreline",
-       "x": -280.55,
-       "z": -41.31
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "5a27ba9586f7741b543d8e85",
-   "name": "疗养之旅 - 6",
-   "nameEn": "Spa Tour - Part 6",
-   "trader": "5935c25fb3acc3127c3d8cd9",
-   "level": 12,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Spa_Tour_-_Part_6",
    "maps": [],
    "prerequisites": [],
    "objectives": []
@@ -10276,31 +9739,6 @@
    ]
   },
   {
-   "id": "5a27bb5986f7741dfb660900",
-   "name": "神秘货物 - 3",
-   "nameEn": "Cargo X - Part 3",
-   "trader": "5935c25fb3acc3127c3d8cd9",
-   "level": 19,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Cargo_X_-_Part_3",
-   "maps": [
-    "shoreline"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在海岸线疗养院内找到被藏匿的 TerraGroup 货物",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "shoreline",
-       "x": -149.87,
-       "z": -77
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "658027799634223183395339",
    "name": "禁止打劫",
    "nameEn": "No Swiping",
@@ -10370,17 +9808,6 @@
      ]
     }
    ]
-  },
-  {
-   "id": "5c0be5fc86f774467a116593",
-   "name": "私人诊所",
-   "nameEn": "Private Clinic",
-   "trader": "54cb57776803fa99248b456e",
-   "level": 35,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Private_Clinic",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
   },
   {
    "id": "6a5424ae135497b9df0c68be",
@@ -11492,31 +10919,6 @@
    ]
   },
   {
-   "id": "639135b04ed9512be67647d7",
-   "name": "苏共之辉 - 1",
-   "nameEn": "Glory to CPSU - Part 1",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 17,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Glory_to_CPSU_-_Part_1",
-   "maps": [
-    "streets-of-tarkov"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在塔科夫街区找到Prapor朋友的公寓",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 131.43,
-       "z": 232.37
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "69c277f3ea6da9c23e07f8d2",
    "name": "苦涩的胜利",
    "nameEn": "A Bitter Victory",
@@ -11679,17 +11081,6 @@
    "objectives": []
   },
   {
-   "id": "5a27d2af86f7744e1115b323",
-   "name": "西方来客 - 2",
-   "nameEn": "Friend From the West - Part 2",
-   "trader": "58330581ace78e27b8b10cee",
-   "level": 9,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Friend_From_the_West_-_Part_2",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "6a7b0df31ea00c9a980e2742",
    "name": "西西弗斯",
    "nameEn": "Sisyphus",
@@ -11842,42 +11233,6 @@
    "maps": [],
    "prerequisites": [],
    "objectives": []
-  },
-  {
-   "id": "675c1ec7a46173572a0bf20a",
-   "name": "试炼之路",
-   "nameEn": "Rite of Passage",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 0,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Rite_of_Passage",
-   "maps": [
-    "customs"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在海关的老加油站击杀 Scav",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "customs",
-       "x": 307.91,
-       "z": -144.64
-      }
-     ]
-    },
-    {
-     "text": "在海关的新加油站击杀 Scav",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "customs",
-       "x": 417.35,
-       "z": 35.85
-      }
-     ]
-    }
-   ]
   },
   {
    "id": "671a49f77d49aea42c029b5f",
@@ -12276,59 +11631,12 @@
    ]
   },
   {
-   "id": "639135cd8ba6894d155e77cb",
-   "name": "软禁 - 2",
-   "nameEn": "House Arrest - Part 2",
-   "trader": "58330581ace78e27b8b10cee",
-   "level": 33,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/House_Arrest_-_Part_2",
-   "maps": [
-    "streets-of-tarkov"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "调查看守者的遭遇",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 106.77,
-       "z": 222.48
-      }
-     ]
-    },
-    {
-     "text": "在塔科夫街区找到临时监狱看守者的公寓",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 107.93,
-       "z": 232.19
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "6942b44f891369fc790e385a",
    "name": "轻重缓急",
    "nameEn": "Setting Priorities",
    "trader": "5a7c2eca46aef81a7ca2145d",
    "level": 40,
    "wiki": "https://escapefromtarkov.fandom.com/wiki/Setting_Priorities",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "5c0d0d5086f774363760aef2",
-   "name": "运动员",
-   "nameEn": "Athlete",
-   "trader": "54cb57776803fa99248b456e",
-   "level": 30,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Athlete",
    "maps": [],
    "prerequisites": [],
    "objectives": []
@@ -13089,17 +12397,6 @@
    "objectives": []
   },
   {
-   "id": "5ae4499a86f77449783815db",
-   "name": "风流倜傥",
-   "nameEn": "Charisma Brings Success",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 0,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Charisma_Brings_Success",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "673f4e956f1b89c7bc0f56ef",
    "name": "风火轮",
    "nameEn": "Hot Wheels",
@@ -13583,17 +12880,6 @@
      ]
     }
    ]
-  },
-  {
-   "id": "5d25e48d86f77408251c4bfb",
-   "name": "黑幕交易",
-   "nameEn": "Shady Business",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 20,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Shady_Business",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
   }
  ]
 }
