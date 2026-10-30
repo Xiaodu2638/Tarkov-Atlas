@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using TarkovAtlas.Controls;
 using TarkovAtlas.Models;
+using TarkovAtlas.Services;
 
 namespace TarkovAtlas;
 
@@ -206,12 +207,20 @@ public partial class OverlayWindow : Window, IOverlayState
         Topmost = true;
         SetLocked(_locked, raiseEvent: false);
         Recenter();
+        // Pop-in without the snap: fade the whole window content in.
+        Root.Opacity = 0;
+        UiFx.FadeIn(Root, UiFx.Normal);
         VisibilityChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void HideOverlay()
     {
-        if (IsVisible) Hide();
+        if (IsVisible)
+        {
+            UiFx.FadeOutAndCollapse(Root, UiFx.Fast);
+            Root.Opacity = _opacity;   // restore for the next open
+            Hide();
+        }
         VisibilityChanged?.Invoke(this, EventArgs.Empty);
     }
 

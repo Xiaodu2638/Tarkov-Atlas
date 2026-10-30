@@ -161,5 +161,24 @@
     <Style Selector="Separator">
       <Setter Property="Background" Value="{StaticResource BorderSoft}" />
     </Style>
+
+    <!-- Window caption buttons (min/max/close): Fluent's template snaps between
+         states. A foreground + background transition on the button and its
+         ContentPresenter makes hover/press smooth instead of harsh. -->
+    <Style Selector="CaptionButtons Button">
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="Foreground" Duration="0:0:0.12" />
+          <BrushTransition Property="Background" Duration="0:0:0.12" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="CaptionButtons Button /template/ ContentPresenter">
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="Background" Duration="0:0:0.12" />
+        </Transitions>
+      </Setter>
+    </Style>
   </Application.Styles>
 </Application>

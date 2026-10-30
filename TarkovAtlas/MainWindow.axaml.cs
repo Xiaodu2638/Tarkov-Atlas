@@ -278,6 +278,8 @@ public partial class MainWindow : Window
                 MapView.SetMap(map, bitmap);
                 MapView.ClearFocusPin();
                 MapView.PoiKindsHidden = _settings.HiddenPoiKinds;
+                MapView.Opacity = 0;
+                UiFx.FadeIn(MapView, UiFx.Normal);
                 LoadFloorLayers(map);
                 _overlay?.SetMap(map, bitmap);
                 SyncOverlayFloor();
@@ -834,7 +836,15 @@ public partial class MainWindow : Window
     /// empty checkbox.</summary>
     private void RebuildLegend()
     {
-        LegendPanel.IsVisible = _settings.ShowLegend && _currentMap is not null;
+        var show = _settings.ShowLegend && _currentMap is not null;
+        if (show && !LegendPanel.IsVisible)
+        {
+            UiFx.FadeIn(LegendPanel, UiFx.Normal);
+        }
+        else if (!show && LegendPanel.IsVisible)
+        {
+            UiFx.FadeOutAndCollapse(LegendPanel, UiFx.Normal);
+        }
         if (!LegendPanel.IsVisible) { LegendItems.Children.Clear(); return; }
 
         var rows = CollectLegendRows();
@@ -1319,21 +1329,26 @@ public partial class MainWindow : Window
 
     private void ToggleQuestDrawer()
     {
-        var open = !QuestDrawer.IsVisible;
-        QuestDrawer.IsVisible = open;
-        QuestDrawer.Width = open ? 400 : 0;
+        var open = !QuestDrawer.IsVisible || QuestDrawer.Width < 200;
         if (open)
         {
             _deferQuestSort = false;
             RefreshQuestScope();
+            UiFx.AnimateWidth(QuestDrawer, 400);
+            UiFx.FadeIn(QuestDrawer, UiFx.Normal);
             QuestSearchBox.Focus();
+        }
+        else
+        {
+            UiFx.AnimateWidth(QuestDrawer, 0);
+            UiFx.FadeOutAndCollapse(QuestDrawer, UiFx.Normal);
         }
     }
 
     private void CloseQuestDrawer_Click(object? sender, RoutedEventArgs e)
     {
-        QuestDrawer.IsVisible = false;
-        QuestDrawer.Width = 0;
+        UiFx.AnimateWidth(QuestDrawer, 0);
+        UiFx.FadeOutAndCollapse(QuestDrawer, UiFx.Normal);
     }
 
     private void QuestSearchBox_TextChanged(object? sender, TextChangedEventArgs e)
@@ -1846,8 +1861,8 @@ public partial class MainWindow : Window
         }
         else if (e.Key == Key.Escape && QuestDrawer.IsVisible)
         {
-            QuestDrawer.IsVisible = false;
-            QuestDrawer.Width = 0;
+            UiFx.AnimateWidth(QuestDrawer, 0);
+            UiFx.FadeOutAndCollapse(QuestDrawer, UiFx.Normal);
             e.Handled = true;
         }
     }
@@ -1864,6 +1879,7 @@ public partial class MainWindow : Window
     private void ShowToast(string message)
     {
         HintText.Text = message;
+        UiFx.FadeIn(HintText, UiFx.Fast);
         if (_toastTimer is null)
         {
             _toastTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4.5) };
