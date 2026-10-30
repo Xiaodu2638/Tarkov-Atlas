@@ -36,7 +36,12 @@ for cand in (ROOT / "tools" / "pyext", ROOT / "pyext"):
         sys.path.insert(0, str(cand))
 from PIL import ImageGrab  # noqa: E402
 
-EXE_DIR = ROOT / "dist" / "TarkovAtlas-win-x64"
+# 默认截 dist 产物。发布版内嵌 requireAdministrator，非交互 shell 里会被 UAC
+# 挡住（WinError 740）；要脚本化验证就用非提权构建：
+#   dotnet publish ... -p:ApplicationManifest= --no-incremental -o .tmp/verify/app
+#   TARKOVATLAS_EXE_DIR=.tmp/verify/app python tools/capture_docs.py
+EXE_DIR = pathlib.Path(os.environ.get("TARKOVATLAS_EXE_DIR")
+                       or ROOT / "dist" / "TarkovAtlas-win-x64")
 EXE = EXE_DIR / "TarkovAtlas.exe"
 DOCS = ROOT / "docs"
 
@@ -220,7 +225,11 @@ def grab(h: int, out: pathlib.Path, settle: float = 2.2,
     l, t, r, b = box_fn(h)
     out.parent.mkdir(parents=True, exist_ok=True)
     ImageGrab.grab(bbox=(l, t, r, b), all_screens=True).save(out)
-    print(f"  {out.relative_to(ROOT)}  {r - l}x{b - t}")
+    try:
+        shown = out.relative_to(ROOT)
+    except ValueError:
+        shown = out
+    print(f"  {shown}  {r - l}x{b - t}")
 
 
 # --------------------------------------------------------------------------- driver

@@ -573,6 +573,22 @@ public sealed class MapCanvas : Control
     // ------------------------------------------------------------------
     // markers
 
+    /// <summary>Shared zoom gate for room-level markers (loot containers and
+    /// buried caches): below 4x they always clotted into noise.</summary>
+    public const double LootZoomGate = 4.0;
+
+    /// <summary>
+    /// Icon side length for a marker class. Pure sqrt(zoom) scaling only covers
+    /// ~1:1.6 across the whole 0.35x–32x zoom range, so the old clamps kept
+    /// icons near their full size even when the map itself shrank to a postage
+    /// stamp — at fit-zoom the extract/transit glyphs dwarfed the buildings.
+    /// This scales the base size with a gentler power of the zoom and caps it at
+    /// the old upper bound: small zoom => clearly smaller glyphs, deep zoom =>
+    /// same readable maximum as before.
+    /// </summary>
+    private double MarkerIcon(double baseSize, double maxSize, double minSize = 9)
+        => Math.Clamp(baseSize * Math.Pow(_zoom, 0.45), minSize, maxSize);
+
     private bool ExtractVisible(ExtractPoint e) => Options.ExtractFilter switch
     {
         "pmc" => e.Faction is "pmc" or "shared",
@@ -583,12 +599,11 @@ public sealed class MapCanvas : Control
 
     private void DrawExtracts(DrawingContext context)
     {
-        if (_map is null || _zoom < 0.55) return;
-        var size = Math.Clamp(6.5 * Math.Sqrt(_zoom), 5.5, 11);
+        if (_map is null || _zoom < 0.5) return;
+        // Diamond fallback + artwork icon both follow the shared zoom curve.
+        var size = Math.Clamp(4.0 * Math.Pow(_zoom, 0.45), 4.0, 11);
         var diamond = Diamond(size);
-        // Toolbox artwork icons (PMC/SCAV/通用撤离点) replace the plain diamond
-        // once the zoom shows them at a readable size.
-        var iconSide = Math.Clamp(22.0 * Math.Sqrt(_zoom), 18, 34);
+        var iconSide = MarkerIcon(17.0, 32, 10);
         foreach (var e in _map.Extracts)
         {
             if (!ExtractVisible(e)) continue;
@@ -799,8 +814,9 @@ public sealed class MapCanvas : Control
 
     private void DrawTransits(DrawingContext context)
     {
-        if (_map is null || _zoom < 0.9) return;
-        var iconSide = Math.Clamp(22.0 * Math.Sqrt(_zoom), 18, 32);
+        if (_map is null || _zoom < 0.5) return;
+        // Same curve as extracts: tiny at overview zoom, full size when close.
+        var iconSide = MarkerIcon(17.0, 30, 10);
         var transitIcon = LoadCached("legend", "transit");
         foreach (var t in _map.Transits)
         {
@@ -809,7 +825,8 @@ public sealed class MapCanvas : Control
             if (transitIcon is not null)
                 context.DrawImage(transitIcon, new Rect(s.X - iconSide / 2, s.Y - iconSide / 2, iconSide, iconSide));
             else
-                context.DrawRectangle(TransitFill, TransitPen, new Rect(s.X - 5, s.Y - 5, 10, 10));
+                context.DrawRectangle(TransitFill, TransitPen,
+                    new Rect(s.X - iconSide * 0.28, s.Y - iconSide * 0.28, iconSide * 0.56, iconSide * 0.56));
 
             if (_zoom < 1.1 || Compact) continue;
             // Dest stores the raw map key ("reserve") - print the localized
@@ -828,8 +845,9 @@ public sealed class MapCanvas : Control
     /// </summary>
     private void DrawBtrs(DrawingContext context)
     {
-        if (_map is null || _map.Btrs.Count == 0 || _zoom < 0.9) return;
-        var iconSide = Math.Clamp(20.0 * Math.Sqrt(_zoom), 16, 30);
+        if (_map is null || _map.Btrs.Count == 0 || _zoom < 0.5) return;
+        // Same curve as extracts/transits: shrinks with the overview zoom.
+        var iconSide = MarkerIcon(19.0, 30, 11);
         var btrIcon = LoadCached("legend", "btr-model");
         var showLabel = !Compact && _zoom >= 1.1;
         foreach (var stop in _map.Btrs)
@@ -873,8 +891,7 @@ public sealed class MapCanvas : Control
     private void DrawLoot(DrawingContext context)
     {
         if (_map is null || _map.Loot.Count == 0) return;
-        const double lootZoomGate = 4.0;
-        if (_zoom < lootZoomGate) return;
+        if (_zoom < LootZoomGate) return;
 
         // Same artwork the legend rows use, so what you toggle is what you see.
         var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
@@ -945,17 +962,20 @@ public sealed class MapCanvas : Control
     /// Buried stash spots (物资埋藏点). Same ammo-box artwork as the legend row
     /// (the amber ring was dropped: it doubled the marker's footprint and made
     /// caches shout over every other icon).
+    /// Shares the loot zoom gate: caches are room-level detail too, and a field
+    /// of 60+ amber boxes at fit-zoom was noise.
     /// </summary>
     private void DrawCaches(DrawingContext context)
     {
-        if (_map is null || _zoom < 0.7) return;
+        if (_map is null) return;
+        if (_zoom < LootZoomGate) return;
         if (_map.Caches.Count == 0) return;
 
         // Match the loot-container icon size (16 * sqrt(zoom)) so caches don't
         // read as a bigger class of marker than regular loot.
         var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
         var cacheIcon = LoadCached("legend", "loot-ammo-box");
-        var showLabel = !Compact && _zoom >= 1.25;
+        var showLabel = !Compact;   // gate is already 4x: always readable there
         foreach (var c in _map.Caches)
         {
             var s = Project(c.X, c.Z);
@@ -991,7 +1011,7 @@ public sealed class MapCanvas : Control
     {
         if (_map is null || _map.Pois.Count == 0) return;
 
-        var iconSide = Math.Clamp(17.0 * Math.Sqrt(_zoom), 13, 24);
+        var iconSide = MarkerIcon(15.0, 26, 9);
         var placed = new List<Rect>();
         var showLabel = !Compact && _zoom >= 0.85;
         // Same artwork per kind as the legend's 道具 rows.

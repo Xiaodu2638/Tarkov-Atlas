@@ -713,16 +713,6 @@ public partial class MainWindow : Window
                 Get = () => _settings.ShowBtrs, Set = v => _settings.ShowBtrs = v, Count = map?.Btrs.Count ?? 0,
             });
         }
-        if (map is null || map.Caches.Count > 0)
-        {
-            rows.Add(new()
-            {
-                Label = "资源埋藏点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.CacheStroke),
-                Icon = "loot-ammo-box",
-                Group = points,
-                Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = map?.Caches.Count ?? 0,
-            });
-        }
         // Tracked-task markers: the row is only offered once at least one task
         // is tracked, so the toggle never reads as a broken no-op.
         if (_quests.TrackedCount > 0)
@@ -742,6 +732,19 @@ public partial class MainWindow : Window
                             Select = () => { if (QuestDrawer is { IsVisible: false }) ToggleQuestDrawer(); } },
                     }
                     : null,
+            });
+        }
+        // Buried caches belong to the loot group: they are room-level detail
+        // like containers, share the 4x zoom gate, and sat oddly among the
+        // always-visible 点位 rows.
+        if (map is null || map.Caches.Count > 0)
+        {
+            rows.Add(new()
+            {
+                Label = "物资埋藏点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.CacheStroke),
+                Icon = "loot-ammo-box",
+                Group = loot,
+                Get = () => _settings.ShowCaches, Set = v => _settings.ShowCaches = v, Count = map?.Caches.Count ?? 0,
             });
         }
         if (map is not null)
