@@ -66,6 +66,7 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     QuestService.cs             任务库、剧情、进度读写
     SettingsService.cs          AppPaths（含 TARKOVATLAS_DATA_DIR 重定向）
     ScreenshotService.cs        截图定位：600ms 轮询目录 + 台账 diff（见 4.5）
+    UiFx.cs                     微动效统一入口（150-220ms ease-out 淡入/宽度动画）
     GameLogParsing.cs           战局日志纯解析（无注册表/UI 依赖，logiccheck 直接链接）
     GameLogService.cs           游戏日志监听、地图自动识别（兼容 1.3 会话目录与旧扁平布局）
     HotkeyService.cs            全局热键（Win32 低级键盘钩子）
@@ -161,6 +162,10 @@ docs/                           界面截图（README 引用）
 - **1.3.0.0 日志布局**：`Logs/log_<时间戳>_<版本>/` 每局一个子目录，application 通道是目录内 `<时间戳> application_NNN.log`（顶层不再有扁平 `application*.log`）。`GameLogParsing.FindApplicationLog` 同时认新旧两种布局；文件名里的通道名是**最后一个空格后**的 token。
 - **1.3 的战局标记行**只剩 `scene preset path:... rcid:<id>.scenespreset.asset`（每次进战局都打，rcid 是 bundle 名如 `factory_day` / `Shopping_Mall`）与 `[Transit] ... Locations:<id> ->`；旧的 `Load location:` 已消失。新增 id 一律加进 `MapRepository.LocationToMap`，未知 rcid（大厅/菜单场景）必须跳过——这是唯一的防误触发手段。
 
+### 4.6 生命周期与动效
+- **× 是最小化到托盘，不是退出**：`ShutdownMode = OnExplicitShutdown`（App.axaml.cs），MainWindow.OnClosing 在非退出路径取消关闭并 `Hide()`；真正的退出只有托盘菜单「退出」（`ExitApplication` → 置 `_shuttingDown = true` → `desktop.Shutdown()`），它复用 OnClosing 的 teardown。托盘由 `InitTrayIcon` 在 OnOpened 里挂，失败静默降级。别把 ShutdownMode 改回去——主窗口一关进程就没了。
+- **动效统一走 `Services/UiFx.cs`**：`FadeIn` / `FadeOutAndCollapse` / `AnimateWidth`，150–220ms ease-out。已应用：任务抽屉（滑出+淡入）、图例面板、toast、地图切换画布淡入、悬浮窗开关、标题栏三键（App.axaml 里 CaptionButtons 的 BrushTransition）。新增过渡复用它，不要在每个 call site 手写 Animation；也别把时长调长——超过 ~250ms 就会显得拖沓。
+
 ---
 
 ## 5. 约束与已知的坑
@@ -187,7 +192,7 @@ docs/                           界面截图（README 引用）
 17. **推送 / 发布的网络路径**：本机 `github.com:443` 直连不通（`api.github.com` 通）。git push 走 v2rayN 混合端口的 HTTP 代理 `-c http.proxy=http://127.0.0.1:10808`；`socks5h://` scheme 会 Connection reset，别用。代理没开时 push 秒败，先探端口再推。
 18. **历史已用 git filter-repo 清理过**（第三方工具箱、含个人路径的 HANDOVER.md），`.git` 约 474 MB。绝不能再把 `工具箱*/` 或任何本机路径提交进来；`.gitignore` 已挡住，改 ignore 规则时留意。
 
-两个大文件：`MainWindow.axaml.cs`（约 1.9k 行，所有 UI 交互：地图切换、楼层、图例、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1.6k 行，全部绘制 + 指针手势）。改行为先在这两处找，不要去 Models 里猜。悬浮窗的手势在 `OverlayWindow.axaml.cs`（画布 `IsHitTestVisible=false`，事件由窗口层转发给 `MapCanvas.Begin/Move/EndHostPan`）。
+两个大文件：`MainWindow.axaml.cs`（约 1.97k 行，所有 UI 交互：地图切换、楼层、图例、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1.6k 行，全部绘制 + 指针手势）。改行为先在这两处找，不要去 Models 里猜。悬浮窗的手势在 `OverlayWindow.axaml.cs`（画布 `IsHitTestVisible=false`，事件由窗口层转发给 `MapCanvas.Begin/Move/EndHostPan`）。
 
 运行 `tools/*.py` 前不要 `pip install` 到全局：脚本自己把 `tools/pyext`、`tools/pylibs` 插到 `sys.path` 前面，用的是仓库内的 Pillow/numpy/requests。缺依赖就装到 `tools/pylibs`（见 4.4 节命令）。
 
