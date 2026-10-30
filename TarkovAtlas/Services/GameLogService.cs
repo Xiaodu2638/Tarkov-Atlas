@@ -1,5 +1,4 @@
 using System.Text;
-using System.Text.RegularExpressions;
 using Microsoft.Win32;
 
 namespace TarkovAtlas.Services;
@@ -13,10 +12,6 @@ public sealed class MapDetectedEventArgs : EventArgs
 
 public sealed class GameLogService : IDisposable
 {
-    private static readonly Regex LocationRegex = new(
-        @"(?:Load location|Loading location|location\s*[:=])\s*['""]?([A-Za-z0-9_\-]+)",
-        RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-
     private CancellationTokenSource? _cts;
     private string? _logFile;
     private long _position;
@@ -117,15 +112,16 @@ public sealed class GameLogService : IDisposable
         var dir = LogsDirectory;
         if (dir is null || !Directory.Exists(dir)) return;
 
-        var latest = new DirectoryInfo(dir)
-            .EnumerateFiles("application*.log", SearchOption.TopDirectoryOnly)
-            .OrderByDescending(f => f.LastWriteTimeUtc)
-            .FirstOrDefault();
-        if (latest is null)
+        // 1.3.0.0 writes one session directory per game launch
+        // (Logs/log_<stamp>_<ver>/<stamp> application_000.log); pre-1.3
+        // wrote flat application*.log. FindApplicationLog understands both.
+        var latestPath = GameLogParsing.FindApplicationLog(dir);
+        if (latestPath is null)
         {
             Status = "日志目录存在，但还没有 application*.log";
             return;
         }
+        var latest = new FileInfo(latestPath);
 
         if (!string.Equals(_logFile, latest.FullName, StringComparison.OrdinalIgnoreCase))
         {
@@ -136,8 +132,9 @@ public sealed class GameLogService : IDisposable
         }
 
         string text;
-        using (var fs = new FileStream(latest.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+        try
         {
+            using var fs = new FileStream(latest.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
             if (fs.Length < _position) _position = 0;
             if (_position == 0 && fs.Length > 262144)
                 _position = Math.Max(0, fs.Length - 262144);
@@ -147,34 +144,32 @@ public sealed class GameLogService : IDisposable
             text = reader.ReadToEnd();
             _position = fs.Position;
         }
+        catch (IOException)
+        {
+            // Session directories linger after crashes; a locked or half
+            // deleted file just means we retry on the next poll.
+            return;
+        }
 
         if (text.Length == 0) return;
         _tail = (_tail + text);
         if (_tail.Length > 65536) _tail = _tail[^65536..];
 
-        var matches = LocationRegex.Matches(_tail);
-        if (matches.Count == 0) return;
+        // Newest raid marker for a known map; same-as-last is filtered below.
+        var id = GameLogParsing.NewestRaidLocation(_tail, MapRepository.LocationToMap.ContainsKey);
+        if (id is null) return;        if (string.Equals(id, LastLocationId, StringComparison.OrdinalIgnoreCase)) return;
 
-        // Process only the newest location line. The regex may also match
-        // unrelated "location" JSON fields, so the map id must be known.
-        for (var i = matches.Count - 1; i >= 0; i--)
+        if (!MapRepository.LocationToMap.TryGetValue(id, out var mapKey)) return;
+        LastLocationId = id;
+        LastMapKey = mapKey;
+        LastDetectedAt = DateTime.Now;
+        Status = $"战局地图: {id}";
+        MapDetected?.Invoke(this, new MapDetectedEventArgs
         {
-            var id = matches[i].Groups[1].Value.ToLowerInvariant();
-            if (!MapRepository.LocationToMap.TryGetValue(id, out var key)) continue;
-            if (string.Equals(id, LastLocationId, StringComparison.OrdinalIgnoreCase)) return;
-
-            LastLocationId = id;
-            LastMapKey = key;
-            LastDetectedAt = DateTime.Now;
-            Status = $"战局地图: {id}";
-            MapDetected?.Invoke(this, new MapDetectedEventArgs
-            {
-                LocationId = id,
-                MapKey = key,
-                Line = matches[i].Value,
-            });
-            return;
-        }
+            LocationId = id,
+            MapKey = mapKey,
+            Line = id,
+        });
     }
 
     public void Stop()

@@ -64,7 +64,7 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     QuestService.cs             任务库、剧情、进度读写
     SettingsService.cs          AppPaths（含 TARKOVATLAS_DATA_DIR 重定向）
     ScreenshotService.cs        截图目录监听与解析
-    GameLogService.cs           游戏日志监听、地图自动识别
+    GameLogService.cs           游戏日志监听、地图自动识别（兼容 1.3 会话目录与旧扁平布局）
     HotkeyService.cs            全局热键（Win32 低级键盘钩子）
     OcrService.cs               截图 OCR
   Assets/

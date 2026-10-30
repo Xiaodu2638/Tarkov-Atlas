@@ -316,6 +316,61 @@ internal static class LogicChecks
             service.Apply();
         }
 
+        // Raid detection from the game log. 1.3.0.0 moved application logs
+        // into per-session directories and dropped the old "Load location"
+        // lines; both layouts plus the rcid scene names must still resolve,
+        // and lobby/menu scenes must never fire.
+        Check("1.3 scene preset line resolves",
+            GameLogParsing.RaidLocationId(
+                "2026-10-30 17:45:25.889|1.3.0.0.48484|Info|application|scene preset path:maps/factory_day_preset.bundle rcid:factory_day.scenespreset.asset")
+            == "factory_day");
+        Check("interchange rcid resolves",
+            GameLogParsing.RaidLocationId(
+                "scene preset path:maps/shopping_mall.bundle rcid:Shopping_Mall.ScenesPreset.asset")
+            == "Shopping_Mall");
+        Check("transit locations line resolves",
+            GameLogParsing.RaidLocationId(
+                "2026-10-30 17:45:43.261|1.3.0.0.48484|Info|application|[Transit] Flag:None, RaidId:6ae4674544203dd6df03fbc6, Count:0, Locations:factory4_day -> ")
+            == "factory4_day");
+        Check("legacy Load location line resolves",
+            GameLogParsing.RaidLocationId("2026-01-01 00:00:00.000|Load location: bigmap") == "bigmap");
+        Check("non-marker lines are not markers",
+            GameLogParsing.RaidLocationId("2026-10-30 17:45:40.193|Info|application|LocationLoaded:9.91 real:15.51 diff:5.6") is null);
+        Check("new factory ids map to factory",
+            MapRepository.LocationToMap["factory_day"] == "factory" &&
+            MapRepository.LocationToMap["shopping_mall"] == "interchange");
+
+        var known = MapRepository.LocationToMap.ContainsKey;
+        Check("newest marker wins",
+            GameLogParsing.NewestRaidLocation(
+                "line1 scene preset path:maps/woods_preset.bundle rcid:woods.x\n" +
+                "line2 [Transit] Flag:None, RaidId:abc, Count:0, Locations:bigmap -> \n", known)
+            == "bigmap");
+        Check("unknown scenes never fire",
+            GameLogParsing.NewestRaidLocation(
+                "scene preset path:maps/SomeLobby.bundle rcid:SomeLobby.asset\n", known) is null);
+
+        // Log discovery in both directory layouts.
+        var logRoot = Path.Combine(AppContext.BaseDirectory, "atlas-logtest-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            var sess = Directory.CreateDirectory(Path.Combine(logRoot, "log_2026.10.30_17-40-33_1.3.0.0.48484"));
+            File.WriteAllText(Path.Combine(sess.FullName, "2026.10.30_17-40-33_1.3.0.0.48484 application_000.log"), "x");
+            File.WriteAllText(Path.Combine(sess.FullName, "2026.10.30_17-40-33_1.3.0.0.48484 output_000.log"), "x");
+            var found13 = GameLogParsing.FindApplicationLog(logRoot);
+            Check("1.3 session dir log found", found13 is not null && found13!.EndsWith("application_000.log"),
+                found13 is null ? "null" : Path.GetFileName(found13));
+
+            Directory.Delete(sess.FullName, true);
+            File.WriteAllText(Path.Combine(logRoot, "application_2026.10.24.log"), "x");
+            var foundLegacy = GameLogParsing.FindApplicationLog(logRoot);
+            Check("legacy flat log found", foundLegacy is not null, foundLegacy ?? "null");
+        }
+        finally
+        {
+            try { Directory.Delete(logRoot, true); } catch { }
+        }
+
         // Deleting the player's own screenshots must never be a default.
         Check("screenshot deletion is opt-in", !new AppSettings().DeleteScreenshotsAfterScan);
 
