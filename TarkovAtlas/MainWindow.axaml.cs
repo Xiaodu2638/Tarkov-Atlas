@@ -31,7 +31,10 @@ public partial class MainWindow : Window
     // empty (the filter filled it afterwards without any change notification).
     private readonly ObservableCollection<MapDefinition> _visibleMaps = new();
     private readonly Dictionary<string, List<ScreenshotInfo>> _shotsByMap = new(StringComparer.OrdinalIgnoreCase);
-    private readonly HashSet<string> _knownShotPaths = new(StringComparer.OrdinalIgnoreCase);
+    // Imported screenshot ledger: the game name has only minute precision and
+    // delete-after-import lets the same name return as a fresh capture, so
+    // re-import is keyed by FileTime, not path alone.
+    private readonly ScreenshotImportLedger _knownShots = new();
     private List<FloorLayerView> _floorLayers = new();
     private double _lastPlayerY;
     private bool _suppressLayerSelection;
@@ -1073,7 +1076,8 @@ public partial class MainWindow : Window
 
         foreach (var info in files)
         {
-            if (!_knownShotPaths.Add(info.FilePath)) continue;
+            if (!ShouldImportScreenshot(info)) continue;
+            MarkScreenshotImported(info);
             AssignScreenshotMap(info);
             AddScreenshotInternal(info);
             imported++;
@@ -1134,6 +1138,12 @@ public partial class MainWindow : Window
         info.MapWasGuessed = true;
     }
 
+    private bool ShouldImportScreenshot(ScreenshotInfo info) =>
+        _knownShots.ShouldImport(info.FilePath, info.FileTime);
+
+    private void MarkScreenshotImported(ScreenshotInfo info) =>
+        _knownShots.MarkImported(info.FilePath, info.FileTime);
+
     private void AddScreenshotInternal(ScreenshotInfo info)
     {
         if (!_shotsByMap.TryGetValue(info.MapKey, out var list))
@@ -1141,14 +1151,18 @@ public partial class MainWindow : Window
             list = new List<ScreenshotInfo>();
             _shotsByMap[info.MapKey] = list;
         }
-        if (!list.Any(p => p.FilePath.Equals(info.FilePath, StringComparison.OrdinalIgnoreCase)))
-            list.Add(info);
+        // Same path re-imported (capture overwrote the name): replace so the
+        // pin shows the fresh coordinates, not the first capture.
+        var existing = list.FindIndex(p => p.FilePath.Equals(info.FilePath, StringComparison.OrdinalIgnoreCase));
+        if (existing >= 0) list[existing] = info;
+        else list.Add(info);
     }
 
     private async Task OnNewScreenshotAsync(ScreenshotInfo info)
     {
         if (!_settings.ScanScreenshots) return;
-        if (!_knownShotPaths.Add(info.FilePath)) return;
+        if (!ShouldImportScreenshot(info)) return;
+        MarkScreenshotImported(info);
 
         AssignScreenshotMap(info);
         AddScreenshotInternal(info);

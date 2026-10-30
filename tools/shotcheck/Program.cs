@@ -64,6 +64,21 @@ internal static class ShotChecks
         // A loose-named file is the user's picture: never delete it.
         Check("loose name is not deleted", !svc.TryDeleteAfterImport(loose) && File.Exists(loose));
 
+        // Import ledger: same path+time is one import; a SAME name coming back
+        // with a newer write time is a fresh capture (minute-precision names
+        // plus delete-after-import) and must import again.
+        var ledger = new ScreenshotImportLedger();
+        var t1 = new DateTime(2026, 10, 30, 17, 45, 0);
+        var t2 = t1.AddMinutes(1);
+        var shot = Path.Combine(dir, "2026-10-30[17-45]_1.0, 2.0, 3.0_0, 0, 0, 1_5.0 (0).png");
+        Check("ledger: new path imports", ledger.ShouldImport(shot, t1));
+        ledger.MarkImported(shot, t1);
+        Check("ledger: same path+time skipped", !ledger.ShouldImport(shot, t1));
+        Check("ledger: same path newer time imports", ledger.ShouldImport(shot, t2));
+        ledger.MarkImported(shot, t2);
+        Check("ledger: other path imports",
+            ledger.ShouldImport(shot + "-2.png", t1));
+
         try { Directory.Delete(dir, true); } catch { }
 
         Console.WriteLine(_failures == 0 ? "\nALL SCREENSHOT CHECKS PASSED" : $"\n{_failures} SCREENSHOT CHECK(S) FAILED");

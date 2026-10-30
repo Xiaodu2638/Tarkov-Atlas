@@ -4,6 +4,23 @@ using TarkovAtlas.Models;
 
 namespace TarkovAtlas.Services;
 
+/// <summary>
+/// Import de-duplication keyed by path + write time. The game screenshot name
+/// only has minute precision, and with delete-after-import the SAME name
+/// returns later as a brand-new capture, so a newer FileTime must import
+/// again; the same FileTime (e.g. a second watcher event for one write) is
+/// skipped.
+/// </summary>
+public sealed class ScreenshotImportLedger
+{
+    private readonly Dictionary<string, DateTime> _seen = new(StringComparer.OrdinalIgnoreCase);
+
+    public bool ShouldImport(string path, DateTime fileTime) =>
+        !_seen.TryGetValue(path, out var seen) || seen != fileTime;
+
+    public void MarkImported(string path, DateTime fileTime) => _seen[path] = fileTime;
+}
+
 public sealed class ScreenshotService : IDisposable
 {
     private static readonly Regex StrictPattern = new(
@@ -167,6 +184,7 @@ public sealed class ScreenshotService : IDisposable
                 EnableRaisingEvents = true,
             };
             _watcher.Created += OnFile;
+            _watcher.Changed += OnFile;
             _watcher.Renamed += OnRenamed;
         }
         catch (Exception ex)
