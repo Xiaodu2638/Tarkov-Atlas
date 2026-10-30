@@ -164,6 +164,12 @@ public sealed class ScreenshotService : IDisposable
     private static double Num(string s) =>
         double.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ? v : 0;
 
+    /// <summary>Keep only the latest capture per map: the pin answers "where
+    /// am I now", and an accumulating trail clutters the mini-map. Asserted
+    /// by shotcheck so the replace-on-write semantics cannot regress.</summary>
+    public static void RememberLatest(Dictionary<string, List<ScreenshotInfo>> shots, ScreenshotInfo info)
+        => shots[info.MapKey] = new List<ScreenshotInfo> { info };
+
     public List<ScreenshotInfo> Scan(string directory, int limit = 3000)
     {
         var result = new List<ScreenshotInfo>();

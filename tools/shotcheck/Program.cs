@@ -89,6 +89,17 @@ internal static class ShotChecks
         Check("diff: vanished file forgotten", diffLedger.Diff(Array.Empty<ScreenshotInfo>()).Count == 0);
         Check("diff: name back after vanish yields fresh", diffLedger.Diff(one).Count == 1);
 
+        // Latest-wins pin store: a new capture on the same map REPLACES the
+        // old pin (no accumulating trail), a different map keeps its own.
+        var shots = new Dictionary<string, List<ScreenshotInfo>>(StringComparer.OrdinalIgnoreCase);
+        ScreenshotService.RememberLatest(shots, new ScreenshotInfo { MapKey = "customs", X = 1 });
+        ScreenshotService.RememberLatest(shots, new ScreenshotInfo { MapKey = "customs", X = 2 });
+        ScreenshotService.RememberLatest(shots, new ScreenshotInfo { MapKey = "woods", X = 3 });
+        Check("latest-wins: one pin per map", shots.Count == 2 &&
+              shots["customs"].Count == 1 && shots["woods"].Count == 1);
+        Check("latest-wins: newest coordinates kept",
+              Math.Abs(shots["customs"][0].X - 2) < 1e-9, shots["customs"][0].X.ToString());
+
         // End-to-end watcher: the file appears -> callback within one poll;
         // the game keeps streaming bytes -> still exactly one callback.
         var watchDir = Path.Combine(dir, "watch");
@@ -118,8 +129,11 @@ internal static class ShotChecks
         lock (received) finalCount = received.Count;
         Check("watcher: one callback per capture", finalCount == 1, $"{finalCount} callbacks");
         wsvc.Dispose();
-
-        try { Directory.Delete(dir, true); } catch { }
+        // The poll timer's in-flight callback may still hold a directory
+        // handle; give it one cycle to finish before wiping the test tree.
+        await Task.Delay(ScreenshotService.PollInterval + TimeSpan.FromMilliseconds(300));
+        try { Directory.Delete(dir, true); }
+        catch (Exception ex) { Check("test dir cleaned up", false, ex.Message); }
 
         Console.WriteLine(_failures == 0 ? "\nALL SCREENSHOT CHECKS PASSED" : $"\n{_failures} SCREENSHOT CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;

@@ -1076,7 +1076,10 @@ public partial class MainWindow : Window
         ScreenshotInfo? latestInfo = null;
         var latestTime = DateTime.MinValue;
 
-        foreach (var info in files)
+        // Scan returns newest-first; import oldest-first so the newest
+        // capture is the one left on the map (AddScreenshotInternal replaces).
+        var ordered = files.OrderBy(f => f.CapturedAt == default ? f.FileTime : f.CapturedAt).ToList();
+        foreach (var info in ordered)
         {
             if (!ShouldImportScreenshot(info)) continue;
             MarkScreenshotImported(info);
@@ -1151,19 +1154,11 @@ public partial class MainWindow : Window
 
     private void MarkScreenshotImported(ScreenshotInfo info) => _knownShots.MarkImported(info);
 
+    /// <summary>One pin per map: the latest capture replaces the old one.
+    /// Old trail dots cluttered the mini-map and the "current position" is
+    /// the only thing the screenshot flow is for.</summary>
     private void AddScreenshotInternal(ScreenshotInfo info)
-    {
-        if (!_shotsByMap.TryGetValue(info.MapKey, out var list))
-        {
-            list = new List<ScreenshotInfo>();
-            _shotsByMap[info.MapKey] = list;
-        }
-        // Same path re-imported (capture overwrote the name): replace so the
-        // pin shows the fresh coordinates, not the first capture.
-        var existing = list.FindIndex(p => p.FilePath.Equals(info.FilePath, StringComparison.OrdinalIgnoreCase));
-        if (existing >= 0) list[existing] = info;
-        else list.Add(info);
-    }
+        => ScreenshotService.RememberLatest(_shotsByMap, info);
 
     private async Task OnNewScreenshotAsync(ScreenshotInfo info)
     {
