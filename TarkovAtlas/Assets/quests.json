@@ -1636,53 +1636,6 @@
    ]
   },
   {
-   "id": "6573387d0b26ed4fde798de3",
-   "name": "兽医也是医 - 2",
-   "nameEn": "Pets Won't Need It - Part 2",
-   "trader": "54cb57776803fa99248b456e",
-   "level": 0,
-   "wiki": "https://escapefromtarkov.fandom.com/wiki/Pets_Won't_Need_It_-_Part_2",
-   "maps": [
-    "streets-of-tarkov"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在塔科夫街区的Primorsky大街找到第一家药店",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 39.05,
-       "z": 162.41
-      }
-     ]
-    },
-    {
-     "text": "在塔科夫街区的Primorsky大街找到第二家药店",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -44.62,
-       "z": 336.07
-      }
-     ]
-    },
-    {
-     "text": "在塔科夫街区的Cardinal公寓区找到第三家药店",
-     "type": "visit",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 89.26,
-       "z": -275.35
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "66058cc1da30b620a34e6e86",
    "name": "再创新高！- 1（PVP）",
    "nameEn": "To Great Heights! - Part 1",

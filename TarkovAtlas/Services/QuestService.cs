@@ -7,7 +7,11 @@ namespace TarkovAtlas.Services;
 
 public sealed class QuestService
 {
-    private static readonly Regex NonAlnum = new(@"[^a-z0-9]+", RegexOptions.Compiled);
+    // Keep CJK: most titles are Chinese ("枪弹专家 - 2"), and stripping every
+    // non-ASCII letter left queries like "枪弹专家-2" as just "2" - matching
+    // dozens of "- 2" tasks or none at all (the raw Contains fallback breaks on
+    // the " - " spacing). Word-based Similarity/OCR scoring needs the words too.
+    private static readonly Regex NonAlnum = new(@"[^0-9a-z\u4e00-\u9fff\u3400-\u4dbf]+", RegexOptions.Compiled);
 
     private readonly List<Quest> _quests = new();
     private readonly List<StoryChapter> _chapters = new();

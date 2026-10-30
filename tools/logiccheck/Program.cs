@@ -299,6 +299,23 @@ internal static class LogicChecks
         service.SetQuery("");
         service.Apply();
 
+        // Regression: Chinese titles with " - N" suffixes. Normalize must keep
+        // CJK (it used to strip it, leaving only "2" which matched dozens of
+        // part-2 tasks or none at all when the dash spacing differed).
+        var spaced = service.Quests.FirstOrDefault(q => q.Name.Contains(" - "));
+        if (spaced is not null)
+        {
+            var tight = spaced.Name.Replace(" ", "");   // user drops the spaces
+            service.SetQuery(tight);
+            service.Apply();
+            Check("compact Chinese query finds its task",
+                service.VisibleQuests.Any(r => r.Quest.Id == spaced.Id), tight);
+            Check("compact Chinese query stays specific",
+                service.VisibleQuests.Count <= 3, service.VisibleQuests.Count.ToString());
+            service.SetQuery("");
+            service.Apply();
+        }
+
         // Deleting the player's own screenshots must never be a default.
         Check("screenshot deletion is opt-in", !new AppSettings().DeleteScreenshotsAfterScan);
 

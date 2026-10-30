@@ -73,7 +73,7 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     maps/layers/index.json      楼层图索引
     maps/layers/<key>/*.png     楼层叠加图（与底图共用像素网格）
     maps/hazards.json           雷区 / 狙击区 / 其它危险区多边形
-    quests.json                 任务库（503 条）
+    quests.json                 任务库（502 条）
     story.json                  剧情（10 章 / 254 目标）
     bosses/*.png                Boss 头像
     traders/*.png               商人头像
