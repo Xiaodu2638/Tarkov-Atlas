@@ -1,4 +1,3 @@
-using System.Net.Http;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -15,8 +14,6 @@ namespace TarkovAtlas;
 /// </summary>
 public sealed class ImageViewerWindow : Window
 {
-    private static readonly HttpClient Http = new() { Timeout = TimeSpan.FromSeconds(45) };
-
     private readonly Image _image;
     private readonly TextBlock _status;
     private readonly List<string> _urls;
@@ -182,34 +179,9 @@ public sealed class ImageViewerWindow : Window
         }
 
         var source = _urls[_index];
-
-        // Local guide files load straight from disk; remote urls keep the
-        // https-only rule (the list used to be scraped from a web page).
-        if (File.Exists(source))
+        if (!File.Exists(source))
         {
-            try
-            {
-                _status.Text = "正在加载…";
-                _status.Foreground = Palette.Brush(Palette.TextSecondary);
-                _prev.IsEnabled = _index > 0;
-                _next.IsEnabled = _index < _urls.Count - 1;
-                _pager.Text = _urls.Count > 1 ? $"{_index + 1} / {_urls.Count}" : "";
-
-                await using var stream = File.OpenRead(source);
-                _bitmap = new Bitmap(stream);
-                _image.Source = _bitmap;
-                _status.Text = $"{_bitmap.PixelSize.Width} × {_bitmap.PixelSize.Height}";
-            }
-            catch (Exception ex)
-            {
-                ShowError("加载失败：" + ex.Message);
-            }
-            return;
-        }
-
-        if (!IsHttps(source))
-        {
-            ShowError("只支持 https 图片地址或本地文件");
+            ShowError("文件不存在：" + Path.GetFileName(source));
             return;
         }
 
@@ -221,15 +193,7 @@ public sealed class ImageViewerWindow : Window
             _next.IsEnabled = _index < _urls.Count - 1;
             _pager.Text = _urls.Count > 1 ? $"{_index + 1} / {_urls.Count}" : "";
 
-            using var response = await Http.GetAsync(source);
-            if (!response.IsSuccessStatusCode)
-            {
-                ShowError($"加载失败：HTTP {(int)response.StatusCode}");
-                return;
-            }
-
-            var bytes = await response.Content.ReadAsByteArrayAsync();
-            using var stream = new MemoryStream(bytes);
+            await using var stream = File.OpenRead(source);
             _bitmap = new Bitmap(stream);
             _image.Source = _bitmap;
             _status.Text = $"{_bitmap.PixelSize.Width} × {_bitmap.PixelSize.Height}";
@@ -253,16 +217,12 @@ public sealed class ImageViewerWindow : Window
         _status.Foreground = Palette.Brush(Palette.DangerText);
     }
 
-    private static bool IsHttps(string? url) =>
-        Uri.TryCreate(url, UriKind.Absolute, out var uri) && uri.Scheme == Uri.UriSchemeHttps;
-
     private void OpenInBrowser()
     {
         var source = _urls[_index];
         try
         {
-            // Local files open in the system image viewer, remote ones in the
-            // default browser.
+            // Local guide file: hand it to the system image viewer.
             System.Diagnostics.Process.Start(
                 new System.Diagnostics.ProcessStartInfo { FileName = source, UseShellExecute = true });
         }

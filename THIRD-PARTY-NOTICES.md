@@ -51,9 +51,9 @@ Tarkov Atlas 是玩家社区的非官方、非商业工具，与 Battlestate Gam
 ## 头像与攻略图
 
 - 商人 / Boss 头像：`https://www.eftarkov.com/uploads/{trader,boss}/<id>.webp`
-  → `Assets/traders/*.png`、`Assets/bosses/*.png`
-- 任务地点攻略图：运行时按需抓取 `https://www.eftarkov.com`（仅 https），
-  缓存在应用数据目录，不随仓库分发。
+  → `Assets/traders/*.png`、`Assets/bosses/*.png`（构建期一次性抓取，已随包内置）
+- 任务地点攻略图：本机整理的攻略页标注图 → `Assets/guides/<questId>/*.webp`
+  （259 个任务随包内置，运行时不联网）
 
 ## 图例图标
 

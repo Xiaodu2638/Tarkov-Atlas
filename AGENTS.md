@@ -10,7 +10,7 @@ Tarkov Atlas —— 《逃离塔科夫》离线战术地图与任务助手（Win
 
 桌面端离线地图工具。玩家在副屏或窗口模式下跑游戏时，用一块不遮挡游戏、可交互的高清地图查撤离点、Boss 刷点、危险区，并把「这一局该做什么任务」直接标在图上。
 
-运行时**地图与任务数据全部离线**：底图、标记点、任务库打包进 `Assets/`。唯一的联网行为是任务详情里「任务地点图」按需抓取 `www.eftarkov.com` 的攻略图（`TaskGuideService`，只接受 https，失败只是没有图）。
+运行时**完全离线**：底图、标记点、任务库、剧情、地点攻略图全部打包进 `Assets/`，不请求任何网络；「打开 Wiki」只是用系统浏览器打开 eftarkov.com 的网页。
 
 ---
 
@@ -60,7 +60,6 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     GameLogService.cs           游戏日志监听、地图自动识别
     HotkeyService.cs            全局热键（Win32 低级键盘钩子）
     OcrService.cs               截图 OCR
-    TaskGuideService.cs         任务指引
   Assets/
     maps/mapdata.json           运行时地图清单（唯一可信来源）
     maps/*.jpg                  13 张底图（最长边 5600 px）
@@ -133,6 +132,7 @@ docs/                           界面截图（README 引用）
 - **迷宫底图不下载瓦片**：美术本来就是 `Labyrinth.svg` 经锚点矩阵 warp 进「瓦片像素栅格」；栅格的尺寸和仿射是纯几何（`build_assets.tile_grid()` 按投影公式直接算），不需要 240 张瓦片提供。`stitch_tiles()` 只剩 reserve 2–5 层、customs 4 层在用。
 - **地图 → SVG 只有一处映射**：`build_assets.svg_source(key)` 按 `research/svg/<key>/` 目录查找（单文件地图取唯一的 `*.svg`，破冰船取 `BASE_DECK`）。`build_layers.py` 复用它，不要再写第二张文件名表。
 - build 脚本靠本机 headless Edge 栅格化 SVG（可用 `EDGE_PATH` 覆盖）；瓦片只有 reserve 2–5 层、customs 4 层在用，缓存在 `tools/tile-cache/`（git 忽略，可离线重跑）。渲染中间产物写到 `.tmp/build/`（git 忽略，不写 `%TEMP%`）。
+- **构建期零联网**：API 快照、矢量源、剧情、头像、地点图都已提交进 `research/` 或 `Assets/`；`build_data.py` 不再下载头像（缺 PNG 只提示，应用回退色点）。
 - 外部依赖：`tools/pyext`（Pillow）、`tools/pylibs`（numpy、requests）。重建：
   `python -m pip install --target tools/pylibs pillow numpy requests`
 - 上游快照放在 `research/`：`api/`（tarkov.dev API）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。

@@ -21,7 +21,6 @@ import pathlib
 import shutil
 import sys
 import urllib.parse
-import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RES = ROOT / "research"
@@ -308,22 +307,10 @@ def main() -> None:
             zh_name = fallback.replace(" Nickname", "").strip() or english_name
         target = TRADERS / f"{slug}.png"
         if not target.exists():
-            url = tr.get("imageLink") or f"https://assets.tarkov.dev/{tid}.webp"
-            try:
-                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-                raw = urllib.request.urlopen(req, timeout=45).read()
-                tmp = TRADERS / f".{slug}.tmp"
-                tmp.write_bytes(raw)
-                with Image.open(tmp) as im:
-                    im = im.convert("RGBA")
-                    side = min(im.size)
-                    im = im.crop(((im.width - side) // 2, (im.height - side) // 2,
-                                  (im.width + side) // 2, (im.height + side) // 2))
-                    im = im.resize((96, 96), Image.Resampling.LANCZOS)
-                    im.save(target, "PNG")
-                tmp.unlink(missing_ok=True)
-            except Exception as exc:  # noqa: BLE001
-                print(f"  avatar failed {slug}: {exc}")
+            # Avatars were once fetched from assets.tarkov.dev / eftarkov here;
+            # the pipeline is fully offline now, so a missing PNG stays missing
+            # and the app falls back to a colour dot for that trader.
+            print(f"  avatar missing {slug}: not bundled, no download")
         trader_meta.append({"id": tid, "slug": slug,
                             "name": english_name, "nameZh": zh_name})
 
