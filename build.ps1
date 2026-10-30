@@ -70,24 +70,28 @@ New-Item -ItemType Directory -Force -Path $target | Out-Null
 Get-ChildItem $result.Dir -File | Where-Object { $_.Extension -ne ".pdb" } |
     Copy-Item -Destination $target -Force
 # Scripts/ is embedded in the assembly (OcrService), so it is not shipped.
-foreach ($sub in @("Assets", "docs")) {
-    $src = Join-Path $result.Dir $sub
-    if (Test-Path $src) { Copy-Item $src $target -Recurse -Force }
+# docs/ holds repository screenshots, not runtime data.
+Copy-Item (Join-Path $result.Dir "Assets") $target -Recurse -Force
+# The licence and third-party notice must travel with the binary: the map art is
+# CC BY-NC-SA 4.0 and attribution is a condition of redistribution.
+foreach ($doc in @("LICENSE", "THIRD-PARTY-NOTICES.md")) {
+    $src = Join-Path $root $doc
+    if (Test-Path $src) { Copy-Item $src $target -Force }
 }
 
 $exe = Join-Path $target "TarkovAtlas.exe"
 $required = @(
     "Assets\quests.json",
-    "Assets\Maps\mapdata.json",
-    "Assets\Maps\hazards.json",
-    "Assets\Maps\layers\index.json"
+    "Assets\maps\mapdata.json",
+    "Assets\maps\hazards.json",
+    "Assets\maps\layers\index.json"
 )
 $missing = @($required | Where-Object { -not (Test-Path (Join-Path $target $_)) })
 if (-not (Test-Path $exe)) { throw "publish produced no EXE in $target" }
 if ($missing.Count -gt 0) { throw ("missing assets in output: " + ($missing -join ", ")) }
 
 $sizeMb = [Math]::Round((Get-ChildItem $target -Recurse -File | Measure-Object Length -Sum).Sum / 1MB, 1)
-$zip = Join-Path $OutputRoot "TartovAtlas-$Runtime.zip".Replace("TartovAtlas","TarkovAtlas")
+$zip = Join-Path $OutputRoot "TarkovAtlas-$Runtime.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path (Join-Path $target "*") -DestinationPath $zip -CompressionLevel Optimal
 

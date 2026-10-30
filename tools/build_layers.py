@@ -4,9 +4,9 @@
 Where the data lives
 --------------------
 * Geometry (transform / bounds / coordinateRotation) and the per-level tile layers
-  come from the tarkov.dev repo snapshot: src/data/maps.json.
+  come from the tarkov.dev repo snapshot: research/upstream/tarkov-dev-maps.json.
 * Hazards (minefields / sniper zones) come from the JSON API snapshot:
-  research/api-maps.json, keyed by map object id.
+  research/api/maps.json, keyed by map object id.
 
 Floors
 ------
@@ -20,9 +20,9 @@ is warped into the base image's pixel grid at build time:
 so at runtime the app only draws the PNG over the base rectangle.
 
 Outputs:
-  TarkovAtlas/Assets/Maps/layers/<key>/<n>_<slug>.png
-  TarkovAtlas/Assets/Maps/layers/index.json
-  TarkovAtlas/Assets/Maps/hazards.json
+  TarkovAtlas/Assets/maps/layers/<key>/<n>_<slug>.png
+  TarkovAtlas/Assets/maps/layers/index.json
+  TarkovAtlas/Assets/maps/hazards.json
 """
 from __future__ import annotations
 
@@ -34,10 +34,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MAPS = ROOT / "TarkovAtlas" / "Assets" / "Maps"
+MAPS = ROOT / "TarkovAtlas" / "Assets" / "maps"
 RESEARCH = ROOT / "research"
-DATA_MAPS = RESEARCH / "upstream" / "maps.json"
-API_MAPS = RESEARCH / "api-maps.json"
+DATA_MAPS = RESEARCH / "upstream" / "tarkov-dev-maps.json"
+API_MAPS = RESEARCH / "api" / "maps.json"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -66,7 +66,7 @@ BASE_LAYERS = {
     "icebreaker": ("Deck", -10000.0, 18.92),
 }
 
-# Floors tqarkov.dev only ships as raster tiles but whose SVG has the same group.
+# Floors tarkov.dev only ships as raster tiles but whose SVG has the same group.
 # The Lab's tiles are the pre-0.16 "photo" render, which looked like a different
 # map on top of the vector base; the SVG group is the same artwork as the base.
 SVG_FLOOR_ALIASES = {
@@ -79,7 +79,7 @@ SVG_FLOOR_ALIASES = {
 # base art; the old raster tiles used a different grid, which is why decks never
 # lined up and why their art style differed from the vector base.
 # Mapping was verified by reading each SVG's visible group id.
-_ICE_SVG_DIR = base.ROOT / "research" / "ice-floors-svg"
+_ICE_SVG_DIR = base.SVG_ROOT / "icebreaker"
 
 # Deck svg per in-game level, in the same order as the upstream layer list so the
 # floor picker keeps its familiar order. Levels that share deck art point at the
@@ -222,23 +222,10 @@ def bake_svg_layer(key: str, index: int, layer: dict,
     if svg_file:
         svg = _ICE_SVG_DIR / svg_file
     else:
-        svg_name = {
-            "interchange": "Interchange.svg",
-            "shoreline": "Shoreline.svg",
-            "ground-zero": "GroundZero.svg",
-            "factory": "Factory.svg",
-            "reserve": "Reserve.svg",
-            "woods": "Woods.svg",
-            "customs": "Customs.svg",
-            "terminal": "Terminal.svg",
-            "the-lab": "Labs.svg",
-            "the-labyrinth": "Labyrinth.svg",
-            "streets-of-tarkov": "StreetsOfTarkov.svg",
-        }.get(key)
-        if not svg_name:
+        svg = base.svg_source(key)
+        if svg is None:
             print(f"!! no SVG source registered for {key}", flush=True)
             return None
-        svg = base.SVG_DIR / svg_name
     if not svg.is_file():
         print(f"!! SVG source missing for {key}: {svg}", flush=True)
         return None
@@ -272,6 +259,11 @@ def bake_svg_layer(key: str, index: int, layer: dict,
     # cropping or resizing here; any deviation shifts the deck off the base.
     warped = base.svg_canvas(svg, base_w, base_h, turn,
                              only_layer=layer_id, transparent=True)
+    # Same failure mode as the base art: a layer filter that hides too much
+    # yields a fully transparent PNG, which would overlay nothing.
+    if warped.getbbox() is None:
+        print(f"!! {key}/{name}: SVG layer rendered empty", flush=True)
+        return None
     warped.save(target, "PNG", optimize=True)
     return _layer_meta(key, index, name, file_name, layer)
 
@@ -412,9 +404,9 @@ def main() -> None:
     index.update({k: v for k, v in order.items() if v})
 
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")
+    out.write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     hz_out = MAPS / "hazards.json"
-    hz_out.write_text(json.dumps(hazards, ensure_ascii=False, indent=1), encoding="utf-8")
+    hz_out.write_text(json.dumps(hazards, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     print(f"wrote {out} ({sum(len(v) for v in index.values())} layers)")
     print(f"wrote {hz_out} ({sum(len(v) for v in hazards.values())} hazards)")
 

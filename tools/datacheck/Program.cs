@@ -13,11 +13,11 @@ internal static class DataChecks
     public static int Main()
     {
         var assets = Path.Combine(AppContext.BaseDirectory, "Assets");
-        Check("mapdata.json exists", File.Exists(Path.Combine(assets, "Maps", "mapdata.json")));
+        Check("mapdata.json exists", File.Exists(Path.Combine(assets, "maps", "mapdata.json")));
         Check("quests.json exists", File.Exists(Path.Combine(assets, "quests.json")));
 
         var manifest = JsonSerializer.Deserialize(
-            File.ReadAllText(Path.Combine(assets, "Maps", "mapdata.json")),
+            File.ReadAllText(Path.Combine(assets, "maps", "mapdata.json")),
             AppJsonContext.Default.MapManifest);
         var quests = JsonSerializer.Deserialize(
             File.ReadAllText(Path.Combine(assets, "quests.json")),
@@ -162,7 +162,7 @@ internal static class DataChecks
         Check("trader avatars bundled", missingAvatar.Count == 0, string.Join(",", missingAvatar));
 
         // ---- floor layers -------------------------------------------------
-        var layersDir = Path.Combine(assets, "Maps", "layers");
+        var layersDir = Path.Combine(assets, "maps", "layers");
         var layerIndexPath = Path.Combine(layersDir, "index.json");
         Check("layers/index.json exists", File.Exists(layerIndexPath));
 
@@ -213,7 +213,7 @@ internal static class DataChecks
                     // An empty image is the map's own artwork: the ground/base
                     // level needs no extra PNG, so nothing to verify on disk.
                     if (string.IsNullOrWhiteSpace(layer.Image)) continue;
-                    var path = Path.Combine(assets, "Maps", layer.Image.Replace('/', Path.DirectorySeparatorChar));
+                    var path = Path.Combine(assets, "maps", layer.Image.Replace('/', Path.DirectorySeparatorChar));
                     if (!File.Exists(path)) { missingLayerImages.Add(layer.Image); continue; }
                     var size = ReadPngSize(path);
                     if (size is null || size.Value.Width != owner.Width || size.Value.Height != owner.Height)
@@ -230,7 +230,7 @@ internal static class DataChecks
         }
 
         // ---- hazards -------------------------------------------------------
-        var hazardsPath = Path.Combine(assets, "Maps", "hazards.json");
+        var hazardsPath = Path.Combine(assets, "maps", "hazards.json");
         Check("hazards.json exists", File.Exists(hazardsPath));
         Dictionary<string, List<HazardZone>>? hazards = null;
         try

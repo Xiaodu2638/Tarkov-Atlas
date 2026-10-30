@@ -17,6 +17,6 @@
 *.otf binary
 
 # 生成的 JSON 数据较大，diff 无意义
-TarkovAtlas/Assets/Maps/mapdata.json -diff
-TarkovAtlas/Assets/Maps/markers.json -diff
+TarkovAtlas/Assets/maps/mapdata.json -diff
+TarkovAtlas/Assets/maps/markers.json -diff
 TarkovAtlas/Assets/quests.json -diff

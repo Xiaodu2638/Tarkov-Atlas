@@ -16,7 +16,7 @@ internal static class LogicChecks
         Environment.SetEnvironmentVariable("TARKOVATLAS_DATA_DIR",
             Path.Combine(AppContext.BaseDirectory, "data"));
         var manifest = JsonSerializer.Deserialize(
-            File.ReadAllText(Path.Combine(assets, "Maps", "mapdata.json")),
+            File.ReadAllText(Path.Combine(assets, "maps", "mapdata.json")),
             AppJsonContext.Default.MapManifest)!;
         var db = JsonSerializer.Deserialize(
             File.ReadAllText(Path.Combine(assets, "quests.json")),

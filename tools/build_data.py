@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Rebuild the Tarkov Atlas data bundle from tarkov.dev's JSON API.
+"""Rebuild the Tarkov Atlas data bundle from tarkov.dev's JSON API snapshots.
+
+Inputs (committed under research/api/):
+  maps.json / maps.zh.json / tasks.json / tasks.zh.json / traders.json
+  (the *.zh.json files hold the Chinese localisation tables)
 
 Produces:
-  TarkovAtlas/Assets/Maps/mapdata.json   maps + affine + labels + markers
+  TarkovAtlas/Assets/maps/mapdata.json   maps + affine + labels + markers
   TarkovAtlas/Assets/quests.json         localized tasks with objective coords
   TarkovAtlas/Assets/traders/*.png       trader avatars (quest markers)
 
-Base JPGs already exist; they are rotated 180 degrees in place so the view
-matches the in-game map orientation, and the affine matrix is adjusted to keep
-every game coordinate mapping onto the same physical spot.
+Base JPGs are produced by build_assets.py in the official in-game orientation;
+this script only reads their size and the manifest affine, never rotates them.
 """
 from __future__ import annotations
 
@@ -16,15 +19,15 @@ import json
 import math
 import pathlib
 import shutil
+import sys
 import urllib.parse
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RES = ROOT / "research"
 ASSETS = ROOT / "TarkovAtlas" / "Assets"
-MAPS = ASSETS / "Maps"
+MAPS = ASSETS / "maps"
 TRADERS = ASSETS / "traders"
-import sys
 
 # pyext holds the working Pillow build; pylibs only contains an empty stub.
 sys.path.insert(0, str(ROOT / "tools" / "pyext"))
@@ -268,12 +271,8 @@ def IsHexId(value: str) -> bool:
 
 
 def load(name: str):
-    return json.loads((RES / name).read_text(encoding="utf-8"))["data"]
-
-
-def flip_affine(aff: list[float], w: int, h: int) -> list[float]:
-    a, b, c, d, e, f = aff
-    return [-a, -b, w - c, -d, -e, h - f]
+    """Read one tarkov.dev API snapshot from research/api/."""
+    return json.loads((RES / "api" / name).read_text(encoding="utf-8"))["data"]
 
 
 def main() -> None:
@@ -281,23 +280,12 @@ def main() -> None:
         d.mkdir(parents=True, exist_ok=True)
 
     manifest = json.loads((MAPS / "maps.json").read_text(encoding="utf-8"))
-    # Spline calibrations were written into mapdata.json by import_splines.py;
-    # build_assets.py does not know about them, so carry them across rebuilds.
-    prev_mapdata = {}
-    if (MAPS / "mapdata.json").exists():
-        try:
-            prev_mapdata = {m["key"]: m for m in json.loads(
-                (MAPS / "mapdata.json").read_text(encoding="utf-8"))["maps"]}
-        except Exception:
-            prev_mapdata = {}
-    PREV_SPLINES = {k: m.get("spline") for k, m in prev_mapdata.items()
-                    if m.get("spline")}
-    api_root = load("api-maps.json")
+    api_root = load("maps.json")
     api_maps = api_root["maps"]
-    maps_zh = load("api-maps-zh.json")
-    api_tasks = load("api-tasks.json")["tasks"]
-    tasks_zh = load("api-tasks-zh.json")
-    traders = load("api-traders.json")
+    maps_zh = load("maps.zh.json")
+    api_tasks = load("tasks.json")["tasks"]
+    tasks_zh = load("tasks.zh.json")
+    traders = load("traders.json")
     loot_containers = api_root.get("lootContainers") or {}
 
     id_to_key = {v: k for k, v in KEY_TO_ID.items()}
@@ -357,10 +345,6 @@ def main() -> None:
         # orientation, and the manifest affine matches it. Never rotate here:
         # doing it in two places is what flipped the maps upside-down before.
         aff = sanitize_affine(entry["affine"])
-        # Spline calibrations (tools/import_splines.py) live on the previous
-        # mapdata entry: build_assets rewrites maps.json without them, so carry
-        # them forward across rebuilds.
-        spline = PREV_SPLINES.get(key)
 
         name_zh = META.get(key, (key, "", "", ""))[0]
         if mid and (maps_zh.get(mid + " Name")):
@@ -550,7 +534,6 @@ def main() -> None:
             "width": w,
             "height": h,
             "affine": aff,
-            "spline": spline,
             "bounds": entry["bounds"],
             "content": entry.get("content") or [],
             "labels": labels,
@@ -563,7 +546,6 @@ def main() -> None:
             "pois": pois.get(key, []),
             "source": entry.get("source", ""),
             "order": entry["order"],
-            "flipped": True,
         })
 
     # ---- tasks ---------------------------------------------------------
@@ -651,16 +633,18 @@ def main() -> None:
         "loot": m["loot"],
         "pois": m["pois"],
     } for m in out_maps}
+    # newline="" keeps LF on Windows so rebuilds don't churn every line of the
+    # generated JSON (git strips CRLF on commit, hiding the real diff).
     (MAPS / "markers.json").write_text(
         json.dumps({"generatedAt": "2026-10-27", "maps": markers}, ensure_ascii=False, indent=1),
-        encoding="utf-8")
+        encoding="utf-8", newline="")
 
     (MAPS / "mapdata.json").write_text(
         json.dumps({"generatedAt": "2026-10-27", "maps": out_maps, "traders": trader_meta},
-                   ensure_ascii=False, indent=1), encoding="utf-8")
+                   ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     (ASSETS / "quests.json").write_text(
         json.dumps({"generatedAt": "2026-10-27", "source": "tarkov.dev JSON API",
-                    "quests": out_tasks}, ensure_ascii=False, indent=1), encoding="utf-8")
+                    "quests": out_tasks}, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     print(f"maps={len(out_maps)} tasks={len(out_tasks)} traders={len(trader_meta)}")
 
 

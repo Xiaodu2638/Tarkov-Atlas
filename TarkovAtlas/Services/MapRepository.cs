@@ -50,7 +50,7 @@ public sealed class MapRepository
     {
         var manifestPath = AppPaths.MapDataPath;
         if (!File.Exists(manifestPath))
-            throw new FileNotFoundException("地图清单不存在，请确认 Assets/Maps/mapdata.json 已随程序发布。", manifestPath);
+            throw new FileNotFoundException("地图清单不存在，请确认 Assets/maps/mapdata.json 已随程序发布。", manifestPath);
 
         var json = File.ReadAllText(manifestPath);
         var manifest = JsonSerializer.Deserialize(json, AppJsonContext.Default.MapManifest)

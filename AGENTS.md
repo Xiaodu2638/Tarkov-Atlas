@@ -62,27 +62,42 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     OcrService.cs               截图 OCR
     TaskGuideService.cs         任务指引
   Assets/
-    Maps/mapdata.json           运行时地图清单（唯一可信来源）
-    Maps/*.jpg                  13 张底图（最长边 5600 px）
-    Maps/layers/index.json      楼层图索引
-    Maps/layers/<key>/*.png     楼层叠加图（与底图共用像素网格）
-    Maps/hazards.json           雷区 / 狙击区 / 其它危险区多边形
+    maps/mapdata.json           运行时地图清单（唯一可信来源）
+    maps/*.jpg                  13 张底图（最长边 5600 px）
+    maps/layers/index.json      楼层图索引
+    maps/layers/<key>/*.png     楼层叠加图（与底图共用像素网格）
+    maps/hazards.json           雷区 / 狙击区 / 其它危险区多边形
     quests.json                 任务库（503 条）
     story.json                  剧情（10 章 / 254 目标）
-    bosses/*.png                商人 / Boss 头像
+    bosses/*.png                Boss 头像
+    traders/*.png               商人头像
+    legend/*.png                图例图标（48×48）
+    guides/<questId>/*.webp     任务地点攻略图
+  Scripts/ocr.ps1               内嵌资源（OCR 调用）
 tools/
   check.ps1                     三套自检入口
   datacheck/                    数据层断言（地图几何、标记、任务、楼层、hazard）
   logiccheck/                   服务层断言（QuestService、剧情、商人、跳转）
   shotcheck/                    截图解析与删除行为
-  build_assets.py               下载瓦片 / 渲染 SVG → 生成底图 + maps.json
+  build_all.py                  管线入口（按依赖顺序跑完下面四步）
+  build_assets.py               渲染 SVG（迷宫拼瓦片）→ 生成底图 + maps.json
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
-  build_data.py                 合并 API → quests.json / mapdata.json
+  build_data.py                 合并 API → mapdata.json / quests.json / 商人头像
   build_story.py                剧情 → story.json
-  check_map_coverage.py        底图内容区覆盖率自检（第 7 节验收标准用它）
+  check_map_coverage.py         底图内容区覆盖率自检（第 7 节验收标准用它）
+  poi.json                      手工维护的 POI 表（迷宫解谜道具）
+  tile-cache/                   瓦片下载缓存（git 忽略）
+research/                       管线输入，全部进 git
+  api/                          tarkov.dev API 快照（maps/tasks/traders + *.zh.json）
+  upstream/tarkov-dev-maps.json 上游楼层与仿射表
+  story/zh-raw.json             剧情中文抓取
+  story/coords.json             剧情坐标标定表（只含双源验证过的点）
+  svg/<地图 key>/*.svg          矢量源，一张地图一个子目录
+  svg/LICENSE.md                上游矢量图许可全文
+docs/                           界面截图（README 引用）
 ```
 
-`tools/*.py`、`tools/pyext/`、`tools/pylibs/`、`research/` 全部**不进 git**（见 `.gitignore`），只存在于开发机。`app` 的构建和运行都不碰 Python。
+`tools/pyext/`、`tools/pylibs/`、`tools/tile-cache/` 不进 git（见 `.gitignore`），其余源码与 `research/` 输入都随仓库分发。`app` 的构建和运行都不碰 Python。
 
 ---
 
@@ -111,14 +126,15 @@ tools/
 - 其它 generic `hazard` 若面积超过 `AreaLevelFraction = 0.02`（地图 bounds 的 2%），只画质心 `!` 标记，避免一块 50 m 级区域盖住整张图。
 - 数据本身不做删改，只在展示层过滤。
 
-### 4.4 数据管线（本机，不进 git）
-- 顺序：`build_assets.py` → `build_layers.py` → `build_data.py` → `build_story.py`。所有地图（含冰破船）都在同一条管线里。
-- 局部重建：`build_assets.py --only factory`、`build_layers.py --only factory`。其余地图的 manifest 条目和楼层索引会合并保留，不会清空。
-- **冰破船在同一管线内**：`build_layers.py` 用 `ICE_FLOOR_FILES` 把上游的瓦片层映射到 `research/ice-floors-svg/*.svg`，逐层走 `bake_svg_layer`。不要为它另建入口脚本，也不要在 `build_layers.py` 里跳过它。
-- build 脚本靠本机 headless Edge 栅格化 SVG；已下载瓦片在 `tools/tile-cache/`，瓦片类地图可离线重跑。
+### 4.4 数据管线（输入进 git，产物由脚本生成）
+- 入口：`python tools/build_all.py`（等价于依次跑下面四步）。顺序：`build_assets.py` → `build_layers.py` → `build_data.py` → `build_story.py`。所有地图（含冰破船）都在同一条管线里。
+- 局部重建：`build_all.py --only factory`、`build_assets.py --only factory`、`build_layers.py --only factory`。其余地图的 manifest 条目和楼层索引会合并保留，不会清空。
+- **冰破船在同一管线内**：`build_layers.py` 用 `ICE_FLOOR_FILES` 把上游的层名映射到 `research/svg/icebreaker/*.svg`，逐层走 `bake_svg_layer`。不要为它另建入口脚本，也不要在 `build_layers.py` 里跳过它。
+- **地图 → SVG 只有一处映射**：`build_assets.svg_source(key)` 按 `research/svg/<key>/` 目录查找（单文件地图取唯一的 `*.svg`，破冰船取 `BASE_DECK`）。`build_layers.py` 复用它，不要再写第二张文件名表。
+- build 脚本靠本机 headless Edge 栅格化 SVG（可用 `EDGE_PATH` 覆盖）；瓦片只有迷宫底图和 reserve 2–5 层、customs 4 层在用，缓存在 `tools/tile-cache/`（git 忽略，可离线重跑）。渲染中间产物写到 `.tmp/build/`（git 忽略，不写 `%TEMP%`）。
 - 外部依赖：`tools/pyext`（Pillow）、`tools/pylibs`（numpy、requests）。重建：
   `python -m pip install --target tools/pylibs pillow numpy requests`
-- 上游快照放在 `research/`：`api-maps.json`（tarkov.dev）、`svg-maps/tarkov-dev-svg-maps-main`（矢量图）、`ice-floors-svg`（冰破船 14 层 SVG）、`orient-ref`（朝向参考）。
+- 上游快照放在 `research/`：`api/`（tarkov.dev API）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。
 
 ---
 
@@ -130,12 +146,13 @@ tools/
 4. **JSON 走源生成**（`JsonSerializerIsReflectionEnabledByDefault=false`）：新增要序列化/反序列化的类型必须加进 `AppJsonContext.cs` 的 `[JsonSerializable]` 列表，否则 NativeAOT 下要等到运行时才炸。
 5. **`dotnet publish` 的输出目录被占用会锁住 `bin\Release\...`**；用暂存目录或 `-p:OutputPath=`。
 6. **不要加 NuGet 外网依赖**：只能用 `.nuget-packages` 里的离线缓存。
-7. **别 `git clean -xdf`**：会连 `research/` 和 `tools/*.py` 管线一起删掉。
+7. **别 `git clean -xdf`**：会连 `research/` 的矢量源一起删掉（`tools/pyext`、`tools/pylibs`、`tools/tile-cache` 也会没）。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
 9. **`assets.tarkov.dev` 返回 403**；GitHub 与 fandom wiki 可访问。
 10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
-11. **冰破船的层必须用与底图相同的渲染身份**：`research/ice-floors-svg/*.svg` 共享同一 viewBox（`1000 1500 3000 5400`），每个文件里只有 `display:block` 的那个组是有效内容。必须按**与底图完全相同的目标尺寸与 `turn`** 渲染（`bake_svg_layer` 已如此），任何裁剪/二次缩放都会重新引入错位。
-12. **`render_svg()` 的 `only_layer` 用 `^  <g` 缩进正则匹配顶层组名**，而这些 SVG 常被压成单行，匹配结果为 0 —— 于是「隐藏其它层」静默失效、整份文档全被渲染。给新地图加层过滤时先确认匹配数不为 0，或改用 `ElementTree` 解析。
+11. **冰破船的层必须用与底图相同的渲染身份**：`research/svg/icebreaker/*.svg` 共享同一 viewBox（`1000 1500 3000 5400`），每个文件里只有 `display:block` 的那个组是有效内容。必须按**与底图完全相同的目标尺寸与 `turn`** 渲染（`bake_svg_layer` 已如此），任何裁剪/二次缩放都会重新引入错位。
+12. **`render_svg()` 的 `only_layer` 只允许隐藏顶层组**：这些 SVG 把每层作为根 `<svg>` 的直接子 `<g>`，层内还有 `Floor` / `Wall` / `Stairs` 等嵌套组。早期用 `^  <g` 缩进正则匹配顶层组，文件被压成单行后匹配数为 0，「隐藏其它层」静默失效、整份文档全被渲染；后来改成匹配任意 `<g id>` 又把**层内**的嵌套组一起隐藏，底图直接变成纯背景色。现在统一走 `top_level_group_ids()`（`ElementTree` 解析，只取根节点的直接子组）。新增地图的层过滤必须复用它，不要再用正则猜缩进。
+13. **重建底图后必须目视/数值确认不是纯色**：`render_svg()` 只检查 PNG 大于 1 KB，空背景也能过。改完渲染路径先跑 `python tools/build_assets.py --only <key>`，用 PIL 数一下 distinct colors（正常底图上万，纯背景是 1），再跑 `check_map_coverage.py`。
 
 两个大文件：`MainWindow.axaml.cs`（约 1.2k 行，所有 UI 交互：地图切换、楼层、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1k 行，全部绘制）。改行为先在这两处找，不要去 Models 里猜。
 
@@ -148,12 +165,12 @@ tools/
 - **Boss / 刷点**：上游同一个 `mob` 会按刷点变体重复出现，必须按 `mob` 合并（`chance` 取最大，`points` 0.1 m 去重取并集）。显示名见 `BOSS_ZH`：`exUsecFree/ExUsec → 游荡者`（**不是「流氓」**）、`PmcBot → 掠夺者`、`vsRF/vsRFSniper → 俄军/俄军狙击手`、`blackDivision/pmcBotBlackDiv/bossBullyBlackDiv → 黑色军团`、`sectantPriest → 邪教徒祭司`。不要出现 `PMC` / `Boss` 这类占位名。
 - **出生点**：只保留 `categories` 含 `player` 的点。
 - **Shturman**：唯一的人工筛选 `BOSS_ZONE_FILTER["woods"]["bossKojaniy"] = (10, -3, 250)`；上游 `ZoneWoodCutter` 混进了 USEC Camp / Scav Town 方向的点。**只删远点，不新增任何点。**
-- **剧情**：中文标题/目标来自 `https://www.eftarkov.com/storyline/<id>` 的抓取（`research/story_zh_raw.json`），不是机器翻译；章节映射在 `tools/build_story.py`。
+- **剧情**：中文标题/目标来自 `https://www.eftarkov.com/storyline/<id>` 的抓取（`research/story/zh-raw.json`），不是机器翻译；章节映射在 `tools/build_story.py`。
 - **剧情坐标**：只对双重验证通过的地图输出 —— `customs`、`woods`、`shoreline`、`streets-of-tarkov`、`lighthouse`、`ground-zero`、`interchange`。其余地图只给「跳转到地图」，`hasCoordinates=false`。**宁可不标，也不编坐标。**
 - **商人**：任务列表显示英文原名（`TraderInfo.Name`），中文名只用于其它展示。`QuestService.ResolveTraderNames()` 同时填 `TraderDisplay` 和 `TraderSlug`，不出现 24 位十六进制 id。
 - **头像**：`Assets/bosses/`、`Assets/traders/`，来源 `https://www.eftarkov.com/uploads/{boss,trader}/<id>.webp`。`BossSpawn.AvatarSlug` 是唯一映射入口，`MapCanvas` 不得保留第二份表。
 - **图例图标**：`Assets/legend/*.png`（48×48）。图标 stem 的唯一映射在 `MainWindow.axaml.cs`（`LootKindIcon` / `PoiKindIcon` + 各图例行的 `Icon =` 字面量）；`LoadLegendIcon` 找不到文件时回退成色点，所以新增图标类别必须同步补 PNG。图标美术来自本机工具箱资源（不进 git 的 `工具箱*/资源素材/用户自定义`），`hazard`/`label` 是 PIL 内置几何绘制（`.tmp/make_fallback_icons.py` 思路），别用外部素材覆盖这两个。
-- **楼层**：`layers/index.json`。空 `image` 是合法的「仅底图」层——室外图（reserve / customs / shoreline / ground-zero / streets / icebreaker）**必须**有这个条目，否则默认选中第一层时整个室外底图会被压暗成 35%。部分楼层来自 SVG 分组（`svgLayer`）而非瓦片，修改 `build_layers.py` 时必须两种都支持。
+- **楼层**：`layers/index.json`。空 `image` 是合法的「仅底图」层——室外图（reserve / customs / shoreline / ground-zero / streets / icebreaker）**必须**有这个条目，否则默认选中第一层时整个室外底图会被压暗成 35%。楼层大部分来自 SVG 分组（`svgLayer`）；仅 reserve 2–5 层与 customs 4 层（上游无对应 SVG 组）仍走瓦片拼合分支（`bake_layer`/`stitch_tiles`，缓存在 `tools/tile-cache`）。
 - **许可**：矢量图 CC BY-NC-SA 4.0（the-hideout/tarkov-dev-svg-maps），几何与任务 MIT（the-hideout/tarkov-dev）。与 Battlestate Games 无关，禁止商用，禁止作弊/雷达用途。
 
 ---
@@ -162,7 +179,7 @@ tools/
 
 - **海岸线楼层**：3 层已生成，内容区仍偏小，待重烘焙。
 - 历史缺陷（破冰船空背景、实验室/迷宫硬拉伸）已修复，**不要再退回**：
-  - 破冰船：已改为纯矢量管线，不再用上游栅格瓦片。成品 5600×5183，16 层全部由 `build_layers.py` 从 `research/ice-floors-svg` 渲染，与底图共用同一 viewBox 渲染身份，逐层对齐。旧的 `uniform_transform()` 1.75× 拉伸修正仍适用于其他瓦片地图。
+  - 破冰船：已改为纯矢量管线，不再用上游栅格瓦片。成品 5600×5183，16 层全部由 `build_layers.py` 从 `research/svg/icebreaker` 渲染，与底图共用同一 viewBox 渲染身份，逐层对齐。旧的 `uniform_transform()` 1.75× 拉伸修正仍适用于其他瓦片地图。
   - 实验室 / 迷宫：实验室底图 = `First_Level` 组（5600×4082），两层楼（`Second Level` / `Technical`）走 `SVG_FLOOR_ALIASES` 映射到 SVG 组 `Second_Level` / `Technical_Level`——上游只给瓦片，那套瓦片是旧版照片风底图，叠在矢量底图上像两张地图；**迷宫必须走瓦片分支**（3602×3873，`TILE_MAPS`）。`Labyrinth.svg` 的 viewBox 比画面本身大，按 bounds 拉伸后每个标记都偏出房间，试过就知道（3/7 落在画面内）。
   - 验收口径：`python tools/check_map_coverage.py` 全 13 张退出码 0。有 `content` 的图按「content 与实测画面偏差 ≤ 3%」判，没有 `content` 的图仍按四边边距 < 10% + 标记落在画面内 ≥ 90% 判；背景色取**图片边框环**的众数（整图众数会把工厂判成误报），边框环本身不是深色底（码头的水面铺满画布）时按「画布已铺满」处理。`datacheck` 的 `knownGeometryDefects` 已清空，并新增「content 矩形必须落在画布内」断言；旋转仿射（reserve）跳过「bounds 角点必须在画面内」那条——那是轴对齐前提。
 
@@ -171,7 +188,7 @@ tools/
 ## 8. 改动规范
 
 - 改数据先跑对应 `tools/build_*.py`，再跑 `tools/check.ps1`，三套全绿才提交。
-- 冰破船的层和其它地图一样由 `build_layers.py` 生成；它的层源在 `ICE_FLOOR_FILES`（`research/ice-floors-svg`），改完直接重跑该脚本即可。
+- 冰破船的层和其它地图一样由 `build_layers.py` 生成；它的层源在 `ICE_FLOOR_FILES`（`research/svg/icebreaker`），改完直接重跑该脚本即可。
 - 新增断言优先加到 `tools/datacheck`（数据层）或 `tools/logiccheck`（服务层），不要只靠肉眼。
 - `MapCanvas` 是性能关键路径：新增绘制要素必须复用画笔/文本缓存，且不得在平移时触发整图重采样。
 - 同一份映射只保留一处（例如头像 slug），避免两处表漂移。

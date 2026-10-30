@@ -7,7 +7,7 @@ public static class AppPaths
 {
     public static string BaseDir => AppContext.BaseDirectory;
     public static string AssetsDir => Path.Combine(BaseDir, "Assets");
-    public static string MapsDir => Path.Combine(AssetsDir, "Maps");
+    public static string MapsDir => Path.Combine(AssetsDir, "maps");
 
     // Asset file names live here so the loader and the build/check tools agree
     // on one spelling instead of repeating literals in several files.

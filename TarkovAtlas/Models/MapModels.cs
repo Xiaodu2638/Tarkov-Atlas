@@ -156,7 +156,7 @@ public sealed class MapDefinition
 public sealed class MapLayer
 {
     public string Name { get; set; } = "";
-    /// <summary>Path relative to Assets/Maps.</summary>
+    /// <summary>Path relative to Assets/maps.</summary>
     public string Image { get; set; } = "";
     public int Order { get; set; }
     /// <summary>Player Y range (game units) where this level is the right one.</summary>

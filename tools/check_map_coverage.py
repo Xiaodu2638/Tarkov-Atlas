@@ -7,11 +7,11 @@ bitmap matches them. This script decodes the JPEGs and compares the drawn
 artwork with the declared `content` rect.
 
 The app fits `content`, not the whole bitmap (Icebreaker's hull occupies a fifth
-of its tile canvas, the Labyrinth SVG has a wide border). So an empty canvas
+of its baked canvas, the Labyrinth SVG has a wide border). So an empty canvas
 border is fine as long as `content` is tight around the artwork. Without a
 content rect the canvas itself must be full, which is the old behaviour.
 
-Run after touching Assets/Maps/*.jpg or mapdata.json:
+Run after touching Assets/maps/*.jpg or mapdata.json:
 
     python tools/check_map_coverage.py              # all maps
     python tools/check_map_coverage.py icebreaker   # one map
@@ -31,7 +31,7 @@ sys.path.insert(0, str(ROOT / "tools" / "pylibs"))
 import numpy as np
 from PIL import Image
 
-MAPS = ROOT / "TarkovAtlas" / "Assets" / "Maps"
+MAPS = ROOT / "TarkovAtlas" / "Assets" / "maps"
 
 # Artwork is anything meaningfully brighter than the empty border colour.
 ART_DELTA = 12

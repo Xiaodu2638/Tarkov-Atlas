@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Build the offline map bundle for Tarkov Atlas.
 
-Sources:
-  * tarkov.dev map geometry/labels (MIT repository code; map art is credited in
-    the generated manifest and THIRD-PARTY-NOTICES.md)
-  * tarkov-dev-svg-maps vector maps (CC BY-NC-SA 4.0)
-  * tarkov.dev raster tile layers for maps without a public SVG
+Sources (all committed under research/):
+  * research/svg/<key>/*.svg        vector maps (CC BY-NC-SA 4.0)
+  * research/api/maps.json          tarkov.dev geometry/labels (MIT)
+  * research/upstream/              upstream data/maps.json (layer + affine table)
+  * tarkov.dev raster tiles         for maps that ship no public SVG (labyrinth)
+
+Output: TarkovAtlas/Assets/maps/ (base JPGs + maps.json manifest).
 
 The script intentionally uses the same camera/CRS maths as tarkov.dev's web map,
 then normalises every output image to north-up so the desktop app needs only one
@@ -14,7 +16,6 @@ simple affine transform.
 from __future__ import annotations
 
 import html
-import io
 import json
 import math
 import os
@@ -22,10 +23,10 @@ import re
 import shutil
 import subprocess
 import sys
-import tempfile
 import threading
 import time
 import uuid
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -41,10 +42,36 @@ try:  # noqa: E402 - used for the labyrinth SVG warp; pylibs is vendored
 except ImportError:  # pragma: no cover
     np = None
 
-SVG_DIR = ROOT / "research" / "svg-maps" / "tarkov-dev-svg-maps-main"
-DATA_MAPS = ROOT / "research" / "upstream" / "maps.json"
-OUT = ROOT / "TarkovAtlas" / "Assets" / "Maps"
+RESEARCH = ROOT / "research"
+# Vector sources: one directory per map key, so `research/svg/<key>/` is the only
+# place a map's artwork can come from. Icebreaker keeps its 14 deck files there.
+SVG_ROOT = RESEARCH / "svg"
+DATA_MAPS = RESEARCH / "upstream" / "tarkov-dev-maps.json"
+OUT = ROOT / "TarkovAtlas" / "Assets" / "maps"
 CACHE = ROOT / "tools" / "tile-cache"
+# Scratch space for headless Edge profiles and intermediate renders. Kept inside
+# the repo (never %TEMP%) and git-ignored.
+SCRATCH = ROOT / ".tmp" / "build"
+
+# Maps whose SVG directory holds more than one deck; the base art is the ground
+# deck. Every other map has exactly one SVG in its directory.
+BASE_DECK = {"icebreaker": "1.svg"}
+
+
+def svg_source(key: str) -> Path | None:
+    """The base-art SVG for a map key, or None when the map ships no vector art.
+
+    Single source of truth for map -> SVG: `build_layers.py` calls this instead
+    of keeping its own file-name table.
+    """
+    folder = SVG_ROOT / key
+    if not folder.is_dir():
+        return None
+    if key in BASE_DECK:
+        deck = folder / BASE_DECK[key]
+        return deck if deck.is_file() else None
+    files = sorted(folder.glob("*.svg"))
+    return files[0] if len(files) == 1 else None
 
 
 def _find_edge() -> Path:
@@ -172,10 +199,13 @@ HEADERS = {
 BG = (13, 18, 23)
 
 # Maps whose base art comes from the interactive tile layer. Everything else
-# uses the SVG in the repo snapshot.
-# Icebreaker ships full vector art (one SVG per deck, same viewBox). It used
-# to be built from raster tiles, which put the decks on a different pixel
-# grid than the vector base and gave them a visibly different art style.
+# uses the vector source under research/svg/<key>/.
+# The Labyrinth used to be baked from raster tiles with the SVG warped on top.
+# Its SVG aligns markers only through the tiles' affine (3/7 anchors when the
+# generic bounds-stretch is used), so the tile path stays for that one map.
+# Icebreaker ships full vector art (one SVG per deck, same viewBox); it is built
+# from those decks so the base art and the floor overlays share one render
+# identity.
 TILE_MAPS = {"the-labyrinth"}
 
 # Edge renders are CPU bound; four at a time keeps the peak memory (a few
@@ -261,6 +291,30 @@ def _thread_profile() -> str:
     return f"w{ident}"
 
 
+def top_level_group_ids(text: str) -> list[str]:
+    """Ids of the `<g>` children directly under the root `<svg>` element.
+
+    These files stack every floor as a top-level group, and each floor in turn
+    contains nested groups (Floor, Walls, Stairs...). Hiding by *any* matching
+    id therefore hides the children of the floor we want to keep and renders a
+    blank canvas, so only the direct children may be considered. Parsed with
+    ElementTree because the files are minified on some maps and pretty-printed
+    on others, which makes indent-anchored regexes unreliable.
+    """
+    try:
+        root = ET.fromstring(text)
+    except ET.ParseError:
+        return []
+    ids: list[str] = []
+    for child in root:
+        if child.tag.rsplit("}", 1)[-1] != "g":
+            continue
+        gid = child.get("id")
+        if gid:
+            ids.append(gid)
+    return ids
+
+
 def render_svg(svg: Path, width: int, height: int, out_png: Path,
                transparent: bool = False, only_layer: str | None = None) -> None:
     """Rasterise an SVG through headless Edge.
@@ -278,17 +332,19 @@ def render_svg(svg: Path, width: int, height: int, out_png: Path,
     hide_css = ""
     if only_layer:
         text = svg.read_text(encoding="utf-8", errors="replace")
-        # Top-level groups carry ids; the file is minified onto one line so the
-        # old `^  <g` (indent-anchored) pattern matched nothing and the hide
-        # stylesheet was never emitted — every floor rendered on top of the
-        # others. Match any <g id="..."> instead (ids are unique in these files).
-        ids = re.findall(r'<g[^>]*\bid="([^"]+)"', text)
+        ids = top_level_group_ids(text)
+        if not ids:
+            print(f"!! {svg.name}: no top-level groups parsed, rendering all layers",
+                  flush=True)
+        elif only_layer not in ids:
+            print(f"!! {svg.name}: {only_layer!r} is not a top-level group",
+                  flush=True)
         hide = [i for i in ids if i != only_layer]
         if hide:
             hide_css = "<style>" + "".join(
                 f"#{i} {{ display: none !important; }}" for i in hide) + "</style>"
             # Serve the patched copy from the scratch dir instead of the source.
-            scratch_dir = ROOT / "research" / "edge-temp"
+            scratch_dir = SCRATCH
             scratch_dir.mkdir(parents=True, exist_ok=True)
             patched = scratch_dir / f"{svg.stem}-only-{only_layer}-{uuid.uuid4().hex[:8]}.svg"
             body = text
@@ -300,7 +356,7 @@ def render_svg(svg: Path, width: int, height: int, out_png: Path,
 html,body{{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:{body_bg}}}
 img{{display:block;width:100vw;height:100vh;object-fit:fill;image-rendering:auto}}
 </style></head><body><img src="{html.escape(uri)}"></body></html>"""
-    scratch = ROOT / "research" / "edge-temp"
+    scratch = SCRATCH
     scratch.mkdir(parents=True, exist_ok=True)
     stamp = f"{svg.stem}-{width}x{height}-{'clear' if transparent else 'dark'}"
     # Unique per call: concurrent renders of the same layer would otherwise
@@ -523,8 +579,7 @@ def ground_group(svg: Path) -> str | None:
     is why the base art must pick one group. The upper floors are separate
     layers in the picker.
     """
-    ids = re.findall(r'^  <g[^>]*id="([^"]+)"',
-                     svg.read_text(encoding="utf-8", errors="replace"), flags=re.M)
+    ids = top_level_group_ids(svg.read_text(encoding="utf-8", errors="replace"))
     for name in ("Ground_Level", "Ground_Floor", "First_Level"):
         if name in ids:
             return name
@@ -560,7 +615,8 @@ def svg_canvas(svg: Path, width: int, height: int, turn: int,
         rw, rh = width, max(1, round(width / ratio))
     else:
         rw, rh = max(1, round(height * ratio)), height
-    raw = ROOT / "research" / "edge-temp" / f"canvas-{uuid.uuid4().hex[:8]}.png"
+    SCRATCH.mkdir(parents=True, exist_ok=True)
+    raw = SCRATCH / f"canvas-{uuid.uuid4().hex[:8]}.png"
     render_svg(svg, rw, rh, raw, transparent=transparent, only_layer=only_layer)
     img = Image.open(raw).convert("RGBA")
     raw.unlink(missing_ok=True)
@@ -635,7 +691,7 @@ def main() -> None:
     data = json.loads(DATA_MAPS.read_text(encoding="utf-8"))
     by_name = {m["normalizedName"]: m for m in data}
     # Marker points live in the API snapshot, not in the repo geometry file.
-    api_root = json.loads((ROOT / "research" / "api-maps.json").read_text(encoding="utf-8"))["data"]["maps"]
+    api_root = json.loads((RESEARCH / "api" / "maps.json").read_text(encoding="utf-8"))["data"]["maps"]
     api_by_name = {m.get("normalizedName"): m for m in api_root.values()}
     manifest = []
 
@@ -672,31 +728,16 @@ def main() -> None:
         rx, rz = maxx - minx, maxz - minz
         print(f"[{idx}/{len(MAP_META)}] {key}: {rx:.0f} x {rz:.0f} game units", flush=True)
 
-        svg_path = SVG_DIR / {
-            "customs": "Customs.svg",
-            "factory": "Factory.svg",
-            "ground-zero": "GroundZero.svg",
-            "interchange": "Interchange.svg",
-            "labyrinth": "Labyrinth.svg",
-            "the-labyrinth": "Labyrinth.svg",
-            "lighthouse": "Lighthouse.svg",
-            "the-lab": "Labs.svg",
-            "reserve": "Reserve.svg",
-            "shoreline": "Shoreline.svg",
-            "streets-of-tarkov": "StreetsOfTarkov.svg",
-            "terminal": "Terminal.svg",
-            "woods": "Woods.svg",
-            "icebreaker": "icebreaker/1.svg",
-        }.get(key, "")
+        svg_path = svg_source(key)
 
         if key in TILE_MAPS:
             # Tiles are the same pixel grid the marker coordinates come from, so
             # they align by construction.
             zoom = 4
             img, aff = stitch_tiles(uniform_transform(mm), key, zoom)
-            # The tile transform is a placeholder for Icebreaker (Factory's), so
-            # the emitted matrix has to be made isotropic before bounds/content
-            # are derived from it.
+            # Upstream ships placeholder transforms for some maps, so the emitted
+            # matrix has to be made isotropic before bounds/content are derived
+            # from it.
             aff = sanitize_affine(aff)
             mode = f"tiles z{zoom}"
             if key == "the-labyrinth":
@@ -714,7 +755,7 @@ def main() -> None:
                     print("!! numpy missing: keeping labyrinth tiles", file=sys.stderr)
                 else:
                     RENDER = 2600  # svg pixels across; eftarkov frame is 1300
-                    svg_canvas_path = ROOT / "research" / "scratch" / "laby-hi.png"
+                    svg_canvas_path = SCRATCH / "laby-hi.png"
                     render_svg(svg_path, RENDER, round(RENDER * 1200 / 1300),
                                svg_canvas_path)
                     # forward (render px -> tile px): ef = px/RENDER*1300, then
@@ -769,9 +810,6 @@ def main() -> None:
             print(f"!! no source for {key}", file=sys.stderr)
             return None
 
-        # Tile maps were already rotated (artwork + affine together) inside
-        # stitch_tiles(), so there is nothing left to do here.
-
         # Flatten transparency onto the app's dark surface.
         bg = Image.new("RGB", img.size, BG)
         if img.mode == "RGBA":
@@ -779,8 +817,12 @@ def main() -> None:
         else:
             bg.paste(img.convert("RGB"))
 
-        # Tile maps were already rotated (artwork + affine together) inside
-        # stitch_tiles(), so there is nothing left to do here.
+        # A solid canvas is what a broken layer filter looks like: Edge exits 0,
+        # the PNG is big enough to pass the size check, and the map ships empty.
+        # Every real map has thousands of colours, so a handful means failure.
+        flat = bg.getcolors(maxcolors=8)
+        if flat is not None and len(flat) == 1:
+            raise RuntimeError(f"{key}: base art rendered blank (layer filter?)")
 
         out_img = OUT / f"{key}.jpg"
         bg.save(out_img, "JPEG", quality=90, optimize=True, progressive=True)
@@ -837,9 +879,12 @@ def main() -> None:
         # artwork rect as an axis-aligned world rect, and the app fits pixels.
         entry["content"] = [float(v) for v in box] if box else []
 
+    # newline="" keeps LF: git strips CRLF on commit and the noise hides real
+    # diffs in the generated manifest.
     (OUT / "maps.json").write_text(
         json.dumps({"generatedAt": time.strftime("%Y-%m-%d"), "maps": manifest}, ensure_ascii=False, indent=2),
         encoding="utf-8",
+        newline="",
     )
     print(f"wrote {OUT/'maps.json'} with {len(manifest)} maps", flush=True)
 

@@ -25,10 +25,6 @@ _backup/
 # 图标已复制进 TarkovAtlas/Assets/legend/，运行时不需要本目录。
 工具箱*/
 
-# 渲染临时目录（build_assets.py 在 research/edge-temp 下产生）
-.edge-profile-*/
-.render-*.html
-
 # Python 字节码
 __pycache__/
 *.pyc
