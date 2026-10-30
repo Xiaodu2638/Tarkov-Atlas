@@ -1,4 +1,4 @@
-# build output
+# 构建产物（由 .gitignore 之外的管线生成）
 bin/
 obj/
 dist/
@@ -6,47 +6,35 @@ _verify/
 _aottest/
 _avtest/
 
-# local NuGet / dotnet caches
+# 本地 NuGet / dotnet 缓存
 .nuget-cache/
 .nuget-packages/
 .dotnet-home/
 
-# scratch
+# 临时与草稿
 _*.py
 _*.png
 _*.jpg
 _*.log
-
-# scratch / sandbox temp
 _piptmp/
 _aotv/
 _backup/
+.tmp/
 
-# staging dir used by build_assets.py when rasterising SVG
-tools/_tmpstage/
+# 第三方工具箱：本机素材来源，不随仓库分发。
+# 图标已复制进 TarkovAtlas/Assets/legend/，运行时不需要本目录。
+工具箱*/
 
-# browser/render scratch. build_assets.py writes these under research/edge-temp;
-# the patterns below also guard against ever leaking them into Assets/ again.
+# 渲染临时目录（build_assets.py 在 research/edge-temp 下产生）
 .edge-profile-*/
 .render-*.html
 
-# python bytecode caches (tools/pyext ships its own PIL)
+# Python 字节码
 __pycache__/
 *.pyc
 
-# downloaded tile cache is a build input, not source
+# 瓦片下载缓存：构建输入，不是源码
 tools/tile-cache/
-
-# local pip --target dependencies (pillow / numpy / requests) for tools/*.py;
-# recreate with: python -m pip install --target tools/pylibs pillow numpy requests
-tools/pylibs/
-
-# local-only Python data pipeline. The app builds and runs without any of this;
-# these files stay on the developer machine and are deliberately not in git.
-research/
+# 本地 pip --target 依赖（Pillow / numpy / requests）
 tools/pyext/
-tools/*.py
-/*.py
-
-# dotnet / MSBuild scratch, redirected here by build.ps1 and tools/check.ps1
-.tmp/
+tools/pylibs/

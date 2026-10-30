@@ -29,7 +29,7 @@ dotnet run --project tools/logiccheck -c Release
 dotnet run --project tools/shotcheck  -c Release
 ```
 
-产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 21.6 MB 原生 exe，整个目录约 87 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`、`Scripts/`）。脚本同时打一个同名 zip；`-NoAot` 跳过 AOT，`-OutputRoot <dir>` 换输出目录。
+产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 22 MB 原生 exe，整个目录约 265 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`、`Scripts/`）。脚本同时打一个同名 zip；`-NoAot` 跳过 AOT，`-OutputRoot <dir>` 换输出目录。
 
 构建与自检会强制把 `TEMP`/`TMP`、`NUGET_PACKAGES`、`DOTNET_CLI_HOME` 指到仓库内（`.tmp/`、`.nuget-packages/`、`.dotnet-home/`），不写主机。**不要裸跑 `dotnet publish`**，会污染 `%TEMP%` 且可能锁住 `bin/`。上面「单独跑某套」的 `dotnet run` **不做**这套重定向（只有 `check.ps1` 会）：要么直接用 `check.ps1`，要么在同一个 shell 里先导出这几个变量。
 
@@ -78,7 +78,7 @@ tools/
   build_assets.py               下载瓦片 / 渲染 SVG → 生成底图 + maps.json
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
   build_data.py                 合并 API → quests.json / mapdata.json
-  build_story.py               剧情 → story.json
+  build_story.py                剧情 → story.json
   check_map_coverage.py        底图内容区覆盖率自检（第 7 节验收标准用它）
 ```
 
@@ -95,7 +95,7 @@ tools/
 - **底图必须上北下南**：图片帧 = 游戏坐标按 `coordinateToCardinalRotation` 旋转后，`px ∝ east`、`py ∝ -north`；SVG 再按 `(cardinal − coordinateRotation) mod 360` 转正（`svg_turn()`），等比缩放后拉伸进 cardinal bounds 矩形（与 tarkov.dev 的 `L.svgOverlay` 一致）。11 张图 `turn=0`，reserve 是 15.2°（`svg_canvas()` 绕中心转完再裁回原帧，否则地图会缩在黑角里），其余都在 90° 的整数倍上。
 - **SVG 底图只渲染地面层组**：这些 SVG 把各层叠在一个文件里，整份渲染会重影（工厂四层、海关/立交桥/地面零区/街区/实验室都一样）。`ground_group()` 取 `Ground_Level` → `Ground_Floor` → `First_Level`，其余层是楼层选择器里的 `svgLayer`。工厂竖版 5183×5600。
 - **`content` 是像素矩形，不是游戏坐标**：`build_assets.py` 的 `content_box()` 用「边框环众数色 + 12 灰阶」找出实际画出来的区域，直接把像素框写进 `mapdata.json` 的 `content`；`MapCanvas.EnsureLayout()` 按它做 fit + 居中，所以画布边缘的空白不会把地图缩成一小块。像素是因为旋转后的仿射无法把轴对齐的图画框映射成轴对齐的世界矩形。`bounds` 仍是整张图片的世界范围（`datacheck` 用它做一致性断言），两者别混。
-- **仿射必须各向同性**：世界单位是米、图片保持比例，所以 `|a| == |e|`。破冰船的上游 tile `transform` 是工厂的占位值（`sx=2.0, sy=3.5`），`uniform_transform()` 会在拼瓦片前统一成水平尺度；`sanitize_affine()` 在产物侧再兜一次底。数据里出现各向异性矩阵一律按 bug 处理。
+- **仿射必须各向同性**：世界单位是米、图片保持比例，所以 `|a| == |e|`。`build_assets.py` 里 `uniform_transform()` 会在拼瓦片前把上游占位 `transform`（如工厂的 `sx=2.0, sy=3.5`）统一成水平尺度，`sanitize_affine()` 在产物侧再兜一次底。数据里出现各向异性矩阵一律按 bug 处理。
 
 ### 4.2 渲染
 - `MapCanvas.Render()` 每次整帧重绘。性能红线：
@@ -112,12 +112,13 @@ tools/
 - 数据本身不做删改，只在展示层过滤。
 
 ### 4.4 数据管线（本机，不进 git）
-- 顺序：`build_assets.py` → `build_layers.py` → `build_data.py` → `build_story.py`。
+- 顺序：`build_assets.py` → `build_layers.py` → `build_data.py` → `build_story.py`。所有地图（含冰破船）都在同一条管线里。
 - 局部重建：`build_assets.py --only factory`、`build_layers.py --only factory`。其余地图的 manifest 条目和楼层索引会合并保留，不会清空。
-- 两个 build 脚本都靠本机 headless Edge 栅格化 SVG；已下载瓦片在 `tools/tile-cache/`，瓦片类地图可离线重跑。
+- **冰破船在同一管线内**：`build_layers.py` 用 `ICE_FLOOR_FILES` 把上游的瓦片层映射到 `research/ice-floors-svg/*.svg`，逐层走 `bake_svg_layer`。不要为它另建入口脚本，也不要在 `build_layers.py` 里跳过它。
+- build 脚本靠本机 headless Edge 栅格化 SVG；已下载瓦片在 `tools/tile-cache/`，瓦片类地图可离线重跑。
 - 外部依赖：`tools/pyext`（Pillow）、`tools/pylibs`（numpy、requests）。重建：
   `python -m pip install --target tools/pylibs pillow numpy requests`
-- 上游快照放在 `research/`：`api-maps.json`（tarkov.dev）、`svg-maps/tarkov-dev-svg-maps-main`（矢量图）、`orient-ref`（朝向参考）。
+- 上游快照放在 `research/`：`api-maps.json`（tarkov.dev）、`svg-maps/tarkov-dev-svg-maps-main`（矢量图）、`ice-floors-svg`（冰破船 14 层 SVG）、`orient-ref`（朝向参考）。
 
 ---
 
@@ -132,9 +133,13 @@ tools/
 7. **别 `git clean -xdf`**：会连 `research/` 和 `tools/*.py` 管线一起删掉。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
 9. **`assets.tarkov.dev` 返回 403**；GitHub 与 fandom wiki 可访问。
-10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按 SVG 自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
+10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
+11. **冰破船的层必须用与底图相同的渲染身份**：`research/ice-floors-svg/*.svg` 共享同一 viewBox（`1000 1500 3000 5400`），每个文件里只有 `display:block` 的那个组是有效内容。必须按**与底图完全相同的目标尺寸与 `turn`** 渲染（`bake_svg_layer` 已如此），任何裁剪/二次缩放都会重新引入错位。
+12. **`render_svg()` 的 `only_layer` 用 `^  <g` 缩进正则匹配顶层组名**，而这些 SVG 常被压成单行，匹配结果为 0 —— 于是「隐藏其它层」静默失效、整份文档全被渲染。给新地图加层过滤时先确认匹配数不为 0，或改用 `ElementTree` 解析。
 
 两个大文件：`MainWindow.axaml.cs`（约 1.2k 行，所有 UI 交互：地图切换、楼层、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1k 行，全部绘制）。改行为先在这两处找，不要去 Models 里猜。
+
+运行 `tools/*.py` 前不要 `pip install` 到全局：脚本自己把 `tools/pyext`、`tools/pylibs` 插到 `sys.path` 前面，用的是仓库内的 Pillow/numpy/requests。缺依赖就装到 `tools/pylibs`（见 4.4 节命令）。`research/` 与 `tools/*.py` 都不进 git，管线改动只存在于本机。
 
 ---
 
@@ -157,7 +162,7 @@ tools/
 
 - **海岸线楼层**：3 层已生成，内容区仍偏小，待重烘焙。
 - 历史缺陷（破冰船空背景、实验室/迷宫硬拉伸）已修复，**不要再退回**：
-  - 破冰船：`uniform_transform()` 修掉 1.75× 纵向拉伸，crop 原点改按画布帧计算，成品 4585×4270，船体占满画布。
+  - 破冰船：已改为纯矢量管线，不再用上游栅格瓦片。成品 5600×5183，16 层全部由 `build_layers.py` 从 `research/ice-floors-svg` 渲染，与底图共用同一 viewBox 渲染身份，逐层对齐。旧的 `uniform_transform()` 1.75× 拉伸修正仍适用于其他瓦片地图。
   - 实验室 / 迷宫：实验室底图 = `First_Level` 组（5600×4082），两层楼（`Second Level` / `Technical`）走 `SVG_FLOOR_ALIASES` 映射到 SVG 组 `Second_Level` / `Technical_Level`——上游只给瓦片，那套瓦片是旧版照片风底图，叠在矢量底图上像两张地图；**迷宫必须走瓦片分支**（3602×3873，`TILE_MAPS`）。`Labyrinth.svg` 的 viewBox 比画面本身大，按 bounds 拉伸后每个标记都偏出房间，试过就知道（3/7 落在画面内）。
   - 验收口径：`python tools/check_map_coverage.py` 全 13 张退出码 0。有 `content` 的图按「content 与实测画面偏差 ≤ 3%」判，没有 `content` 的图仍按四边边距 < 10% + 标记落在画面内 ≥ 90% 判；背景色取**图片边框环**的众数（整图众数会把工厂判成误报），边框环本身不是深色底（码头的水面铺满画布）时按「画布已铺满」处理。`datacheck` 的 `knownGeometryDefects` 已清空，并新增「content 矩形必须落在画布内」断言；旋转仿射（reserve）跳过「bounds 角点必须在画面内」那条——那是轴对齐前提。
 
@@ -166,6 +171,7 @@ tools/
 ## 8. 改动规范
 
 - 改数据先跑对应 `tools/build_*.py`，再跑 `tools/check.ps1`，三套全绿才提交。
+- 冰破船的层和其它地图一样由 `build_layers.py` 生成；它的层源在 `ICE_FLOOR_FILES`（`research/ice-floors-svg`），改完直接重跑该脚本即可。
 - 新增断言优先加到 `tools/datacheck`（数据层）或 `tools/logiccheck`（服务层），不要只靠肉眼。
 - `MapCanvas` 是性能关键路径：新增绘制要素必须复用画笔/文本缓存，且不得在平移时触发整图重采样。
 - 同一份映射只保留一处（例如头像 slug），避免两处表漂移。

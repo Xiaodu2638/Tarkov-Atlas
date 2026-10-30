@@ -1,0 +1,1586 @@
+[
+ {
+  "href": "/storyline/68cbcdc4c964ab83cc0c928e",
+  "name": "陨落星辰",
+  "objectives": [
+   {
+    "id": "6ab719d971b30671e7b58701",
+    "title": "在森林找到坠毁的飞机",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab740e97cdaa3d9598d5801"
+   },
+   {
+    "id": "6ab719d98e5ba122bb4a7b02",
+    "title": "Prapor 信任度达到 2 级",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d9c033f51296285e03",
+    "title": "询问 Prapor 有关坠毁飞机的事情",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d9870f6e5e987e3804",
+    "title": "找到指定的 G 型越野车，回收 U 盘",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab7454779ca136e2a721701"
+   },
+   {
+    "id": "6ab719d93930280bf6eed005",
+    "title": "把 U 盘交给 Prapor",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d9140524e173e5b706",
+    "title": "等待 Prapor 的消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d9436e8cc35bacaf07",
+    "title": "从飞机上回收飞行记录仪",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab745e8df2ff34365584d01"
+   },
+   {
+    "id": "6ab719d91ce69c31b166cf08",
+    "title": "将飞行记录仪留在指定交货位置",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab746d9f0ed4e849745bf01"
+   },
+   {
+    "id": "6ab719d96a65dd218607c909",
+    "title": "和 Prapor 见面",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d922f5548ae9952d0a",
+    "title": "将战局中找到的物品上交给 Prapor：工具 2 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d90c7f407c07c1820b",
+    "title": "将战局中找到的物品上交给 Prapor：充电电池 3 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d927ab3d59ca09380c",
+    "title": "将战局中找到的物品上交给 Prapor：印刷电路板 5 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d9f32a865dfde8280d",
+    "title": "等待 Prapor 传来消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d917ac6e0eba11570e",
+    "title": "找到飞行员的通话记录",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab7488fc55c2189ee691501"
+   },
+   {
+    "id": "6ab719d9145b0391537d350f",
+    "title": "找到 Elektronik 的加密 U 盘",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab749400aefcfe6185b6201"
+   },
+   {
+    "id": "6ab719d9c7519ec8b9cfef10",
+    "title": "将飞行员通话记录交给 Prapor",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d9a17b163d50a09911",
+    "title": "将 Elektronik 的加密 U 盘交给 Prapor",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d98e28ef4337fbaf12",
+    "title": "等待 Prapor 传来消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab719d9c2265474ff91a713",
+    "title": "回收加固手提箱",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab74c3aef483aef939fc001"
+   }
+  ]
+ },
+ {
+  "href": "/storyline/68cbd33676fe74b1e80bfd91",
+  "name": "塔科夫之旅",
+  "objectives": [
+   {
+    "id": "6ab5d3cc1b4d3880e1783101",
+    "title": "逃离中心区",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab5d3cc96035e92eaff3102",
+    "title": "和 Therapist 交谈",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8dc64ffe0eb31c3201",
+    "title": "把现金交给 Therapist 250,000 卢布",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8db3ae56dfdb282802",
+    "title": "和 Ragman 交谈",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d6b80b44161a62503",
+    "title": "告诉 Ragman 侦察行动期间的发现",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d2a7841b09f8d6e04",
+    "title": "幸存并从立交桥撤离或进入立交桥3次",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8db94f243724713d05",
+    "title": "与 Skier 对话",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8dbd7495367fda5d07",
+    "title": "将任意战局中找到的建筑材料上交给 Skier 5 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d5c5a6ff4abfe0c08",
+    "title": "幸存并从海关撤离或进入海关3次",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8ddc2bfdab147d3409",
+    "title": "和 Mechanic 谈话",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d852ba1dcae4d800a",
+    "title": "把任意战局中找到的武器带给 Mechanic 2 把",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d9d953e1e2135450b",
+    "title": "幸存并从工厂撤离或进入工厂3次",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8daebfcebe9864e10c",
+    "title": "与 Skier 对话",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d241a64361d01640d",
+    "title": "在森林击杀任意目标 3 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8dd35fc0f3adb9340e",
+    "title": "幸存并从森林撤离或进入森林3次",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d086f8ac2bb4db30f",
+    "title": "找到港口终点站的入口",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab62a04ff52befea3865101"
+   },
+   {
+    "id": "6ab60f8d7e36d949c1f67610",
+    "title": "想办法与港口终点站的守军联系",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab62a8f6ea6ae6b16f86401"
+   },
+   {
+    "id": "6ab60f8d3d052f84b9885011",
+    "title": "使用对讲机联系港口守军",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab62a8f6ea6ae6b16f86401"
+   },
+   {
+    "id": "6ab60f8d045699710f491712",
+    "title": "了解逃出塔科夫的方法",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d9b860d9c0ef4b414",
+    "title": "将物品上交给Prapor：PMC 狗牌 5 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d42bf5777ca5aae15",
+    "title": "幸存并从海岸线撤离或进入海岸线3次",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d8fa0995a27d9a416",
+    "title": "把现金交给 Mechanic 8,000 美元",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d89276664fa4f2317",
+    "title": "前往 TerraGroup 秘密设施",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab60f8d57a1e9da28e85218",
+    "title": "在实验室内找到通过排水系统的撤离路线",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab62d8b1079fe6be65a7c01"
+   },
+   {
+    "id": "6ab6295c4798e6539452ad01",
+    "title": "搜查实验室机房",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab62dafa1814943266fd501"
+   },
+   {
+    "id": "6ab60f8dde6b106c9704c519",
+    "title": "搜查实验室管理层的办公室",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab62dd2902aaf0890d67001"
+   }
+  ]
+ },
+ {
+  "href": "/storyline/68da33fe00868edcb6025ac4",
+  "name": "门票",
+  "objectives": [
+   {
+    "id": "6ab925ce1100cc35cd200601",
+    "title": "情报中心 等级1",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab925ce981457527b518702",
+    "title": "和 Kerman 先生交谈",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab9a0c3a1d588baf2fab301",
+    "title": "开启加固手提箱",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab9a0c3e8e7d406d8c0bc02",
+    "title": "向 Mechanic 求助",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab9a0c35b1e8f639d76a603",
+    "title": "获得实验型信号干扰器",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab9a0f784d8eeb4aff97201"
+   },
+   {
+    "id": "6ab9a1caafcb1d39d1745b01",
+    "title": "和 Mechanic 谈话",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab9a1caa6d874e03235a002",
+    "title": "使用实验型信号干扰器以解锁箱子",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab9a1cad6274ca8f5e8e003",
+    "title": "取得“门票”",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab9a1ca76b269193c9f1f04",
+    "title": "阅读加固手提箱里找到的提示",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aba0b9e394dfc1d5dac3c02",
+    "title": "抵达港口码头的入口通道",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aba0b9e8f7de6d27c8a7003",
+    "title": "将钥匙卡插入对讲机读卡器",
+    "map": "",
+    "marker": ""
+   }
+  ]
+ },
+ {
+  "href": "/storyline/68da36cf7cff54fc6109874a",
+  "name": "Batya",
+  "objectives": [
+   {
+    "id": "6ab8a9c4fdddc708c7cdb101",
+    "title": "找到BEAR特种小队的踪迹",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab8ae88be6a12464f5b1401"
+   },
+   {
+    "id": "6ab8b03ab0ffa7447a7d5901",
+    "title": "从 Jaeger 处了解 Bogatyr 小队的更多消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b03a0339a32a6c98bd02",
+    "title": "找到“鸟巢”前哨站",
+    "map": "5714dbc024597771384a510d",
+    "marker": "6ab8b038e6f389192b09c201"
+   },
+   {
+    "id": "6ab8b193b5974b44a8a24501",
+    "title": "调查 Bogatyr 小队的遭遇",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1935bd9b85bbd6f0102",
+    "title": "收集 Bogatyr 小队的更多消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1933086c0daba301a03",
+    "title": "找到“花楸树”营地",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab8b55e2bd34380f82c6501"
+   },
+   {
+    "id": "6ab8b193fdcaf4a35e472904",
+    "title": "找到 Bogatyr 小队的更多消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193a038d3aa808cd505",
+    "title": "找到伏击地点",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab8b8be2c083d9872b20301"
+   },
+   {
+    "id": "6ab8b193bee266a56892bf06",
+    "title": "检查 Moreman 的尸体",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193f6a955f4260db207",
+    "title": "找到“旋转木马”营地",
+    "map": "5714dbc024597771384a510d",
+    "marker": "6ab8b90b386285c3de489901"
+   },
+   {
+    "id": "6ab8b193fa1e1da5c9df2008",
+    "title": "深入了解 Taran",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1937a9a171afaf7d509",
+    "title": "找到 Bogatyr 小队成员的个人档案",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193aa0f66de6c59a50a",
+    "title": "深入了解 Voevoda",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1934bcbc5c1ce5a170b",
+    "title": "深入了解 Strelets",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193e30ecc3e0986870c",
+    "title": "从 Moreman 的手机里提取关于那场伏击更多的消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193e378d4edb92e900d",
+    "title": "藏身处 情报中心 达到 3 级",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1937498b5e0add59c0e",
+    "title": "联络 Bogatyr 小队",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b19318107a0fd01a6a0f",
+    "title": "想办法接触 Lightkeeper",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193bb8dc3fc6b1ae710",
+    "title": "把 Bogatyr 小队的物品交给Lightkeeper",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193173151bb3eb83411",
+    "title": "将 Bogatyr 小队臂章交给 Lightkeeper",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193b9881c9325dfde12",
+    "title": "将 Moreman 的狗牌交给 Lightkeeper",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1934bb1d76d9bf00113",
+    "title": "将 Strelets 的护身符交给 Lightkeeper",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193c747f8eb3b9f3214",
+    "title": "将 Taran 的明信片交给 Lightkeeper",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193a1ec0c0b9282b415",
+    "title": "将 Voevoda 的录音机交给 Lightkeeper",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1936e8959654544b716",
+    "title": "等待 Voevoda 主动联络",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193dc6e32ac33549617",
+    "title": "力量技能达到 15 级",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193dfa4f703ce3b4018",
+    "title": "抗压技能达到 10 级",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b19319bc934ebbd25119",
+    "title": "轻机枪技能达到 5 级",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1936e530a1a0932f51a",
+    "title": "突击步枪技能达到 10 级",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1939cc4e6cd971ba91b",
+    "title": "一命连续击杀 PMC 4 名",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193f5c49069a49a6d1c",
+    "title": "一命连续击杀任意目标 15 名",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b1935e2d4fe4867bd61d",
+    "title": "联系 Voevoda",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193a69cce946d72231e",
+    "title": "找到叛徒的踪迹",
+    "map": "5704e4dad2720bb55b8b4567",
+    "marker": "6ab8bba8f5a22aa1a1becb01"
+   },
+   {
+    "id": "6ab8b193c8e09d51ff5de01f",
+    "title": "逼问 Prapor",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b19372d2469a1e202020",
+    "title": "找出邪教徒是怎么和军方的将军扯上关系的",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab8bd0907609ea96598c501"
+   },
+   {
+    "id": "6ab8b193c8beed2e02fc5b21",
+    "title": "和 Lightkeeper 交谈",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193d3783c796bcde222",
+    "title": "等待 Lightkeeper 准备与“无名者”相关的文件",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8b193ceab28412f2cb523",
+    "title": "收集 Lightkeeper 的文件",
+    "map": "",
+    "marker": ""
+   }
+  ]
+ },
+ {
+  "href": "/storyline/68e3a35002661eb2d30ce387",
+  "name": "探秘“迷宫”",
+  "objectives": [
+   {
+    "id": "6ab88f0e513e44b59fc83401",
+    "title": "向 Jaeger 打听地下设施的消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0e454727100f277402",
+    "title": "等待 Jaeger 找来钥匙卡",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0eca4953da69d73f03",
+    "title": "找到疗养院地下设施的入口通道",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0e513b875fb92e0b04",
+    "title": "进入设施",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0ed83887a5a18abc05",
+    "title": "在“迷宫”中找到 BEAR 小队的踪迹",
+    "map": "6733700029c367a3d40b02af",
+    "marker": "6ab891f78dd67247e6459b01"
+   },
+   {
+    "id": "6ab88f0efcd069bedb125606",
+    "title": "调查 1156 项目周围的 BEAR 小队集结点",
+    "map": "6733700029c367a3d40b02af",
+    "marker": "6ab8921f3b50452770ded901"
+   },
+   {
+    "id": "6ab88f0ef3a28e8e056bd907",
+    "title": "找到小队长",
+    "map": "6733700029c367a3d40b02af",
+    "marker": "6ab8924f776830f5c88cd301"
+   },
+   {
+    "id": "6ab88f0e42e8169093448008",
+    "title": "收集小队的更多消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0efe034d2473ae1f09",
+    "title": "获取观察室钥匙",
+    "map": "6733700029c367a3d40b02af",
+    "marker": "6ab893b0372417c0be4a5601"
+   },
+   {
+    "id": "6ab88f0e3b2393003232030a",
+    "title": "调查科学家的尸体",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0e39ce25826cc0be0b",
+    "title": "进入上锁的办公室",
+    "map": "6733700029c367a3d40b02af",
+    "marker": "6ab89ba88048056c9bba8901"
+   },
+   {
+    "id": "6ab88f0e506eeeed4b40a80c",
+    "title": "听办公室里的录音带",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0e21b45c1126a52d0d",
+    "title": "将录音带交给 Jaeger",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab88f0edf068bad7913a50e",
+    "title": "阅读迷宫设施研究报告",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab89c4010265e3ba86d1d01"
+   }
+  ]
+ },
+ {
+  "href": "/storyline/68e784b7fa3f1fa3770094ba",
+  "name": "神秘蓝焰",
+  "objectives": [
+   {
+    "id": "6ab826397ec2ce08e43e5d01",
+    "title": "和 Mechanic 谈谈 EMP 冲击的事情",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8263996b4a9d781e80902",
+    "title": "找到并获取设备的碎片",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab82e732afc896de2945101"
+   },
+   {
+    "id": "6ab82745cd01a68c334d3801",
+    "title": "将黑客入侵装置安放在实验室的机房内",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab827ac5eec4a5c5c8d7201"
+   },
+   {
+    "id": "6ab8281676be7246f6f27e01",
+    "title": "和 Mechanic 交谈",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8281682f2e1ffa6409702",
+    "title": "寻找 #1156 项目的线索",
+    "map": "653e6760052c01c1c805532f",
+    "marker": "6ab8293f889637eee600be01"
+   },
+   {
+    "id": "6ab82ae066cd03d6031a8601",
+    "title": "调查俄罗斯邮政办公室",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab82b5bdc49343f6ffe3401"
+   },
+   {
+    "id": "6ab82ae0baf8e913e3c8f702",
+    "title": "获得 #1156 项目的蓝图",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab82caa5e826bbd68046c01"
+   }
+  ]
+ },
+ {
+  "href": "/storyline/6900927ab7d28358f80b9421",
+  "name": "无名者",
+  "objectives": [
+   {
+    "id": "6ab76409697273bc82a91301",
+    "title": "了解 TerraGroup 活动的更多消息",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab78513e437c24549fa1c01"
+   },
+   {
+    "id": "6ab78fa5d7629e167cf38c01",
+    "title": "搜集更多有关转运特种催化剂的消息",
+    "map": "55f2d3fd4bdc2d5f408b4567",
+    "marker": "6ab7911d644a4876bf074f01"
+   },
+   {
+    "id": "6ab78fa57e00e39f80251d02",
+    "title": "找到勒热夫斯基的配车",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab791b160d78a79da979701"
+   },
+   {
+    "id": "6ab790907b7fa8061572f901",
+    "title": "获取勒热夫斯基的个人物品",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa5ebb73a6bae6c8e03",
+    "title": "从勒热夫斯基的配车里找到的硬盘中提取数据",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa54d57c01e02ecb804",
+    "title": "找到并获取“蓝冰”燃料催化剂的相关研究文件",
+    "map": "55f2d3fd4bdc2d5f408b4567",
+    "marker": "6ab79315cc3bc2e524398501"
+   },
+   {
+    "id": "6ab78fa591bc873c6e978a05",
+    "title": "在实验室查找与 A.P. 相关的任何消息",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab7937a3266eb121d3fc701"
+   },
+   {
+    "id": "6ab78fa54dde9d2663120506",
+    "title": "了解A.P.活动的更多消息",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab7941e112e9d5d1ded3201"
+   },
+   {
+    "id": "6ab78fa5e68f7f1633c8f307",
+    "title": "深入了解A.P.的职责",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab7945a5fb60a431abe2501"
+   },
+   {
+    "id": "6ab78fa59cde102948f6da08",
+    "title": "在疗养院找到A.P.的房间",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab794af2b1f600d31f96601"
+   },
+   {
+    "id": "6ab78fa5db1205f8de371609",
+    "title": "获取 A.P. 的个人物品",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa5030c688ce5879b0a",
+    "title": "获得 A.P. 的数据存储设备",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa53bc07cf7ff494d0b",
+    "title": "破解A.P.房间里的U盘",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa5a3a5b9feb84eb40c",
+    "title": "把现金交给 Mechanic 5,000,000 卢布",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa5f0786c295218880d",
+    "title": "把A.P.的U盘交给 Mechanic",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa58c2276426482f80e",
+    "title": "等待 Elektronik 传来消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa56cd4989e6322750f",
+    "title": "将从A.P.的U盘里找到的技术文件写入 TerraGroup 钥匙卡中",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa5fc84db541ca59c10",
+    "title": "进入集团分配给A.P.的公寓",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab799732988470558791d01"
+   },
+   {
+    "id": "6ab78fa50183da157485c811",
+    "title": "调查 A.P. 的公寓",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa520b52098973d0112",
+    "title": "进入A.P.公寓里的隐藏房间",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa531c6f18d9c56f613",
+    "title": "研究 A.P.办公室里的 TerraGroup文件",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa582c515bda85ad714",
+    "title": "研究“蓝冰”催化剂在“无名者”的协议中扮演什么角色",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa5f2c3984e9d8af315",
+    "title": "深入了解“无名者”的协议",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab78fa57d07442e9f85a916",
+    "title": "查出“无名者”与塔科夫之间的联系",
+    "map": "",
+    "marker": ""
+   }
+  ]
+ },
+ {
+  "href": "/storyline/6903d779fdfc4078740a4bd0",
+  "name": "他们已经来了",
+  "objectives": [
+   {
+    "id": "6ab8324d0a5297ec69539b02",
+    "title": "了解在塔科夫四处留下奇特符号的神秘人士",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab855dcf23fc70d6dfd6501"
+   },
+   {
+    "id": "6ab8324d67dd2b7d57472903",
+    "title": "找到与“世界之眼”有关的地方",
+    "map": "5704e4dad2720bb55b8b4567",
+    "marker": "6ab859330d6125a6177f7b01"
+   },
+   {
+    "id": "6ab8324d9c718e340f9a3504",
+    "title": "在行刑室里寻找邪教徒受害者的更多消息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d7e11fd987cd75905",
+    "title": "找到邪教受害者的公寓",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab85a45d4c93ddec04baf01"
+   },
+   {
+    "id": "6ab8324dab21830706a3ca06",
+    "title": "调查邪教受害者的公寓",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d683fdc188ea29807",
+    "title": "问问 Mechanic 关于“世界之眼”的事情",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d53f291018e8ffc08",
+    "title": "找到并消灭邪教徒祭司 1 名",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d1a6630e431226909",
+    "title": "收集更多有关“世界之眼”的情报",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab85c67556898c605c46d01"
+   },
+   {
+    "id": "6ab8324d14472450b8c4b70a",
+    "title": "在海岸线找到标有“世界之眼”的地方",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab86283542ec83a28cf4301"
+   },
+   {
+    "id": "6ab8324d14d4519d5614b30b",
+    "title": "调查 Sordi 塔楼周围的区域",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324daa6911233b71900c",
+    "title": "修复 Sordi 通讯塔",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d313969d71433960d",
+    "title": "在森林找到标有“世界之眼”的地方",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab863251cadc301dc934601"
+   },
+   {
+    "id": "6ab8324d39279ffb563f2c0e",
+    "title": "调查标有“世界之眼”的邪教徒房屋",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab864062dedb687c5e59901",
+    "title": "在灯塔找到标有“世界之眼”的地方",
+    "map": "5704e4dad2720bb55b8b4567",
+    "marker": "6ab864498919251cc6335001"
+   },
+   {
+    "id": "6ab8324dec0757b37811950f",
+    "title": "调查被打砸一空的邪教徒房间",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d647fe062a361f810",
+    "title": "找到受害人笔记中提到的那把钥匙",
+    "map": "5704e4dad2720bb55b8b4567",
+    "marker": "6ab864e638840e4bc5ae0701"
+   },
+   {
+    "id": "6ab8324d9404956b96dbe111",
+    "title": "从 Mechanic 处了解更多与 14-4 KORD 站点相关的情报",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d631627c755a57412",
+    "title": "修复 Arshavin 的钥匙卡",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324dd1ab1e914305ee13",
+    "title": "设法进入 NGO Cobalt 的秘密设施",
+    "map": "5714dbc024597771384a510d",
+    "marker": "6ab866e0944d1cfe762c4301"
+   },
+   {
+    "id": "6ab8324dafbae3270a29c214",
+    "title": "恢复站点的供电",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d0382811a08aada15",
+    "title": "启动机房内的冷却系统",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324de4b9ecd80df1b716",
+    "title": "插入U盘以下载数据",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324de48ccde5d1bd7d17",
+    "title": "彻底调查代号 14-4 KORD 的 ARRS 站点",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d3e797844f63a9a18",
+    "title": "以幸存状态撤离立交桥",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d9d8bf4c8088f5a19",
+    "title": "想办法断开站点与外部代理之间的连接",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d9305acdd906e331a",
+    "title": "将 ARRS 站点回滚至备用配置",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d4a2b854d5f2b261b",
+    "title": "从 ARRS 站点回收 U 盘",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d2d3223d678ecff1c",
+    "title": "以幸存状态撤离立交桥",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d6af059fe4559ba1d",
+    "title": "将装有数据的U盘交给 Mechanic",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8324d247882bcd4557e1e",
+    "title": "阅读 ARRS 站点规格说明",
+    "map": "",
+    "marker": ""
+   }
+  ]
+ },
+ {
+  "href": "/storyline/69052e18e680c2d3e3034d3a",
+  "name": "意外证人",
+  "objectives": [
+   {
+    "id": "6ab86f5302cf8a3f0bd24901",
+    "title": "找出科兹洛夫的住址",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab871b9e3d13ed232341601"
+   },
+   {
+    "id": "6ab86f5379628da6aaae8502",
+    "title": "搞清楚科兹洛夫到底被卷进什么麻烦里了",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f53c98d0d91a0928003",
+    "title": "询问 Skier 阿纳斯塔西娅的事情",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f5332a3d10ff98ee104",
+    "title": "进入 Skier 犯罪同伙的公寓",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab872efefc81068ae27f401"
+   },
+   {
+    "id": "6ab86f5312d2817a0f526705",
+    "title": "了解 Skier 这位同伙的更多信息",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f533ecd7ee17de05306",
+    "title": "阅读从 Skier 同伙的公寓里找到的文件",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f5372003339a0ed5807",
+    "title": "向 Skier 报告",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f53168dc057b069e008",
+    "title": "和 Ragman 交谈",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f53ac22c5bcfbf37209",
+    "title": "找到阿纳斯塔西娅的公寓",
+    "map": "5714dc692459777137212e12",
+    "marker": "6ab873ace78fc1cfc7185e01"
+   },
+   {
+    "id": "6ab86f53b65754a449562f0a",
+    "title": "调查阿纳斯塔西娅公寓的入口",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f5311164f0140fc480b",
+    "title": "深入了解阿纳斯塔西娅",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f537c0182252db26c0c",
+    "title": "找到信使帕沙",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab87b970ed85041e401de01"
+   },
+   {
+    "id": "6ab86f532cfce8c452f0690d",
+    "title": "捜索偷袭位置周围",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f53f3228da100c28e0e",
+    "title": "与 Skier 对话",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f530c37fe587e65e30f",
+    "title": "找到 Reshala 的储藏处",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab87f5eacc2d3b1dfd37a01"
+   },
+   {
+    "id": "6ab86f5349f44353498e7f10",
+    "title": "调查 Reshala 的窝棚",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab86f53fb9897482205a411",
+    "title": "找到科兹洛夫的藏身处",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab87e3e914e7a54d747d301"
+   },
+   {
+    "id": "6ab86f5309712ceb02a1a112",
+    "title": "找到并获取科兹洛夫的证据",
+    "map": "",
+    "marker": ""
+   }
+  ]
+ },
+ {
+  "href": "/storyline/69d38381cea4b428690ea1d9",
+  "name": "Boreas",
+  "objectives": [
+   {
+    "id": "6ab8c58e8920371e4cd9a301",
+    "title": "询问 Mechanic 求救信号的来源",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c58e3e241c10fd066202",
+    "title": "在森林找到通讯基站下的设备",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c58ecbb0946790f09f03",
+    "title": "在森林修复通讯基站下的设备",
+    "map": "5704e3c2d2720bac5b8b4567",
+    "marker": "6ab8d705b4badabee3d27401"
+   },
+   {
+    "id": "6ab8c58ed3bd5dc80589ab04",
+    "title": "向 Mechanic 汇报情况",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c58e3b2a387d2b35fd05",
+    "title": "找到并获取 Paradigm 航运文件",
+    "map": "5704e4dad2720bb55b8b4567",
+    "marker": "6ab8d738f8b26407a6927201"
+   },
+   {
+    "id": "6ab8c58e2edcf7689d517906",
+    "title": "告诉 Mechanic 关于 Boreas 号的情况",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c58e0732f6ba8b92ea07",
+    "title": "安排登船的交通工具",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a5c9a885b5deed2c01",
+    "title": "在储备站击杀 30名 任意目标",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a563b6a06cdb644c02",
+    "title": "在储备站的森林转移点发射一枚黄色信号棒",
+    "map": "5704e5fad2720bc05b8b4567",
+    "marker": "6ab8de7875e7d9e7ad838901"
+   },
+   {
+    "id": "6ab8c6a5a8c508edcde72c03",
+    "title": "把 AMG-10 液压油交给 Prapor",
+    "map": "5704e5fad2720bc05b8b4567",
+    "marker": "6ab8e06161b511eae590cc01"
+   },
+   {
+    "id": "6ab8c6a5f886b549a26f1e04",
+    "title": "想办法找到其他登船方式",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a531b8311077049905",
+    "title": "返回藏身处",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a5e3e48ab1b7eb9706",
+    "title": "上交 7.62x54R 7BT1 弹药给 BTR 司机 200 发",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a5efb57b2f51260807",
+    "title": "在海关找到并获取 Skier 的报告",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab8e1192f15e4be1d124201"
+   },
+   {
+    "id": "6ab8c6a5671fc60473ffa708",
+    "title": "在海关烧掉 Skier 的报告",
+    "map": "56f40101d2720b2a4d8b45d6",
+    "marker": "6ab8e15e53f5fc44ee467901"
+   },
+   {
+    "id": "6ab8c6a54c750025a9b92009",
+    "title": "在走私者营地范围内消灭任意目标 15 名",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab8e2c9875e3507adaeaf01"
+   },
+   {
+    "id": "6ab8c6a50d5ea40142cab80a",
+    "title": "在走私者营地范围内消灭任意目标 10 名",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab8e2de55cd9ed0ed039001"
+   },
+   {
+    "id": "6ab8c6a5788a13e53f050d0b",
+    "title": "返回 BTR 司机处报告进展",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a5674eae093939c10c",
+    "title": "告诉 Mechanic 你找到了登船的交通工具",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a5c2498a7f4c332a0d",
+    "title": "在海岸线登上走私者的气垫船",
+    "map": "5704e554d2720bac5b8b456e",
+    "marker": "6ab8e38407bc3278d89a4901"
+   },
+   {
+    "id": "6ab8c6a585be5e65eff9c80e",
+    "title": "登上破冰船",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a53f419611d2d35e0f",
+    "title": "检查破冰船上是否有任何船员幸存",
+    "map": "69af492a4819ea4ba10a69c5",
+    "marker": "6ab8e61157f8c53ae7e4d201"
+   },
+   {
+    "id": "6ab8c6a5c521a4bfe1ceac10",
+    "title": "进入破冰船的轮机舱",
+    "map": "69af492a4819ea4ba10a69c5",
+    "marker": "6ab8e6f920b24eaab7ba5a01"
+   },
+   {
+    "id": "6ab8c6a5d7dc301a6776da11",
+    "title": "想办法进入破冰船的上层建筑",
+    "map": "69af492a4819ea4ba10a69c5",
+    "marker": "6ab8e872ddb3d302b5330401"
+   },
+   {
+    "id": "6ab8c6a5cb4cb4509517ad12",
+    "title": "向 Mechanic 询问炸药的事情",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a5ba44ce44343b0d13",
+    "title": "向 Prapor 了解炸药的事情",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c6a523b9bcc3ce963214",
+    "title": "在海岸线登上走私者的气垫船",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcdb45c8b5b0210701",
+    "title": "登上破冰船",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc4cb7f9757e93d602",
+    "title": "抵达轮机舱顶部那扇损坏的门",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcac2c68470d2c7703",
+    "title": "使用 SZ-1 炸药破坏轮机舱顶部密闭门的锁链",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcb241bf45d9a34d04",
+    "title": "从轮机舱顶部的门进入破冰船上层舱室",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcf3c27056cc16f605",
+    "title": "想办法进入破冰船上层舱室的上甲板",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcaa04995ff2361006",
+    "title": "询问幸存的科学家如何打开第 6 层的密码锁",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bccff4bc3de1cf7e07",
+    "title": "向 Mechanic 寻求帮助，找到第 6 层上锁大门的密码",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc34ae73b018150308",
+    "title": "将黑客入侵装置安放在实验室的机房内",
+    "map": "5b0fc42d86f7744a585f9105",
+    "marker": "6ab8ea734873bcc9f3039801"
+   },
+   {
+    "id": "6ab8c7bca8365a2817b94c09",
+    "title": "返回 Mechanic 处",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcc855d97b976f850a",
+    "title": "在海岸线登上走私者的气垫船",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc58ade882f661cb0b",
+    "title": "登上破冰船",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc58a3473e79df520c",
+    "title": "抵达破冰船的轮机舱",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc306ea6f54e3f0b0d",
+    "title": "抵达轮机舱顶部那扇损坏的门",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bce5c5f5e5aa63470e",
+    "title": "使用 SZ-1 炸药破坏轮机舱顶部密闭门的锁链",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc9afb2295ef60d50f",
+    "title": "抵达密码锁旁",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcd357ba187669fc10",
+    "title": "使用正确的密码开锁",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcd606b5cb6d11a711",
+    "title": "进入破冰船上层甲板",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc826d71b0044bbf12",
+    "title": "找到 C-1 舱窒",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc89e7c7bc80f31a13",
+    "title": "抵达上层甲板",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc6fbd8d8a63a50214",
+    "title": "营救破冰船船长",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcc2ae12d410043e15",
+    "title": "解冻舰桥顶部的舱口",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcbcf37d34a924c316",
+    "title": "进入 C-1 舱窒",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc5611b32cdc0c3e17",
+    "title": "在 C-1 舱室的服务器周边寻找有情报价值的东西",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc9e38e011482ccc18",
+    "title": "在 C-1 舱室中的工作台周围寻找有情报价值的东西",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc260ee0a74053f619",
+    "title": "在 C-1 舱室的架子上寻找有情报价值的东西",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc09f76f15f1d6bc1a",
+    "title": "请 Mechanic 帮忙破解破冰船上找回的闪存盘",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc5c503d2ea776961b",
+    "title": "将 Ultralink 卫星通讯模块 交给 Mechanic 3 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc0ffee0c57a1e961c",
+    "title": "将 Memento 服务器内存模块 交给 Mechanic 4 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc6baf0e248782801d",
+    "title": "将 IBX Gigachad 加密处理器 交给 Mechanic 2 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc4959f6326bd68e1e",
+    "title": "分析从破冰船上回收的数据",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcb81a988ebe404c1f",
+    "title": "将船长的死讯通知科学家",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcb60133931c523a20",
+    "title": "询问 BTR 司机能否协助从船上撤离科学家",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc624199d61cdd3d21",
+    "title": "帮助走私者在冲突中对抗游荡者",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc1fba43e22ae69b22",
+    "title": "在破冰船上消灭任意目标 20 名",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc74f2d14e49495223",
+    "title": "上交 Kirasa-N（胸甲-N）防弹衣给 BTR 司机 1 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcf4d3c06786f7d224",
+    "title": "将 5 级及以上的防弹插板上交给 BTR 司机 2 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc62523ebd50043025",
+    "title": "上交呼吸面罩给 BTR 司机 5 个",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc38be4508c4af5226",
+    "title": "向 BTR 司机询问接下来的行动",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bcecc5c3ed81997627",
+    "title": "通知科学家，救援行动已经一切就绪",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6ab8c7bc2e275ed40341cd28",
+    "title": "向 BTR 司机询问救援行动的进展",
+    "map": "",
+    "marker": ""
+   }
+  ]
+ }
+]
