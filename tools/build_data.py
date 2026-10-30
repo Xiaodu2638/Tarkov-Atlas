@@ -214,7 +214,6 @@ BOSS_ZH = {
     "bossZryachiy": "Zryachiy",
     "bossSanitar": "Sanitar",
     "bossGluhar": "Glukhar",
-    "bossZryachiy": "Zryachiy",
     "bossKolontay": "Kollontay",
     "bossPartisan": "Partisan",
     "bossBoar": "Kaban",

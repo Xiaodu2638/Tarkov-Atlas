@@ -132,7 +132,6 @@ public sealed class MapCanvas : Control
     private bool _panning;
     private Point _dragStart;
     private Vector _panStart;
-    private Point _lastPointer;
 
     // Downscaled copy of the base artwork. Zoomed out, the viewport covers a
     // small fraction of a 5600 px image and the rasteriser re-samples the whole
@@ -189,24 +188,44 @@ public sealed class MapCanvas : Control
         var changed = !ReferenceEquals(map, _map);
         _map = map;
         _bitmap = bitmap;
+        // RenderTargetBitmaps hold native surfaces: clearing the slot without
+        // Dispose leaked one 1400x700(-ish) mip per map switch (PickDrawBitmap
+        // only disposes on the replace path, never here).
         if (!ReferenceEquals(_mipSource, bitmap))
         {
+            _mipBitmap?.Dispose();
             _mipBitmap = null;
             _mipSource = null;
             _mipFactor = 1;
         }
-        // Floor decks change with the layer combo, not just with the map; the
-        // floor mip slot has to drop its stale source whenever the map changes.
-        _floorMipBitmap = null;
-        _floorMipSource = null;
-        _floorMipFactor = 1;
-        _floorMipFailed = null;
-        _mipFailed = null;
         if (changed)
         {
+            // Floor decks change with the layer combo, not just with the map;
+            // the floor mip slot has to drop its stale source whenever the map
+            // changes. A re-SetMap of the SAME map (the overlay does this on
+            // every new screenshot) must NOT rebuild it, or every screenshot
+            // pays a fresh RenderTargetBitmap while zoomed out. PickDrawBitmap
+            // already rebuilds on a deck swap because the source reference
+            // differs, so clearing only on map change is safe.
+            if (_floorMipBitmap is not null)
+            {
+                _floorMipBitmap.Dispose();
+                _floorMipBitmap = null;
+            }
+            _floorMipSource = null;
+            _floorMipFactor = 1;
+            _floorMipFailed = null;
+            _mipFailed = null;
             _zoom = 1;
             _pan = default;
             _avatarCache.Clear();
+            // LoadCircle caches RenderTargetBitmaps (native surfaces). Only
+            // dispose those: on the rasterisation-failure path the cached
+            // value IS the raw bitmap shared with _avatarCache, and Avalonia
+            // bitmaps double-free loudly.
+            foreach (var b in _circleCache.Values)
+                if (b is RenderTargetBitmap)
+                    b.Dispose();
             _circleCache.Clear();
             _markerHits.Clear();
             _focusPin = null;
@@ -530,7 +549,9 @@ public sealed class MapCanvas : Control
         // the rasteriser re-samples the whole texture every drag frame. Drawing
         // a pre-shrunk copy keeps pixels identical but makes panning smooth.
         var floor = Layers.FirstOrDefault(l => l.Bitmap is not null);
-        var baseBitmap = PickDrawBitmap(_bitmap);
+        // Same "remember the failure, never retry" guard the floor slot uses:
+        // without it a failing base mip rebuilt (and threw) on every frame.
+        var baseBitmap = _mipFailed == _bitmap ? _bitmap : PickDrawBitmap(_bitmap);
         // The selected deck is drawn opaque over a dimmed base, so the base
         // pixels below it are invisible — resampling BOTH full-size textures
         // per drag frame was the main cost on multi-deck maps (Factory,
@@ -1490,7 +1511,6 @@ public sealed class MapCanvas : Control
     {
         base.OnPointerMoved(e);
         var pos = e.GetPosition(this);
-        _lastPointer = pos;
 
         if (_panning)
         {

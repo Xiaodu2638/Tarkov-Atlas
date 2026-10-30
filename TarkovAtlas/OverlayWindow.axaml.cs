@@ -110,6 +110,13 @@ public partial class OverlayWindow : Window, IOverlayState
         ShowCaches = settings.ShowCaches,
         ShowQuestMarkers = settings.ShowQuestMarkers,
         ShowHazards = settings.ShowHazards,
+        // Default-true switches must follow the main window's toggles too:
+        // omitting them made the mini-map always paint BTR stops and loot
+        // containers (plus kinds the legend switched off), and DrawLoot's
+        // 6000+ point loop ran over hidden kinds every frame.
+        ShowBtrs = settings.ShowBtrs,
+        ShowLoot = settings.ShowLoot,
+        LootKindsHidden = settings.HiddenLootKinds,
     };
 
     private void PlaceWindow(AppSettings settings)
