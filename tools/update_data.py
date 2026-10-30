@@ -60,7 +60,10 @@ def load_json(path: Path):
 
 
 def dump_json(path: Path, obj) -> None:
-    path.write_text(json.dumps(obj, ensure_ascii=False, indent=1),
+    # Match the committed snapshots byte-for-byte (compact, one line, no
+    # spaces): a re-pull must show a *data* diff, not a whitespace reshuffle
+    # of a 3 MB file that hides the real change.
+    path.write_text(json.dumps(obj, ensure_ascii=False, separators=(',', ':')),
                     encoding="utf-8", newline="\n")
 
 
@@ -136,10 +139,18 @@ def selection_for(value) -> str | None:
     return " ".join(subs)
 
 
+# traders.json 的 data 直接是 id->对象 的平铺 map（GraphQL 根字段就叫 traders），
+# 没有 maps/tasks 那种 data.<section>.<id> 的中间层；拉取与回写都要按这层映射。
+FLAT_MAP_SECTIONS = {"traders": "traders"}
+
+
 def build_query(name: str, snapshot: dict) -> str:
     """query($language:String){ section(language:$language){...} } from old shape."""
+    sections = snapshot["data"]
+    if name in FLAT_MAP_SECTIONS:
+        sections = {FLAT_MAP_SECTIONS[name]: sections}
     parts = []
-    for section, value in snapshot["data"].items():
+    for section, value in sections.items():
         sample = None
         if isinstance(value, dict) and value:
             sample = next(iter(value.values()))
@@ -150,6 +161,10 @@ def build_query(name: str, snapshot: dict) -> str:
             parts.append(f"{section}(language: $language) {{ {inner} }}")
         else:
             log(f"  跳过 {name}.{section}（非对象段，无法派生选择集）")
+    # 空选择集 = 快照结构与预期不符。此时继续拉取只会把空 data 写回快照，
+    # 静默毁掉整个文件；宁可在这里停下来让人看。
+    if not parts:
+        die(f"{name}: 无法从现有快照派生任何选择段，中止（不写回）")
     return "query($language: String) { " + " ".join(parts) + " }"
 
 
@@ -262,20 +277,30 @@ def refresh_dataset(name: str, en_raw: dict, zh_raw: dict) -> tuple[int, int]:
     """Reshape one fetched dataset and write both files. Returns (sections, zh rows)."""
     snap = load_json(API / f"{name}.json")
     old_zh = load_json(API / f"{name}.zh.json")["data"]
-
     old_sections = snap["data"]
+
     data = {sec: key_section(val, isinstance(old_sections.get(sec), dict))
             for sec, val in en_raw.items()}
     flat = dict(old_zh)
-    for section, en_sec in en_raw.items():
+    for section, en_sec in data.items():
         zh_sec = zh_raw.get(section)
         if zh_sec is None:
             continue
         flat = flatten_zh(en_sec, zh_sec, flat)
 
+    # build_query 把平铺 map（traders 的 data 就是 id->对象）当成一个虚拟
+    # section 发查询；回写前解包回 data 顶层，保持提交快照的原有形状。
+    virtual = FLAT_MAP_SECTIONS.get(name)
+    if virtual and set(data) == {virtual}:
+        data = data[virtual]
+
     dump_json(API / f"{name}.json",
               {"data": data, "translations": snap.get("translations", [])})
-    dump_json(API / f"{name}.zh.json", {"data": dict(sorted(flat.items()))})
+    # flat starts as dict(old_zh) so committed keys keep their committed
+    # positions; only genuinely new rows are appended (in doc order). Sorting
+    # here would reshuffle the whole table on the first real pull and bury the
+    # data diff under key-order noise.
+    dump_json(API / f"{name}.zh.json", {"data": flat})
     return len(data), len(flat)
 
 
