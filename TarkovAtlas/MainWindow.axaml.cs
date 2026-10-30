@@ -535,6 +535,7 @@ public partial class MainWindow : Window
             ShowBtrs = _settings.ShowBtrs,
             ShowLoot = _settings.ShowLoot,
             LootKindsHidden = _settings.HiddenLootKinds,
+            PoiKindsHidden = _settings.HiddenPoiKinds,
         };
         MapView.Hazards = _currentMap?.Hazards ?? new List<HazardZone>();
         MapView.InvalidateVisual();
@@ -815,6 +816,7 @@ public partial class MainWindow : Window
                         if (v) _settings.HiddenPoiKinds.Remove(kind);
                         else if (!_settings.HiddenPoiKinds.Contains(kind)) _settings.HiddenPoiKinds.Add(kind);
                         MapView.PoiKindsHidden = _settings.HiddenPoiKinds;
+                        _overlay.ApplyDisplayOptions(_settings);
                     },
                     Count = group.Count(),
                 });

@@ -9,7 +9,7 @@ using TarkovAtlas.Models;
 namespace TarkovAtlas.Controls;
 
 /// <summary>Rendering options shared by the main view and the overlay.</summary>
-public sealed class MapDisplayOptions
+    public sealed class MapDisplayOptions
 {
     public bool ShowLabels { get; set; } = true;
     public bool ShowExtracts { get; set; } = true;
@@ -29,6 +29,8 @@ public sealed class MapDisplayOptions
     public bool ShowHazards { get; set; } = true;
     /// <summary>Draw BTR taxi stops (BTR 站点).</summary>
     public bool ShowBtrs { get; set; } = true;
+    /// <summary>Puzzle-item kinds toggled off in the legend (解谜道具).</summary>
+    public IReadOnlyCollection<string> PoiKindsHidden { get; set; } = Array.Empty<string>();
 
     public MapDisplayOptions Clone() => (MapDisplayOptions)MemberwiseClone();
 }

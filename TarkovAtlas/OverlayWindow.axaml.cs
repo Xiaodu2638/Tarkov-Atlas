@@ -117,6 +117,7 @@ public partial class OverlayWindow : Window, IOverlayState
         ShowBtrs = settings.ShowBtrs,
         ShowLoot = settings.ShowLoot,
         LootKindsHidden = settings.HiddenLootKinds,
+        PoiKindsHidden = settings.HiddenPoiKinds,
     };
 
     private void PlaceWindow(AppSettings settings)
