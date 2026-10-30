@@ -143,7 +143,7 @@
             <CheckBox x:Name="AutoSwitchCheck" Content="识别到战局后自动切换主地图和悬浮地图" />
             <CheckBox x:Name="ScanScreenshotsCheck" Content="监听新截图并自动在地图上定位" />
             <CheckBox x:Name="ScanOnStartupCheck" Content="启动时扫描已有截图" />
-            <CheckBox x:Name="DeleteScreenshotsCheck" Content="读取坐标后删除截图文件（不留垃圾）" />
+            <CheckBox x:Name="DeleteScreenshotsCheck" Content="读取坐标后删除截图文件（永久删除，不进回收站）" />
             <CheckBox x:Name="LabelsCheck" Content="在地图上显示地名" />
           </StackPanel>
         </Border>

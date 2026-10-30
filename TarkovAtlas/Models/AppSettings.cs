@@ -69,8 +69,9 @@ public sealed class AppSettings
     public bool ScanScreenshots { get; set; } = true;
     public bool ScanOnStartup { get; set; } = true;
     /// <summary>
-    /// Move imported screenshots to the Recycle Bin. Off by default: the folder
-    /// holds the player's own pictures, so deleting is opt-in.
+    /// Permanently delete imported screenshots (no Recycle Bin — the coordinate
+    /// pin is already stored by us). Off by default: the folder holds the
+    /// player's own pictures, so deleting is opt-in.
     /// </summary>
     public bool DeleteScreenshotsAfterScan { get; set; }
 

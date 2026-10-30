@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using TarkovAtlas.Models;
 
@@ -130,10 +129,12 @@ public sealed class ScreenshotService : IDisposable
     }
 
     /// <summary>
-    /// Move a screenshot to the Recycle Bin once its coordinates were imported,
-    /// so the folder does not fill with junk. Opt-in only (the settings default
-    /// is off) and the file must carry the exact game-format name, because
-    /// anything else in that folder belongs to the user.
+    /// Permanently delete a screenshot once its coordinates were imported, so the
+    /// folder does not fill with junk. The game re-screenshots in seconds, so a
+    /// recycled copy only clutters the Recycle Bin; the coordinate pin already
+    /// lives in our own state. Opt-in only (the settings default is off) and the
+    /// file must carry the exact game-format name, because anything else in that
+    /// folder belongs to the user.
     /// </summary>
     public bool TryDeleteAfterImport(string path)
     {
@@ -141,47 +142,14 @@ public sealed class ScreenshotService : IDisposable
         {
             if (!File.Exists(path)) return false;
             if (!StrictPattern.IsMatch(Path.GetFileNameWithoutExtension(path))) return false;
-            return MoveToRecycleBin(path);
+            File.Delete(path);
+            return !File.Exists(path);
         }
         catch (Exception ex)
         {
             AppPaths.LogCrash(ex);
             return false;
         }
-    }
-
-    private const uint FoDelete = 3;
-    private const ushort FofSilent = 0x0004;
-    private const ushort FofNoConfirmation = 0x0010;
-    private const ushort FofAllowUndo = 0x0040;
-    private const ushort FofNoErrorUi = 0x0400;
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    private struct ShFileOpStruct
-    {
-        public IntPtr hwnd;
-        public uint wFunc;
-        public string pFrom;
-        public string? pTo;
-        public ushort fFlags;
-        public int fAnyOperationsAborted;
-        public IntPtr hNameMappings;
-        public string? lpszProgressTitle;
-    }
-
-    [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-    private static extern int SHFileOperation(ref ShFileOpStruct op);
-
-    /// <summary>Delete through the shell so the file lands in the Recycle Bin.</summary>
-    private static bool MoveToRecycleBin(string path)
-    {
-        var op = new ShFileOpStruct
-        {
-            wFunc = FoDelete,
-            pFrom = path + "\0\0",
-            fFlags = FofAllowUndo | FofNoConfirmation | FofSilent | FofNoErrorUi,
-        };
-        return SHFileOperation(ref op) == 0 && op.fAnyOperationsAborted == 0 && !File.Exists(path);
     }
 
     public void StartWatching(string directory, Action<ScreenshotInfo> onNew)
