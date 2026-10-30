@@ -578,6 +578,17 @@ public sealed class MapCanvas : Control
     public const double LootZoomGate = 4.0;
 
     /// <summary>
+    /// The overlay (Compact) squeezes the whole map into a small window, so icon
+    /// sizes tuned against the main window's ~700 px map area dwarf the
+    /// buildings there. Every marker class multiplies its side length by the
+    /// canvas short side relative to that reference. Deep zoom still grows the
+    /// icons through the zoom curve; this only fixes the overview footprint.
+    /// </summary>
+    private double CompactShrink =>
+        !Compact ? 1.0
+                 : Math.Clamp(Math.Min(Bounds.Width, Bounds.Height) / 700.0, 0.30, 1.0);
+
+    /// <summary>
     /// Icon side length for a marker class. Pure sqrt(zoom) scaling only covers
     /// ~1:1.6 across the whole 0.35x–32x zoom range, so the old clamps kept
     /// icons near their full size even when the map itself shrank to a postage
@@ -587,7 +598,8 @@ public sealed class MapCanvas : Control
     /// same readable maximum as before.
     /// </summary>
     private double MarkerIcon(double baseSize, double maxSize, double minSize = 9)
-        => Math.Clamp(baseSize * Math.Pow(_zoom, 0.45), minSize, maxSize);
+        => Math.Clamp(baseSize * Math.Pow(_zoom, 0.45) * CompactShrink,
+                      minSize * CompactShrink, maxSize);
 
     private bool ExtractVisible(ExtractPoint e) => Options.ExtractFilter switch
     {
