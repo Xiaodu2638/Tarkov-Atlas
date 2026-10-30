@@ -1082,15 +1082,22 @@ public partial class MainWindow : Window
             AddScreenshotInternal(info);
             imported++;
 
-            if (_settings.DeleteScreenshotsAfterScan && _screenshots.TryDeleteAfterImport(info.FilePath))
-                deleted++;
-
             var time = info.CapturedAt == default ? info.FileTime : info.CapturedAt;
             if (time > latestTime)
             {
                 latestTime = time;
                 latestInfo = info;
                 latestMap = _repo.FindByKey(info.MapKey);
+            }
+
+            // Deferred too: see OnNewScreenshotAsync. The toast reports the
+            // count that WILL be cleaned.
+            if (_settings.DeleteScreenshotsAfterScan)
+            {
+                var path = info.FilePath;
+                _ = Task.Delay(ScreenshotService.DeleteGrace)
+                    .ContinueWith(_ => _screenshots.TryDeleteAfterImport(path));
+                deleted++;
             }
         }
 
@@ -1168,9 +1175,11 @@ public partial class MainWindow : Window
         AddScreenshotInternal(info);
         UpdateScreenshotCount();
 
-        if (_settings.DeleteScreenshotsAfterScan)
-            _screenshots.TryDeleteAfterImport(info.FilePath);
-
+        // Render first, delete later: the pin/overlay update below must not
+        // wait on file I/O, and the game may still hold the file open right
+        // after writing it. The grace delay also keeps us from deleting a
+        // capture the game is about to replace under the same minute-precision
+        // name.
         if (_settings.AutoSwitchMap && info.MapKey != _currentMap?.Key)
         {
             var map = _repo.FindByKey(info.MapKey);
@@ -1189,6 +1198,10 @@ public partial class MainWindow : Window
 
         SyncOverlayPlayer();
         ShowToast($"新截图已定位: X {info.X:0.0}  Z {info.Z:0.0}");
+
+        if (_settings.DeleteScreenshotsAfterScan)
+            _ = Task.Delay(ScreenshotService.DeleteGrace)
+                .ContinueWith(_ => _screenshots.TryDeleteAfterImport(info.FilePath));
     }
 
     private void UpdateScreenshotCount()

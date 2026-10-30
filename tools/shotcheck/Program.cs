@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using TarkovAtlas.Services;
 
 // Screenshot filename parsing + "read then delete" behaviour.
@@ -78,6 +79,27 @@ internal static class ShotChecks
         ledger.MarkImported(shot, t2);
         Check("ledger: other path imports",
             ledger.ShouldImport(shot + "-2.png", t1));
+
+        // Delete grace: the constant exists and is short enough that the
+        // folder visibly clears, but long enough to outlive the game's own
+        // write handle (the whole point of deferring deletion).
+        Check("delete grace is 3s", ScreenshotService.DeleteGrace == TimeSpan.FromSeconds(3),
+            ScreenshotService.DeleteGrace.ToString());
+
+        // Stability wait: a file that stops growing is reported stable; a file
+        // that keeps growing is not imported half-written.
+        var grow = Path.Combine(dir, "2026-10-30[17-46]_4.0, 5.0, 6.0_0, 0, 0, 1_5.0.png");
+        using (var f = File.Create(grow))
+        {
+            f.Write(new byte[1024]);
+            f.Flush();
+            var sw = Stopwatch.StartNew();
+            var stable = ScreenshotService_TestHook.WaitUntilStableForTest(grow)
+                .GetAwaiter().GetResult();
+            sw.Stop();
+            // Nothing else writes it, so it becomes stable after ~StableWindow.
+            Check("stability: quiet file becomes stable", stable, $"{sw.ElapsedMilliseconds}ms");
+        }
 
         try { Directory.Delete(dir, true); } catch { }
 

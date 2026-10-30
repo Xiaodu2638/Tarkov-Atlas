@@ -21,6 +21,21 @@ public sealed class ScreenshotImportLedger
     public void MarkImported(string path, DateTime fileTime) => _seen[path] = fileTime;
 }
 
+/// <summary>Test seam: expose the private stability wait to the check tools.</summary>
+public static class ScreenshotService_TestHook
+{
+    public static Task<bool> WaitUntilStableForTest(string path)
+    {
+        // Invoke the private static via a tiny reflection shim so the service
+        // keeps its surface clean.
+        var m = typeof(ScreenshotService)
+            .GetMethod("WaitUntilStableAsync",
+                       System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        return (Task<bool>?)m?.Invoke(null, new object[] { path })
+            ?? Task.FromResult(false);
+    }
+}
+
 public sealed class ScreenshotService : IDisposable
 {
     private static readonly Regex StrictPattern = new(
@@ -39,6 +54,16 @@ public sealed class ScreenshotService : IDisposable
     private Action<ScreenshotInfo>? _onNew;
     private readonly HashSet<string> _recent = new(StringComparer.OrdinalIgnoreCase);
     private readonly object _gate = new();
+
+    // The game creates the file and then streams a multi-MB PNG into it, firing
+    // Changed the whole way, so "Created" alone often catches a 0-byte file.
+    private static readonly TimeSpan StableWindow = TimeSpan.FromMilliseconds(700);
+    private static readonly TimeSpan StableTimeout = TimeSpan.FromSeconds(8);
+
+    /// <summary>Grace period before an imported screenshot is deleted. Deleting
+    /// right away raced the game's own write handle and let the next capture
+    /// reuse the same name, which then looked like a lost screenshot.</summary>
+    public static readonly TimeSpan DeleteGrace = TimeSpan.FromSeconds(3);
 
     public static readonly string[] Extensions = { ".png", ".jpg", ".jpeg", ".bmp" };
 
@@ -207,8 +232,11 @@ public sealed class ScreenshotService : IDisposable
         {
             try
             {
-                // Let the game finish writing the PNG before reading its metadata.
-                await Task.Delay(450);
+                // Wait until the game finished streaming the PNG (size and write
+                // time stop changing) instead of a fixed delay: a big screenshot
+                // takes longer than 450 ms and a half-written file silently
+                // dropped the pin.
+                if (!await WaitUntilStableAsync(e.FullPath)) return;
                 var info = Parse(e.FullPath, strictOnly: true);
                 if (info is not null) _onNew?.Invoke(info);
             }
@@ -224,6 +252,40 @@ public sealed class ScreenshotService : IDisposable
         });
     }
 
+    /// <summary>Poll size + LastWriteTime until both stop changing for
+    /// <see cref="StableWindow"/>. False on timeout or if the file vanished
+    /// (the game can rename or clean it up).</summary>
+    private static async Task<bool> WaitUntilStableAsync(string path)
+    {
+        var deadline = DateTime.UtcNow + StableTimeout;
+        var lastSize = -1L;
+        var lastWrite = DateTime.MinValue;
+        var stableSince = DateTime.UtcNow;
+
+        while (DateTime.UtcNow < deadline)
+        {
+            var fi = new FileInfo(path);
+            fi.Refresh();
+            if (!fi.Exists) return false;
+
+            var size = fi.Length;
+            var write = fi.LastWriteTimeUtc;
+            if (size != lastSize || write != lastWrite)
+            {
+                lastSize = size;
+                lastWrite = write;
+                stableSince = DateTime.UtcNow;
+            }
+            else if (size > 0 && DateTime.UtcNow - stableSince >= StableWindow)
+            {
+                return true;
+            }
+
+            await Task.Delay(150);
+        }
+        return false;
+    }
+
     public void StopWatching()
     {
         if (_watcher is null) return;
@@ -231,6 +293,7 @@ public sealed class ScreenshotService : IDisposable
         {
             _watcher.EnableRaisingEvents = false;
             _watcher.Created -= OnFile;
+            _watcher.Changed -= OnFile;
             _watcher.Renamed -= OnRenamed;
             _watcher.Dispose();
         }
