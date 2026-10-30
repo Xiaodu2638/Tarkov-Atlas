@@ -198,11 +198,10 @@ HEADERS = {
 }
 BG = (13, 18, 23)
 
-# Maps whose base art comes from the interactive tile layer. Everything else
-# uses the vector source under research/svg/<key>/.
-# The Labyrinth used to be baked from raster tiles with the SVG warped on top.
-# Its SVG aligns markers only through the tiles' affine (3/7 anchors when the
-# generic bounds-stretch is used), so the tile path stays for that one map.
+# Maps whose base art is drawn into the interactive map's tile pixel grid.
+# The labyrinth SVG only lines up through the calibrated warp into that grid,
+# so its size/affine are reproduced from the projection formula (tile_grid) —
+# no tiles are downloaded and none are painted into the artwork.
 # Icebreaker ships full vector art (one SVG per deck, same viewBox); it is built
 # from those decks so the base art and the floor overlays share one render
 # identity.
@@ -415,6 +414,12 @@ def download_tile(session: requests.Session, url: str, path: Path) -> bool:
 
 
 def stitch_tiles(mm: dict, key: str, zoom: int) -> tuple[Image.Image, list[float]]:
+    """Download and composite one interactive-map tile layer into a canvas.
+
+    Used by build_layers for floors tarkov.dev ships only as tiles (reserve
+    2nd-5th, customs 4th). The labyrinth base art used to come from here too,
+    but its grid is now derived analytically — see tile_grid.
+    """
     tile_size = int(mm.get("tileSize") or 256)
     tx0, ty0, tx1, ty1, ts, z = tile_range(mm, zoom, tile_size)
     cols, rows = tx1 - tx0 + 1, ty1 - ty0 + 1
@@ -501,6 +506,49 @@ def stitch_tiles(mm: dict, key: str, zoom: int) -> tuple[Image.Image, list[float
     raw_affine[2] -= left
     raw_affine[5] -= top
     return canvas, raw_affine
+
+
+def tile_grid(mm: dict, zoom: int) -> tuple[tuple[int, int], list[float]]:
+    """The pixel grid a stitched tile canvas would have — without downloading.
+
+    Tile stitching is pure geometry: the canvas size and its affine follow from
+    the projection formula and the tile range, not from the tile pixels. The
+    labyrinth needs that grid (its SVG only lines up through the calibrated
+    warp into it), but it no longer needs the 240 tile downloads that used to
+    provide the grid before being painted over.
+    """
+    tile_size = int(mm.get("tileSize") or 256)
+    tx0, ty0, tx1, ty1, ts, z = tile_range(mm, zoom, tile_size)
+    cols, rows = tx1 - tx0 + 1, ty1 - ty0 + 1
+
+    sx, mx, sy, my = mm["transform"]
+    rot = math.radians(mm.get("coordinateRotation", 0) or 0)
+    c, s = math.cos(rot), math.sin(rot)
+    scale = 2**z
+    raw_affine = [sx * c * scale, -sx * s * scale, mx * scale - tx0 * ts,
+                  -sy * s * scale, -sy * c * scale, my * scale - ty0 * ts]
+
+    # Rotate the grid into the official orientation, then crop to the bounds
+    # rectangle (plus pad) — the same numbers stitch_tiles crops by.
+    b0x, b0z = mm["bounds"][0]
+    b1x, b1z = mm["bounds"][1]
+    q = official_orientation(raw_affine, cols * ts, rows * ts)
+    if q:
+        raw_affine, nw, nh = rotate_affine(raw_affine, cols * ts, rows * ts, q)
+    gw, gh = (nw, nh) if q else (cols * ts, rows * ts)
+
+    rxs = [raw_affine[0] * x + raw_affine[1] * z_ + raw_affine[2]
+           for x in (b0x, b1x) for z_ in (b0z, b1z)]
+    rys = [raw_affine[3] * x + raw_affine[4] * z_ + raw_affine[5]
+           for x in (b0x, b1x) for z_ in (b0z, b1z)]
+    pad = 24
+    left = max(0, math.floor(min(rxs)) - pad)
+    top = max(0, math.floor(min(rys)) - pad)
+    right = min(gw, math.ceil(max(rxs)) + pad)
+    bottom = min(gh, math.ceil(max(rys)) + pad)
+    raw_affine[2] -= left
+    raw_affine[5] -= top
+    return (right - left, bottom - top), raw_affine
 
 
 def sanitize_affine(aff: list[float]) -> list[float]:
@@ -731,15 +779,17 @@ def main() -> None:
         svg_path = svg_source(key)
 
         if key in TILE_MAPS:
-            # Tiles are the same pixel grid the marker coordinates come from, so
-            # they align by construction.
+            # The labyrinth SVG only lines up through the calibrated warp into
+            # the interactive map's tile pixel grid, so that grid is reproduced
+            # from the projection formula (tile_grid) instead of downloading
+            # the tiles and painting over them.
             zoom = 4
-            img, aff = stitch_tiles(uniform_transform(mm), key, zoom)
+            size, aff = tile_grid(uniform_transform(mm), zoom)
             # Upstream ships placeholder transforms for some maps, so the emitted
             # matrix has to be made isotropic before bounds/content are derived
             # from it.
             aff = sanitize_affine(aff)
-            mode = f"tiles z{zoom}"
+            mode = "tile grid (vector art)"
             if key == "the-labyrinth":
                 # The labyrinth tiles and Labyrinth.svg are authored in different
                 # orientations, and tarkov.dev ships no svgLayer for this map, so
@@ -768,7 +818,7 @@ def main() -> None:
                     coeffs = (float(Minv[0, 0]), float(Minv[0, 1]), float(-q[0]),
                               float(Minv[1, 0]), float(Minv[1, 1]), float(-q[1]))
                     art = Image.open(svg_canvas_path).convert("RGBA")
-                    tw, th = img.size
+                    tw, th = size
                     warped = art.transform((tw, th), Image.AFFINE, coeffs,
                                            resample=Image.BICUBIC)
                     flat = Image.new("RGB", (tw, th), BG)

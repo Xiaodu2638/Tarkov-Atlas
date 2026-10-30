@@ -17,8 +17,8 @@
 - **13 张当前战局地图**，采用游戏内官方中文名：中心区、海关、工厂、森林、立交桥、
   海岸线、储备站、实验室、灯塔、塔科夫街区、迷宫、码头、破冰船。
 - **朝向与官方一致**：底图按 tarkov.dev 官方呈现方向输出（上北下南），不存在南北颠倒。
-- **离线高清底图**：矢量 SVG 在构建阶段烘焙成本地 JPG（最长边 5600 px），仅迷宫
-  与个别楼层（上游无矢量组）取自社区瓦片，运行时不请求任何在线资源。
+- **离线高清底图**：全部 13 张底图都由矢量 SVG 烘焙（最长边 5600 px）；仅储备站
+  2–5 层与海关 4 层（上游无矢量组）取自社区瓦片，运行时不请求任何在线资源。
 - **浏览**：左侧列表 + 搜索；滚轮缩放、左键拖拽、双击放大、`0`/`Home` 复位、
   比例尺与指北针。
 - **中文地名**：地标名已本地化（红厂房、宿舍、伐木场、疗养院……），商店品牌名保留原文。
@@ -233,7 +233,7 @@ TarkovAtlas/                 应用主体（C# / Avalonia）
   Assets/story.json          剧情
 tools/                       数据管线（Python）+ 三套自检（C#）
   build_all.py               管线入口
-  build_assets.py            渲染 SVG（迷宫拼接瓦片）→ 底图 + maps.json
+  build_assets.py            渲染 SVG（迷宫 warp 进解析栅格）→ 底图 + maps.json
   build_layers.py            楼层 PNG + layers/index.json + hazards.json
   build_data.py              mapdata.json + quests.json + 商人头像
   build_story.py             剧情

@@ -80,7 +80,7 @@ tools/
   logiccheck/                   服务层断言（QuestService、剧情、商人、跳转）
   shotcheck/                    截图解析与删除行为
   build_all.py                  管线入口（按依赖顺序跑完下面四步）
-  build_assets.py               渲染 SVG（迷宫拼瓦片）→ 生成底图 + maps.json
+  build_assets.py               渲染 SVG（迷宫 warp 进解析栅格）→ 生成底图 + maps.json
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
   build_data.py                 合并 API → mapdata.json / quests.json / 商人头像
   build_story.py                剧情 → story.json
@@ -130,8 +130,9 @@ docs/                           界面截图（README 引用）
 - 入口：`python tools/build_all.py`（等价于依次跑下面四步）。顺序：`build_assets.py` → `build_layers.py` → `build_data.py` → `build_story.py`。所有地图（含冰破船）都在同一条管线里。
 - 局部重建：`build_all.py --only factory`、`build_assets.py --only factory`、`build_layers.py --only factory`。其余地图的 manifest 条目和楼层索引会合并保留，不会清空。
 - **冰破船在同一管线内**：`build_layers.py` 用 `ICE_FLOOR_FILES` 把上游的层名映射到 `research/svg/icebreaker/*.svg`，逐层走 `bake_svg_layer`。不要为它另建入口脚本，也不要在 `build_layers.py` 里跳过它。
+- **迷宫底图不下载瓦片**：美术本来就是 `Labyrinth.svg` 经锚点矩阵 warp 进「瓦片像素栅格」；栅格的尺寸和仿射是纯几何（`build_assets.tile_grid()` 按投影公式直接算），不需要 240 张瓦片提供。`stitch_tiles()` 只剩 reserve 2–5 层、customs 4 层在用。
 - **地图 → SVG 只有一处映射**：`build_assets.svg_source(key)` 按 `research/svg/<key>/` 目录查找（单文件地图取唯一的 `*.svg`，破冰船取 `BASE_DECK`）。`build_layers.py` 复用它，不要再写第二张文件名表。
-- build 脚本靠本机 headless Edge 栅格化 SVG（可用 `EDGE_PATH` 覆盖）；瓦片只有迷宫底图和 reserve 2–5 层、customs 4 层在用，缓存在 `tools/tile-cache/`（git 忽略，可离线重跑）。渲染中间产物写到 `.tmp/build/`（git 忽略，不写 `%TEMP%`）。
+- build 脚本靠本机 headless Edge 栅格化 SVG（可用 `EDGE_PATH` 覆盖）；瓦片只有 reserve 2–5 层、customs 4 层在用，缓存在 `tools/tile-cache/`（git 忽略，可离线重跑）。渲染中间产物写到 `.tmp/build/`（git 忽略，不写 `%TEMP%`）。
 - 外部依赖：`tools/pyext`（Pillow）、`tools/pylibs`（numpy、requests）。重建：
   `python -m pip install --target tools/pylibs pillow numpy requests`
 - 上游快照放在 `research/`：`api/`（tarkov.dev API）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。
@@ -180,7 +181,7 @@ docs/                           界面截图（README 引用）
 - **海岸线楼层**：3 层已生成，内容区仍偏小，待重烘焙。
 - 历史缺陷（破冰船空背景、实验室/迷宫硬拉伸）已修复，**不要再退回**：
   - 破冰船：已改为纯矢量管线，不再用上游栅格瓦片。成品 5600×5183，16 层全部由 `build_layers.py` 从 `research/svg/icebreaker` 渲染，与底图共用同一 viewBox 渲染身份，逐层对齐。旧的 `uniform_transform()` 1.75× 拉伸修正仍适用于其他瓦片地图。
-  - 实验室 / 迷宫：实验室底图 = `First_Level` 组（5600×4082），两层楼（`Second Level` / `Technical`）走 `SVG_FLOOR_ALIASES` 映射到 SVG 组 `Second_Level` / `Technical_Level`——上游只给瓦片，那套瓦片是旧版照片风底图，叠在矢量底图上像两张地图；**迷宫必须走瓦片分支**（3602×3873，`TILE_MAPS`）。`Labyrinth.svg` 的 viewBox 比画面本身大，按 bounds 拉伸后每个标记都偏出房间，试过就知道（3/7 落在画面内）。
+  - 实验室 / 迷宫：实验室底图 = `First_Level` 组（5600×4082），两层楼（`Second Level` / `Technical`）走 `SVG_FLOOR_ALIASES` 映射到 SVG 组 `Second_Level` / `Technical_Level`——上游只给瓦片，那套瓦片是旧版照片风底图，叠在矢量底图上像两张地图；**迷宫必须走「瓦片栅格 + SVG warp」分支**（3602×3873，`TILE_MAPS`）：`Labyrinth.svg` 的 viewBox 比画面本身大，按 bounds 拉伸后每个标记都偏出房间（3/7 落在画面内），只有经锚点矩阵 warp 进瓦片栅格才对齐——但栅格由 `tile_grid()` 纯几何算出，不下载瓦片。
   - 验收口径：`python tools/check_map_coverage.py` 全 13 张退出码 0。有 `content` 的图按「content 与实测画面偏差 ≤ 3%」判，没有 `content` 的图仍按四边边距 < 10% + 标记落在画面内 ≥ 90% 判；背景色取**图片边框环**的众数（整图众数会把工厂判成误报），边框环本身不是深色底（码头的水面铺满画布）时按「画布已铺满」处理。`datacheck` 的 `knownGeometryDefects` 已清空，并新增「content 矩形必须落在画布内」断言；旋转仿射（reserve）跳过「bounds 角点必须在画面内」那条——那是轴对齐前提。
 
 ---
