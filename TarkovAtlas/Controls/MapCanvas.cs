@@ -1495,20 +1495,53 @@ public sealed class MapCanvas : Control
 
         if (_panning)
         {
-            _pan = _panStart + (pos - _dragStart);
-            InvalidateVisual();
+            PanTo(pos);
             e.Handled = true;
             return;
         }
+        UpdateCursorGame(pos);
+    }
 
-        if (_map is not null)
-        {
-            EnsureLayout();
-            var img = ScreenToImage(pos);
-            var game = _map.ImageToGame(img.X, img.Y);
-            if (double.IsFinite(game.X) && double.IsFinite(game.Z))
-                CursorGameMoved?.Invoke(this, game);
-        }
+    private void PanTo(Point pos)
+    {
+        _pan = _panStart + (pos - _dragStart);
+        InvalidateVisual();
+    }
+
+    private void UpdateCursorGame(Point pos)
+    {
+        if (_map is null) return;
+        EnsureLayout();
+        var img = ScreenToImage(pos);
+        var game = _map.ImageToGame(img.X, img.Y);
+        if (double.IsFinite(game.X) && double.IsFinite(game.Z))
+            CursorGameMoved?.Invoke(this, game);
+    }
+
+    // ------------------------------------------------------------------
+    // host-driven panning: the overlay's canvas is hit-test-invisible (its
+    // window forwards gestures), so expose the same drag-pan the built-in
+    // pointer handlers implement. Begin once on press, feed positions while
+    // captured, End on release.
+
+    public void BeginHostPan(Point pos)
+    {
+        _panning = true;
+        _dragStart = pos;
+        _panStart = _pan;
+        SetInteractiveQuality(true);
+    }
+
+    public void MoveHostPan(Point pos)
+    {
+        if (_panning) PanTo(pos);
+    }
+
+    public void EndHostPan()
+    {
+        if (!_panning) return;
+        _panning = false;
+        SetInteractiveQuality(false);
     }
 
     protected override void OnPointerReleased(PointerReleasedEventArgs e)

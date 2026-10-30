@@ -13,8 +13,9 @@
         TransparencyLevelHint="Transparent"
         WindowStartupLocation="Manual">
   <!-- Borderless square cut-out centred on the player position. The window
-       follows the newest screenshot automatically; drag with the right mouse
-       button to move it, wheel to zoom, Ctrl+Alt+L toggles click-through. -->
+       follows the newest screenshot automatically; drag with the left mouse
+       button to pan the map, right-drag to move the window, wheel to zoom,
+       Ctrl+Alt+L toggles click-through. -->
   <Grid x:Name="Root" Background="Transparent">
     <controls:MapCanvas x:Name="OverlayMap" Compact="True" IsHitTestVisible="False" />
     <TextBlock x:Name="HintText" Text=""

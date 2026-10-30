@@ -34,13 +34,26 @@ public partial class OverlayWindow : Window, IOverlayState
     private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter,
         int x, int y, int cx, int cy, uint flags);
 
+    [StructLayout(LayoutKind.Sequential)]
+    private struct WinPoint
+    {
+        public int X;
+        public int Y;
+    }
+
+    [DllImport("user32.dll")]
+    private static extern bool GetCursorPos(out WinPoint lpPoint);
+
     private readonly MainWindow _owner;
     private bool _locked;
     private bool _allowClose;
     private bool _suppressSettings;
     private bool _dragging;
-    private Point _dragStart;
-    private PixelPoint _dragOrigin;
+    private bool _dragIsPan;
+    // Right-drag window move: cursor grab offset in PHYSICAL pixels. Both
+    // GetCursorPos and Window.Position are physical, so no DPI math is needed.
+    private int _grabOffsetX;
+    private int _grabOffsetY;
     private double _opacity = 0.9;
     private double _zoom = 2.4;
     private MapDefinition? _map;
@@ -261,29 +274,58 @@ public partial class OverlayWindow : Window, IOverlayState
     }
 
     /// <summary>
-    /// Right-drag moves the floating window. It used to resize the window,
-    /// which fought with the wheel zoom and made the small map hard to place.
+    /// Two gestures on the mini-map:
+    ///   left-drag  - pan the map itself (same feel as the main window);
+    ///   right-drag - move the floating window (it used to resize, which fought
+    ///                with the wheel zoom and made the small map hard to place).
+    /// A manual pan is temporary by design: the next screenshot re-centres on
+    /// the player (SetPlayer clears the anchors), which is the whole point of
+    /// the follow-the-player overlay.
     /// </summary>
+    /// <remarks>
+    /// BeginMoveDrag only fires for the left button (the Win32 backend checks
+    /// the mouse state), so the right-drag move is driven by hand. It samples
+    /// the physical cursor via GetCursorPos and keys the window position off a
+    /// grab offset captured on press. DIP deltas (e.GetPosition relative to the
+    /// already-moved window) made a re-baselined/press-baseline scheme lag to
+    /// ~40% of the cursor; physical coords dodge the whole DPI trap.
+    /// </remarks>
     private void OnRootPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (_locked) return;
         var point = e.GetCurrentPoint(this);
-        if (!point.Properties.IsRightButtonPressed) return;
+        var left = point.Properties.IsLeftButtonPressed;
+        if (!left && !point.Properties.IsRightButtonPressed) return;
+
         _dragging = true;
-        _dragStart = point.Position;
-        _dragOrigin = Position;
+        _dragIsPan = left;
+        if (left)
+        {
+            OverlayMap.BeginHostPan(point.Position);
+        }
+        else if (GetCursorPos(out var c))
+        {
+            _grabOffsetX = c.X - Position.X;
+            _grabOffsetY = c.Y - Position.Y;
+        }
         e.Pointer.Capture(Root);
         Cursor = new Cursor(StandardCursorType.SizeAll);
         e.Handled = true;
     }
 
+    private void StepWindow()
+    {
+        if (GetCursorPos(out var c))
+            Position = new PixelPoint(c.X - _grabOffsetX, c.Y - _grabOffsetY);
+    }
+
     private void OnRootPointerMoved(object? sender, PointerEventArgs e)
     {
         if (!_dragging) return;
-        var pos = e.GetPosition(this);
-        Position = new PixelPoint(
-            _dragOrigin.X + (int)Math.Round(pos.X - _dragStart.X),
-            _dragOrigin.Y + (int)Math.Round(pos.Y - _dragStart.Y));
+        if (_dragIsPan)
+            OverlayMap.MoveHostPan(e.GetPosition(this));
+        else
+            StepWindow();
         e.Handled = true;
     }
 
@@ -291,9 +333,17 @@ public partial class OverlayWindow : Window, IOverlayState
     {
         if (!_dragging) return;
         _dragging = false;
+        if (_dragIsPan)
+        {
+            OverlayMap.EndHostPan();
+        }
+        else
+        {
+            StepWindow();
+            RaiseSettingsChanged();            // persist the new spot
+        }
         Cursor = new Cursor(StandardCursorType.Hand);
         e.Pointer.Capture(null);
-        RaiseSettingsChanged();
         e.Handled = true;
     }
 
