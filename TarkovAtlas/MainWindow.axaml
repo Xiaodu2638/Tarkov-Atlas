@@ -338,9 +338,21 @@
             <TabItem Header="剧情任务">
               <Grid RowDefinitions="Auto,*">
                 <Border Grid.Row="0" Margin="12,10,12,6" Padding="9,7" Background="{StaticResource CardAltBg}" CornerRadius="5">
-                  <StackPanel Spacing="2">
-                    <TextBlock x:Name="StoryCountText" Text="剧情进度 0/0" FontSize="10"
-                               FontWeight="SemiBold" Foreground="{StaticResource Accent}" />
+                  <StackPanel Spacing="5">
+                    <Grid ColumnDefinitions="*,Auto">
+                      <TextBlock x:Name="StoryCountText" Text="剧情进度 0/0" FontSize="10"
+                                 FontWeight="SemiBold" Foreground="{StaticResource Accent}"
+                                 VerticalAlignment="Center" />
+                      <CheckBox Grid.Column="1" x:Name="StoryHideDoneCheck" Content="隐藏已完成"
+                                FontSize="9" VerticalAlignment="Center"
+                                AutomationProperties.AutomationId="StoryHideDone"
+                                Click="StoryHideDone_Click"
+                                ToolTip.Tip="不再显示已勾选的章节（只影响列表显示，不改进度数据）" />
+                    </Grid>
+                    <ProgressBar x:Name="StoryProgressBar" Height="4" Minimum="0" Maximum="1" Value="0"
+                                 ShowProgressText="False"
+                                 Background="{StaticResource BorderSoft}"
+                                 Foreground="{StaticResource Accent}" />
                     <TextBlock Text="勾选即标记该章已完成；进度保存在本地。" FontSize="9"
                                Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" />
                   </StackPanel>
@@ -350,22 +362,28 @@
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                   <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="models:StoryRow">
-                      <Border Padding="8,7" CornerRadius="6">
+                      <Border Padding="8,7" CornerRadius="6" Classes="story"
+                              Classes.done="{Binding IsDone}">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="7">
                           <CheckBox Grid.Column="0" IsChecked="{Binding IsDone, Mode=TwoWay}"
                                     VerticalAlignment="Top" Margin="0,2,0,0"
                                     Click="StoryCheckBox_Click"
                                     ToolTip.Tip="标记该主线章节已完成" />
                           <StackPanel Grid.Column="1" Spacing="3">
-                            <TextBlock Text="{Binding Title}" FontSize="11.5" FontWeight="SemiBold"
+                            <TextBlock Text="{Binding Title}" Classes="story-title"
+                                       FontSize="11.5" FontWeight="SemiBold"
                                        TextWrapping="Wrap" />
                             <StackPanel Orientation="Horizontal" Spacing="6">
                               <TextBlock Text="{Binding MapsText}" FontSize="9"
                                          Foreground="{StaticResource Accent}" />
                               <TextBlock Text="{Binding ObjectiveText}" FontSize="9"
                                          Foreground="{StaticResource TextMuted}" />
+                              <TextBlock Text="{Binding StatusText}" FontSize="9"
+                                         Foreground="{StaticResource Success}"
+                                         IsVisible="{Binding IsDone}" />
                             </StackPanel>
-                            <Expander Header="目标列表" FontSize="9.5" IsExpanded="False">
+                            <Expander Header="目标列表" FontSize="9.5"
+                                      IsExpanded="{Binding IsExpanded, Mode=TwoWay}">
                               <ItemsControl ItemsSource="{Binding Objectives}">
                                 <ItemsControl.ItemTemplate>
                                   <DataTemplate x:DataType="models:StoryObjective">

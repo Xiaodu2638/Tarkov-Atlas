@@ -106,7 +106,10 @@ public partial class MainWindow : Window
             }
 
             QuestList.ItemsSource = _quests.VisibleQuests;
-            StoryList.ItemsSource = _quests.StoryRows;
+            _quests.HideDoneStories = _settings.StoryHideDone;
+            StoryHideDoneCheck.IsChecked = _settings.StoryHideDone;
+            _quests.RefreshStoryView();
+            StoryList.ItemsSource = _quests.StoryView;
             RefreshQuestCounts();
             _quests.SetFilter(_settings.QuestFilter);
             _quests.SetQuery("");
@@ -1409,6 +1412,21 @@ public partial class MainWindow : Window
         if (sender is not CheckBox { DataContext: StoryRow row } box) return;
         _quests.SetStoryDone(row.Id, box.IsChecked == true);
         RefreshQuestCounts();
+
+        // With 「隐藏已完成」 on, the row has to leave the list. Post it so the
+        // click finishes on a live container instead of being torn down inside
+        // the handler.
+        if (_quests.HideDoneStories) Dispatcher.UIThread.Post(_quests.RefreshStoryView);
+    }
+
+    /// <summary>「隐藏已完成」：只过滤剧情列表，不改任何进度数据。</summary>
+    private void StoryHideDone_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not CheckBox box) return;
+        _quests.HideDoneStories = box.IsChecked == true;
+        _settings.StoryHideDone = _quests.HideDoneStories;
+        _quests.RefreshStoryView();
+        Persist();
     }
 
     private void RefreshQuestCounts()
@@ -1426,6 +1444,11 @@ public partial class MainWindow : Window
         QuestDatabaseText.Text = $"{total} 个任务 · 本地化 · 2026-10-27";
         if (StoryCountText is not null)
             StoryCountText.Text = $"剧情进度 {_quests.StoryDoneCount}/{_quests.Chapters.Count}";
+        if (StoryProgressBar is not null)
+        {
+            StoryProgressBar.Maximum = Math.Max(1, _quests.Chapters.Count);
+            StoryProgressBar.Value = _quests.StoryDoneCount;
+        }
     }
 
     private void SyncQuestMarkers()

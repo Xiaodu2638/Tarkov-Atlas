@@ -71,6 +71,7 @@ public sealed class StoryObjective
 public sealed class StoryRow : INotifyPropertyChanged
 {
     private bool _isDone;
+    private bool _isExpanded;
 
     public StoryRow(StoryChapter chapter, int index, bool isDone)
     {
@@ -95,8 +96,23 @@ public sealed class StoryRow : INotifyPropertyChanged
         {
             if (_isDone == value) return;
             _isDone = value;
+            // Ticking a chapter off folds its objective list away: the row is
+            // done, so the per-objective 前往 buttons stop being interesting.
+            if (value) IsExpanded = false;
             OnPropertyChanged();
             OnPropertyChanged(nameof(StatusText));
+        }
+    }
+
+    /// <summary>Whether the chapter's 目标列表 expander is open.</summary>
+    public bool IsExpanded
+    {
+        get => _isExpanded;
+        set
+        {
+            if (_isExpanded == value) return;
+            _isExpanded = value;
+            OnPropertyChanged();
         }
     }
 

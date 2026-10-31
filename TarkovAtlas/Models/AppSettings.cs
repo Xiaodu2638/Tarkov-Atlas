@@ -81,6 +81,9 @@ public sealed class AppSettings
     public int QuestFilter { get; set; }
     /// <summary>Only show tasks that can be progressed on the selected map.</summary>
     public bool QuestFollowsMap { get; set; } = true;
+    /// <summary>Hide completed chapters in the main-story tab (display only; the
+    /// ticks themselves live in the progress file).</summary>
+    public bool StoryHideDone { get; set; }
 
     public AppSettings Clone() => (AppSettings)MemberwiseClone();
 

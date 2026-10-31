@@ -410,6 +410,28 @@ internal static class LogicChecks
         Check("story objective coords resolve", brokenStoryCoord.Count == 0,
             string.Join("; ", brokenStoryCoord));
 
+        // The story tab's tick is display state on top of the progress file:
+        // ticking a chapter must fold its objective list, and the optional
+        // 「隐藏已完成」 filter must drop exactly the ticked rows without
+        // touching the full list the count is derived from.
+        var filterProbe = new StoryRow(service.Chapters[0], 0, false) { IsExpanded = true };
+        filterProbe.IsDone = true;
+        Check("ticking a story chapter folds its objective list", !filterProbe.IsExpanded,
+            filterProbe.IsExpanded.ToString());
+
+        service.SetStoryDoneByIndex(0, true);
+        var allRows = service.StoryRows.Count;
+        var doneRows = service.StoryDoneCount;
+        service.HideDoneStories = true;
+        service.RefreshStoryView();
+        Check("story view hides completed chapters",
+            service.StoryView.Count == allRows - doneRows && service.StoryView.All(r => !r.IsDone),
+            $"{service.StoryView.Count}/{allRows} done={doneRows}");
+        service.HideDoneStories = false;
+        service.RefreshStoryView();
+        Check("story view restores every chapter", service.StoryView.Count == allRows,
+            service.StoryView.Count.ToString());
+
         Console.WriteLine(_failures == 0 ? "\nALL LOGIC CHECKS PASSED" : $"\n{_failures} LOGIC CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;
     }

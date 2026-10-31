@@ -383,6 +383,27 @@ public sealed class QuestService
     /// <summary>Chapters flattened for the story tab, with their tick state.</summary>
     public ObservableCollection<StoryRow> StoryRows { get; } = new();
 
+    /// <summary>
+    /// What the story ListBox is bound to: <see cref="StoryRows"/> minus the
+    /// ticked chapters when 「隐藏已完成」 is on. Kept separate so the full list
+    /// (and the progress count) never depends on a display toggle.
+    /// </summary>
+    public ObservableCollection<StoryRow> StoryView { get; } = new();
+
+    /// <summary>Hide ticked chapters from the story list. Display only.</summary>
+    public bool HideDoneStories { get; set; }
+
+    /// <summary>Rebuild <see cref="StoryView"/> from the current tick state.</summary>
+    public void RefreshStoryView()
+    {
+        StoryView.Clear();
+        foreach (var row in StoryRows)
+        {
+            if (HideDoneStories && row.IsDone) continue;
+            StoryView.Add(row);
+        }
+    }
+
     public void SetStoryDone(string id, bool done)
     {
         if (string.IsNullOrWhiteSpace(id)) return;
@@ -406,6 +427,7 @@ public sealed class QuestService
             var chapter = _chapters[i];
             StoryRows.Add(new StoryRow(chapter, i, IsStoryDone(chapter.Id)));
         }
+        RefreshStoryView();
     }
 
     public void SetStoryDoneByIndex(int index, bool done)
