@@ -133,6 +133,7 @@ docs/                           界面截图（README 引用）
 ### 4.2 渲染
 - `MapCanvas.Render()` 每次整帧重绘。性能红线：
   - `DrawBitmapCropped()` 只把视口内的源矩形交给 Skia，禁止整图重采样。
+  - 楼层位图与底图共用 `PickDrawBitmap` 的单一 mip 阈值（`MipBuildScale=0.5`）：**别给楼层加「缩得更小时绕过 mip」的豁免**——5600² 的层是 113 MB 纹理，每帧全尺寸采样就是「非地面层平移巨卡」的根因（mip 只有 ~2 MB）。
   - 文本走 `_textCache`，画笔走 `_penCache`，菱形/多边形几何走 `_diamondCache`。
   - `Compact`（悬浮窗）跳过标签、比例尺、指北针。
   - 任务标记在 `ShowQuestMarkers=false` 时直接跳过生成与绘制。

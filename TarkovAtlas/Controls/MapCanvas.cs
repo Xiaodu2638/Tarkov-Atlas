@@ -463,18 +463,17 @@ public sealed class MapCanvas : Control
     /// until the map changes. <paramref name="isFloor"/> selects the mip slot:
     /// base and floor overlay are cached separately so drawing a deck does not
     /// invalidate the base mip every frame.
-    /// Hysteresis: the switch-back threshold sits below the build threshold so
-    /// a zoom right at the boundary cannot flip slots every frame (that flip
-    /// showed as flicker on multi-deck maps).
+    /// Floors follow the same single threshold as the base: a 5600x5300 deck is
+    /// a 113 MB texture and sampling it full-size per drag frame is exactly the
+    /// stutter this cache exists to prevent (the old "deep zoom may skip the
+    /// mip" exemption made every non-ground floor lag while panning; the flicker
+    /// it was added for came from the wrong return slot, fixed below).
     /// </summary>
     private const double MipBuildScale = 0.5;
-    private const double MipDropScale = 0.42;
 
     private Bitmap PickDrawBitmap(Bitmap source, bool isFloor = false)
     {
         if (Scale >= MipBuildScale) return source;
-        // Below the drop threshold the downscale is cheap enough at full res.
-        if (isFloor && Scale < MipDropScale) return source;
 
         var mipSource = isFloor ? _floorMipSource : _mipSource;
         var mipBitmap = isFloor ? _floorMipBitmap : _mipBitmap;
