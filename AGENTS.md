@@ -202,6 +202,7 @@ docs/                           界面截图（README 引用）
 ## 6. 数据出处（不要凭印象改）
 
 - **Boss / 刷点**：上游同一个 `mob` 会按刷点变体重复出现，必须按 `mob` 合并（`chance` 取最大，`points` 0.1 m 去重取并集）。显示名见 `BOSS_ZH`：`exUsecFree/ExUsec → 游荡者`（**不是「流氓」**）、`PmcBot → 掠夺者`、`vsRF/vsRFSniper → 俄军/俄军狙击手`、`blackDivision/pmcBotBlackDiv/bossBullyBlackDiv → 黑色军团`、`sectantPriest → 邪教徒祭司`。不要出现 `PMC` / `Boss` 这类占位名。
+- **Glukhar 在储备站**（1.3 起从灯塔搬迁）：tarkov.dev 快照滞后，仍把他挂在 `lighthouse` 的 `Zone_Hellicopter`。修正入口是 `tools/boss_relocate.py`：`RELOCATIONS` 表记着 `mob -> (from, to, 坐标)`（reserve 的 6 个点取 eftarkov 储备站标记，像素→游戏仿射 14 锚点拟合、残差中位 6.7 m，落点与白车/K楼群/白马/停机坪/K4地堡/白后吻合），脚本幂等（`--check` 只报告）。**`update_data.py` 重拉快照会把它冲掉，重拉后跑一次 `boss_relocate.py` 再 `build_data.py` 即可恢复**。`datacheck` 有 reserve Glukhar present / lighthouse has no Glukhar 两条断言兜底；上游修好数据后删掉 RELOCATIONS 里对应条目。
 - **出生点**：只保留 `categories` 含 `player` 的点。
 - **BTR 站点**：森林 8 / 街区 6 取上游 `btrStops`（站名查 `maps.zh` 的 `Trading/Dialog/PlayerTaxi/...` 键）；灯塔上游为空，用人工表 `tools/btr.json`（10-29 交互地图标定）。人工表只在该图 API 无数据处补位。共 22 站，图例行按数据存在与否显示，数据丢了整行就没了。
 - **Shturman**：唯一的人工筛选 `BOSS_ZONE_FILTER["woods"]["bossKojaniy"] = (10, -3, 250)`；上游 `ZoneWoodCutter` 混进了 USEC Camp / Scav Town 方向的点。**只删远点，不新增任何点。**

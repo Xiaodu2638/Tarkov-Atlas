@@ -423,6 +423,25 @@ internal static class DataChecks
             Check("no boss named 流氓", mislabelled.Count == 0, string.Join(",", mislabelled));
         }
 
+        // Glukhar patrols the Reserve depot (he was on Lighthouse until the
+        // 1.3 relocation). Pinning both sides: the snapshot is hand-corrected,
+        // so a future re-pull that silently restores him under Lighthouse
+        // would drop the map description out of sync with the pins.
+        {
+            var reserve = manifest.Maps.FirstOrDefault(m => m.Key == "reserve");
+            var gluReserve = reserve?.Bosses.FirstOrDefault(b =>
+                b.Mob.Equals("bossGluhar", StringComparison.OrdinalIgnoreCase));
+            Check("reserve Glukhar present", gluReserve is not null && gluReserve.Name == "Glukhar",
+                gluReserve is null ? "missing" : $"{gluReserve.Points.Count} points");
+            Check("reserve Glukhar avatar exists",
+                gluReserve is not null
+                && File.Exists(Path.Combine(assets, "bosses", gluReserve.AvatarSlug + ".png")),
+                gluReserve?.AvatarSlug ?? "missing");
+            var gluLighthouse = lighthouse?.Bosses.Any(b =>
+                b.Mob.Equals("bossGluhar", StringComparison.OrdinalIgnoreCase)) ?? false;
+            Check("lighthouse has no Glukhar", !gluLighthouse);
+        }
+
         // Shturman spawns on Woods are all in the Sawmill, not at USEC Camp or
         // Scav Town (upstream mixes ZoneWoodCutter entries from those areas).
         var woods = manifest.Maps.FirstOrDefault(m => m.Key == "woods");
