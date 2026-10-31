@@ -102,12 +102,15 @@ public partial class OverlayWindow : Window, IOverlayState
 
     private static MapDisplayOptions BuildOptions(AppSettings settings) => new()
     {
+        // 地标名（DrawLabels 的聚落标签）在 ~390px 小窗里只会糊成一片，继续关；
+        // 但撤离点 / 转移点 / BTR 站点的名字要可读（用户要求），MapCanvas 里
+        // 这三类 label 不再被 Compact 屏蔽，只受自身 zoom 门槛控制。
         ShowLabels = false,
         ShowExtracts = settings.ShowExtracts,
         ExtractFilter = settings.ExtractFilter,
         ShowBosses = settings.ShowBosses,
         ShowSpawns = false,
-        ShowTransits = false,
+        ShowTransits = settings.ShowTransits,
         ShowCaches = settings.ShowCaches,
         ShowQuestMarkers = settings.ShowQuestMarkers,
         ShowHazards = settings.ShowHazards,

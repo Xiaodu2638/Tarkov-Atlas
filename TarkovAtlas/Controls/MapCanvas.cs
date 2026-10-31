@@ -671,11 +671,13 @@ public sealed class MapCanvas : Control
                     context.DrawGeometry(ExtractFill, pen, diamond);
             }
 
-            if (_zoom >= 1.15 && !Compact)
+            // 小窗同样要能读出「这是什么撤离点」；字号略收一档适配 ~390px 画布。
+            if (_zoom >= 1.15)
             {
-                var label = Text(e.Name, 10.5, brush);
+                var fs = Compact ? 8.5 : 10.5;
+                var label = Text(e.Name, fs, brush);
                 var pos = new Point(s.X - label.Width / 2, s.Y + iconSide / 2 + 3);
-                context.DrawText(Text(e.Name, 10.5, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+                context.DrawText(Text(e.Name, fs, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
                 context.DrawText(label, pos);
             }
         }
@@ -875,13 +877,15 @@ public sealed class MapCanvas : Control
                 context.DrawRectangle(TransitFill, TransitPen,
                     new Rect(s.X - iconSide * 0.28, s.Y - iconSide * 0.28, iconSide * 0.56, iconSide * 0.56));
 
-            if (_zoom < 1.1 || Compact) continue;
+            if (_zoom < 1.1) continue;
+            // 转移点名字在主图和悬浮窗都要显示（Compact 的聚落标签依然关闭）。
             // Dest stores the raw map key ("reserve") - print the localized
             // name so the label matches every other map reference.
             var dest = MapNames.Display(t.Dest);
-            var label = Text(dest, 10, TransitBrush);
+            var fs = Compact ? 8.5 : 10;
+            var label = Text(dest, fs, TransitBrush);
             var pos = new Point(s.X - label.Width / 2, s.Y + iconSide / 2 + 3);
-            context.DrawText(Text(dest, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+            context.DrawText(Text(dest, fs, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
             context.DrawText(label, pos);
         }
     }
@@ -896,7 +900,9 @@ public sealed class MapCanvas : Control
         // Same curve as extracts/transits: shrinks with the overview zoom.
         var iconSide = MarkerIcon(19.0, 30, 11);
         var btrIcon = LoadCached("legend", "btr-model");
-        var showLabel = !Compact && _zoom >= 1.1;
+        // 站点名字主图与悬浮窗都显示（与撤离点/转移点一致）。
+        var showLabel = _zoom >= 1.1;
+        var labelFs = Compact ? 8.5 : 10;
         foreach (var stop in _map.Btrs)
         {
             var s = Project(stop.X, stop.Z);
@@ -920,9 +926,9 @@ public sealed class MapCanvas : Control
             }
 
             if (!showLabel) continue;
-            var label = Text(stop.Name, 10, TransitBrush);
+            var label = Text(stop.Name, labelFs, TransitBrush);
             var pos = new Point(s.X - label.Width / 2, s.Y + iconSide / 2 + 3);
-            context.DrawText(Text(stop.Name, 10, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
+            context.DrawText(Text(stop.Name, labelFs, LabelShadow), new Point(pos.X + 1, pos.Y + 1));
             context.DrawText(label, pos);
         }
     }
