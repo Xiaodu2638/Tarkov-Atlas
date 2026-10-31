@@ -28,10 +28,11 @@ dotnet run --project tools/datacheck  -c Release
 dotnet run --project tools/logiccheck -c Release
 dotnet run --project tools/shotcheck  -c Release
 
-# 联网更新数据（重拉快照 -> build_all -> 门禁；从不自动提交，失败自动回滚快照）
+# 联网更新数据（重拉快照 -> 重放 Boss 搬迁修正 -> build_all -> 门禁；从不自动提交，失败自动回滚快照）
 python tools/update_data.py            # 全流程
 python tools/update_data.py --dry-run  # 只 diff 快照并回滚
 python tools/update_data.py --selftest # 离线自测快照重塑/翻译展平
+python tools/boss_relocate.py          # update_data 重拉后必须补跑一次（快照会冲掉修正，datacheck 随即报红）
 ```
 
 改了代码要做任何运行时验证之前**先重跑 `build.ps1`**：验证脚本打的是 `dist/` 里的 exe，代码提交了但 dist 没重发，测到的就是旧版本（曾把「功能正常」误判成「左键拖拽没反应」）。
@@ -96,6 +97,7 @@ tools/
   build_data.py                 合并 API → mapdata.json / markers.json / quests.json
   build_story.py                剧情 → story.json
   update_data.py                联网更新入口：重拉 research/api 快照 -> build_all -> 门禁（可回滚）
+  boss_relocate.py              快照滞后于游戏版本的 Boss 搬迁修正表（幂等；update_data 重拉后重跑，见第 6 节）
   check_map_coverage.py         底图内容区覆盖率自检（第 7 节验收标准用它）
   capture_docs.py               驱动 dist 产物重拍 docs/ 四张界面截图
   poi.json                      手工维护的 POI 表（迷宫解谜道具）
@@ -172,14 +174,14 @@ docs/                           界面截图（README 引用）
 ## 5. 约束与已知的坑
 
 1. **一切留在工作区内。** 不写 `%APPDATA%`、`%TEMP%`、全局 git config、全局 pip。测试项目和非提权构建用 `TARKOVATLAS_DATA_DIR` 重定向应用状态（提权版见下一条）。
-2. **管理员清单**：`app.manifest` 内嵌 `requireAdministrator`（全局热键需要）。副作用是**非交互 shell 里启动 exe 会卡在 UAC**；自动化验证请用非提权构建（`-p:ApplicationManifest=`，改完须先删 `TarkovAtlas/obj`，apphost 会增量缓存旧 manifest），并按 PID 定位窗口后再截图。同时务必先清掉残留实例——否则截到的是旧窗口，而且哈希会完全一致。另外 UAC 提权**不继承父进程环境变量**，所以发布版 exe 永远读 `%APPDATA%\TarkovAtlas\settings.json`，`TARKOVATLAS_DATA_DIR` 对它无效；要用干净配置验证，先备份挪走那份 settings.json，验完还原。
+2. **管理员清单**：`app.manifest` 内嵌 `requireAdministrator`（全局热键需要）。副作用是**非交互 shell 里启动 exe 会卡在 UAC**；自动化验证请用非提权构建，并按 PID 定位窗口后再截图。非提权验证构建（在同一 shell 里先做好第 2 节的环境变量重定向）：`dotnet publish TarkovAtlas\TarkovAtlas.csproj -c Release -p:ApplicationManifest= -p:PublishAot=false -o .tmp/verify/app`——注意 `--no-incremental` 不是 publish 的合法开关（MSB1001），manifest 改动要强制重建得先删 `TarkovAtlas/obj`（apphost 会增量缓存旧 manifest）。同时务必先清掉残留实例——否则截到的是旧窗口，而且哈希会完全一致。另外 UAC 提权**不继承父进程环境变量**，所以发布版 exe 永远读 `%APPDATA%\TarkovAtlas\settings.json`，`TARKOVATLAS_DATA_DIR` 对它无效；要用干净配置验证，先备份挪走那份 settings.json，验完还原。
 3. **构建**必须设 `AVALONIA_TELEMETRY_OPTOUT=1`，否则 Avalonia 遥测写日志失败会让整个 build 以误导性的 MSB4018 崩掉。`build.ps1` / `tools/check.ps1` 已经设好，只有绕过脚本直接跑 `dotnet build|publish` 时才需要自己设。
 4. **JSON 走源生成**（`JsonSerializerIsReflectionEnabledByDefault=false`）：新增要序列化/反序列化的类型必须加进 `AppJsonContext.cs` 的 `[JsonSerializable]` 列表，否则 NativeAOT 下要等到运行时才炸。
 5. **`dotnet publish` 的输出目录被占用会锁住 `bin\Release\...`**；用暂存目录或 `-p:OutputPath=`。
 6. **不要加 NuGet 外网依赖**：只能用 `.nuget-packages` 里的离线缓存。
 7. **别 `git clean -xdf`**：会连 `research/` 的矢量源一起删掉（`tools/pyext`、`tools/pylibs`、`tools/tile-cache` 也会没）。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
-9. **上游端点现状（实测）**：`assets.tarkov.dev` 403；`api.tarkov.dev/graphql` 可用但间歇 422 "GraphQL server unavailable"（update_data.py 按退避重试处理）；`data.tarkov.dev` 在本机连 DNS 都不解析。GitHub 与 fandom wiki 可访问。真实拉取若持续失败，换网络环境重跑，不要改脚本硬编码假数据。
+9. **上游端点现状（实测）**：`assets.tarkov.dev` 403；`api.tarkov.dev/graphql` 可用但间歇 422 "GraphQL server unavailable"（可连发多次，重试也未必好；update_data.py 按退避重试处理）——**请求必须带浏览器 UA + Content-Type/Accept，否则 Cloudflare 直接 403**；`data.tarkov.dev` 在本机连 DNS 都不解析，tarkov-api 的 GitHub 仓库也不随仓分发数据 JSON。GitHub 与 fandom wiki、eftarkov.com 可访问。真实拉取若持续失败，换网络环境重跑，不要改脚本硬编码假数据。
 10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
 11. **冰破船的层必须用与底图相同的渲染身份**：`research/svg/icebreaker/*.svg` 共享同一 viewBox（`1000 1500 3000 5400`），每个文件里只有 `display:block` 的那个组是有效内容。必须按**与底图完全相同的目标尺寸与 `turn`** 渲染（`bake_svg_layer` 已如此），任何裁剪/二次缩放都会重新引入错位。
 12. **`render_svg()` 的 `only_layer` 只允许隐藏顶层组**：这些 SVG 把每层作为根 `<svg>` 的直接子 `<g>`，层内还有 `Floor` / `Wall` / `Stairs` 等嵌套组。早期用 `^  <g` 缩进正则匹配顶层组，文件被压成单行后匹配数为 0，「隐藏其它层」静默失效、整份文档全被渲染；后来改成匹配任意 `<g id>` 又把**层内**的嵌套组一起隐藏，底图直接变成纯背景色。现在统一走 `top_level_group_ids()`（`ElementTree` 解析，只取根节点的直接子组）。新增地图的层过滤必须复用它，不要再用正则猜缩进。
@@ -188,12 +190,13 @@ docs/                           界面截图（README 引用）
     - 单实例互斥（`TarkovAtlas_SingleInstance`）：已有实例在跑时，新启动的进程只会激活旧窗口就退出——测到的行为是**旧那个进程**的。
     - 低权限 shell 给提权实例合成的鼠标事件会被 UIPI 静默吞掉（画面零像素变化 ≠ 功能坏了）；判据：`Get-Process TarkovAtlas` 的 `Path` 读不到即提权实例，先让用户手动退出再测。
     - 验证脚本要与 app 同 DPI 感知（`SetProcessDpiAwareness(2)`），否则 `mouse_event` 的绝对坐标被虚拟化，跟手率永远算不满。
+    - UIA 细节：CheckBox 要点 `TogglePattern`（对它 `InvokePattern` 会抛 Unsupported Pattern）；按 `BoundingRectangle` 坐标点击前先 `SetForegroundWindow`，否则事件落到别的窗口；窗口矩形用 `DwmGetWindowAttribute(EXTENDED_FRAME_BOUNDS)`。
 15. **悬浮窗拖窗不用 DIP 增量**：`e.GetPosition` 是相对已移动的窗口的，负反馈导致窗口只跟到光标位移的 40–73%；`GetCursorPos`（物理像素，与 `Window.Position` 同系）+ 按下时抓取偏移才 100% 跟手。`BeginMoveDrag` 只认左键，右键无效。
 16. **数据管线缩进陷阱**：`build_data.py` 里曾有一段 12 空格的代码被 8 空格的 `for` 头吞成循环体，12 张地图的 loot/caches 静默清零而三套自检照样全绿（当时没有非空断言）。改完 `build_*.py` 重跑后，必须 diff 产物：`git diff` 之外，用 Python 按 `maps.<key>.<field>` 逐字段对比 HEAD 版本，确认**只有预期字段变化**。datacheck 现已有 BTR/loot/caches 逐图非空断言兜底，但只覆盖已知类别。
 17. **推送 / 发布的网络路径**：本机 `github.com:443` 直连不通（`api.github.com` 通）。git push 走 v2rayN 混合端口的 HTTP 代理 `-c http.proxy=http://127.0.0.1:10808`；`socks5h://` scheme 会 Connection reset，别用。代理没开时 push 秒败，先探端口再推。
 18. **历史已用 git filter-repo 清理过**（第三方工具箱、含个人路径的 HANDOVER.md），`.git` 约 474 MB。绝不能再把 `工具箱*/` 或任何本机路径提交进来；`.gitignore` 已挡住，改 ignore 规则时留意。
 
-两个大文件：`MainWindow.axaml.cs`（约 1.97k 行，所有 UI 交互：地图切换、楼层、图例、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1.6k 行，全部绘制 + 指针手势）。改行为先在这两处找，不要去 Models 里猜。悬浮窗的手势在 `OverlayWindow.axaml.cs`（画布 `IsHitTestVisible=false`，事件由窗口层转发给 `MapCanvas.Begin/Move/EndHostPan`）。
+两个大文件：`MainWindow.axaml.cs`（约 2k 行，所有 UI 交互：地图切换、楼层、图例、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1.6k 行，全部绘制 + 指针手势）。改行为先在这两处找，不要去 Models 里猜。悬浮窗的手势在 `OverlayWindow.axaml.cs`（画布 `IsHitTestVisible=false`，事件由窗口层转发给 `MapCanvas.Begin/Move/EndHostPan`）。
 
 运行 `tools/*.py` 前不要 `pip install` 到全局：脚本自己把 `tools/pyext`、`tools/pylibs` 插到 `sys.path` 前面，用的是仓库内的 Pillow/numpy/requests。缺依赖就装到 `tools/pylibs`（见 4.4 节命令）。
 
@@ -202,7 +205,7 @@ docs/                           界面截图（README 引用）
 ## 6. 数据出处（不要凭印象改）
 
 - **Boss / 刷点**：上游同一个 `mob` 会按刷点变体重复出现，必须按 `mob` 合并（`chance` 取最大，`points` 0.1 m 去重取并集）。显示名见 `BOSS_ZH`：`exUsecFree/ExUsec → 游荡者`（**不是「流氓」**）、`PmcBot → 掠夺者`、`vsRF/vsRFSniper → 俄军/俄军狙击手`、`blackDivision/pmcBotBlackDiv/bossBullyBlackDiv → 黑色军团`、`sectantPriest → 邪教徒祭司`。不要出现 `PMC` / `Boss` 这类占位名。
-- **Glukhar 在储备站**（1.3 起从灯塔搬迁）：tarkov.dev 快照滞后，仍把他挂在 `lighthouse` 的 `Zone_Hellicopter`。修正入口是 `tools/boss_relocate.py`：`RELOCATIONS` 表记着 `mob -> (from, to, 坐标)`（reserve 的 6 个点取 eftarkov 储备站标记，像素→游戏仿射 14 锚点拟合、残差中位 6.7 m，落点与白车/K楼群/白马/停机坪/K4地堡/白后吻合），脚本幂等（`--check` 只报告）。**`update_data.py` 重拉快照会把它冲掉，重拉后跑一次 `boss_relocate.py` 再 `build_data.py` 即可恢复**。`datacheck` 有 reserve Glukhar present / lighthouse has no Glukhar 两条断言兜底；上游修好数据后删掉 RELOCATIONS 里对应条目。
+- **Boss 搬迁 / 钉位修正（`tools/boss_relocate.py`）**：tarkov.dev 快照滞后于游戏版本，该脚本在重拉后把快照修回正确状态，三张表各管一类：`RELOCATIONS`（换图：`bossGluhar` lighthouse → reserve，6 个点取 eftarkov 储备站标记，14 锚点拟合、残差中位 6.7 m，落点与白车/K楼群/白马/停机坪/K4地堡/白后吻合）；`POSITION_FIXES`（同图钉位：`bossZryachiy` 上游 `Zone_Island` positions 为空数组、build_data 会整条丢弃，按 eftarkov 灯塔页标记钉到「灯塔新区」半岛 (346.3, 471.9)，21 锚点、LOO 中位 9.7 m）；`REMOVALS`（整条删除：`bossKnight` 三狗——豪宅自 Rogue 重做后由游荡者驻守，上游还把 Zone_Chalet 的一点画在新区半岛）。三张表幂等，`--check` 只报告。**`update_data.py` 重拉后必须跑 `boss_relocate.py` 再 `build_data.py`**（datacheck 随即报红兜底）。灯塔现行口径：**新区 = Zryachiy、豪宅 = 游荡者（Rogue）、无三狗、Glukhar 在储备站**——datacheck 有对应断言。上游修好后删表内条目、退回纯上游数据。
 - **出生点**：只保留 `categories` 含 `player` 的点。
 - **BTR 站点**：森林 8 / 街区 6 取上游 `btrStops`（站名查 `maps.zh` 的 `Trading/Dialog/PlayerTaxi/...` 键）；灯塔上游为空，用人工表 `tools/btr.json`（10-29 交互地图标定）。人工表只在该图 API 无数据处补位。共 22 站，图例行按数据存在与否显示，数据丢了整行就没了。
 - **Shturman**：唯一的人工筛选 `BOSS_ZONE_FILTER["woods"]["bossKojaniy"] = (10, -3, 250)`；上游 `ZoneWoodCutter` 混进了 USEC Camp / Scav Town 方向的点。**只删远点，不新增任何点。**
@@ -235,5 +238,5 @@ docs/                           界面截图（README 引用）
 - `MapCanvas` 是性能关键路径：新增绘制要素必须复用画笔/文本缓存，且不得在平移时触发整图重采样。
 - 同一份映射只保留一处（例如头像 slug），避免两处表漂移。
 - 提交前 `git status --short` 必须干净。
-- **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ GitHub API PATCH 移动 `v1.0.0` tag → `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
+- **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_tag_move.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ `python .tmp/gh_tag_move.py`（PATCH 移动 `v1.0.0` tag，幂等）→ `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。**`gh_release.py` 必须用后台方式跑**：232 MB 走代理可超过任何前台超时，被中途杀掉会留下「旧资产已删、新资产没传」的空档（Release 一度 0 资产）；传完用 API 的 `assets[].digest` 与本地 `sha256` 对账。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
 - **官方已下线任务的剔除**：tarkov.dev 快照滞后于游戏版本，判断以 eftarkov.com 为准——`/task?q=<名>` 返回 0 且详情页被退回列表页 = 已下线（对照一个已知存在的任务 id 验行为）。确认后直接改快照 `research/api/tasks.json` + `tasks.zh.json`（删任务对象与其专属 zh 键，共享键保留）→ `build_data.py` 重建 → 核对 `git grep <id>` 无残留。

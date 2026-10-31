@@ -159,7 +159,7 @@ MAP_META = {
     "lighthouse": {
         "zh": "灯塔", "subtitle": "海岸长图 · 水电站", "difficulty": "高",
         "players": "9–12", "minutes": 40,
-        "desc": "狭长的海岸地图，水电站、村庄与灯塔区域分布着 Rogues。",
+        "desc": "狭长的海岸地图，Rogues 驻守豪宅，Zryachiy 守着灯塔新区半岛。",
     },
     "streets-of-tarkov": {
         "zh": "塔科夫街区", "subtitle": "城市巷战 · 超大地图", "difficulty": "高",

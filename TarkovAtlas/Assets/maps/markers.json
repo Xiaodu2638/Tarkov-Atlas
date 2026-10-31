@@ -32708,21 +32708,6 @@
    ],
    "bosses": [
     {
-     "name": "三狗",
-     "mob": "bossKnight",
-     "chance": 0.2,
-     "points": [
-      {
-       "x": 329.55,
-       "z": 505.63
-      },
-      {
-       "x": -81,
-       "z": 19.2799988
-      }
-     ]
-    },
-    {
      "name": "游荡者",
      "mob": "exUsecFree",
      "chance": 1,
@@ -32798,6 +32783,17 @@
       {
        "x": 332.006958,
        "z": 518.079
+      }
+     ]
+    },
+    {
+     "name": "Zryachiy",
+     "mob": "bossZryachiy",
+     "chance": 1,
+     "points": [
+      {
+       "x": 346.3,
+       "z": 471.9
       }
      ]
     }

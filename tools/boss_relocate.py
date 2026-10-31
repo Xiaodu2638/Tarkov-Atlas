@@ -48,6 +48,22 @@ RELOCATIONS = {
 
 ZONE_NAME = "Zone_Glukhar"
 
+# 同图刷点修正：mob -> (map, zone 名, [(x, z, y), ...])，整体替换 spawnLocations。
+# bossZryachiy：上游 Zone_Island 的 positions 是空数组，build_data 直接丢弃，
+# 灯塔上没有 Zryachiy。eftarkov 灯塔页的 Zryachiy 标记在「灯塔新区」半岛（距
+# 地标 43 m），按该页 21 锚点仿射标定（残差中位 7.7 m）为 (346.3, 471.9)。
+POSITION_FIXES = {
+    "bossZryachiy": ("lighthouse", "Zone_Island", [(346.3, 471.9, 12.0)]),
+}
+
+# 整条删除：mob -> map。
+# bossKnight（三狗）：豪宅自 Rogue 重做后由游荡者（exUsecFree）驻守；上游
+# Zone_Chalet 两点一个在新区半岛 (329.6, 505.6)、一个在豪宅 (-81, 19.3)，
+# 保留会把三狗画进 Zryachiy 的领地，且与「豪宅 = 游荡者」的现行事实冲突。
+REMOVALS = {
+    "bossKnight": "lighthouse",
+}
+
 
 def current_state(maps: dict) -> dict[str, tuple[str, int] | None]:
     """mob -> (which map holds it now, spawn point count)"""
@@ -55,7 +71,7 @@ def current_state(maps: dict) -> dict[str, tuple[str, int] | None]:
     for key, mid in MAP_IDS.items():
         for boss in maps.get(mid, {}).get("bosses") or []:
             mob = boss.get("mob")
-            if mob in RELOCATIONS:
+            if mob in RELOCATIONS or mob in POSITION_FIXES or mob in REMOVALS:
                 n = sum(len(s.get("positions") or []) for s in boss.get("spawnLocations") or [])
                 out[mob] = (key, n)
     return out
@@ -104,6 +120,44 @@ def main() -> int:
         maps[MAP_IDS[dst]]["bosses"].append(record)
         changed = True
         print(f"[fixed] {mob}: {src} -> {dst} ({len(points)} points)")
+
+    for mob, (mp, zone, points) in POSITION_FIXES.items():
+        bosses = maps[MAP_IDS[mp]]["bosses"]
+        held = state.get(mob)
+        wanted = {(round(x, 2), round(z, 2)) for x, z, _ in points}
+        got = {(round(p["x"], 2), round(p["z"], 2))
+               for b in bosses if b.get("mob") == mob
+               for s in b.get("spawnLocations") or [] for p in s.get("positions") or []}
+        if held and held[0] == mp and got == wanted:
+            print(f"[ok] {mob} already pinned on {mp}/{zone}")
+            continue
+        if check_only:
+            print(f"[stale] {mob}: on {held[0] if held else 'nowhere'}, expected {mp}")
+            return 1
+        record = next((b for b in bosses if b.get("mob") == mob), None)
+        record = dict(record or {})
+        record["mob"] = mob
+        record.setdefault("spawnChance", 1)
+        record["spawnLocations"] = [{
+            "name": zone, "chance": 1, "spawnKey": zone,
+            "positions": [{"x": x, "y": y, "z": z} for x, z, y in points],
+        }]
+        bosses[:] = [b for b in bosses if b.get("mob") != mob]
+        bosses.append(record)
+        changed = True
+        print(f"[fixed] {mob}: pinned {mp}/{zone} ({len(points)} points)")
+
+    for mob, mp in REMOVALS.items():
+        bosses = maps[MAP_IDS[mp]]["bosses"]
+        if not any(b.get("mob") == mob for b in bosses):
+            print(f"[ok] {mob} absent from {mp}")
+            continue
+        if check_only:
+            print(f"[stale] {mob}: still on {mp}")
+            return 1
+        bosses[:] = [b for b in bosses if b.get("mob") != mob]
+        changed = True
+        print(f"[fixed] {mob}: removed from {mp}")
 
     if check_only:
         print("[ok] snapshot matches the relocation table")

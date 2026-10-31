@@ -442,6 +442,29 @@ internal static class DataChecks
             Check("lighthouse has no Glukhar", !gluLighthouse);
         }
 
+        // Lighthouse boss layout (1.1.5 rework + 1.3): the new-town peninsula
+        // belongs to Zryachiy, the chalet to the rogues; Knight is gone.
+        // Upstream ships bossZryachiy with an EMPTY Zone_Island position list
+        // and still spawns Knight at Zone_Chalet, so tools/boss_relocate.py
+        // pins/removes both — assert the corrected state, not the snapshot.
+        if (lighthouse is not null)
+        {
+            var zryachiy = lighthouse.Bosses.FirstOrDefault(b =>
+                b.Mob.Equals("bossZryachiy", StringComparison.OrdinalIgnoreCase));
+            var onNewTown = zryachiy is not null && zryachiy.Points.Any(p =>
+                Math.Sqrt((p.X - 382) * (p.X - 382) + (p.Z - 496) * (p.Z - 496)) <= 120);
+            Check("lighthouse Zryachiy at the new town", onNewTown,
+                zryachiy is null ? "missing" : string.Join(",", zryachiy.Points.Select(p => $"{p.X:0},{p.Z:0}")));
+            Check("lighthouse has no Knight",
+                !lighthouse.Bosses.Any(b => b.Mob.Equals("bossKnight", StringComparison.OrdinalIgnoreCase)),
+                string.Join(",", lighthouse.Bosses.Select(b => b.Mob)));
+            var chaletRogue = lighthouse.Bosses.FirstOrDefault(b =>
+                b.Mob.Equals("exUsecFree", StringComparison.OrdinalIgnoreCase));
+            var atChalet = chaletRogue is not null && chaletRogue.Points.Any(p =>
+                Math.Sqrt((p.X + 81) * (p.X + 81) + (p.Z - 19.3) * (p.Z - 19.3)) <= 60);
+            Check("lighthouse chalet held by rogues", atChalet);
+        }
+
         // Shturman spawns on Woods are all in the Sawmill, not at USEC Camp or
         // Scav Town (upstream mixes ZoneWoodCutter entries from those areas).
         var woods = manifest.Maps.FirstOrDefault(m => m.Key == "woods");

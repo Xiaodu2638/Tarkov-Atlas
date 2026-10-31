@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30",
+  "generatedAt": "2026-10-31",
   "maps": [
     {
       "key": "ground-zero",
@@ -1947,7 +1947,7 @@
       "name": "lighthouse",
       "nameZh": "灯塔",
       "subtitle": "海岸长图 · 水电站",
-      "description": "狭长的海岸地图，水电站、村庄与灯塔区域分布着 Rogues。",
+      "description": "狭长的海岸地图，Rogues 驻守豪宅，Zryachiy 守着灯塔新区半岛。",
       "difficulty": "高",
       "players": "9–12",
       "raidMinutes": 40,
