@@ -250,6 +250,11 @@ BOSS_ZH = {
 # keep-radius is tightened to 120 m.
 BOSS_ZONE_FILTER = {
     "woods": {"bossKojaniy": (10.0, -3.0, 120.0)},
+    # Lighthouse rogues camp at Pike Peaks chalet / Big Cabin / Tennis Court
+    # (user-verified 2026-10-31). Upstream Zone_Chalet/Zone_Rocks still mix in
+    # the pre-1.1.5 Water Treatment cluster and 6 points on the Zryachiy
+    # peninsula (new town) - those are his cultist guards, not rogues.
+    "lighthouse": {"exUsecFree": (-60.0, 40.0, 220.0)},
 }
 
 

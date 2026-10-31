@@ -463,6 +463,20 @@ internal static class DataChecks
             var atChalet = chaletRogue is not null && chaletRogue.Points.Any(p =>
                 Math.Sqrt((p.X + 81) * (p.X + 81) + (p.Z - 19.3) * (p.Z - 19.3)) <= 60);
             Check("lighthouse chalet held by rogues", atChalet);
+            // Rogues must not appear in the new town (that is Zryachiy's zone)
+            // nor at the water treatment plant (pre-1.1.5 leftover, dropped by
+            // BOSS_ZONE_FILTER). All their points sit inside the chalet /
+            // Big Cabin / Tennis Court triangle the user verified.
+            var strays = chaletRogue?.Points
+                .Where(p => Math.Sqrt((p.X + 60) * (p.X + 60) + (p.Z - 40) * (p.Z - 40)) > 260)
+                .Select(p => $"{p.X:0},{p.Z:0}")
+                .ToList() ?? new List<string>();
+            Check("rogues stay inside the chalet camp", strays.Count == 0, string.Join(";", strays));
+            var nearNewTown = lighthouse.Bosses
+                .Where(b => !b.Mob.Equals("bossZryachiy", StringComparison.OrdinalIgnoreCase))
+                .SelectMany(b => b.Points)
+                .Count(p => Math.Sqrt((p.X - 382) * (p.X - 382) + (p.Z - 496) * (p.Z - 496)) <= 120);
+            Check("new town has only Zryachiy", nearNewTown == 0, nearNewTown.ToString());
         }
 
         // Shturman spawns on Woods are all in the Sawmill, not at USEC Camp or
