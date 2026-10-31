@@ -47,8 +47,13 @@ public sealed class StoryChapter
 /// happens on; <see cref="X"/>/<see cref="Z"/> are only filled when the
 /// upstream marker position could be calibrated against this app's artwork.
 /// </summary>
-public sealed class StoryObjective
+public sealed class StoryObjective : INotifyPropertyChanged
 {
+    private bool _isDone;
+    private bool _isVisible = true;
+
+    /// <summary>eftarkov objective id — the stable progress key (unique per objective).</summary>
+    public string Id { get; set; } = "";
     public string Text { get; set; } = "";
     public string Map { get; set; } = "";
     public string MapName { get; set; } = "";
@@ -56,12 +61,46 @@ public sealed class StoryObjective
     public double Z { get; set; }
     public bool HasCoordinates { get; set; }
 
+    /// <summary>
+    /// Tick state, mirrored from the progress file by QuestService. Lives on the
+    /// model so the row's TwoWay checkbox has something to write to.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsDone
+    {
+        get => _isDone;
+        set
+        {
+            if (_isDone == value) return;
+            _isDone = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>Cleared when 「隐藏已完成」 hides this row (display only).</summary>
+    [JsonIgnore]
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set
+        {
+            if (_isVisible == value) return;
+            _isVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
     [JsonIgnore] public bool HasLocation => !string.IsNullOrWhiteSpace(Map);
     [JsonIgnore] public string LocationText => HasLocation ? MapName : "任意地图";
     [JsonIgnore]
     public string Tooltip => HasCoordinates
         ? $"{Text}\n跳转到 {MapName} 的目标位置"
         : $"跳转到 {MapName}";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
 
 /// <summary>
@@ -117,6 +156,14 @@ public sealed class StoryRow : INotifyPropertyChanged
     }
 
     public string StatusText => _isDone ? "已完成" : "未完成";
+
+    /// <summary>Ticked objectives of this chapter, e.g. "12/26 目标".</summary>
+    public string ObjectiveProgressText => Chapter.Objectives.Count == 0
+        ? "无目标"
+        : $"{Chapter.Objectives.Count(o => o.IsDone)}/{Chapter.Objectives.Count} 目标";
+
+    /// <summary>Re-read the chapter's objective ticks after one of them changed.</summary>
+    public void NotifyObjectivesChanged() => OnPropertyChanged(nameof(ObjectiveProgressText));
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

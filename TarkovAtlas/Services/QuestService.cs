@@ -16,6 +16,7 @@ public sealed class QuestService
     private readonly List<Quest> _quests = new();
     private readonly List<StoryChapter> _chapters = new();
     private readonly HashSet<string> _storyDone = new(StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _storyObjectiveDone = new(StringComparer.Ordinal);
     private readonly Dictionary<string, bool> _completed = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> _tracked = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, TraderInfo> _traders = new(StringComparer.OrdinalIgnoreCase);
@@ -42,6 +43,7 @@ public sealed class QuestService
         _completed.Clear();
         _tracked.Clear();
         _storyDone.Clear();
+        _storyObjectiveDone.Clear();
         _traders.Clear();
 
         var questPath = Path.Combine(AppPaths.AssetsDir, AppPaths.QuestDataFile);
@@ -119,6 +121,20 @@ public sealed class QuestService
             foreach (var (id, done) in file.Completed) _completed[id] = done;
             foreach (var id in file.Tracked) _tracked.Add(id);
             foreach (var id in file.StoryDone) _storyDone.Add(id);
+            foreach (var id in file.StoryObjectiveDone) _storyObjectiveDone.Add(id);
+
+            // Files written before objective-level ticks existed only carry
+            // chapter ids. Seed their objectives so the older ticks keep their
+            // meaning instead of showing 0/26.
+            if (_storyObjectiveDone.Count == 0)
+            {
+                foreach (var chapter in _chapters)
+                {
+                    if (!_storyDone.Contains(chapter.Id)) continue;
+                    foreach (var objective in chapter.Objectives)
+                        if (!string.IsNullOrEmpty(objective.Id)) _storyObjectiveDone.Add(objective.Id);
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -166,6 +182,7 @@ public sealed class QuestService
                 Completed = new Dictionary<string, bool>(_completed),
                 Tracked = _tracked.ToList(),
                 StoryDone = _storyDone.ToList(),
+                StoryObjectiveDone = _storyObjectiveDone.ToList(),
             };
             AppPaths.WriteAllTextAtomic(AppPaths.QuestProgressFile,
                 JsonSerializer.Serialize(data, AppJsonContext.Default.QuestProgressFile));
@@ -390,12 +407,13 @@ public sealed class QuestService
     /// </summary>
     public ObservableCollection<StoryRow> StoryView { get; } = new();
 
-    /// <summary>Hide ticked chapters from the story list. Display only.</summary>
+    /// <summary>Hide ticked chapters/objectives from the story list. Display only.</summary>
     public bool HideDoneStories { get; set; }
 
-    /// <summary>Rebuild <see cref="StoryView"/> from the current tick state.</summary>
+    /// <summary>Rebuild <see cref="StoryView"/> and re-apply the objective flags.</summary>
     public void RefreshStoryView()
     {
+        ApplyStoryObjectiveFlags();
         StoryView.Clear();
         foreach (var row in StoryRows)
         {
@@ -404,20 +422,85 @@ public sealed class QuestService
         }
     }
 
+    /// <summary>
+    /// Mirror the persisted ticks onto the objective models: the TwoWay
+    /// checkboxes read <see cref="StoryObjective.IsDone"/>, and 「隐藏已完成」
+    /// folds finished objectives away via <see cref="StoryObjective.IsVisible"/>.
+    /// </summary>
+    private void ApplyStoryObjectiveFlags()
+    {
+        foreach (var chapter in _chapters)
+        {
+            foreach (var objective in chapter.Objectives)
+            {
+                var done = objective.Id.Length > 0 && _storyObjectiveDone.Contains(objective.Id);
+                objective.IsDone = done;
+                objective.IsVisible = !(HideDoneStories && done);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Chapter checkbox. Ticking it ticks every objective in the chapter (the
+    /// user asked for 全选); clearing it clears them. Any individual objective
+    /// change re-derives the chapter flag, so the two levels cannot disagree.
+    /// </summary>
     public void SetStoryDone(string id, bool done)
     {
         if (string.IsNullOrWhiteSpace(id)) return;
-        if (done) _storyDone.Add(id);
-        else _storyDone.Remove(id);
+        var chapter = _chapters.FirstOrDefault(c => string.Equals(c.Id, id, StringComparison.OrdinalIgnoreCase));
+        if (chapter is not null)
+        {
+            foreach (var objective in chapter.Objectives)
+            {
+                if (objective.Id.Length == 0) continue;
+                if (done) _storyObjectiveDone.Add(objective.Id);
+                else _storyObjectiveDone.Remove(objective.Id);
+            }
+        }
 
-        // Keep the bound row in sync before the list is rebuilt, so the tick
-        // does not visibly bounce back when the save is debounced.
-        var row = StoryRows.FirstOrDefault(r => string.Equals(r.Id, id, StringComparison.OrdinalIgnoreCase));
-        if (row is not null) row.IsDone = done;
+        SetChapterFlag(chapter, id, done);
 
         SaveProgress();
         ProgressChanged?.Invoke(this, EventArgs.Empty);
     }
+
+    /// <summary>One objective checkbox.</summary>
+    public void SetStoryObjectiveDone(string objectiveId, bool done)
+    {
+        if (string.IsNullOrWhiteSpace(objectiveId)) return;
+        var chapter = _chapters.FirstOrDefault(c => c.Objectives.Any(o => o.Id == objectiveId));
+        if (chapter is null) return;
+
+        if (done) _storyObjectiveDone.Add(objectiveId);
+        else _storyObjectiveDone.Remove(objectiveId);
+
+        // A chapter counts as done only when every one of its objectives is.
+        var all = chapter.Objectives.Count > 0
+                  && chapter.Objectives.All(o => o.Id.Length > 0 && _storyObjectiveDone.Contains(o.Id));
+        SetChapterFlag(chapter, chapter.Id, all);
+
+        SaveProgress();
+        ProgressChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>Write the chapter-level flag and mirror it onto the bound row.</summary>
+    private void SetChapterFlag(StoryChapter? chapter, string id, bool done)
+    {
+        if (done) _storyDone.Add(id);
+        else _storyDone.Remove(id);
+
+        var row = StoryRows.FirstOrDefault(r => string.Equals(r.Id, id, StringComparison.OrdinalIgnoreCase));
+        if (row is null) return;
+
+        row.IsDone = done;
+        ApplyStoryObjectiveFlags();
+        row.NotifyObjectivesChanged();
+    }
+
+    public bool IsStoryObjectiveDone(string id) => _storyObjectiveDone.Contains(id);
+
+    public int StoryObjectiveDoneCount => _storyObjectiveDone.Count;
 
     private void BuildStoryRows()
     {

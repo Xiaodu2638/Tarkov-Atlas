@@ -1274,6 +1274,9 @@ public partial class MainWindow : Window
                 _overlay.SetMap(_currentMap, _repo.GetBitmap(_currentMap));
                 _overlay.SetPlayer(GetLatestPin(_currentMap.Key));
                 SyncOverlayFloor();
+                // The overlay is created lazily, so it misses every marker sync
+                // that happened while it did not exist.
+                SyncQuestMarkers();
             }
 
             if (visible)
@@ -1429,6 +1432,18 @@ public partial class MainWindow : Window
         Persist();
     }
 
+    /// <summary>剧情子目标勾选：写回进度，章节状态由 service 反推。</summary>
+    private void StoryObjectiveCheckBox_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not CheckBox { Tag: StoryObjective objective } box) return;
+        _quests.SetStoryObjectiveDone(objective.Id, box.IsChecked == true);
+        RefreshQuestCounts();
+
+        // Hide-done folds the ticked objective away; post so the click finishes
+        // on a live container.
+        if (_quests.HideDoneStories) Dispatcher.UIThread.Post(_quests.RefreshStoryView);
+    }
+
     private void RefreshQuestCounts()
     {
         if (QuestEmptyText is not null)
@@ -1453,14 +1468,13 @@ public partial class MainWindow : Window
 
     private void SyncQuestMarkers()
     {
-        if (_currentMap is null)
-        {
-            MapView.QuestMarkers = Array.Empty<QuestMarker>();
-            return;
-        }
-        MapView.QuestMarkers = _settings.ShowQuestMarkers
-            ? _quests.BuildMarkers(_currentMap.Key)
-            : Array.Empty<QuestMarker>();
+        // Tracked-task markers belong to the current map; the mini-map renders
+        // the same set so the overlay is not a blind copy of the base artwork.
+        var markers = _currentMap is null || !_settings.ShowQuestMarkers
+            ? Array.Empty<QuestMarker>()
+            : _quests.BuildMarkers(_currentMap.Key);
+        MapView.QuestMarkers = markers;
+        _overlay?.SetQuestMarkers(markers);
         MapView.InvalidateVisual();
     }
 

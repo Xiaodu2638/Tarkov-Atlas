@@ -201,18 +201,22 @@ internal static class LogicChecks
         var legacyFile = JsonSerializer.Deserialize(legacy, AppJsonContext.Default.QuestProgressFile)!;
         Check("legacy progress loads", legacyFile.Completed.Count == 1 && legacyFile.Tracked.Count == 1);
         Check("legacy progress has no story state", legacyFile.StoryDone.Count == 0);
+        Check("legacy progress has no story objective state", legacyFile.StoryObjectiveDone.Count == 0);
 
         var roundtrip = new QuestProgressFile
         {
             Completed = new Dictionary<string, bool> { ["q1"] = true, ["q2"] = false },
             Tracked = new List<string> { "q2" },
             StoryDone = new List<string> { "story-accidental-witness", "story-batya" },
+            StoryObjectiveDone = new List<string> { "6ab719d971b30671e7b58701", "6ab719d9870f6e5e987e3804" },
         };
         var json = JsonSerializer.Serialize(roundtrip, AppJsonContext.Default.QuestProgressFile);
         Check("progress json carries storyDone", json.Contains("\"storyDone\"", StringComparison.Ordinal));
         var back = JsonSerializer.Deserialize(json, AppJsonContext.Default.QuestProgressFile)!;
         Check("progress roundtrip tasks", back.Completed.Count == 2 && back.Tracked.SequenceEqual(roundtrip.Tracked));
         Check("progress roundtrip story", back.StoryDone.OrderBy(x => x).SequenceEqual(roundtrip.StoryDone.OrderBy(x => x)));
+        Check("progress roundtrip story objectives",
+            back.StoryObjectiveDone.OrderBy(x => x).SequenceEqual(roundtrip.StoryObjectiveDone.OrderBy(x => x)));
 
         // 13. Hazard sizing: generic zones that cover a large part of a map are
         //     area-level triggers (drawn as one marker), while genuinely small
@@ -431,6 +435,36 @@ internal static class LogicChecks
         service.RefreshStoryView();
         Check("story view restores every chapter", service.StoryView.Count == allRows,
             service.StoryView.Count.ToString());
+
+        // Chapter and objective ticks are two views of one state: ticking the
+        // chapter ticks every objective, unticking any objective reopens the
+        // chapter, and 「隐藏已完成」 folds finished objectives too.
+        var syncChapter = service.Chapters.First(c => c.Objectives.Count > 1);
+        var syncChapterId = syncChapter.Id;
+        service.SetStoryDone(syncChapterId, true);
+        Check("ticking a chapter ticks its objectives",
+            syncChapter.Objectives.All(o => o.IsDone),
+            $"{syncChapter.Objectives.Count(o => o.IsDone)}/{syncChapter.Objectives.Count}");
+        Check("story objective progress is countable",
+            service.StoryObjectiveDoneCount >= syncChapter.Objectives.Count,
+            service.StoryObjectiveDoneCount.ToString());
+
+        service.SetStoryObjectiveDone(syncChapter.Objectives[0].Id, false);
+        Check("unticking one objective reopens the chapter", !service.IsStoryDone(syncChapterId),
+            service.IsStoryDone(syncChapterId).ToString());
+
+        service.SetStoryDone(syncChapterId, true);
+        Check("re-ticking the chapter restores every objective",
+            syncChapter.Objectives.All(o => o.IsDone));
+
+        service.HideDoneStories = true;
+        service.RefreshStoryView();
+        Check("hide done also folds finished objectives",
+            syncChapter.Objectives.All(o => !o.IsVisible));
+        service.HideDoneStories = false;
+        service.RefreshStoryView();
+        Check("clearing hide-done restores objectives",
+            syncChapter.Objectives.All(o => o.IsVisible));
 
         Console.WriteLine(_failures == 0 ? "\nALL LOGIC CHECKS PASSED" : $"\n{_failures} LOGIC CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;

@@ -135,6 +135,7 @@ docs/                           界面截图（README 引用）
 - **房间级标记统一走 `MapDefinition.LootGate`**：容器点与物资埋藏点只在放大到门槛以上才渲染（图例里也都归在「物资」组）。门槛按图取值：室外图 4.0（400%），小图 2.0（200%）——世界面积 < `SmallMapArea = 100_000 m²` 即迷宫（12k）、破冰船（19k）、工厂（19k）、实验室（59k），再往上一张是地面零区（170k），所以分界不会含混。加新类别时别再写死 4.0，直接用 `LootGate`/`_map.LootGate`；`datacheck` 的「small maps use the 2x loot gate」会盯住这个分类不被 bounds 改动悄悄挪走。
 - **图标尺寸用 `MarkerIcon(base, max, min)`**：纯 `sqrt(zoom)` 在整个 0.35x–32x 区间只覆盖约 1:1.6 的变化，加上较宽的下限后，概览缩放下撤离点/转移点/BTR 会比建筑还大。该helper按 `zoom^0.45` 缩放并保留原上限，概览时明显缩小、贴近时回到原来的大小。
 - **悬浮窗图标再乘 `CompactShrink`**：Compact 画布把整张图塞进 ~390px 小窗，按主窗口地图区（~700px）调好的图标仍然偏大；helper 内部已按 `min(w,h)/700` 自动缩小（0.30–1.00），主窗口不受影响。新增标记类别直接复用 `MarkerIcon`。
+- **悬浮窗与主图共用同一份标注数据**：`MainWindow.SyncQuestMarkers()` 把追踪任务标记同时推给 `MapView.QuestMarkers` 和 `_overlay.SetQuestMarkers(...)`；悬浮窗是懒创建的，`ShowOverlay` 里还要补推一次，否则先开图后开窗时标记是空的。新增任何「只在主图出现」的标记层时，记得一起推给悬浮窗（`OverlayWindow.BuildOptions` 的开关也要跟着补）。
 - 楼层图与底图共用同一目标矩形，运行时直接叠加，不做单独缩放。
 
 ### 4.3 危险区
@@ -205,7 +206,7 @@ docs/                           界面截图（README 引用）
 - **BTR 站点**：森林 8 / 街区 6 取上游 `btrStops`（站名查 `maps.zh` 的 `Trading/Dialog/PlayerTaxi/...` 键）；灯塔上游为空，用人工表 `tools/btr.json`（10-29 交互地图标定）。人工表只在该图 API 无数据处补位。共 22 站，图例行按数据存在与否显示，数据丢了整行就没了。
 - **Shturman**：唯一的人工筛选 `BOSS_ZONE_FILTER["woods"]["bossKojaniy"] = (10, -3, 250)`；上游 `ZoneWoodCutter` 混进了 USEC Camp / Scav Town 方向的点。**只删远点，不新增任何点。**
 - **剧情**：中文标题/目标来自 `https://www.eftarkov.com/storyline/<id>` 的抓取（`research/story/zh-raw.json`），不是机器翻译；章节映射在 `tools/build_story.py`。
-- **剧情勾选**：`剧情任务` 页的勾选框是**章级、纯本地**的完成标记（写 `progress` 的 `storyDone`，顶栏进度条 + `N/10`）。勾上只做三件事：整行淡化到 45%（`Border.story.done`）、标题加删除线、自动收起目标列表；「隐藏已完成」只过滤列表绑定的 `QuestService.StoryView`，`StoryRows` 永远是全量，进度计数和自检都读它。它不参与地图/任务/悬浮窗的任何逻辑，**别把它当任务完成状态**。
+- **剧情勾选**：`剧情任务` 页有**章级**和**目标级**两套勾选框，都写同一份进度（`storyDone` = 章 id，`storyObjectiveDone` = eftarkov objective id，后者由 `build_story.py` 从 `zh-raw.json` 带进 `story.json`）。规则：勾章 = 全选该章所有子目标；取消章 = 全部清空；子目标全勾 → 章自动变完成，取消任意一个 → 章自动回到未完成。视觉上两者一致（整行淡化 45%/50% + 删除线），`Border.story.done` / `Border.story-obj.done`。旧的只有 `storyDone` 的进度文件会在加载时把整章子目标点亮（一次性迁移）。「隐藏已完成」同时过滤章（`StoryView`）和子目标（`StoryObjective.IsVisible`），`StoryRows` 与进度计数永远是全量。**别把它当任务完成状态**，它不参与地图/任务/悬浮窗的任何逻辑。
 - **剧情坐标**：`research/story/coords.json` 是唯一来源（69 条，`datacheck` 断言「有地图就必须有坐标」，少一条就红）。像素 -> 游戏坐标的分辨率按图不同，**不要用固定比例换算**（直接按 `data-map-width/height` 换算的已知点误差中位 43 m、最大 83 m）。正确做法是逐图拟合，锚点来自：① 已人工验证的点；② 站点「地图标注」与本图 `mapdata.labels` 同名；③ 站点「任务地点」（带 `task_id`）与 `quests.json` 同任务唯一 zone。锚点 ≥ 4 用通用仿射（工厂/实验室的站点图相对游戏坐标是旋转的，轴对齐模型会把残差拉到 40 m+），只有 3 个点时用反射相似。迷宫可用本图 5 个出生点与站点 7 个 `PMC` 标记做形状配准（rms 0.8 m），破冰船用「和平原子」的 3 个任务点配准（rms 0.3 m）。全部过留一法，残差 > ~10 m 的图不输出。**宁可不标，也不编坐标。**
 - **商人**：任务列表显示英文原名（`TraderInfo.Name`），中文名只用于其它展示。`QuestService.ResolveTraderNames()` 同时填 `TraderDisplay` 和 `TraderSlug`，不出现 24 位十六进制 id。
 - **头像**：`Assets/bosses/`、`Assets/traders/`，来源 `https://www.eftarkov.com/uploads/{boss,trader}/<id>.webp`。`BossSpawn.AvatarSlug` 是唯一映射入口，`MapCanvas` 不得保留第二份表。

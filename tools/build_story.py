@@ -63,6 +63,7 @@ def main() -> None:
             point = points.get(str(obj.get("id") or ""))
             x, z = (point["x"], point["z"]) if point else (0.0, 0.0)
             objectives.append({
+                "id": str(obj.get("id") or ""),
                 "text": text,
                 "map": map_key,
                 "mapName": map_names.get(map_key, map_key),

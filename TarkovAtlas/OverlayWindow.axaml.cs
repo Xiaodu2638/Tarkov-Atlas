@@ -170,6 +170,17 @@ public partial class OverlayWindow : Window, IOverlayState
         OverlayMap.InvalidateVisual();
     }
 
+    /// <summary>
+    /// Tracked-task markers for the current map. The mini-map used to draw the
+    /// artwork only: <see cref="MapCanvas.QuestMarkers"/> was never pushed here,
+    /// so the overlay silently dropped every trader-avatar task pin.
+    /// </summary>
+    public void SetQuestMarkers(IReadOnlyList<QuestMarker> markers)
+    {
+        OverlayMap.QuestMarkers = markers;
+        OverlayMap.InvalidateVisual();
+    }
+
     public void SetPlayer(ScreenshotInfo? pin)
     {
         _player = pin;

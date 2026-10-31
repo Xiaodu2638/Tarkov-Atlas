@@ -376,7 +376,7 @@
                             <StackPanel Orientation="Horizontal" Spacing="6">
                               <TextBlock Text="{Binding MapsText}" FontSize="9"
                                          Foreground="{StaticResource Accent}" />
-                              <TextBlock Text="{Binding ObjectiveText}" FontSize="9"
+                              <TextBlock Text="{Binding ObjectiveProgressText}" FontSize="9"
                                          Foreground="{StaticResource TextMuted}" />
                               <TextBlock Text="{Binding StatusText}" FontSize="9"
                                          Foreground="{StaticResource Success}"
@@ -387,22 +387,30 @@
                               <ItemsControl ItemsSource="{Binding Objectives}">
                                 <ItemsControl.ItemTemplate>
                                   <DataTemplate x:DataType="models:StoryObjective">
-                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" Margin="0,2">
-                                      <StackPanel Grid.Column="0" Spacing="1">
-                                        <TextBlock Text="{Binding Text}" FontSize="9.5"
-                                                   Foreground="{StaticResource TextSecondary}"
-                                                   TextWrapping="Wrap" />
-                                        <TextBlock Text="{Binding LocationText}" FontSize="8.5"
-                                                   Foreground="{StaticResource Accent}"
-                                                   IsVisible="{Binding HasLocation}" />
-                                      </StackPanel>
-                                      <Button Grid.Column="1" Content="前往 ▸" FontSize="8.5"
-                                              Padding="4,0" VerticalAlignment="Top"
-                                              Classes="ghost"
-                                              Tag="{Binding}" Click="StoryJumpButton_Click"
-                                              IsVisible="{Binding HasLocation}"
-                                              ToolTip.Tip="{Binding Tooltip}" />
-                                    </Grid>
+                                    <Border Classes="story-obj" Classes.done="{Binding IsDone}"
+                                            IsVisible="{Binding IsVisible}"
+                                            Margin="0,1" Padding="0,1" CornerRadius="4">
+                                      <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="5">
+                                        <CheckBox Grid.Column="0" IsChecked="{Binding IsDone, Mode=TwoWay}"
+                                                  VerticalAlignment="Top" Margin="0,1,0,0"
+                                                  Tag="{Binding}" Click="StoryObjectiveCheckBox_Click"
+                                                  ToolTip.Tip="标记该目标已完成" />
+                                        <StackPanel Grid.Column="1" Spacing="1">
+                                          <TextBlock Text="{Binding Text}" Classes="story-obj-text"
+                                                     FontSize="9.5" Foreground="{StaticResource TextSecondary}"
+                                                     TextWrapping="Wrap" />
+                                          <TextBlock Text="{Binding LocationText}" FontSize="8.5"
+                                                     Foreground="{StaticResource Accent}"
+                                                     IsVisible="{Binding HasLocation}" />
+                                        </StackPanel>
+                                        <Button Grid.Column="2" Content="前往 ▸" FontSize="8.5"
+                                                Padding="4,0" VerticalAlignment="Top"
+                                                Classes="ghost"
+                                                Tag="{Binding}" Click="StoryJumpButton_Click"
+                                                IsVisible="{Binding HasLocation}"
+                                                ToolTip.Tip="{Binding Tooltip}" />
+                                      </Grid>
+                                    </Border>
                                   </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                               </ItemsControl>

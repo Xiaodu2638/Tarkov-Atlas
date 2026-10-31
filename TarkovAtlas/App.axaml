@@ -139,10 +139,11 @@
       <Setter Property="FontSize" Value="12" />
     </Style>
 
-    <!-- 剧情章节的完成态：勾上后整行淡化、标题加删除线（状态来自
-         StoryRow.IsDone，通过 Classes.done 绑定）。淡化用 180ms 过渡，
-         和 UiFx 的时长一致；这是纯声明式样式，没有 call-site 动画。 -->
-    <Style Selector="Border.story">
+    <!-- 剧情章节/目标的完成态：勾上后整行淡化、标题加删除线（状态来自
+         StoryRow.IsDone / StoryObjective.IsDone，通过 Classes.done 绑定）。
+         淡化用 180ms 过渡，和 UiFx 的时长一致；这是纯声明式样式，没有
+         call-site 动画。 -->
+    <Style Selector="Border.story, Border.story-obj">
       <Setter Property="Opacity" Value="1" />
       <Setter Property="Transitions">
         <Transitions>
@@ -154,6 +155,13 @@
       <Setter Property="Opacity" Value="0.45" />
     </Style>
     <Style Selector="Border.story.done TextBlock.story-title">
+      <Setter Property="TextDecorations" Value="Strikethrough" />
+      <Setter Property="Foreground" Value="{StaticResource TextMuted}" />
+    </Style>
+    <Style Selector="Border.story-obj.done">
+      <Setter Property="Opacity" Value="0.5" />
+    </Style>
+    <Style Selector="Border.story-obj.done TextBlock.story-obj-text">
       <Setter Property="TextDecorations" Value="Strikethrough" />
       <Setter Property="Foreground" Value="{StaticResource TextMuted}" />
     </Style>

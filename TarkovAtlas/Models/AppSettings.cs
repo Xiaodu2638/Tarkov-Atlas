@@ -127,4 +127,6 @@ public sealed class QuestProgressFile
     public List<string> Tracked { get; set; } = new();
     /// <summary>Story chapter ids that were ticked off in the main-story tab.</summary>
     public List<string> StoryDone { get; set; } = new();
+    /// <summary>Story objective ids ticked off inside those chapters.</summary>
+    public List<string> StoryObjectiveDone { get; set; } = new();
 }

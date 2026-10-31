@@ -464,6 +464,12 @@ internal static class DataChecks
 
             var objectives = story.Chapters.SelectMany(c => c.Objectives).ToList();
             Check("story objectives populated", objectives.Count > 200, objectives.Count.ToString());
+            // Objective-level ticks are keyed by the eftarkov objective id, so
+            // it must survive the build and stay unique.
+            Check("story objectives carry ids",
+                objectives.All(o => !string.IsNullOrWhiteSpace(o.Id)));
+            Check("story objective ids unique",
+                objectives.Select(o => o.Id).Distinct().Count() == objectives.Count);
             var cjk = objectives.Count(o => o.Text.Any(ch => ch >= 0x4E00 && ch <= 0x9FFF));
             Check("story objective text is Chinese", cjk >= objectives.Count * 0.9,
                 $"{cjk}/{objectives.Count}");
