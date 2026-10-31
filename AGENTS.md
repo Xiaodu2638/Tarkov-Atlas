@@ -28,11 +28,13 @@ dotnet run --project tools/datacheck  -c Release
 dotnet run --project tools/logiccheck -c Release
 dotnet run --project tools/shotcheck  -c Release
 
-# 联网更新数据（重拉快照 -> 重放 Boss 搬迁修正 -> build_all -> 门禁；从不自动提交，失败自动回滚快照）
+# 联网更新数据（重拉快照 -> build_all -> 门禁；从不自动提交，失败自动回滚快照。
+# 注意：boss_relocate 不在 update_data 内部，重拉后必须手动补跑一次再 build_data）
 python tools/update_data.py            # 全流程
 python tools/update_data.py --dry-run  # 只 diff 快照并回滚
+python tools/update_data.py --no-fetch # 跳过联网，只跑 build_all + 门禁
 python tools/update_data.py --selftest # 离线自测快照重塑/翻译展平
-python tools/boss_relocate.py          # update_data 重拉后必须补跑一次（快照会冲掉修正，datacheck 随即报红）
+python tools/boss_relocate.py && python tools/build_data.py  # update_data 之后必跑（快照会冲掉 Boss 修正，datacheck 随即报红）
 ```
 
 改了代码要做任何运行时验证之前**先重跑 `build.ps1`**：验证脚本打的是 `dist/` 里的 exe，代码提交了但 dist 没重发，测到的就是旧版本（曾把「功能正常」误判成「左键拖拽没反应」）。
@@ -238,5 +240,5 @@ docs/                           界面截图（README 引用）
 - `MapCanvas` 是性能关键路径：新增绘制要素必须复用画笔/文本缓存，且不得在平移时触发整图重采样。
 - 同一份映射只保留一处（例如头像 slug），避免两处表漂移。
 - 提交前 `git status --short` 必须干净。
-- **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_tag_move.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ `python .tmp/gh_tag_move.py`（PATCH 移动 `v1.0.0` tag，幂等）→ `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。**`gh_release.py` 必须用后台方式跑**：232 MB 走代理可超过任何前台超时，被中途杀掉会留下「旧资产已删、新资产没传」的空档（Release 一度 0 资产）；传完用 API 的 `assets[].digest` 与本地 `sha256` 对账。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
+- **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_tag_move.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写。release 正文取 `docs/RELEASE-NOTES.md`）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ `python .tmp/gh_tag_move.py`（PATCH 移动 `v1.0.0` tag，幂等）→ `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。**`gh_release.py` 必须用脱离终端的方式跑**（`Start-Process` + 日志重定向，或 harness 的 background shell）：232 MB 走代理可超过任何前台超时，被中途杀掉会留下「旧资产已删、新资产没传」的空档（Release 一度 0 资产）；传完用 API 的 `assets[].digest` 与本地 `sha256` 对账。**先 push 后上传**——zip 必须是刚构建的那份，否则等于挂错版本（曾把旧数据构建传上去，杀掉重跑）。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
 - **官方已下线任务的剔除**：tarkov.dev 快照滞后于游戏版本，判断以 eftarkov.com 为准——`/task?q=<名>` 返回 0 且详情页被退回列表页 = 已下线（对照一个已知存在的任务 id 验行为）。确认后直接改快照 `research/api/tasks.json` + `tasks.zh.json`（删任务对象与其专属 zh 键，共享键保留）→ `build_data.py` 重建 → 核对 `git grep <id>` 无残留。
