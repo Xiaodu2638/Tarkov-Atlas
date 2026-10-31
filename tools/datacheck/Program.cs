@@ -476,6 +476,17 @@ internal static class DataChecks
             Check("story calibrated markers exist",
                 objectives.Count(o => o.HasCoordinates) > 20,
                 objectives.Count(o => o.HasCoordinates).ToString());
+
+            // Every objective that names a map must also carry its calibrated
+            // point: the UI's "前往" jump silently turns into a bare map switch
+            // otherwise, which is exactly the bug this assertion guards against.
+            var mappedWithoutCoords = objectives
+                .Where(o => o.HasLocation && !o.HasCoordinates)
+                .Select(o => $"{o.Map}:{o.Text}")
+                .Take(5)
+                .ToList();
+            Check("story mapped objectives carry coordinates", mappedWithoutCoords.Count == 0,
+                string.Join("; ", mappedWithoutCoords));
         }
 
         // ---- XAML resource keys -------------------------------------------

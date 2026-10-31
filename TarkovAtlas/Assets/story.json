@@ -373,25 +373,25 @@
      "text": "在实验室内找到通过排水系统的撤离路线",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -133.91,
+     "z": -322.4,
+     "hasCoordinates": true
     },
     {
      "text": "搜查实验室机房",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -133.91,
+     "z": -322.4,
+     "hasCoordinates": true
     },
     {
      "text": "搜查实验室管理层的办公室",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -182.07,
+     "z": -349.11,
+     "hasCoordinates": true
     }
    ],
    "objectiveCount": 26
@@ -444,9 +444,9 @@
      "text": "获得实验型信号干扰器",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -96.41,
+     "z": -416.27,
+     "hasCoordinates": true
     },
     {
      "text": "和 Mechanic 谈话",
@@ -874,25 +874,25 @@
      "text": "在“迷宫”中找到 BEAR 小队的踪迹",
      "map": "the-labyrinth",
      "mapName": "迷宫",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -12.23,
+     "z": -24.24,
+     "hasCoordinates": true
     },
     {
      "text": "调查 1156 项目周围的 BEAR 小队集结点",
      "map": "the-labyrinth",
      "mapName": "迷宫",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -7.93,
+     "z": 30.3,
+     "hasCoordinates": true
     },
     {
      "text": "找到小队长",
      "map": "the-labyrinth",
      "mapName": "迷宫",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": 16.79,
+     "z": 3.89,
+     "hasCoordinates": true
     },
     {
      "text": "收集小队的更多消息",
@@ -906,9 +906,9 @@
      "text": "获取观察室钥匙",
      "map": "the-labyrinth",
      "mapName": "迷宫",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -4.84,
+     "z": 10.32,
+     "hasCoordinates": true
     },
     {
      "text": "调查科学家的尸体",
@@ -922,9 +922,9 @@
      "text": "进入上锁的办公室",
      "map": "the-labyrinth",
      "mapName": "迷宫",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": 9.21,
+     "z": 4.07,
+     "hasCoordinates": true
     },
     {
      "text": "听办公室里的录音带",
@@ -989,9 +989,9 @@
      "text": "将黑客入侵装置安放在实验室的机房内",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -135.54,
+     "z": -306.27,
+     "hasCoordinates": true
     },
     {
      "text": "和 Mechanic 交谈",
@@ -1050,17 +1050,17 @@
      "text": "了解 TerraGroup 活动的更多消息",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -156.87,
+     "z": -374.81,
+     "hasCoordinates": true
     },
     {
      "text": "搜集更多有关转运特种催化剂的消息",
      "map": "factory",
      "mapName": "工厂",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -1.06,
+     "z": -17.67,
+     "hasCoordinates": true
     },
     {
      "text": "找到勒热夫斯基的配车",
@@ -1090,33 +1090,33 @@
      "text": "找到并获取“蓝冰”燃料催化剂的相关研究文件",
      "map": "factory",
      "mapName": "工厂",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": 65.81,
+     "z": -62.49,
+     "hasCoordinates": true
     },
     {
      "text": "在实验室查找与 A.P. 相关的任何消息",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -260.03,
+     "z": -371.64,
+     "hasCoordinates": true
     },
     {
      "text": "了解A.P.活动的更多消息",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -220.25,
+     "z": -323.91,
+     "hasCoordinates": true
     },
     {
      "text": "深入了解A.P.的职责",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -217.09,
+     "z": -321.5,
+     "hasCoordinates": true
     },
     {
      "text": "在疗养院找到A.P.的房间",
@@ -1761,17 +1761,17 @@
      "text": "在储备站的森林转移点发射一枚黄色信号棒",
      "map": "reserve",
      "mapName": "储备站",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": 213.78,
+     "z": -208.96,
+     "hasCoordinates": true
     },
     {
      "text": "把 AMG-10 液压油交给 Prapor",
      "map": "reserve",
      "mapName": "储备站",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -119.23,
+     "z": 37.42,
+     "hasCoordinates": true
     },
     {
      "text": "想办法找到其他登船方式",
@@ -1865,25 +1865,25 @@
      "text": "检查破冰船上是否有任何船员幸存",
      "map": "icebreaker",
      "mapName": "破冰船",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": 11.05,
+     "z": 40.39,
+     "hasCoordinates": true
     },
     {
      "text": "进入破冰船的轮机舱",
      "map": "icebreaker",
      "mapName": "破冰船",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -10.6,
+     "z": 17.67,
+     "hasCoordinates": true
     },
     {
      "text": "想办法进入破冰船的上层建筑",
      "map": "icebreaker",
      "mapName": "破冰船",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -10.6,
+     "z": 17.67,
+     "hasCoordinates": true
     },
     {
      "text": "向 Mechanic 询问炸药的事情",
@@ -1969,9 +1969,9 @@
      "text": "将黑客入侵装置安放在实验室的机房内",
      "map": "the-lab",
      "mapName": "实验室",
-     "x": 0.0,
-     "z": 0.0,
-     "hasCoordinates": false
+     "x": -135.54,
+     "z": -306.27,
+     "hasCoordinates": true
     },
     {
      "text": "返回 Mechanic 处",

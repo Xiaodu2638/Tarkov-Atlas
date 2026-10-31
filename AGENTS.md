@@ -205,7 +205,7 @@ docs/                           界面截图（README 引用）
 - **BTR 站点**：森林 8 / 街区 6 取上游 `btrStops`（站名查 `maps.zh` 的 `Trading/Dialog/PlayerTaxi/...` 键）；灯塔上游为空，用人工表 `tools/btr.json`（10-29 交互地图标定）。人工表只在该图 API 无数据处补位。共 22 站，图例行按数据存在与否显示，数据丢了整行就没了。
 - **Shturman**：唯一的人工筛选 `BOSS_ZONE_FILTER["woods"]["bossKojaniy"] = (10, -3, 250)`；上游 `ZoneWoodCutter` 混进了 USEC Camp / Scav Town 方向的点。**只删远点，不新增任何点。**
 - **剧情**：中文标题/目标来自 `https://www.eftarkov.com/storyline/<id>` 的抓取（`research/story/zh-raw.json`），不是机器翻译；章节映射在 `tools/build_story.py`。
-- **剧情坐标**：只对双重验证通过的地图输出 —— `customs`、`woods`、`shoreline`、`streets-of-tarkov`、`lighthouse`、`ground-zero`、`interchange`。其余地图只给「跳转到地图」，`hasCoordinates=false`。**宁可不标，也不编坐标。**
+- **剧情坐标**：`research/story/coords.json` 是唯一来源（69 条，`datacheck` 断言「有地图就必须有坐标」，少一条就红）。像素 -> 游戏坐标的分辨率按图不同，**不要用固定比例换算**（直接按 `data-map-width/height` 换算的已知点误差中位 43 m、最大 83 m）。正确做法是逐图拟合，锚点来自：① 已人工验证的点；② 站点「地图标注」与本图 `mapdata.labels` 同名；③ 站点「任务地点」（带 `task_id`）与 `quests.json` 同任务唯一 zone。锚点 ≥ 4 用通用仿射（工厂/实验室的站点图相对游戏坐标是旋转的，轴对齐模型会把残差拉到 40 m+），只有 3 个点时用反射相似。迷宫可用本图 5 个出生点与站点 7 个 `PMC` 标记做形状配准（rms 0.8 m），破冰船用「和平原子」的 3 个任务点配准（rms 0.3 m）。全部过留一法，残差 > ~10 m 的图不输出。**宁可不标，也不编坐标。**
 - **商人**：任务列表显示英文原名（`TraderInfo.Name`），中文名只用于其它展示。`QuestService.ResolveTraderNames()` 同时填 `TraderDisplay` 和 `TraderSlug`，不出现 24 位十六进制 id。
 - **头像**：`Assets/bosses/`、`Assets/traders/`，来源 `https://www.eftarkov.com/uploads/{boss,trader}/<id>.webp`。`BossSpawn.AvatarSlug` 是唯一映射入口，`MapCanvas` 不得保留第二份表。
 - **图例图标**：`Assets/legend/*.png`（48×48）。图标 stem 的唯一映射在 `MainWindow.axaml.cs`（`LootKindIcon` / `PoiKindIcon` + 各图例行的 `Icon =` 字面量）；`LoadLegendIcon` 找不到文件时回退成色点，所以新增图标类别必须同步补 PNG。图标美术来自本机工具箱资源（不进 git 的 `工具箱*/资源素材/用户自定义`），`hazard`/`label` 是 PIL 内置几何绘制（`.tmp/make_fallback_icons.py` 思路），别用外部素材覆盖这两个。

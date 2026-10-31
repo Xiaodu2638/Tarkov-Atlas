@@ -1,5 +1,5 @@
 {
- "_note": "eftarkov storyline marker coordinates, calibrated against this app's tarkov.dev label positions. Only entries validated on both sources are listed; everything else stays map-only. Regenerate never: edit by hand.",
+ "_note": "eftarkov storyline marker coordinates, calibrated against this app's tarkov.dev positions. The original 47 points were hand-verified against this app's map labels; the later entries (factory, the-lab, the-labyrinth, reserve, icebreaker) come from a per-map pixel->world fit anchored on those verified points, same-name labels and tarkov.dev task zones (shape registration of task markers / player spawns where a single anchor was not enough), all kept under ~10 m leave-one-out error and every point inside its map bounds. Anything that could not be validated stays map-only. Regenerate never: edit by hand.",
  "source": "https://www.eftarkov.com/storyline",
  "maps": {
   "55f2d3fd4bdc2d5f408b4567": "factory",
@@ -24,9 +24,21 @@
    "x": -912.55,
    "z": 267.42
   },
+  "6ab60f8d57a1e9da28e85218": {
+   "x": -133.91,
+   "z": -322.4
+  },
   "6ab60f8d7e36d949c1f67610": {
    "x": -912.55,
    "z": 267.42
+  },
+  "6ab60f8dde6b106c9704c519": {
+   "x": -182.07,
+   "z": -349.11
+  },
+  "6ab6295c4798e6539452ad01": {
+   "x": -133.91,
+   "z": -322.4
   },
   "6ab719d9145b0391537d350f": {
    "x": 408.48,
@@ -56,13 +68,37 @@
    "x": -246.48,
    "z": -21.72
   },
+  "6ab76409697273bc82a91301": {
+   "x": -156.87,
+   "z": -374.81
+  },
+  "6ab78fa54d57c01e02ecb804": {
+   "x": 65.81,
+   "z": -62.49
+  },
+  "6ab78fa54dde9d2663120506": {
+   "x": -220.25,
+   "z": -323.91
+  },
   "6ab78fa57e00e39f80251d02": {
    "x": 21.53,
    "z": 353.08
   },
+  "6ab78fa591bc873c6e978a05": {
+   "x": -260.03,
+   "z": -371.64
+  },
   "6ab78fa59cde102948f6da08": {
    "x": -280.9,
    "z": -91.91
+  },
+  "6ab78fa5d7629e167cf38c01": {
+   "x": -1.06,
+   "z": -17.67
+  },
+  "6ab78fa5e68f7f1633c8f307": {
+   "x": -217.09,
+   "z": -321.5
   },
   "6ab78fa5fc84db541ca59c10": {
    "x": 139.23,
@@ -71,6 +107,10 @@
   "6ab8263996b4a9d781e80902": {
    "x": 190.05,
    "z": 228.18
+  },
+  "6ab82745cd01a68c334d3801": {
+   "x": -135.54,
+   "z": -306.27
   },
   "6ab8281682f2e1ffa6409702": {
    "x": -19.89,
@@ -144,9 +184,29 @@
    "x": 293.68,
    "z": 117.26
   },
+  "6ab88f0e39ce25826cc0be0b": {
+   "x": 9.21,
+   "z": 4.07
+  },
+  "6ab88f0ed83887a5a18abc05": {
+   "x": -12.23,
+   "z": -24.24
+  },
   "6ab88f0edf068bad7913a50e": {
    "x": -272.33,
    "z": 480.24
+  },
+  "6ab88f0ef3a28e8e056bd907": {
+   "x": 16.79,
+   "z": 3.89
+  },
+  "6ab88f0efcd069bedb125606": {
+   "x": -7.93,
+   "z": 30.3
+  },
+  "6ab88f0efe034d2473ae1f09": {
+   "x": -4.84,
+   "z": 10.32
   },
   "6ab8a9c4fdddc708c7cdb101": {
    "x": 502.16,
@@ -188,21 +248,49 @@
    "x": -598.04,
    "z": -168.21
   },
+  "6ab8c6a53f419611d2d35e0f": {
+   "x": 11.05,
+   "z": 40.39
+  },
   "6ab8c6a54c750025a9b92009": {
    "x": -598.04,
    "z": -168.21
+  },
+  "6ab8c6a563b6a06cdb644c02": {
+   "x": 213.78,
+   "z": -208.96
   },
   "6ab8c6a5671fc60473ffa708": {
    "x": 204.73,
    "z": -126.13
   },
+  "6ab8c6a5a8c508edcde72c03": {
+   "x": -119.23,
+   "z": 37.42
+  },
   "6ab8c6a5c2498a7f4c332a0d": {
    "x": -316.68,
    "z": 522.78
   },
+  "6ab8c6a5c521a4bfe1ceac10": {
+   "x": -10.6,
+   "z": 17.67
+  },
+  "6ab8c6a5d7dc301a6776da11": {
+   "x": -10.6,
+   "z": 17.67
+  },
   "6ab8c6a5efb57b2f51260807": {
    "x": 126.11,
    "z": -155.34
+  },
+  "6ab8c7bc34ae73b018150308": {
+   "x": -135.54,
+   "z": -306.27
+  },
+  "6ab9a0c35b1e8f639d76a603": {
+   "x": -96.41,
+   "z": -416.27
   }
  }
 }
