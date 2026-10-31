@@ -101,6 +101,34 @@ public sealed class MapDefinition
     [JsonIgnore] public double MaxX => Bounds.Length >= 4 ? Math.Max(Bounds[0], Bounds[2]) : Width;
     [JsonIgnore] public double MaxZ => Bounds.Length >= 4 ? Math.Max(Bounds[1], Bounds[3]) : Height;
 
+    /// <summary>World footprint of the map bounds, in square metres.</summary>
+    [JsonIgnore] public double WorldArea => (MaxX - MinX) * (MaxZ - MinZ);
+
+    /// <summary>
+    /// Zoom at which room-level markers (loot containers and buried caches)
+    /// become visible. 4x is the default: below it the icons always clotted into
+    /// noise on the outdoor maps. A small map (labyrinth / icebreaker / factory /
+    /// the-lab) is only a few rooms wide, so 4x there is already a full-screen
+    /// close-up and its loot stayed hidden far longer than it should; those maps
+    /// reveal at 2x instead.
+    /// </summary>
+    [JsonIgnore] public double LootGate => IsSmallMap ? LootZoomGateSmall : LootZoomGate;
+
+    /// <summary>Default loot/cache zoom gate.</summary>
+    public const double LootZoomGate = 4.0;
+
+    /// <summary>Loot/cache zoom gate for maps narrower than a few hundred metres.</summary>
+    public const double LootZoomGateSmall = 2.0;
+
+    /// <summary>
+    /// World footprint (m²) under which a map counts as "small": the-labyrinth
+    /// 12k, icebreaker 19k, factory 19k, the-lab 59k, and the next map up is
+    /// ground-zero at 170k — so the cut leaves no ambiguity.
+    /// </summary>
+    public const double SmallMapArea = 100_000;
+
+    [JsonIgnore] public bool IsSmallMap => WorldArea > 0 && WorldArea < SmallMapArea;
+
     [JsonIgnore] public bool HasContent => Content.Length >= 4
         && Math.Abs(Content[2] - Content[0]) > 0.01 && Math.Abs(Content[3] - Content[1]) > 0.01;
     [JsonIgnore] public double ContentMinX => HasContent ? Math.Min(Content[0], Content[2]) : 0;

@@ -132,7 +132,7 @@ docs/                           界面截图（README 引用）
   - 文本走 `_textCache`，画笔走 `_penCache`，菱形/多边形几何走 `_diamondCache`。
   - `Compact`（悬浮窗）跳过标签、比例尺、指北针。
   - 任务标记在 `ShowQuestMarkers=false` 时直接跳过生成与绘制。
-- **房间级标记统一走 `MapCanvas.LootZoomGate = 4.0`**：容器点与物资埋藏点只有放大到 400% 及以上才渲染（图例里也都归在「物资」组）。加新类别时别再各写一套门槛。
+- **房间级标记统一走 `MapDefinition.LootGate`**：容器点与物资埋藏点只在放大到门槛以上才渲染（图例里也都归在「物资」组）。门槛按图取值：室外图 4.0（400%），小图 2.0（200%）——世界面积 < `SmallMapArea = 100_000 m²` 即迷宫（12k）、破冰船（19k）、工厂（19k）、实验室（59k），再往上一张是地面零区（170k），所以分界不会含混。加新类别时别再写死 4.0，直接用 `LootGate`/`_map.LootGate`；`datacheck` 的「small maps use the 2x loot gate」会盯住这个分类不被 bounds 改动悄悄挪走。
 - **图标尺寸用 `MarkerIcon(base, max, min)`**：纯 `sqrt(zoom)` 在整个 0.35x–32x 区间只覆盖约 1:1.6 的变化，加上较宽的下限后，概览缩放下撤离点/转移点/BTR 会比建筑还大。该helper按 `zoom^0.45` 缩放并保留原上限，概览时明显缩小、贴近时回到原来的大小。
 - **悬浮窗图标再乘 `CompactShrink`**：Compact 画布把整张图塞进 ~390px 小窗，按主窗口地图区（~700px）调好的图标仍然偏大；helper 内部已按 `min(w,h)/700` 自动缩小（0.30–1.00），主窗口不受影响。新增标记类别直接复用 `MarkerIcon`。
 - 楼层图与底图共用同一目标矩形，运行时直接叠加，不做单独缩放。

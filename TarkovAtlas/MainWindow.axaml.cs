@@ -744,8 +744,8 @@ public partial class MainWindow : Window
             });
         }
         // Buried caches belong to the loot group: they are room-level detail
-        // like containers, share the 4x zoom gate, and sat oddly among the
-        // always-visible 点位 rows.
+        // like containers, share the per-map zoom gate (4x outdoors, 2x on
+        // small maps), and sat oddly among the always-visible 点位 rows.
         if (map is null || map.Caches.Count > 0)
         {
             rows.Add(new()

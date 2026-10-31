@@ -607,8 +607,11 @@ public sealed class MapCanvas : Control
     // markers
 
     /// <summary>Shared zoom gate for room-level markers (loot containers and
-    /// buried caches): below 4x they always clotted into noise.</summary>
-    public const double LootZoomGate = 4.0;
+    /// buried caches). The value depends on the map: outdoor maps keep 4x
+    /// (<see cref="MapDefinition.LootZoomGate"/>), small maps use 2x
+    /// (<see cref="MapDefinition.LootZoomGateSmall"/>) because 4x there is
+    /// already a full-screen close-up.</summary>
+    private double LootGate => _map?.LootGate ?? MapDefinition.LootZoomGate;
 
     /// <summary>
     /// The overlay (Compact) squeezes the whole map into a small window, so icon
@@ -929,14 +932,15 @@ public sealed class MapCanvas : Control
     /// Loot container markers (物资点). Sourced from tarkov.dev's lootContainer
     /// table; each kind (weapon-box, safe, jacket, drawer, medcase, ...) has its
     /// own colour and can be switched off individually from the legend.
-    /// Only rendered at 4x zoom and beyond: at smaller scales the icons always
-    /// clotted into noise no matter how they were thinned, so they stay hidden
-    /// entirely until the user is close enough for room-level reading.
+    /// Only rendered from the map's loot gate on (4x outdoors, 2x on small
+    /// maps): at smaller scales the icons always clotted into noise no matter
+    /// how they were thinned, so they stay hidden entirely until the user is
+    /// close enough for room-level reading.
     /// </summary>
     private void DrawLoot(DrawingContext context)
     {
         if (_map is null || _map.Loot.Count == 0) return;
-        if (_zoom < LootZoomGate) return;
+        if (_zoom < LootGate) return;
 
         // Same artwork the legend rows use, so what you toggle is what you see.
         var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
@@ -1013,14 +1017,14 @@ public sealed class MapCanvas : Control
     private void DrawCaches(DrawingContext context)
     {
         if (_map is null) return;
-        if (_zoom < LootZoomGate) return;
+        if (_zoom < LootGate) return;
         if (_map.Caches.Count == 0) return;
 
         // Match the loot-container icon size (16 * sqrt(zoom)) so caches don't
         // read as a bigger class of marker than regular loot.
         var iconSide = Math.Clamp(16.0 * Math.Sqrt(_zoom), 13, 22);
         var cacheIcon = LoadCached("legend", "loot-ammo-box");
-        var showLabel = !Compact;   // gate is already 4x: always readable there
+        var showLabel = !Compact;   // gate is already a close-up: always readable there
         foreach (var c in _map.Caches)
         {
             var s = Project(c.X, c.Z);

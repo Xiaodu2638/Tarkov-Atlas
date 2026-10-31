@@ -31,6 +31,19 @@ internal static class DataChecks
         Check("traders listed", manifest.Traders.Count >= 10, manifest.Traders.Count.ToString());
         Check("tasks loaded", quests.Quests.Count > 400, quests.Quests.Count.ToString());
 
+        // Loot/cache markers only appear at a per-map zoom gate. The gate flips
+        // to the small-map value below a world-footprint cut-off, so a bounds
+        // edit that moves a map across it silently changes when its loot shows
+        // up. Pin the current classification.
+        var smallMaps = manifest.Maps
+            .Where(m => m.IsSmallMap)
+            .Select(m => $"{m.Key}({m.WorldArea / 1000:0}k)")
+            .OrderBy(s => s, StringComparer.Ordinal)
+            .ToList();
+        Check("small maps use the 2x loot gate",
+            string.Join(",", smallMaps.Select(s => s.Split('(')[0])) == "factory,icebreaker,the-lab,the-labyrinth",
+            string.Join(",", smallMaps));
+
         // All names localized (no raw "extension Name" artifacts).
         var badNames = manifest.Maps.Where(m => m.Name.Contains(" Name") || m.NameEn.Contains(" Name")).ToList();
         Check("map names localized", badNames.Count == 0,
