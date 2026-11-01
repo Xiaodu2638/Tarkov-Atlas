@@ -8,6 +8,9 @@
 剧情、255 个任务的地点攻略图全部打包在 `Assets/` 里，运行时不请求任何网络；
 「打开 Wiki」只是用系统浏览器打开 eftarkov.com 的网页，应用本身零联网。
 
+> 🌐 **项目主页**：<https://xiaodu2638.github.io/Tarkov-Atlas/> ·
+> **下载**：[Releases](https://github.com/Xiaodu2638/Tarkov-Atlas/releases/latest)
+
 ![主界面](docs/main.png)
 
 ## 功能
