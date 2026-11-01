@@ -42,7 +42,12 @@ internal static class LogicChecks
             // A task may list a map without typed-out zones (e.g. only a "kill in
             // this area" note), so offered >= withZones; the gap must stay small.
             Check($"offered covers zones {key}", offered >= withZones, $"{offered} >= {withZones}");
-            Check($"offered not inflated {key}", offered <= withZones * 2 + 4, $"{offered} vs {withZones}");
+            // maps[] also carries the eftarkov "任务地图" chips (kill-anywhere
+            // style tasks list their eligible maps without typed-out zones), so
+            // offered legitimately exceeds withZones. What must never happen is
+            // one map claiming a large share of the whole DB (the scoping bug
+            // this guard exists for).
+            Check($"offered not inflated {key}", offered * 3 <= db.Quests.Count, $"{offered}/{db.Quests.Count}");
         }
 
         // 3. Objectives for a map must actually be located on that map.
@@ -60,10 +65,14 @@ internal static class LogicChecks
         }
         Check("ObjectivesFor stays on its map", wrongZone == 0, wrongZone.ToString());
 
-        // 4. Multi-map tasks: every reported map has at least one zone.
+        // 4. Every coordinate zone map must be declared in Maps (the reverse is
+        //    fine: chip-only entries carry no zones by design).
+        var badZoneScope = db.Quests.Count(q => q.ZoneMaps.Any(m =>
+            !q.Maps.Any(x => string.Equals(x, m, StringComparison.OrdinalIgnoreCase))));
+        Check("zone maps stay inside Maps", badZoneScope == 0, badZoneScope.ToString());
         var multi = db.Quests.Where(q => q.IsMultiMap).ToList();
-        var badMulti = multi.Count(q => q.Maps.Any(m => !q.ObjectivesFor(m).Any()));
-        Check("multi-map tasks all have zones", badMulti == 0, $"{badMulti}/{multi.Count}");
+        var zonedMulti = multi.Count(q => q.ZoneMaps.Count() > 1);
+        Check("true multi-zone tasks exist", zonedMulti > 10, $"{zonedMulti}/{multi.Count}");
 
         // 5. Markers: tracked tasks on customs must produce markers inside the map
         //    and each marker must resolve to a bundled trader avatar.

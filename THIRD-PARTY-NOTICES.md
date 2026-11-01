@@ -42,18 +42,20 @@ Tarkov Atlas 是玩家社区的非官方、非商业工具，与 Battlestate Gam
 
 ## 任务与剧情数据
 
-- 任务：https://github.com/the-hideout/tarkov-data-manager
-  （`quest-data.json`，MIT）→ `Assets/quests.json`
+- 任务名册、中文名称/目标、前置关系、地点攻略图：https://www.eftarkov.com/task
+  → `research/eftarkov/tasks.json` → `Assets/quests.json`、`Assets/guides/`
+- 任务目标坐标（站点不提供）：https://github.com/the-hideout/tarkov-dev（MIT）
+  → `research/api/tasks.json`，构建期作为坐标覆盖层合并
 - 剧情中文标题与目标：https://www.eftarkov.com/storyline → `Assets/story.json`
 - 任务名、目标与链接为社区维护数据，新任务可能缺失；更新方式见 README 的
-  数据管线章节，不要手改 JSON。
+  数据管线章节（`python tools/update_data.py`），不要手改 JSON。
 
 ## 头像与攻略图
 
 - 商人 / Boss 头像：`https://www.eftarkov.com/uploads/{trader,boss}/<id>.webp`
   → `Assets/traders/*.png`、`Assets/bosses/*.png`（构建期一次性抓取，已随包内置）
-- 任务地点攻略图：本机整理的攻略页标注图 → `Assets/guides/<questId>/*.webp`
-  （259 个任务随包内置，运行时不联网）
+- 任务地点攻略图：eftarkov.com 任务攻略页标注图（`tools/fetch_eftarkov.py --guides`
+  抓取）→ `Assets/guides/<questId>/*.webp`（285 个任务随包内置，运行时不联网）
 
 ## 图例图标
 

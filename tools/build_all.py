@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
-"""Rebuild every map asset (base art, floors, hazards, quest data).
+"""Rebuild everything the app ships - the one entry point for the data pipeline.
 
-One entry point for the whole data pipeline so nobody has to remember the
-order. Steps run in dependency order; pass --only to rebuild a single map's
-base art and floors (other maps keep their current output), or --skip-quests
-when only map art changed.
-
-    python tools/build_all.py                 # full rebuild
+    python tools/build_all.py                 # full rebuild (offline)
     python tools/build_all.py --only factory  # one map's art + floors
-    python tools/build_all.py --skip-quests   # art only (no quests.json)
+    python tools/build_all.py --skip-quests   # art only (no task/story data)
+    python tools/build_all.py --check         # rebuild + all gates (check.ps1, coverage)
+
+Every step here is OFFLINE: inputs are the committed snapshots under research/
+(eftarkov.com tasks/story, tarkov.dev coordinate overlay, SVG vector sources).
+Nothing in this script needs the network or an agent. To refresh the snapshots
+from eftarkov.com, run tools/fetch_eftarkov.py first (see tools/update_data.py
+for the fetch -> rebuild -> gate -> rollback orchestration).
+
+Steps run in dependency order:
+  1. build_assets.py   base JPGs + maps.json (headless Edge rasterises research/svg)
+  2. build_layers.py   floor PNGs + layers/index.json + hazards.json
+  3. boss_relocate.py  apply curated Boss fixes to the API snapshot (idempotent;
+                       a re-fetched snapshot would otherwise wipe them)
+  4. build_data.py     mapdata.json / markers.json / quests.json
+  5. build_story.py    story.json
 
 Requires the vendored Pillow/numpy in tools/pyext and tools/pylibs, and a
 headless Edge install for SVG rasterisation (see AGENTS.md).
@@ -35,6 +45,7 @@ def main() -> None:
     argv = sys.argv[1:]
     only: list[str] = []
     skip_quests = False
+    check = "--check" in argv
     for i, a in enumerate(argv):
         if a == "--only" and i + 1 < len(argv):
             only = ["--only", argv[i + 1]]
@@ -44,14 +55,27 @@ def main() -> None:
     # 1. Base artwork + per-map manifest.
     run("build_assets.py", only)
 
-    # 2. Floor overlays + hazards (skips icebreaker internally; its floors come
-    #    from the deck SVGs handled inside this same script).
+    # 2. Floor overlays + hazards (icebreaker's floors come from the deck SVGs
+    #    handled inside this same script).
     run("build_layers.py", only)
 
     # 3. Quest / trader data (independent of the artwork).
     if not skip_quests:
+        # The relocation table edits research/api/ and must land before
+        # build_data.py consumes the snapshot; it is idempotent, so running it
+        # on every rebuild is free even when the snapshot was not re-fetched.
+        run("boss_relocate.py", [])
         run("build_data.py", [])
         run("build_story.py", [])
+
+    # 4. Optional gates: the three self-check suites + map coverage.
+    if check:
+        print("\n=== check.ps1 ===", flush=True)
+        r = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass",
+                            "-File", str(TOOLS / "check.ps1")], cwd=ROOT)
+        if r.returncode != 0:
+            raise SystemExit("check.ps1 failed")
+        run("check_map_coverage.py", [])
 
     print("\nall build steps finished", flush=True)
 

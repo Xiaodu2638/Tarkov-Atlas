@@ -28,13 +28,14 @@ dotnet run --project tools/datacheck  -c Release
 dotnet run --project tools/logiccheck -c Release
 dotnet run --project tools/shotcheck  -c Release
 
-# 联网更新数据（重拉快照 -> build_all -> 门禁；从不自动提交，失败自动回滚快照。
-# 注意：boss_relocate 不在 update_data 内部，重拉后必须手动补跑一次再 build_data）
-python tools/update_data.py            # 全流程
-python tools/update_data.py --dry-run  # 只 diff 快照并回滚
-python tools/update_data.py --no-fetch # 跳过联网，只跑 build_all + 门禁
-python tools/update_data.py --selftest # 离线自测快照重塑/翻译展平
-python tools/boss_relocate.py && python tools/build_data.py  # update_data 之后必跑（快照会冲掉 Boss 修正，datacheck 随即报红）
+# 联网更新数据（拉 eftarkov.com 任务/剧情快照 -> build_all -> 门禁；从不自动提交，
+# 失败自动回滚快照。boss_relocate 已内置于 build_all，重拉 --td 快照后无需手动补跑）
+python tools/update_data.py                # 全流程（只碰 eftarkov.com，国内直连）
+python tools/update_data.py --with-guides  # 顺带增量下载新任务的攻略配图
+python tools/update_data.py --dry-run      # 只 diff 快照并回滚
+python tools/update_data.py --no-fetch     # 跳过联网，只跑 build_all + 门禁
+python tools/update_data.py --td           # 额外重拉 tarkov.dev 坐标/标记快照（间歇 422）
+python tools/fetch_eftarkov.py             # 单独跑抓取器（--tasks/--story/--guides，--cache-only 离线重放）
 ```
 
 改了代码要做任何运行时验证之前**先重跑 `build.ps1`**：验证脚本打的是 `dist/` 里的 exe，代码提交了但 dist 没重发，测到的就是旧版本（曾把「功能正常」误判成「左键拖拽没反应」）。
@@ -81,7 +82,7 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     maps/layers/index.json      楼层图索引
     maps/layers/<key>/*.png     楼层叠加图（与底图共用像素网格）
     maps/hazards.json           雷区 / 狙击区 / 其它危险区多边形
-    quests.json                 任务库（468 条）
+    quests.json                 任务库（553 条）
     story.json                  剧情（10 章 / 254 目标）
     bosses/*.png                Boss 头像
     traders/*.png               商人头像
@@ -93,22 +94,24 @@ tools/
   datacheck/                    数据层断言（地图几何、标记、任务、楼层、hazard）
   logiccheck/                   服务层断言（QuestService、剧情、商人、跳转、战局日志解析）
   shotcheck/                    截图解析、导入台账、轮询 watcher、latest-wins pin
-  build_all.py                  管线入口（按依赖顺序跑完下面四步）
+  build_all.py                  离线管线入口（assets → layers → boss_relocate → data → story；--check 连门禁一起跑）
   build_assets.py               渲染 SVG（迷宫 warp 进解析栅格）→ 生成底图 + maps.json
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
-  build_data.py                 合并 API → mapdata.json / markers.json / quests.json
+  build_data.py                 eftarkov 任务文本 + API 标记/坐标 → mapdata.json / markers.json / quests.json
   build_story.py                剧情 → story.json
-  update_data.py                联网更新入口：重拉 research/api 快照 -> build_all -> 门禁（可回滚）
-  boss_relocate.py              快照滞后于游戏版本的 Boss 搬迁修正表（幂等；update_data 重拉后重跑，见第 6 节）
+  fetch_eftarkov.py             eftarkov.com 抓取器：任务快照 + 剧情 + 攻略配图（页面缓存在 .tmp/eftarkov-cache）
+  update_data.py                联网更新入口：fetch_eftarkov -> build_all -> 门禁（可回滚；--td 才重拉 tarkov.dev）
+  boss_relocate.py              快照滞后于游戏版本的 Boss 搬迁修正表（幂等；build_all 会自动跑，见第 6 节）
   check_map_coverage.py         底图内容区覆盖率自检（第 7 节验收标准用它）
   capture_docs.py               驱动 dist 产物重拍 docs/ 四张界面截图
   poi.json                      手工维护的 POI 表（迷宫解谜道具）
   btr.json                      手工维护的 BTR 站点表（灯塔上游 btrStops 为空；API 有数据的地图不覆盖）
   tile-cache/                   瓦片下载缓存（git 忽略）
 research/                       管线输入，全部进 git
-  api/                          tarkov.dev API 快照（maps/tasks/traders + *.zh.json）
+  eftarkov/tasks.json           任务快照（fetch_eftarkov.py 产物：名册/中文目标/前置/攻略图链接）
+  api/                          tarkov.dev API 快照（maps/tasks/traders + *.zh.json；现仅作标记与任务坐标覆盖层）
   upstream/tarkov-dev-maps.json 上游楼层与仿射表
-  story/zh-raw.json             剧情中文抓取
+  story/zh-raw.json             剧情中文抓取（fetch_eftarkov.py 产物）
   story/coords.json             剧情坐标标定表（只含双源验证过的点）
   svg/<地图 key>/*.svg          矢量源，一张地图一个子目录
   svg/LICENSE.md                上游矢量图许可全文
@@ -153,16 +156,18 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 - 数据本身不做删改，只在展示层过滤。
 
 ### 4.4 数据管线（输入进 git，产物由脚本生成）
-- 入口：`python tools/build_all.py`（等价于依次跑下面四步）。顺序：`build_assets.py` → `build_layers.py` → `build_data.py` → `build_story.py`。所有地图（含冰破船）都在同一条管线里。
+- **两类入口，别混**：`build_all.py` 完全离线，是人/agent 都能单独跑通的重建入口（顺序：`build_assets.py` → `build_layers.py` → `boss_relocate.py` → `build_data.py` → `build_story.py`，加 `--check` 连门禁一起跑）；`update_data.py` 才是联网入口（`fetch_eftarkov.py` → `build_all` → 门禁，失败回滚快照）。所有地图（含冰破船）都在同一条管线里。
+- **联网源以 eftarkov.com 为准**：`fetch_eftarkov.py` 拉任务名册（`/task?mode=pvp|pve` 列表翻页）、中文标题/目标/前置/攻略配图（`/task/<id>` 的 `rich-guide-content`）、剧情（`/storyline`）。tarkov.dev 只提供「站点拿不到的数据」——标记几何与任务目标**坐标**——且访问困难，故默认不碰，`update_data.py --td` 才重拉。
+- **任务 id 两边同空间**（都是 BSG 的 24-hex），eftarkov 与 tarkov.dev 直接按 id 对齐，进度存档与 `guides/<id>/` 目录名跨源切换不失效。任务目标的坐标覆盖用 `align_objectives()`：数量相同按位置对齐，不同则按中文文本相似度贪心匹配（站点会合并/拆分手上交目标）；td 侧有坐标却没匹配上的目标，用 td 的中文描述兜底保留，**地图钉子绝不回退**。
 - 局部重建：`build_all.py --only factory`、`build_assets.py --only factory`、`build_layers.py --only factory`。其余地图的 manifest 条目和楼层索引会合并保留，不会清空。
 - **冰破船在同一管线内**：`build_layers.py` 用 `ICE_FLOOR_FILES` 把上游的层名映射到 `research/svg/icebreaker/*.svg`，逐层走 `bake_svg_layer`。不要为它另建入口脚本，也不要在 `build_layers.py` 里跳过它。
 - **迷宫底图不下载瓦片**：美术本来就是 `Labyrinth.svg` 经锚点矩阵 warp 进「瓦片像素栅格」；栅格的尺寸和仿射是纯几何（`build_assets.tile_grid()` 按投影公式直接算），不需要 240 张瓦片提供。`stitch_tiles()` 只剩 reserve 2–5 层、customs 4 层在用。
 - **地图 → SVG 只有一处映射**：`build_assets.svg_source(key)` 按 `research/svg/<key>/` 目录查找（单文件地图取唯一的 `*.svg`，破冰船取 `BASE_DECK`）。`build_layers.py` 复用它，不要再写第二张文件名表。
 - build 脚本靠本机 headless Edge 栅格化 SVG（可用 `EDGE_PATH` 覆盖）；瓦片只有 reserve 2–5 层、customs 4 层在用，缓存在 `tools/tile-cache/`（git 忽略，可离线重跑）。渲染中间产物写到 `.tmp/build/`（git 忽略，不写 `%TEMP%`）。
-- **构建期零联网**：API 快照、矢量源、剧情、头像、地点图都已提交进 `research/` 或 `Assets/`；`build_data.py` 不再下载头像（缺 PNG 只提示，应用回退色点）。
+- **构建期零联网**：`build_all.py` 及四步脚本不请求任何网络——任务/剧情快照、API 快照、矢量源、头像、地点图都已提交进 `research/` 或 `Assets/`；`build_data.py` 不下载头像（缺 PNG 只提示，应用回退色点）。联网只发生在 `fetch_eftarkov.py` / `update_data.py`。
 - 外部依赖：`tools/pyext`（Pillow）、`tools/pylibs`（numpy、requests）。重建：
   `python -m pip install --target tools/pylibs pillow numpy requests`
-- 上游快照放在 `research/`：`api/`（tarkov.dev API）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。
+- 上游快照放在 `research/`：`eftarkov/tasks.json`（任务权威源）、`api/`（tarkov.dev：标记 + 任务坐标）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。
 
 ### 4.5 战局识别与截图定位
 - **截图文件名就是全部数据**：`2026-10-30[19-51]_x, y, z_qx, qy, qz, qw_游戏内秒.png`，坐标与朝向在文件**创建**那刻就完整；PNG 字节还在流式写入（几 MB、可停顿 >1 s）。所以定位**不要**依赖写入完成信号：`ScreenshotService` 用 600 ms 目录轮询 + `ScreenshotImportLedger` 对上次快照做 diff，只解析文件名。任何「等文件稳定」的做法都被证明会误判（半成品导入 → pin 跳；事件被吞 → 看着像没反应）。
@@ -187,7 +192,7 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 6. **不要加 NuGet 外网依赖**：只能用 `.nuget-packages` 里的离线缓存。
 7. **别 `git clean -xdf`**：会连 `research/` 的矢量源一起删掉（`tools/pyext`、`tools/pylibs`、`tools/tile-cache` 也会没）。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
-9. **上游端点现状（实测）**：`assets.tarkov.dev` 403；`api.tarkov.dev/graphql` 可用但间歇 422 "GraphQL server unavailable"（可连发多次，重试也未必好；update_data.py 按退避重试处理）——**请求必须带浏览器 UA + Content-Type/Accept，否则 Cloudflare 直接 403**；`data.tarkov.dev` 在本机连 DNS 都不解析，tarkov-api 的 GitHub 仓库也不随仓分发数据 JSON。GitHub 与 fandom wiki、eftarkov.com 可访问。真实拉取若持续失败，换网络环境重跑，不要改脚本硬编码假数据。
+9. **上游端点现状（实测）**：`eftarkov.com` 国内直连可用（任务列表 `/task?mode=pvp|pve&page=N` 每页 20 条；`/task/<id>` 详情页里「任务攻略」块除 `/uploads/infoImg/*` 之外还内嵌交互式小地图 `/assets/maps/*.svg` 与 `quest_objective.png` 标记图标——抓配图必须按 `infoImg` 过滤，否则每个任务凭空多 2 张“图”；任务 id 是 BSG 24-hex，与 tarkov.dev 同 id 空间）。`assets.tarkov.dev` 403；`api.tarkov.dev/graphql` 可用但间歇 422 "GraphQL server unavailable"（可连发多次，重试也未必好；update_data.py --td 按退避重试处理）——**请求必须带浏览器 UA + Content-Type/Accept，否则 Cloudflare 直接 403**；`data.tarkov.dev` 在本机连 DNS 都不解析。GitHub 与 fandom wiki 可访问。真实拉取若持续失败，换网络环境重跑，不要改脚本硬编码假数据。
 10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
 11. **冰破船的层必须用与底图相同的渲染身份**：`research/svg/icebreaker/*.svg` 共享同一 viewBox（`1000 1500 3000 5400`），每个文件里只有 `display:block` 的那个组是有效内容。必须按**与底图完全相同的目标尺寸与 `turn`** 渲染（`bake_svg_layer` 已如此），任何裁剪/二次缩放都会重新引入错位。
 12. **`render_svg()` 的 `only_layer` 只允许隐藏顶层组**：这些 SVG 把每层作为根 `<svg>` 的直接子 `<g>`，层内还有 `Floor` / `Wall` / `Stairs` 等嵌套组。早期用 `^  <g` 缩进正则匹配顶层组，文件被压成单行后匹配数为 0，「隐藏其它层」静默失效、整份文档全被渲染；后来改成匹配任意 `<g id>` 又把**层内**的嵌套组一起隐藏，底图直接变成纯背景色。现在统一走 `top_level_group_ids()`（`ElementTree` 解析，只取根节点的直接子组）。新增地图的层过滤必须复用它，不要再用正则猜缩进。
@@ -211,11 +216,11 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 ## 6. 数据出处（不要凭印象改）
 
 - **Boss / 刷点**：上游同一个 `mob` 会按刷点变体重复出现，必须按 `mob` 合并（`chance` 取最大，`points` 0.1 m 去重取并集）。显示名见 `BOSS_ZH`：`exUsecFree/ExUsec → 游荡者`（**不是「流氓」**）、`PmcBot → 掠夺者`、`vsRF/vsRFSniper → 俄军/俄军狙击手`、`blackDivision/pmcBotBlackDiv/bossBullyBlackDiv → 黑色军团`、`sectantPriest → 邪教徒祭司`。不要出现 `PMC` / `Boss` 这类占位名。
-- **Boss 搬迁 / 钉位修正（`tools/boss_relocate.py`）**：tarkov.dev 快照滞后于游戏版本，该脚本在重拉后把快照修回正确状态，三张表各管一类：`RELOCATIONS`（换图：`bossGluhar` lighthouse → reserve，6 个点取 eftarkov 储备站标记，14 锚点拟合、残差中位 6.7 m，落点与白车/K楼群/白马/停机坪/K4地堡/白后吻合）；`POSITION_FIXES`（同图钉位：`bossZryachiy` 上游 `Zone_Island` positions 为空数组、build_data 会整条丢弃，按 eftarkov 灯塔页标记钉到「灯塔新区」半岛 (346.3, 471.9)，21 锚点、LOO 中位 9.7 m）；`REMOVALS`（整条删除：`bossKnight` 三狗——豪宅自 Rogue 重做后由游荡者驻守，上游还把 Zone_Chalet 的一点画在新区半岛）。三张表幂等，`--check` 只报告。**`update_data.py` 重拉后必须跑 `boss_relocate.py` 再 `build_data.py`**（datacheck 随即报红兜底）。灯塔现行口径：**新区 = Zryachiy、豪宅 = 游荡者（Rogue）、无三狗、Glukhar 在储备站**——datacheck 有对应断言。上游修好后删表内条目、退回纯上游数据。
+- **Boss 搬迁 / 钉位修正（`tools/boss_relocate.py`）**：tarkov.dev 快照滞后于游戏版本，该脚本在重拉后把快照修回正确状态，三张表各管一类：`RELOCATIONS`（换图：`bossGluhar` lighthouse → reserve，6 个点取 eftarkov 储备站标记，14 锚点拟合、残差中位 6.7 m，落点与白车/K楼群/白马/停机坪/K4地堡/白后吻合）；`POSITION_FIXES`（同图钉位：`bossZryachiy` 上游 `Zone_Island` positions 为空数组、build_data 会整条丢弃，按 eftarkov 灯塔页标记钉到「灯塔新区」半岛 (346.3, 471.9)，21 锚点、LOO 中位 9.7 m）；`REMOVALS`（整条删除：`bossKnight` 三狗——豪宅自 Rogue 重做后由游荡者驻守，上游还把 Zone_Chalet 的一点画在新区半岛）。三张表幂等，`--check` 只报告，且已内置于 `build_all.py`（`--td` 重拉 tarkov.dev 快照后自动恢复修正，无需手动补跑）。灯塔现行口径：**新区 = Zryachiy、豪宅 = 游荡者（Rogue）、无三狗、Glukhar 在储备站**——datacheck 有对应断言。上游修好后删表内条目、退回纯上游数据。
 - **出生点**：只保留 `categories` 含 `player` 的点。
 - **BTR 站点**：森林 8 / 街区 6 取上游 `btrStops`（站名查 `maps.zh` 的 `Trading/Dialog/PlayerTaxi/...` 键）；灯塔上游为空，用人工表 `tools/btr.json`（10-29 交互地图标定）。人工表只在该图 API 无数据处补位。共 22 站，图例行按数据存在与否显示，数据丢了整行就没了。
 - **Boss 人工筛选（`BOSS_ZONE_FILTER`）**：`(中心x, 中心z, 半径)`，**只删远点，不新增任何点**。现有两条：`woods/bossKojaniy = (10, -3, 120)`（上游 `ZoneWoodCutter` 混进 USEC Camp / Scav Town 方向的点）；`lighthouse/exUsecFree = (-60, 40, 220)`（用户 2026-10-31 在图上圈定游荡者营地 = 派克峰度假村/大木屋/网球场一带，上游 `Zone_Chalet`/`Zone_Rocks` 混进了 1.1.5 前水电站集群和灯塔新区半岛的点——后者是 Zryachiy 的邪教徒护卫，不是游荡者；过滤后剩 3 个点）。
-- **剧情**：中文标题/目标来自 `https://www.eftarkov.com/storyline/<id>` 的抓取（`research/story/zh-raw.json`），不是机器翻译；章节映射在 `tools/build_story.py`。
+- **剧情**：中文标题/目标来自 `https://www.eftarkov.com/storyline/<id>` 的抓取（`tools/fetch_eftarkov.py --story` → `research/story/zh-raw.json`），不是机器翻译；章节映射在 `tools/build_story.py`。章节顺序按 ObjectId（创建时间）排，不按站点的拼音字母导航。
 - **剧情勾选**：`剧情任务` 页有**章级**和**目标级**两套勾选框，都写同一份进度（`storyDone` = 章 id，`storyObjectiveDone` = eftarkov objective id，后者由 `build_story.py` 从 `zh-raw.json` 带进 `story.json`）。规则：勾章 = 全选该章所有子目标；取消章 = 全部清空；子目标全勾 → 章自动变完成，取消任意一个 → 章自动回到未完成。视觉上两者一致（整行淡化 45%/50% + 删除线），`Border.story.done` / `Border.story-obj.done`。旧的只有 `storyDone` 的进度文件会在加载时把整章子目标点亮（一次性迁移）。「隐藏已完成」同时过滤章（`StoryView`）和子目标（`StoryObjective.IsVisible`），`StoryRows` 与进度计数永远是全量。**别把它当任务完成状态**，它不参与地图/任务/悬浮窗的任何逻辑。
 - **剧情坐标**：`research/story/coords.json` 是唯一来源（69 条，`datacheck` 断言「有地图就必须有坐标」，少一条就红）。像素 -> 游戏坐标的分辨率按图不同，**不要用固定比例换算**（直接按 `data-map-width/height` 换算的已知点误差中位 43 m、最大 83 m）。正确做法是逐图拟合，锚点来自：① 已人工验证的点；② 站点「地图标注」与本图 `mapdata.labels` 同名；③ 站点「任务地点」（带 `task_id`）与 `quests.json` 同任务唯一 zone。锚点 ≥ 4 用通用仿射（工厂/实验室的站点图相对游戏坐标是旋转的，轴对齐模型会把残差拉到 40 m+），只有 3 个点时用反射相似。迷宫可用本图 5 个出生点与站点 7 个 `PMC` 标记做形状配准（rms 0.8 m），破冰船用「和平原子」的 3 个任务点配准（rms 0.3 m）。全部过留一法，残差 > ~10 m 的图不输出。**宁可不标，也不编坐标。**
 - **商人**：任务列表显示英文原名（`TraderInfo.Name`），中文名只用于其它展示。`QuestService.ResolveTraderNames()` 同时填 `TraderDisplay` 和 `TraderSlug`，不出现 24 位十六进制 id。
@@ -246,7 +251,8 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 - 提交前 `git status --short` 必须干净。
 - **提交者身份**：本地 `git config` 的 `user.name` = `Xiaodu`、`user.email` = `89345327+Xiaodu2638@users.noreply.github.com`（GitHub 账号 id 89345327 的 noreply 地址）。2026-11 已用 `git filter-branch --env-filter` 把全部历史从 `atlas <atlas@local>` 重写成该身份并强推 main、重指 `v1.0.0`。**别改回 `atlas@local`**——GitHub 按邮箱归属提交，那个地址只会渲染成灰头像的 `atlas`。
 - **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_tag_move.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写。release 正文：`docs/RELEASE-NOTES.md` 已由作者删除（他认为没必要），`gh_release.py` 缺文件时会静默拿仓库名当正文——要写正文用 `REL_BODY` 环境变量传）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ `python .tmp/gh_tag_move.py`（PATCH 移动 `v1.0.0` tag，幂等）→ `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。**`gh_release.py` 必须用脱离终端的方式跑**（`Start-Process` + 日志重定向，或 harness 的 background shell）：232 MB 走代理可超过任何前台超时，被中途杀掉会留下「旧资产已删、新资产没传」的空档（Release 一度 0 资产）；传完用 API 的 `assets[].digest` 与本地 `sha256` 对账。**先 push 后上传**——zip 必须是刚构建的那份，否则等于挂错版本（曾把旧数据构建传上去，杀掉重跑）。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
-- **官方已下线任务的剔除**：tarkov.dev 快照滞后于游戏版本，判断以 eftarkov.com 为准——`/task?q=<名>` 返回 0 且详情页被退回列表页 = 已下线（对照一个已知存在的任务 id 验行为）。确认后直接改快照 `research/api/tasks.json` + `tasks.zh.json`（删任务对象与其专属 zh 键，共享键保留）→ `build_data.py` 重建 → 核对 `git grep <id>` 无残留。
+- **任务名册 / 已下线任务**：以 eftarkov.com 列表页（`/task?mode=pvp|pve`）为准——站点不再列出的任务，`fetch_eftarkov.py` 重拉后就从名册消失，`build_data.py` 只遍历 eftarkov 名册，tarkov.dev 独有的残留条目**自动**不进 quests.json，无需再手改快照。判断口径不变：`/task?q=<名>` 返回 0 且详情页退回列表页 = 已下线（对照一个已知存在的任务 id 验行为）。
+- **任务地点攻略图**：`research/eftarkov/tasks.json` 的 `guideImages` + `fetch_eftarkov.py --guides` 抓取。**已存在的 `guides/<id>/N.webp` 不会被覆盖**（手工验证过的版本优先）；站点列表变短时尾部旧图也保留（个别任务手工集比站点当前页更全，如 54 vs 17）。`--prune` 只删「站点已彻底不收录」的任务目录，默认关闭。共 285 个任务 / 1622 张。
 - **宣传落地页 `docs/index.html`**：单文件、零外部依赖（无 CDN 字体/图标/JS 框架），双击即可预览，因此**不要**引入需要构建或联网的资源。
   - 配色直接复用 `App.axaml` 的调色板（`#080C11` 底 / `#0E141B` 面板 / `#141C25` 卡片 / `#D6A84B` 强调金），新配色先往那里对齐。
   - 截图与图标一律用**同目录相对路径**（`main.png`、`author.png`、`logo-github.svg`），因为该页与 `docs/*.png` 同级；从 `.tmp/` 草稿迁到 `docs/` 时必须批量改掉 `../../docs/` 前缀。

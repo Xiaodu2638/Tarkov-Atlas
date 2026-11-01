@@ -1,20 +1,32 @@
 #!/usr/bin/env python3
-r"""Refresh the research/api snapshots, rebuild every asset, and gate on checks.
+r"""Data refresh entry point: pull from eftarkov.com, rebuild, gate.
 
-    python tools/update_data.py              # 重拉快照 -> build_all -> 门禁 -> 等你审 diff
-    python tools/update_data.py --dry-run    # 拉完只展示快照 diff 并回滚，不构建
-    python tools/update_data.py --no-fetch   # 跳过联网，只跑 build_all + 门禁
-    python tools/update_data.py --selftest   # 离线自测：拿仓库内快照验证重塑/展平逻辑
+    python tools/update_data.py               # eftarkov 任务+剧情 -> build_all -> 门禁
+    python tools/update_data.py --dry-run     # 拉完只展示快照 diff 并回滚，不构建
+    python tools/update_data.py --no-fetch    # 跳过联网，只跑 build_all + 门禁
+    python tools/update_data.py --with-guides # 同时下载任务攻略配图（增量）
+    python tools/update_data.py --td          # 额外重拉 tarkov.dev 坐标快照（慢，可能 422）
+    python tools/update_data.py --selftest    # 离线自测 tarkov.dev 重塑/展平逻辑
+
+数据源分工（以 eftarkov.com 为准，tarkov.dev 只在拿不到的数据上做覆盖层）：
+* research/eftarkov/tasks.json   任务名册 + 中文名 + 中文目标 + 前置 + 攻略图链接
+                                 （tools/fetch_eftarkov.py，国内直连）
+* research/story/zh-raw.json     剧情章节/目标中文文本（同上）
+* research/api/tasks.json        tarkov.dev 快照：只为任务目标提供**坐标**
+                                 （--td 时重拉；eftarkov 没有这个数据）
+* research/api/maps.json 等      撤离点/Boss/出生点/雷区等标记数据 + 楼层表，
+                                 同样只有 tarkov.dev 有（--td 时重拉）
 
 流水线设计（AGENTS.md 第 8 节约定）：
-* 快照进 git、产物 diff 可审：拉完后打印 research/api/ 的 git diff --stat，
-  **脚本从不自动提交**；数据异常（上游坐标漂移等）由现有 datacheck 拦住。
-* 门禁 = build_all.py -> tools/check.ps1（三套自检）-> check_map_coverage.py。
-  任何一步非零退出：快照回滚到拉取前，中止，不留半成品。
-* 依赖：联网（api.tarkov.dev GraphQL）、本机 Edge（SVG 栅格化，build 阶段）、
-  仓库内 tools/pyext|pylibs（Pillow/numpy/requests）。
+* 快照进 git、产物 diff 可审：拉完后打印 research/ 的 git diff --stat，
+  **脚本从不自动提交**；数据异常由门禁（check.ps1 + coverage）拦住。
+* 门禁失败：拉取过的快照回滚到拉取前，中止，不留半成品。
+* boss_relocate 已内置于 build_all.py（幂等），重拉 --td 快照后无需手动补跑。
+* 依赖：eftarkov.com 可直连；--td 需要 api.tarkov.dev 可用（间歇 422，
+  脚本内退避重试）；构建需要本机 Edge（SVG 栅格化）与仓库内
+  tools/pyext|pylibs（Pillow/numpy/requests）。
 
-快照格式与 build_data.py 的读法保持一致：
+tarkov.dev 快照格式与 build_data.py 的读法保持一致：
   {name}.json     {"data": {...id 键控段落...}, "translations": [<jsonpath>...]}
   {name}.zh.json  {"data": {"<id> Name": 中文, "<英文值>": 中文, ...}}
 
@@ -40,6 +52,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
 API = ROOT / "research" / "api"
+EF = ROOT / "research" / "eftarkov"
+STORY = ROOT / "research" / "story" / "zh-raw.json"
 BACKUP = ROOT / ".tmp" / "api-backup"
 GRAPHQL = "https://api.tarkov.dev/graphql"
 DATASETS = ["maps", "tasks", "traders"]   # build_data.py 消费的三对快照
@@ -67,7 +81,19 @@ def dump_json(path: Path, obj) -> None:
                     encoding="utf-8", newline="\n")
 
 
-# ------------------------------------------------------------------ fetch
+# ------------------------------------------------------------ eftarkov.com
+
+
+def fetch_eftarkov(with_guides: bool) -> None:
+    args = [sys.executable, str(TOOLS / "fetch_eftarkov.py"), "--tasks", "--story"]
+    if with_guides:
+        args.append("--guides")
+    log("$ " + " ".join(args))
+    if subprocess.run(args, cwd=ROOT).returncode != 0:
+        die("fetch_eftarkov.py 失败")
+
+
+# ------------------------------------------------------------------- fetch
 
 
 def gql(query: str, language: str) -> dict:
@@ -117,7 +143,7 @@ def gql(query: str, language: str) -> dict:
             die(f"GraphQL 报错（{language}）: {msgs}")
         return payload["data"]
     die(f"GraphQL 不可达（重试 4 次）: {last}\n"
-        f"  该端点偶发不可用；可在网络正常的机器上重跑，或 --no-fetch 跳过拉取")
+        f"  该端点偶发不可用；可在网络正常的机器上重跑，或去掉 --td 跳过坐标快照")
 
 
 def selection_for(value) -> str | None:
@@ -254,20 +280,31 @@ def git_diff_stat(paths: list[str]) -> str:
     return r.stdout.strip()
 
 
+def snapshot_backup() -> None:
+    """Copy every snapshot the fetches may rewrite, mirroring the research/ tree
+    (api/tasks.json and eftarkov/tasks.json must not collide in a flat backup)."""
+    if BACKUP.exists():
+        shutil.rmtree(BACKUP)
+    for src_dir in (API, EF):
+        if src_dir.is_dir():
+            dst = BACKUP / src_dir.relative_to(ROOT)
+            dst.mkdir(parents=True, exist_ok=True)
+            for f in src_dir.glob("*.json"):
+                (dst / f.name).write_bytes(f.read_bytes())
+    if STORY.is_file():
+        dst = BACKUP / STORY.parent.relative_to(ROOT)
+        dst.mkdir(parents=True, exist_ok=True)
+        (dst / STORY.name).write_bytes(STORY.read_bytes())
+
+
 def rollback() -> None:
     if not BACKUP.is_dir():
         return
-    for f in BACKUP.glob("*.json"):
-        (API / f.name).write_bytes(f.read_bytes())
-    log("research/api/ 已回滚到拉取前的快照")
-
-
-def snapshot_backup() -> None:
-    if BACKUP.exists():
-        shutil.rmtree(BACKUP)
-    BACKUP.mkdir(parents=True)
-    for f in API.glob("*.json"):
-        (BACKUP / f.name).write_bytes(f.read_bytes())
+    for f in BACKUP.rglob("*.json"):
+        target = ROOT / f.relative_to(BACKUP)
+        if target.parent.is_dir():
+            target.write_bytes(f.read_bytes())
+    log("research 快照已回滚到拉取前")
 
 
 # ------------------------------------------------------------------- main
@@ -362,7 +399,7 @@ def selftest() -> int:
     return 0 if ok else 1
 
 
-def fetch_all() -> None:
+def fetch_td() -> None:
     for name in DATASETS:
         snap = load_json(API / f"{name}.json")
         query = build_query(name, snap)
@@ -374,11 +411,16 @@ def fetch_all() -> None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="re-pull API snapshots -> build_all -> checks")
+    ap = argparse.ArgumentParser(
+        description="eftarkov.com 快照刷新 -> build_all -> 门禁（tarkov.dev 坐标层可选 --td）")
     ap.add_argument("--dry-run", action="store_true", help="只展示快照 diff，回滚且不构建")
     ap.add_argument("--no-fetch", action="store_true", help="跳过联网，只跑构建与门禁")
     ap.add_argument("--skip-build", action="store_true", help="跳过 build_all（只跑门禁）")
-    ap.add_argument("--selftest", action="store_true", help="离线自测重塑/展平逻辑")
+    ap.add_argument("--with-guides", action="store_true",
+                    help="顺带下载新增任务的攻略配图（增量，不动已有图片）")
+    ap.add_argument("--td", action="store_true",
+                    help="重拉 tarkov.dev 坐标/标记快照（间歇 422，慢；仅在需要同步坐标数据时用）")
+    ap.add_argument("--selftest", action="store_true", help="离线自测 tarkov.dev 重塑/展平逻辑")
     args = ap.parse_args()
 
     if args.selftest:
@@ -391,12 +433,14 @@ def main() -> int:
     if not args.no_fetch:
         snapshot_backup()
         try:
-            fetch_all()
+            fetch_eftarkov(args.with_guides)
+            if args.td:
+                fetch_td()
         except SystemExit:
             rollback()
             raise
-        print("\n=== research/api 变更 ===")
-        print(git_diff_stat(["research/api"]) or "（无变化）")
+        print("\n=== research 变更 ===")
+        print(git_diff_stat(["research"]) or "（无变化）")
         if args.dry_run:
             rollback()
             log("dry-run 完成：快照已回滚，未构建")
@@ -420,7 +464,7 @@ def main() -> int:
         die("check_map_coverage.py 失败")
 
     print("\n=== 产物变更 ===")
-    print(git_diff_stat(["TarkovAtlas/Assets", "research/api"]) or "（无变化）")
+    print(git_diff_stat(["TarkovAtlas/Assets", "research"]) or "（无变化）")
     log("门禁全部通过。git diff 人工审查后再自行 add/commit。")
     return 0
 

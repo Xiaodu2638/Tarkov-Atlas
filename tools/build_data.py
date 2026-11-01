@@ -1,26 +1,33 @@
 #!/usr/bin/env python3
-"""Rebuild the Tarkov Atlas data bundle from tarkov.dev's JSON API snapshots.
+"""Rebuild the Tarkov Atlas data bundle (map metadata, markers, quests).
 
-Inputs (committed under research/api/):
-  maps.json / maps.zh.json / tasks.json / tasks.zh.json / traders.json
-  (the *.zh.json files hold the Chinese localisation tables)
+Inputs (all committed, this script never touches the network):
+  research/eftarkov/tasks.json   authoritative task roster: Chinese titles,
+                                 objectives, prerequisites, maps, trader ids
+  research/api/                  tarkov.dev snapshots - marker geometry
+                                 (extracts/bosses/spawns/hazards), floor tables,
+                                 and the *coordinate overlay* for task objectives
+  TarkovAtlas/Assets/maps/maps.json  manifest from build_assets.py
 
 Produces:
   TarkovAtlas/Assets/maps/mapdata.json   maps + affine + labels + markers
-  TarkovAtlas/Assets/quests.json         localized tasks with objective coords
-  TarkovAtlas/Assets/traders/*.png       trader avatars (quest markers)
+  TarkovAtlas/Assets/maps/markers.json   per-map marker points
+  TarkovAtlas/Assets/quests.json         tasks with objective coords
 
-Base JPGs are produced by build_assets.py in the official in-game orientation;
-this script only reads their size and the manifest affine, never rotates them.
+Task ids are the same BSG ids on both sites, so the eftarkov roster and the
+tarkov.dev overlay join directly on id; objective coordinates are matched per
+objective (see align_objectives). Base JPGs come from build_assets.py in the
+official in-game orientation; this script only reads their size and the
+manifest affine, never rotates them.
 """
 from __future__ import annotations
 
 import json
 import math
 import pathlib
+import re
 import shutil
 import sys
-import urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RES = ROOT / "research"
@@ -258,18 +265,71 @@ BOSS_ZONE_FILTER = {
 }
 
 
-def CleanEnglishName(raw: str, zh_title: str) -> str:
-    """The API sometimes ships "<24-hex-id> name" instead of a real title."""
-    text = (raw or "").replace(" Name", "").strip()
-    if not text:
-        return zh_title
-    if IsHexId(text) or (text.lower().endswith(" name") and IsHexId(text[:-5].strip())):
-        return zh_title
-    return text
-
-
 def IsHexId(value: str) -> bool:
     return len(value) == 24 and all(c in "0123456789abcdefABCDEF" for c in value)
+
+
+def ZhTaskText(table: dict, en: str) -> str:
+    return (table.get(en) or "").replace(" description", "").strip() or en
+
+
+def _norm_text(s: str) -> str:
+    return re.sub(r"[^0-9a-z\u4e00-\u9fff]+", "", (s or "").lower())
+
+
+def td_points(td: dict) -> list:
+    """[(map_id, x, z)] for one tarkov.dev objective: zones first, then
+    findQuestItem possibleLocations (the overlay's two point sources)."""
+    pts = []
+    for z in td.get("zones", []) or []:
+        pos = z.get("position") or {}
+        if z.get("map") and "x" in pos:
+            pts.append((z["map"], pos["x"], pos.get("z", 0)))
+    for loc in td.get("possibleLocations", []) or []:
+        if not loc.get("map"):
+            continue
+        for pos in loc.get("positions", []) or []:
+            if "x" in pos:
+                pts.append((loc["map"], pos["x"], pos.get("z", 0)))
+    return pts
+
+
+def align_objectives(ef_objectives: list[str], td_objs: list[dict],
+                     td_zh_descs: list[str]) -> dict[int, int]:
+    """Match eftarkov objective texts to tarkov.dev objectives (positional when
+    the counts agree, greedy text similarity otherwise), so the coordinate
+    overlay survives hand-in/optional rows that only one side lists.
+    Returns {ef_index: td_index}."""
+    n = len(ef_objectives)
+    if not n or not td_objs:
+        return {}
+    if len(td_objs) == n:
+        return dict(enumerate(range(n)))
+    out: dict[int, int] = {}
+    used: set[int] = set()
+    for i, et in enumerate(ef_objectives):
+        ne = _norm_text(et)
+        if not ne:
+            continue
+        best, bi = 0.6, -1
+        for j in range(len(td_objs)):
+            if j in used:
+                continue
+            nt = _norm_text(td_zh_descs[j])
+            if not nt:
+                continue
+            if ne == nt:
+                s = 1.0
+            elif ne in nt or nt in ne:
+                s = 0.9
+            else:
+                s = len(set(ne) & set(nt)) / max(len(set(ne)), len(set(nt)))
+            if s > best:
+                best, bi = s, j
+        if bi >= 0:
+            used.add(bi)
+            out[i] = bi
+    return out
 
 
 def load(name: str):
@@ -562,75 +622,72 @@ def main() -> None:
         })
 
     # ---- tasks ---------------------------------------------------------
+    # Authoritative roster/text: research/eftarkov/tasks.json (the site this app
+    # links to). Task ids are the same BSG ids on both sites, so the tarkov.dev
+    # snapshot is only a *coordinate overlay* - it has no Chinese text authority.
+    ef_path = RES / "eftarkov" / "tasks.json"
+    if not ef_path.is_file():
+        raise SystemExit("missing research/eftarkov/tasks.json - run: python tools/fetch_eftarkov.py --tasks")
+    ef_tasks = json.loads(ef_path.read_text(encoding="utf-8"))["tasks"]
+    zh_map_to_key = {zh_name: key for key, (zh_name, *_rest) in META.items()}
+
     out_tasks = []
-    for tid, q in api_tasks.items():
-        name_en = q.get("name", tid)
-        title = (tasks_zh.get(name_en) or "").replace(" Name", "").strip()
-        if not title or IsHexId(title) or title.lower().endswith(" name"):
-            title = name_en.replace(" Name", "").replace("-", " ").title()
-        # The API ships "<24-hex-id> name" for every task; the original English
-        # title is only in the wiki link. Without this fallback nameEn stayed a
-        # copy of the Chinese title, so English search never matched.
-        english_name = CleanEnglishName(name_en, title)
-        if not english_name.isascii():
-            wiki_slug = urllib.parse.unquote((q.get("wikiLink") or "").rsplit("/", 1)[-1])
-            wiki_slug = urllib.parse.unquote(wiki_slug).replace("_", " ").strip()
-            if wiki_slug and ":" not in wiki_slug:
-                english_name = wiki_slug
+    for eq in ef_tasks:
+        # Coordinate overlay from the (stale) tarkov.dev snapshot, same id space.
+        tdq = api_tasks.get(eq["id"]) or {}
+        td_objs = tdq.get("objectives") or []
+        td_descs = [ZhTaskText(tasks_zh, o.get("description", "")) for o in td_objs]
+
+        match_index = align_objectives(eq["objectives"], td_objs, td_descs)
+
         objectives = []
         maps_touched: list[str] = []
-        for o in q.get("objectives", []):
-            # Optional objectives (side conditions such as "also bring X") still
-            # carry real map coordinates; skipping them made multi-location
-            # tasks lose their pins, so every zoned objective is kept.
-            desc_en = o.get("description", "")
-            desc = (tasks_zh.get(desc_en) or "").replace(" description", "") or desc_en
-            zones = []
-            for z in o.get("zones", []) or []:
-                zid = z.get("map", "")
+        used_td: set[int] = set()
+
+        def add_zones(pts, otype, text):
+            zs = []
+            for zid, x, z in pts:
                 mkey = id_to_key.get(zid)
-                pos = z.get("position") or {}
-                if not mkey or "x" not in pos:
-                    continue
-                zones.append({"map": mkey, "x": pos["x"], "z": pos["z"]})
-                if mkey not in maps_touched:
-                    maps_touched.append(mkey)
-            # findQuestItem objectives don't use zones; they name the maps the
-            # item can spawn on (possibleLocations) with candidate positions.
-            # Skipping them left tasks like "主钥匙" (Master Key) with a map but
-            # no jump coordinates and no pins.
-            for loc in o.get("possibleLocations", []) or []:
-                mkey = id_to_key.get(loc.get("map", ""))
                 if not mkey:
                     continue
-                for pos in loc.get("positions", []) or []:
-                    if "x" not in pos:
-                        continue
-                    zones.append({"map": mkey, "x": pos["x"], "z": pos["z"]})
-                    if mkey not in maps_touched:
-                        maps_touched.append(mkey)
-            otype = o.get("type", "")
-            if zones:
-                objectives.append({"text": desc, "type": otype, "zones": zones})
-        # Only maps with real objective coordinates count as "this task is done
-        # here". The API's top-level task.map is often a rough guess (it puts the
-        # Therapist "Private clinic" on Factory), so prefer the zones.
+                zs.append({"map": mkey, "x": x, "z": z})
+                if mkey not in maps_touched:
+                    maps_touched.append(mkey)
+            if zs:
+                objectives.append({"text": text, "type": otype, "zones": zs})
+
+        for i, text in enumerate(eq["objectives"]):
+            # Only objectives the overlay has coordinates for become pins
+            # (same UI bar as the old tarkov.dev-only path).
+            j = match_index.get(i)
+            if j is None:
+                continue
+            used_td.add(j)
+            add_zones(td_points(td_objs[j]), td_objs[j].get("type", ""), text)
+        # Tarkov.dev objectives that carry zones but matched no eftarkov text
+        # (eftarkov merges/splits some hand-ins): keep them with the td Chinese
+        # description so map pins never regress.
+        for j, td in enumerate(td_objs):
+            if j in used_td or not td_points(td):
+                continue
+            add_zones(td_points(td), td.get("type", ""), td_descs[j])
+
         map_keys = list(maps_touched)
-        if not map_keys:
-            qmap = id_to_key.get(q.get("map", ""))
-            if qmap:
-                map_keys.append(qmap)
+        for zh_name in eq.get("maps") or []:
+            mkey = zh_map_to_key.get(zh_name)
+            if mkey and mkey not in map_keys:
+                map_keys.append(mkey)
 
         out_tasks.append({
-            "id": tid,
-            "name": title,
-            "nameEn": english_name,
-            "trader": q.get("trader", ""),
-            "level": q.get("minPlayerLevel", 0),
-            "wiki": q.get("wikiLink", ""),
+            "id": eq["id"],
+            "name": eq["name"],
+            "nameEn": eq["nameEn"],
+            "trader": eq["trader"],
+            "level": eq.get("level", 0),
+            "wiki": eq.get("source", ""),
             "maps": map_keys,
-            "prerequisites": [r.get("taskId") for r in (q.get("taskRequirements") or [])
-                              if r.get("status") in ("complete", "active") and r.get("taskId")],
+            "prerequisites": [p["id"] for p in eq.get("prerequisites") or []
+                              if p.get("status") in ("complete", "active")],
             "objectives": objectives,
         })
     out_tasks.sort(key=lambda t: (t["name"]))
@@ -657,7 +714,8 @@ def main() -> None:
         json.dumps({"generatedAt": "2026-10-27", "maps": out_maps, "traders": trader_meta},
                    ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     (ASSETS / "quests.json").write_text(
-        json.dumps({"generatedAt": "2026-10-27", "source": "tarkov.dev JSON API",
+        json.dumps({"generatedAt": "2026-11-01",
+                    "source": "eftarkov.com tasks + tarkov.dev coordinate overlay",
                     "quests": out_tasks}, ensure_ascii=False, indent=1), encoding="utf-8", newline="")
     print(f"maps={len(out_maps)} tasks={len(out_tasks)} traders={len(trader_meta)}")
 

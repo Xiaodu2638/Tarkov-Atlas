@@ -9,8 +9,9 @@ eftarkov 的灯塔地图页已经没有他的分类、储备站有 6 个刷点�
     python tools/boss_relocate.py          # 有出入才写入（幂等）
     python tools/boss_relocate.py --check  # 只检查，不写
 
-update_data.py 重拉快照会覆盖本修正；重拉后跑一次本脚本即可恢复。等上游
-tarkov.dev 把 Boss 位置修对之后，删掉 RELOCATIONS 里对应条目即可。
+update_data.py --td 重拉快照会覆盖本修正；build_all.py 每次都会自动跑本脚本把修
+正补回来（幂等），无需手动执行。等上游 tarkov.dev 把 Boss 位置修对之后，删掉
+RELOCATIONS 里对应条目即可。
 """
 from __future__ import annotations
 
