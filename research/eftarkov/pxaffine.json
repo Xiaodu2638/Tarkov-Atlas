@@ -1,0 +1,220 @@
+{
+ "_note": "eftarkov.com interactive-map SVG pixel -> game-meter affine, keyed per map then per floor ('*' = one transform for the whole map). Fit by tools/site_calibrate.py (storyline points seed, task-zone joins, same-name labels only by consensus). Leave-one-out median<=5m max<=10m; floors/maps that miss the bar get no transform. Regenerate: python tools/fetch_eftarkov.py --maps && python tools/site_calibrate.py",
+ "maps": {
+  "customs": {
+   "*": {
+    "a": -0.500122,
+    "b": 0.000976,
+    "c": 799.167888,
+    "d": 0.000145,
+    "e": 0.498744,
+    "f": -298.78999
+   },
+   "stats": {
+    "anchors": 24,
+    "by": {
+     "story": 7,
+     "zone": 10,
+     "label": 7
+    },
+    "pool": 26,
+    "looMedianM": 1.51,
+    "looMaxM": 4.47
+   }
+  },
+  "factory": {
+   "1": {
+    "a": -0.001408,
+    "b": -0.100301,
+    "c": 87.848919,
+    "d": -0.101703,
+    "e": -0.001644,
+    "f": 82.731288
+   },
+   "stats": {
+    "anchors": 5,
+    "by": {
+     "story": 1,
+     "zone": 2,
+     "label": 2
+    },
+    "pool": 6,
+    "looMedianM": 3.58,
+    "looMaxM": 7.33,
+    "floors": [
+     "1"
+    ],
+    "floorFails": [
+     "f-1:seed <3 anchors / degenerate",
+     "f2:seed <3 anchors / degenerate",
+     "f3:LOO error median 4.8 m max 22.0 m (too large)"
+    ]
+   }
+  },
+  "ground-zero": {
+   "1": {
+    "a": -0.504968,
+    "b": -0.004244,
+    "c": 303.459378,
+    "d": -0.004244,
+    "e": 0.504968,
+    "f": -145.336701
+   },
+   "stats": {
+    "anchors": 3,
+    "by": {
+     "zone": 3
+    },
+    "pool": 4,
+    "looMedianM": 4.32,
+    "looMaxM": 6.79,
+    "floors": [
+     "1"
+    ],
+    "floorFails": [
+     "f2:seed <3 anchors / degenerate"
+    ]
+   }
+  },
+  "interchange": {
+   "*": {
+    "a": -0.502992,
+    "b": -0.000916,
+    "c": 586.919834,
+    "d": -0.000786,
+    "e": 0.500088,
+    "f": -485.184756
+   },
+   "stats": {
+    "anchors": 6,
+    "by": {
+     "story": 3,
+     "zone": 3
+    },
+    "pool": 8,
+    "looMedianM": 2.23,
+    "looMaxM": 4.53
+   }
+  },
+  "lighthouse": {
+   "*": {
+    "a": -1.003691,
+    "b": 0.002387,
+    "c": 550.428695,
+    "d": -0.001166,
+    "e": 0.998687,
+    "f": -1047.042264
+   },
+   "stats": {
+    "anchors": 16,
+    "by": {
+     "story": 5,
+     "zone": 9,
+     "label": 2
+    },
+    "pool": 18,
+    "looMedianM": 2.77,
+    "looMaxM": 6.47
+   }
+  },
+  "shoreline": {
+   "*": {
+    "a": -0.998127,
+    "b": 0.00046,
+    "c": 567.481197,
+    "d": 0.00027,
+    "e": 0.994387,
+    "f": -448.025268
+   },
+   "stats": {
+    "anchors": 31,
+    "by": {
+     "story": 12,
+     "zone": 13,
+     "label": 6
+    },
+    "pool": 36,
+    "looMedianM": 1.21,
+    "looMaxM": 9.27
+   }
+  },
+  "streets-of-tarkov": {
+   "*": {
+    "a": -0.498169,
+    "b": -0.003767,
+    "c": 332.383789,
+    "d": 0.000863,
+    "e": 0.496967,
+    "f": -305.705945
+   },
+   "stats": {
+    "anchors": 18,
+    "by": {
+     "story": 8,
+     "zone": 7,
+     "label": 3
+    },
+    "pool": 23,
+    "looMedianM": 2.42,
+    "looMaxM": 8.73
+   }
+  },
+  "the-lab": {
+   "1": {
+    "a": -0.010001,
+    "b": 0.099222,
+    "c": -277.445329,
+    "d": 0.07927,
+    "e": 0.001264,
+    "f": -444.411646
+   },
+   "2": {
+    "a": -0.000372,
+    "b": 0.098125,
+    "c": -285.011292,
+    "d": 0.098125,
+    "e": 0.000372,
+    "f": -461.260577
+   },
+   "stats": {
+    "anchors": 10,
+    "by": {
+     "story": 7,
+     "zone": 2,
+     "label": 1
+    },
+    "pool": 13,
+    "looMedianM": 2.83,
+    "looMaxM": 4.37,
+    "floors": [
+     "1",
+     "2"
+    ],
+    "floorFails": [
+     "f-1:seed <3 anchors / degenerate"
+    ]
+   }
+  },
+  "woods": {
+   "*": {
+    "a": -0.502656,
+    "b": 0.001096,
+    "c": 602.032857,
+    "d": 0.000558,
+    "e": 0.501681,
+    "f": -922.448887
+   },
+   "stats": {
+    "anchors": 19,
+    "by": {
+     "story": 8,
+     "zone": 10,
+     "label": 1
+    },
+    "pool": 28,
+    "looMedianM": 1.46,
+    "looMaxM": 5.38
+   }
+  }
+ }
+}

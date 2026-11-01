@@ -28,15 +28,15 @@ dotnet run --project tools/datacheck  -c Release
 dotnet run --project tools/logiccheck -c Release
 dotnet run --project tools/shotcheck  -c Release
 
-# 联网更新数据（拉 eftarkov.com 任务/剧情快照 -> build_all -> 门禁；从不自动提交，
-# 失败自动回滚快照。tarkov.dev 默认一起重拉（端点 422 时告警降级沿用现有快照，--no-td 显式跳过）。
-# boss_relocate 已内置于 build_all，重拉后无需手动补跑）
-python tools/update_data.py                # 全流程（eftarkov.com 直连；tarkov.dev 尽力而为）
+# 联网更新数据（只拉 eftarkov.com：任务+剧情+13图标记 -> build_all -> 门禁；从不自动
+# 提交，失败自动回滚快照。tarkov.dev 是手动备选 --td。boss_relocate/site_calibrate
+# 已内置于 build_all，重拉后无需手动补跑）
+python tools/update_data.py                # 全流程（eftarkov.com 国内直连）
 python tools/update_data.py --with-guides  # 顺带增量下载新任务的攻略配图
 python tools/update_data.py --dry-run      # 只 diff 快照并回滚
 python tools/update_data.py --no-fetch     # 跳过联网，只跑 build_all + 门禁
-python tools/update_data.py --no-td        # 跳过 tarkov.dev 重拉（只想更新任务文本 / 端点挂了时用）
-python tools/fetch_eftarkov.py             # 单独跑抓取器（--tasks/--story/--guides，--cache-only 离线重放）
+python tools/update_data.py --td           # 备选：重拉 tarkov.dev 标记/坐标快照（间歇 422）
+python tools/fetch_eftarkov.py             # 单独跑抓取器（--tasks/--story/--maps/--guides，--cache-only 离线重放）
 ```
 
 改了代码要做任何运行时验证之前**先重跑 `build.ps1`**：验证脚本打的是 `dist/` 里的 exe，代码提交了但 dist 没重发，测到的就是旧版本（曾把「功能正常」误判成「左键拖拽没反应」）。
@@ -95,13 +95,14 @@ tools/
   datacheck/                    数据层断言（地图几何、标记、任务、楼层、hazard）
   logiccheck/                   服务层断言（QuestService、剧情、商人、跳转、战局日志解析）
   shotcheck/                    截图解析、导入台账、轮询 watcher、latest-wins pin
-  build_all.py                  离线管线入口（assets → layers → boss_relocate → data → story；--check 连门禁一起跑）
+  build_all.py                  离线管线入口（assets → layers → boss_relocate → site_calibrate → data → story；--check 连门禁一起跑）
   build_assets.py               渲染 SVG（迷宫 warp 进解析栅格）→ 生成底图 + maps.json
   build_layers.py               烘焙楼层 PNG + layers/index.json + hazards.json
-  build_data.py                 eftarkov 任务文本 + API 标记/坐标 → mapdata.json / markers.json / quests.json
+  build_data.py                 eftarkov 任务文本 + API 标记/坐标 + 站点像素 → mapdata.json / markers.json / quests.json
   build_story.py                剧情 → story.json
-  fetch_eftarkov.py             eftarkov.com 抓取器：任务快照 + 剧情 + 攻略配图（页面缓存在 .tmp/eftarkov-cache）
-  update_data.py                联网更新入口：fetch_eftarkov -> tarkov.dev（可降级）-> build_all -> 门禁（可回滚）
+  fetch_eftarkov.py             eftarkov.com 抓取器：任务快照 + 剧情 + 13图 marker + 攻略配图（页面缓存在 .tmp/eftarkov-cache）
+  site_calibrate.py             站点像素 → 游戏坐标仿射拟合（离线；输入 mapmarkers.json，产物 pxaffine.json）
+  update_data.py                联网更新入口：fetch_eftarkov（--td 才碰 tarkov.dev，可降级）-> build_all -> 门禁（可回滚）
   boss_relocate.py              快照滞后于游戏版本的 Boss 搬迁修正表（幂等；build_all 会自动跑，见第 6 节）
   check_map_coverage.py         底图内容区覆盖率自检（第 7 节验收标准用它）
   capture_docs.py               驱动 dist 产物重拍 docs/ 四张界面截图
@@ -109,7 +110,9 @@ tools/
   btr.json                      手工维护的 BTR 站点表（灯塔上游 btrStops 为空；API 有数据的地图不覆盖）
   tile-cache/                   瓦片下载缓存（git 忽略）
 research/                       管线输入，全部进 git
-  eftarkov/tasks.json           任务快照（fetch_eftarkov.py 产物：名册/中文目标/前置/攻略图链接）
+  eftarkov/tasks.json           任务快照（fetch_eftarkov.py 产物：名册/中文目标/前置/攻略图链接/逐目标位置卡像素）
+  eftarkov/mapmarkers.json      13 图交互地图 marker 像素全表（fetch_eftarkov.py --maps 产物，site_calibrate 输入）
+  eftarkov/pxaffine.json        站点像素->游戏坐标仿射（site_calibrate.py 产物，按 图×楼层 存键）
   api/                          tarkov.dev API 快照（maps/tasks/traders + *.zh.json；现仅作标记与任务坐标覆盖层）
   upstream/tarkov-dev-maps.json 上游楼层与仿射表
   story/zh-raw.json             剧情中文抓取（fetch_eftarkov.py 产物）
@@ -157,18 +160,19 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 - 数据本身不做删改，只在展示层过滤。
 
 ### 4.4 数据管线（输入进 git，产物由脚本生成）
-- **两类入口，别混**：`build_all.py` 完全离线，是人/agent 都能单独跑通的重建入口（顺序：`build_assets.py` → `build_layers.py` → `boss_relocate.py` → `build_data.py` → `build_story.py`，加 `--check` 连门禁一起跑）；`update_data.py` 才是联网入口（`fetch_eftarkov.py` → `build_all` → 门禁，失败回滚快照）。所有地图（含冰破船）都在同一条管线里。
-- **联网源以 eftarkov.com 为准**：`fetch_eftarkov.py` 拉任务名册（`/task?mode=pvp|pve` 列表翻页）、中文标题/目标/前置/攻略配图（`/task/<id>` 的 `rich-guide-content`）、剧情（`/storyline`）。tarkov.dev 只提供「站点拿不到的数据」——标记几何与任务目标**坐标**，访问困难（2026-08 起公开 GraphQL 端点间歇 422，上游 issue 在册）；`update_data.py` 默认一起重拉但**拉不到就告警降级沿用现有快照**（`fetch_td` 捕获 `TdUnavailable`，只回滚 `research/api/`，eftarkov 侧保留），`--no-td` 显式跳过。
-- **任务 id 两边同空间**（都是 BSG 的 24-hex），eftarkov 与 tarkov.dev 直接按 id 对齐，进度存档与 `guides/<id>/` 目录名跨源切换不失效。任务目标的坐标覆盖用 `align_objectives()`：数量相同按位置对齐，不同则按中文文本相似度贪心匹配（站点会合并/拆分手上交目标）；td 侧有坐标却没匹配上的目标，用 td 的中文描述兜底保留，**地图钉子绝不回退**。
+- **两类入口，别混**：`build_all.py` 完全离线，是人/agent 都能单独跑通的重建入口（顺序：`build_assets.py` → `build_layers.py` → `boss_relocate.py` → `site_calibrate.py` → `build_data.py` → `build_story.py`，加 `--check` 连门禁一起跑）；`update_data.py` 才是联网入口（`fetch_eftarkov.py` → `build_all` → 门禁，失败回滚快照）。所有地图（含冰破船）都在同一条管线里。
+- **联网一律以 eftarkov.com 为准**（国内直连）：`fetch_eftarkov.py` 拉任务名册（`/task?mode=pvp|pve` 列表翻页）、中文标题/目标/前置/攻略配图/逐目标位置卡（`/task/<id>`）、剧情（`/storyline`）、13 图 marker 全表（`/map/<id>` 内联 `map-config`，含任务地点/地图标注/剧情地点像素）。tarkov.dev 只提供「站点拿不到的几何」——撤离点/Boss/出生/雷区/楼层 + 站点没画的旧任务坐标——且端点自 2026-08 间歇 422，故 `update_data.py` **默认不碰它**，加 `--td` 才手动重拉（届时拉不到会告警降级沿用现有 `research/api/`，不中断）。
+- **任务目标坐标双源**：先 tarkov.dev（旧 468 条覆盖广、验证久），td 缺该目标时用 `site_calibrate.py` 拟的站点像素仿射补（新增 2026 万圣节/PVE 任务全靠它）。任务 id 两边同空间（BSG 24-hex），进度存档与 `guides/<id>/` 目录名跨源不失效。td 侧对齐用 `align_objectives()`（数量同按位置、异按中文文本贪心），td 有坐标却没匹配上的目标用 td 中文兜底，**地图钉子绝不回退**（现网 268 任务 / 889 点）。
+- **站点像素仿射（`research/eftarkov/pxaffine.json`）**：`site_calibrate.py` 逐「图 × 楼层」拟合像素→游戏坐标（剧情点种子、任务唯一 zone 加入、同名标注只作候选——它自身残差 13–34 m 不可单独定标）。留一法 median≤5m、max≤10m 才输出，达标的图/层缺失即「宁可不标也不编坐标」。the-lab/工厂把不同楼层叠在同一像素栅格上，**整图单仿射必错**，故按层存键（`"*"`=全图共用）。重生成：`fetch_eftarkov.py --maps` 后自动随 `build_all` 跑。
 - 局部重建：`build_all.py --only factory`、`build_assets.py --only factory`、`build_layers.py --only factory`。其余地图的 manifest 条目和楼层索引会合并保留，不会清空。
 - **冰破船在同一管线内**：`build_layers.py` 用 `ICE_FLOOR_FILES` 把上游的层名映射到 `research/svg/icebreaker/*.svg`，逐层走 `bake_svg_layer`。不要为它另建入口脚本，也不要在 `build_layers.py` 里跳过它。
 - **迷宫底图不下载瓦片**：美术本来就是 `Labyrinth.svg` 经锚点矩阵 warp 进「瓦片像素栅格」；栅格的尺寸和仿射是纯几何（`build_assets.tile_grid()` 按投影公式直接算），不需要 240 张瓦片提供。`stitch_tiles()` 只剩 reserve 2–5 层、customs 4 层在用。
 - **地图 → SVG 只有一处映射**：`build_assets.svg_source(key)` 按 `research/svg/<key>/` 目录查找（单文件地图取唯一的 `*.svg`，破冰船取 `BASE_DECK`）。`build_layers.py` 复用它，不要再写第二张文件名表。
 - build 脚本靠本机 headless Edge 栅格化 SVG（可用 `EDGE_PATH` 覆盖）；瓦片只有 reserve 2–5 层、customs 4 层在用，缓存在 `tools/tile-cache/`（git 忽略，可离线重跑）。渲染中间产物写到 `.tmp/build/`（git 忽略，不写 `%TEMP%`）。
-- **构建期零联网**：`build_all.py` 及四步脚本不请求任何网络——任务/剧情快照、API 快照、矢量源、头像、地点图都已提交进 `research/` 或 `Assets/`；`build_data.py` 不下载头像（缺 PNG 只提示，应用回退色点）。联网只发生在 `fetch_eftarkov.py` / `update_data.py`。
+- **构建期零联网**：`build_all.py` 及各步脚本不请求任何网络——任务/剧情/地图标记快照、API 快照、矢量源、头像、地点图都已提交进 `research/` 或 `Assets/`；`build_data.py` 不下载头像（缺 PNG 只提示，应用回退色点）。联网只发生在 `fetch_eftarkov.py` / `update_data.py`。
 - 外部依赖：`tools/pyext`（Pillow）、`tools/pylibs`（numpy、requests）。重建：
   `python -m pip install --target tools/pylibs pillow numpy requests`
-- 上游快照放在 `research/`：`eftarkov/tasks.json`（任务权威源）、`api/`（tarkov.dev：标记 + 任务坐标）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。
+- 上游快照放在 `research/`：`eftarkov/tasks.json`（任务权威源，含逐目标位置卡像素）、`eftarkov/mapmarkers.json`（13 图 marker 像素全表，site_calibrate 输入）、`eftarkov/pxaffine.json`（site_calibrate 产物）、`api/`（tarkov.dev：标记几何 + 旧任务坐标，手动 --td）、`upstream/tarkov-dev-maps.json`（楼层与仿射）、`svg/<key>/`（矢量图）、`story/`（剧情中文 + 坐标标定表）。
 
 ### 4.5 战局识别与截图定位
 - **截图文件名就是全部数据**：`2026-10-30[19-51]_x, y, z_qx, qy, qz, qw_游戏内秒.png`，坐标与朝向在文件**创建**那刻就完整；PNG 字节还在流式写入（几 MB、可停顿 >1 s）。所以定位**不要**依赖写入完成信号：`ScreenshotService` 用 600 ms 目录轮询 + `ScreenshotImportLedger` 对上次快照做 diff，只解析文件名。任何「等文件稳定」的做法都被证明会误判（半成品导入 → pin 跳；事件被吞 → 看着像没反应）。

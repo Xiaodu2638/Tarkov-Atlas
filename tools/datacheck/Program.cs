@@ -200,7 +200,11 @@ internal static class DataChecks
         Check("quest names localized", chinese > 400, chinese.ToString());
 
         var withZones = quests.Quests.Count(q => q.HasAnyZones);
-        Check("quests carry coordinates", withZones > 100, withZones.ToString());
+        // Lower bound above the tarkov.dev-only figure (~222): pxaffine.json is
+        // committed, so the site-pixel overlay must keep contributing pins for
+        // the 2026 tasks td does not cover. Silent loss of that layer (bad fit,
+        // dropped file) regresses the map and the app would look fine.
+        Check("quests carry coordinates", withZones > 240, withZones.ToString());
 
         var multi = quests.Quests.Where(q => q.ZoneMaps.Count() > 1).ToList();
         Check("multi-map quests exist", multi.Count > 0, multi.Count.ToString());

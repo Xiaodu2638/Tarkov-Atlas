@@ -151,49 +151,55 @@ dotnet run --project tools/shotcheck  -c Release
 ## 数据管线
 
 管线脚本在 `tools/`，输入在 `research/`，产物写入 `TarkovAtlas/Assets/`。
-**以下命令人可以直接跑，不需要任何 agent 辅助**；全部联网源以 eftarkov.com 为准
-（国内直连），tarkov.dev 提供「只有它才有的标记/坐标数据」（默认一起重拉，拉不到自动降级）。
+**以下命令人可以直接跑，不需要任何 agent 辅助**；联网只走 eftarkov.com（国内直连），
+tarkov.dev 是「站点拿不到的几何」的手动备选（`--td`，其端点间歇 422 访问困难）。
 
 ```powershell
-python tools/update_data.py                  # 一键：重拉 eftarkov.com 任务+剧情 与 tarkov.dev 快照 -> build_all -> 门禁 -> 等你审 diff
+python tools/update_data.py                  # 一键：重拉 eftarkov.com 任务+剧情+地图标记 -> build_all -> 门禁 -> 等你审 diff
 python tools/update_data.py --with-guides    # 同时增量下载新任务的地点攻略图
 python tools/update_data.py --dry-run        # 只拉快照看 research/ 的 diff，回滚不构建
 python tools/update_data.py --no-fetch       # 跳过联网，只跑 build_all + 门禁
-python tools/update_data.py --no-td          # 跳过 tarkov.dev 重拉（其端点间歇 422，拉不到时自动降级沿用现有快照）
+python tools/update_data.py --td             # 备选：额外重拉 tarkov.dev 快照（撤离/Boss/出生/雷区/楼层 + 旧任务坐标；慢、可能 422）
 
-python tools/build_all.py                    # 离线全量重建（底图/楼层/Boss 修正/数据/剧情），可加 --check 连门禁一起跑
+python tools/build_all.py                    # 离线全量重建（底图/楼层/Boss 修正/坐标标定/数据/剧情），可加 --check 连门禁一起跑
 python tools/build_all.py --only factory     # 只重建一张地图的底图与楼层
 python tools/build_all.py --skip-quests      # 只重建美术
 
 python tools/fetch_eftarkov.py --tasks       # 只重拉任务快照 -> research/eftarkov/tasks.json
 python tools/fetch_eftarkov.py --story       # 只重拉剧情 -> research/story/zh-raw.json
+python tools/fetch_eftarkov.py --maps        # 只重拉 13 图 marker 像素全表 -> research/eftarkov/mapmarkers.json
 python tools/fetch_eftarkov.py --guides      # 只下载攻略配图 -> Assets/guides/（增量）
+python tools/site_calibrate.py               # 只重拟站点像素->游戏坐标仿射 -> research/eftarkov/pxaffine.json
 ```
 
 `update_data.py` 是唯一的联网入口：`fetch_eftarkov.py` 拉任务名册（PVP+PVE 列表）、
-中文目标文本、前置关系与攻略配图；tarkov.dev 快照（标记数据 + 任务坐标，只有它有）
-默认一起重拉，端点不可用时告警降级、沿用现有快照（`--no-td` 可显式跳过）。之后
-依次跑 `build_all.py` 与门禁（`check.ps1` + `check_map_coverage.py`）。**它从不
-自动提交**——跑完打印 `git diff --stat` 让人先审快照再决定提交；任何一步失败自动
-把快照回滚，不留半成品。页面缓存在 `.tmp/eftarkov-cache/`，改解析器后可
+中文目标文本、前置关系、逐目标位置卡像素、剧情，以及 13 张交互地图的 marker 全表
+（撤离/标注/剧情地点/任务地点像素）。任务坐标先取旧 tarkov.dev 快照里已有的（已提交
+进 git），缺的由 `site_calibrate.py` 用站点像素仿射补上；只有想更新那些「站点根本没有
+的几何」（Boss/出生点/雷区/楼层 + 站点没画的旧任务坐标）才加 `--td` 手动重拉
+tarkov.dev。之后依次跑 `build_all.py` 与门禁（`check.ps1` + `check_map_coverage.py`）。
+**它从不自动提交**——跑完打印 `git diff --stat` 让人先审快照再决定提交；任何一步失败
+自动把快照回滚，不留半成品。页面缓存在 `.tmp/eftarkov-cache/`，改解析器后可
 `--cache-only` 离线重放。
 
 分步执行时按依赖顺序（`build_all.py` 已经按这个顺序全跑）：
 
 ```powershell
-python tools/build_assets.py   # 底图 + maps.json 清单（需要本机 Edge/Chrome）
-python tools/build_layers.py   # 楼层 PNG + layers/index.json + hazards.json
-python tools/boss_relocate.py  # Boss 人工修正表（幂等；重拉快照后也无需手动补跑，build_all 会自动执行）
-python tools/build_data.py     # mapdata.json + markers.json + quests.json（eftarkov 文本 + td 坐标覆盖）
-python tools/build_story.py    # story.json
+python tools/build_assets.py    # 底图 + maps.json 清单（需要本机 Edge/Chrome）
+python tools/build_layers.py    # 楼层 PNG + layers/index.json + hazards.json
+python tools/boss_relocate.py   # Boss 人工修正表（幂等；重拉快照后也无需手动补跑，build_all 会自动执行）
+python tools/site_calibrate.py  # 站点像素->游戏坐标仿射（离线，输入 mapmarkers.json）
+python tools/build_data.py      # mapdata.json + markers.json + quests.json（eftarkov 文本 + td 坐标 + 站点像素）
+python tools/build_story.py     # story.json
 ```
 
 ### 输入目录
 
 ```
 research/
-  eftarkov/     eftarkov.com 任务快照（名称/中文目标/前置/攻略图链接；fetch_eftarkov.py 产物）
-  api/          tarkov.dev 快照：标记数据（撤离/Boss/出生/雷区）+ 任务目标坐标（默认随 update_data 重拉）
+  eftarkov/     eftarkov.com 快照：任务（名称/中文目标/前置/攻略图链接/位置卡像素）、
+                13 图 marker 像素全表、仿射表（均 fetch_eftarkov.py / site_calibrate.py 产物）
+  api/          tarkov.dev 快照：标记数据（撤离/Boss/出生/雷区）+ 旧任务坐标（手动 --td 才重拉）
   upstream/     上游 data/maps.json（楼层与仿射来源）
   story/        剧情中文抓取（fetch_eftarkov.py 产物）+ 坐标标定表 coords.json
   svg/<地图 key>/  矢量源，一张地图一个子目录（破冰船为 14 个单层 SVG）

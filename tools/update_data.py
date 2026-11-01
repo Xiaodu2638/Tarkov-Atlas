@@ -1,32 +1,30 @@
 #!/usr/bin/env python3
-r"""Data refresh entry point: pull from eftarkov.com (+tarkov.dev overlay), rebuild, gate.
+r"""Data refresh entry point: pull from eftarkov.com, rebuild, gate.
 
-    python tools/update_data.py               # eftarkov 任务+剧情 + tarkov.dev 快照 -> build_all -> 门禁
+    python tools/update_data.py               # eftarkov 任务+剧情+地图标记 -> build_all -> 门禁
     python tools/update_data.py --dry-run     # 拉完只展示快照 diff 并回滚，不构建
     python tools/update_data.py --no-fetch    # 跳过联网，只跑 build_all + 门禁
     python tools/update_data.py --with-guides # 同时下载任务攻略配图（增量）
-    python tools/update_data.py --no-td       # 跳过 tarkov.dev 重拉（端点抽风时用现有快照）
+    python tools/update_data.py --td          # 备选：重拉 tarkov.dev 快照（手动加，见下）
     python tools/update_data.py --selftest    # 离线自测 tarkov.dev 重塑/展平逻辑
 
-数据源分工：
-* research/eftarkov/tasks.json   任务名册 + 中文名 + 中文目标 + 前置 + 攻略图链接
-                                 （tools/fetch_eftarkov.py，国内直连，权威文本源）
-* research/story/zh-raw.json     剧情章节/目标中文文本（同上）
-* research/api/*.{json,zh.json}  tarkov.dev 快照：标记数据（撤离/Boss/出生/雷区/
-                                 楼层）与任务目标坐标——只有它有。2026-11 起上游
-                                 已跟进 1.3（tarkov.dev 网页证实 Glukhar 在储备站），
-                                 默认随 update_data 一起重拉；其端点自 2026-08 起
-                                 间歇 422（the-hideout/tarkov-api issue 在册），
-                                 拉不动时**告警并沿用现有快照**，不中断整条流水线。
-* 三处历史 Boss 修正由 build_all 内置的 boss_relocate 幂等兜底：上游真修好后
-  --check 全绿、datacheck 不红，即可删表内条目退回纯上游。
+数据源分工（一律以 eftarkov.com 为准；tarkov.dev 是拿不到的数据的手动备选）：
+* research/eftarkov/tasks.json    任务名册 + 中文名 + 中文目标 + 前置 + 攻略图链接
+                                  + 逐目标位置卡像素（tools/fetch_eftarkov.py，国内直连）
+* research/story/zh-raw.json      剧情章节/目标中文文本（同上）
+* research/eftarkov/mapmarkers.json 13 图交互地图 marker 全表（撤离/标注/剧情地点/任务
+                                  地点像素），site_calibrate.py 的锚点语料（同上）
+任务目标坐标优先用站点像素（eftarkov 逐目标给出，中文文本天然对齐）；只有站点拿不到
+的**标记几何**（撤离点/Boss/出生点/雷区/楼层表 + 站点没画的旧任务目标坐标）才需要
+tarkov.dev——它访问困难（2026-08 起公开 GraphQL 端点间歇 422），因此**默认不拉**，
+加 --td 才手动重拉。旧快照（research/api/，已提交进 git）继续供这些几何。
 
 流水线设计（AGENTS.md 第 8 节约定）：
 * 快照进 git、产物 diff 可审：拉完后打印 research/ 的 git diff --stat，
   **脚本从不自动提交**；数据异常由门禁（check.ps1 + coverage）拦住。
 * 门禁失败：拉取过的快照回滚到拉取前，中止，不留半成品。
-* 依赖：eftarkov.com 可直连；tarkov.dev 尽力而为（退避重试，失败降级）；
-  构建需要本机 Edge（SVG 栅格化）与仓库内 tools/pyext|pylibs。
+* 依赖：eftarkov.com 可直连；构建需要本机 Edge（SVG 栅格化）与仓库内
+  tools/pyext|pylibs（Pillow/numpy/requests）。
 
 tarkov.dev 快照格式与 build_data.py 的读法保持一致：
   {name}.json     {"data": {...id 键控段落...}, "translations": [<jsonpath>...]}
@@ -87,7 +85,8 @@ def dump_json(path: Path, obj) -> None:
 
 
 def fetch_eftarkov(with_guides: bool) -> None:
-    args = [sys.executable, str(TOOLS / "fetch_eftarkov.py"), "--tasks", "--story"]
+    args = [sys.executable, str(TOOLS / "fetch_eftarkov.py"),
+            "--tasks", "--story", "--maps"]
     if with_guides:
         args.append("--guides")
     log("$ " + " ".join(args))
@@ -431,16 +430,14 @@ def fetch_td() -> bool:
 
 def main() -> int:
     ap = argparse.ArgumentParser(
-        description="eftarkov.com + tarkov.dev 快照刷新 -> build_all -> 门禁")
+        description="eftarkov.com 快照刷新 -> build_all -> 门禁（tarkov.dev 为手动备选 --td）")
     ap.add_argument("--dry-run", action="store_true", help="只展示快照 diff，回滚且不构建")
     ap.add_argument("--no-fetch", action="store_true", help="跳过联网，只跑构建与门禁")
     ap.add_argument("--skip-build", action="store_true", help="跳过 build_all（只跑门禁）")
     ap.add_argument("--with-guides", action="store_true",
                     help="顺带下载新增任务的攻略配图（增量，不动已有图片）")
-    ap.add_argument("--no-td", action="store_true",
-                    help="跳过 tarkov.dev 重拉（只用现有快照；端点抽风或只想更新任务文本时用）")
     ap.add_argument("--td", action="store_true",
-                    help="兼容旧参数，无副作用（现在默认就重拉 tarkov.dev）")
+                    help="备选：重拉 tarkov.dev 坐标/标记快照（间歇 422，慢；只有站点拿不到的数据才需要它）")
     ap.add_argument("--selftest", action="store_true", help="离线自测 tarkov.dev 重塑/展平逻辑")
     args = ap.parse_args()
 
@@ -455,7 +452,7 @@ def main() -> int:
         snapshot_backup()
         try:
             fetch_eftarkov(args.with_guides)
-            if not args.no_td:
+            if args.td:
                 fetch_td()
         except SystemExit:
             rollback()

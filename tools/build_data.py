@@ -646,6 +646,37 @@ def main() -> None:
     ef_tasks = json.loads(ef_path.read_text(encoding="utf-8"))["tasks"]
     zh_map_to_key = {zh_name: key for key, (zh_name, *_rest) in META.items()}
 
+    # Site pixel -> game overlay (tools/site_calibrate.py): provides objective
+    # coordinates for tasks the tarkov.dev snapshot does not cover (the 2026
+    # halloween / PVE-zone batch). Maps/floors whose fit missed the leave-one-out
+    # bar are absent from pxaffine.json, so those tasks simply stay pin-less
+    # (宁可不标，也不编坐标). Same BSG id space as td, keyed by our map key.
+    pxa_path = RES / "eftarkov" / "pxaffine.json"
+    pxa = json.loads(pxa_path.read_text(encoding="utf-8"))["maps"] if pxa_path.is_file() else {}
+    map_bounds = {m["key"]: m.get("bounds") for m in out_maps}
+
+    def site_points(eq: dict) -> dict[int, list]:
+        """{objective index (1-based card obj): [(mapKey, x, z)]} from the task's
+        site location cards, filtered to maps/floors with a validated transform
+        and points inside the map bounds."""
+        pts: dict[int, list] = {}
+        for card in eq.get("locations") or []:
+            mkey = id_to_key.get(card.get("map", ""))
+            entry = pxa.get(mkey or "")
+            if not entry:
+                continue
+            aff = entry.get(str(card.get("floor"))) or entry.get("*")
+            if not aff:
+                continue
+            gx = aff["a"] * card["x"] + aff["b"] * card["y"] + aff["c"]
+            gz = aff["d"] * card["x"] + aff["e"] * card["y"] + aff["f"]
+            b = map_bounds.get(mkey)
+            if b and not (b[0] - 40 <= gx <= b[2] + 40 and b[1] - 40 <= gz <= b[3] + 40):
+                continue
+            pts.setdefault(int(card.get("obj", 1)), []).append(
+                (mkey, round(gx, 2), round(gz, 2)))
+        return pts
+
     out_tasks = []
     for eq in ef_tasks:
         # Coordinate overlay from the (stale) tarkov.dev snapshot, same id space.
@@ -659,10 +690,10 @@ def main() -> None:
         maps_touched: list[str] = []
         used_td: set[int] = set()
 
-        def add_zones(pts, otype, text):
+        def add_zones(pts, otype, text, keyed=False):
             zs = []
-            for zid, x, z in pts:
-                mkey = id_to_key.get(zid)
+            for mkey_or_id, x, z in pts:
+                mkey = mkey_or_id if keyed else id_to_key.get(mkey_or_id)
                 if not mkey:
                     continue
                 zs.append({"map": mkey, "x": x, "z": z})
@@ -670,15 +701,22 @@ def main() -> None:
                     maps_touched.append(mkey)
             if zs:
                 objectives.append({"text": text, "type": otype, "zones": zs})
+            return bool(zs)
+
+        site = site_points(eq)
 
         for i, text in enumerate(eq["objectives"]):
-            # Only objectives the overlay has coordinates for become pins
-            # (same UI bar as the old tarkov.dev-only path).
+            # Only objectives with coordinates become pins. tarkov.dev first
+            # (validated for a year); where it has nothing for this objective,
+            # fall back to the site location card for that same objective index.
             j = match_index.get(i)
-            if j is None:
+            if j is not None and td_points(td_objs[j]):
+                used_td.add(j)
+                add_zones(td_points(td_objs[j]), td_objs[j].get("type", ""), text)
                 continue
-            used_td.add(j)
-            add_zones(td_points(td_objs[j]), td_objs[j].get("type", ""), text)
+            sp = site.get(i + 1)      # site cards are 1-based
+            if sp:
+                add_zones(sp, "", text, keyed=True)
         # Tarkov.dev objectives that carry zones but matched no eftarkov text
         # (eftarkov merges/splits some hand-ins): keep them with the td Chinese
         # description so map pins never regress.

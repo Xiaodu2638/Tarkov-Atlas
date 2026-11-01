@@ -214,6 +214,32 @@ def parse_task(tid: str, html: str) -> dict:
     rec["guideImages"] = imgs
     rec["cover"] = f"{BASE}/uploads/task/{tid}.webp"
 
+    # Per-objective location cards: the site draws each objective's position on
+    # its own SVG grid (/assets/maps/<mapId>/<floor>.svg + data-marker-x/y).
+    # "obj" is the 1-based objective index and repeats when one objective is
+    # doable on several maps. These pixel points are what tools/site_calibrate.py
+    # turns into game coordinates (research/eftarkov/pxaffine.json).
+    locs = []
+    for c in re.findall(r'<article class="task-og-card">([\s\S]*?)</article>', html):
+        idx = re.search(r'task-og-index">(\d+)', c)
+        link = re.search(r'href="/map/([0-9a-f]{24})\?marker=([0-9a-f]{24})"', c)
+        stage = re.search(r'data-floor-key="([^"]*)"[^>]*'
+                          r'data-map-width="([\d.]+)"[^>]*data-map-height="([\d.]+)"', c)
+        m = re.search(r'data-marker-x="([\d.\-]+)"\s+data-marker-y="([\d.\-]+)"', c)
+        if not (idx and link and stage and m):
+            continue
+        locs.append({
+            "obj": int(idx.group(1)),
+            "map": link.group(1),
+            "marker": link.group(2),
+            "floor": stage.group(1),
+            "w": float(stage.group(2)),
+            "h": float(stage.group(3)),
+            "x": float(m.group(1)),
+            "y": float(m.group(2)),
+        })
+    rec["locations"] = locs
+
     m = re.search(r'<p class="text-stone-300 leading-relaxed[^"]*">([\s\S]*?)</p>', html)
     rec["description"] = text_of(m.group(1)) if m else ""
     m = re.search(r"更新于\s*([0-9]{4}-[0-9]{2}-[0-9]{2})", html)
@@ -282,6 +308,8 @@ def fetch_story(refresh: bool, cache_only: bool) -> int:
     if not hrefs:
         die("剧情列表为空，站点结构可能变了")
 
+    story_px = {}  # story marker pixels live in map-config (see fetch_maps); kept for diff debugging only
+
     def one(href: str) -> dict:
         cid = href.rstrip("/").split("/")[-1]
         html = fetch(BASE + href, cache_name=f"story-{cid}.html",
@@ -291,6 +319,9 @@ def fetch_story(refresh: bool, cache_only: bool) -> int:
         objectives = []
         # One block per objective; blocks for mapless steps ("交给我吧") have no
         # story-og-maps panel, so cut on the block start instead of requiring it.
+        # Marker pixel positions are NOT scraped from here: every /map/<id> page
+        # embeds them in map-config (fetch_maps -> mapmarkers.json), which is the
+        # single pixel source site_calibrate.py fits against.
         for blk in re.split(r'(?=<div class="obj-block)', html):
             oid = re.search(r'data-obj-id="([0-9a-f]{24})"', blk[:400])
             title = re.search(r'class="obj-title[^"]*">([\s\S]*?)</h3>', blk)
@@ -316,6 +347,65 @@ def fetch_story(refresh: bool, cache_only: bool) -> int:
     total = sum(len(c["objectives"]) for c in chapters)
     log(f"zh-raw.json: {len(chapters)} 章 / {total} 目标")
     return total
+
+
+# ------------------------------------------------------------------- maps
+
+# Our interactive-map key -> eftarkov map id (== BSG id, same space as KEY_TO_ID
+# in build_data.py; kept duplicated here so the fetcher needs no import).
+EF_MAP_KEYS = {
+    "ground-zero": "653e6760052c01c1c805532f",
+    "customs": "56f40101d2720b2a4d8b45d6",
+    "factory": "55f2d3fd4bdc2d5f408b4567",
+    "woods": "5704e3c2d2720bac5b8b4567",
+    "interchange": "5714dbc024597771384a510d",
+    "shoreline": "5704e554d2720bac5b8b456e",
+    "reserve": "5704e5fad2720bc05b8b4567",
+    "the-lab": "5b0fc42d86f7744a585f9105",
+    "lighthouse": "5704e4dad2720bb55b8b4567",
+    "streets-of-tarkov": "5714dc692459777137212e12",
+    "the-labyrinth": "6733700029c367a3d40b02af",
+    "terminal": "65cc8f81a9aac3e77d0cfd3e",
+    "icebreaker": "69af492a4819ea4ba10a69c5",
+}
+
+
+def fetch_maps(refresh: bool, cache_only: bool) -> int:
+    """Pull every /map/<id> page and keep its inline map-config JSON.
+
+    research/eftarkov/mapmarkers.json: per map -> floors + all markers in site
+    pixel space (categories 任务地点/地图标注/剧情地点/PMC/... ). This is the
+    anchor corpus site_calibrate.py fits pixels against game coordinates with.
+    """
+    out: dict[str, dict] = {}
+    for key, mid in EF_MAP_KEYS.items():
+        html = fetch(f"{BASE}/map/{mid}", cache_name=f"map-{mid}.html",
+                     refresh=refresh, cache_only=cache_only)
+        i = html.find('id="map-config"')
+        if i == -1:
+            die(f"{key}: 页面没有 map-config，站点结构可能变了")
+        j = html.find(">", i) + 1
+        k = html.find("</script>", j)
+        cfg = json.loads(html[j:k])
+        out[key] = {
+            "mapId": mid,
+            "floors": [{"key": f["key"], "width": f["width"], "height": f["height"]}
+                       for f in cfg.get("floors", [])],
+            "markers": [{
+                "id": m.get("id"), "category": m.get("category"),
+                "floor": m.get("floor_key"), "title": m.get("title"),
+                "task_id": m.get("task_id"),
+                "x": float(m["x"]) if m.get("x") not in (None, "") else None,
+                "y": float(m["y"]) if m.get("y") not in (None, "") else None,
+            } for m in cfg.get("markers", [])],
+        }
+        log(f"  {key}: {len(out[key]['markers'])} markers / {len(out[key]['floors'])} floors")
+    EF.mkdir(parents=True, exist_ok=True)
+    (EF / "mapmarkers.json").write_text(
+        json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+    n = sum(len(v["markers"]) for v in out.values())
+    log(f"mapmarkers.json: 13 图 / {n} 标记")
+    return n
 
 
 # ------------------------------------------------------------------ guides
@@ -378,6 +468,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="pull tasks/story/guides from eftarkov.com")
     ap.add_argument("--tasks", action="store_true", help="只拉任务快照")
     ap.add_argument("--story", action="store_true", help="只拉剧情快照")
+    ap.add_argument("--maps", action="store_true", help="只拉 13 张地图页的 marker 表")
     ap.add_argument("--guides", action="store_true", help="只下载攻略配图")
     ap.add_argument("--refresh", action="store_true", help="忽略 .tmp 缓存，重新下载")
     ap.add_argument("--cache-only", action="store_true", help="只解析 .tmp 缓存，不联网")
@@ -385,11 +476,13 @@ def main() -> int:
                     help="guides：删除已下线任务的整个攻略图目录（默认保留）")
     args = ap.parse_args()
 
-    all_steps = not (args.tasks or args.story or args.guides)
+    all_steps = not (args.tasks or args.story or args.maps or args.guides)
     if all_steps or args.tasks:
         fetch_tasks(args.refresh, args.cache_only)
     if all_steps or args.story:
         fetch_story(args.refresh, args.cache_only)
+    if all_steps or args.maps:
+        fetch_maps(args.refresh, args.cache_only)
     if all_steps or args.guides:
         if not (EF / "tasks.json").is_file():
             die(f"缺少 {EF / 'tasks.json'}：先跑 --tasks")

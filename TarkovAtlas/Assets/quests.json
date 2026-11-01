@@ -375,7 +375,19 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在信号源区域内找到线索",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -116.2,
+       "z": -751.45
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6abb7e59dcebb0efbc0fda7b",
@@ -385,11 +397,34 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abb7e59dcebb0efbc0fda7b",
    "maps": [
-    "customs",
-    "lighthouse"
+    "lighthouse",
+    "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔污水处理厂找到并获取疫苗",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -174.88,
+       "z": -646.23
+      }
+     ]
+    },
+    {
+     "text": "在海关二层宿舍楼 105 房内藏匿疫苗",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 224.56,
+       "z": 136.11
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6abb92e1505493a036006ee0",
@@ -573,7 +608,19 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66058ccf06ef1d50a60c1f48",
@@ -627,7 +674,19 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66058cd19f59e625462acc90",
@@ -1124,12 +1183,12 @@
    "objectives": []
   },
   {
-   "id": "6615141bfda04449120269a7",
+   "id": "6613f307fca4f2f386029409",
    "name": "人靠衣装 - 2",
    "nameEn": "Drip-Out - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
-   "wiki": "https://www.eftarkov.com/task/6615141bfda04449120269a7",
+   "wiki": "https://www.eftarkov.com/task/6613f307fca4f2f386029409",
    "maps": [
     "lighthouse",
     "icebreaker"
@@ -1138,12 +1197,12 @@
    "objectives": []
   },
   {
-   "id": "6613f307fca4f2f386029409",
+   "id": "6615141bfda04449120269a7",
    "name": "人靠衣装 - 2",
    "nameEn": "Drip-Out - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
-   "wiki": "https://www.eftarkov.com/task/6613f307fca4f2f386029409",
+   "wiki": "https://www.eftarkov.com/task/6615141bfda04449120269a7",
    "maps": [
     "lighthouse",
     "icebreaker"
@@ -1246,6 +1305,17 @@
        "map": "shoreline",
        "x": -336.55,
        "z": -76.43
+      }
+     ]
+    },
+    {
+     "text": "在海岸线疗养院西楼找到发电机",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -172.07,
+       "z": -75.68
       }
      ]
     },
@@ -1733,7 +1803,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "使用转移功能从海关转移到海岸线",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 18.25,
+       "z": 137.75
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6663148ca9290f9e0806cca1",
@@ -1757,7 +1839,30 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔山间的废弃湖边小屋发射一枚红色信号弹",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -378.74,
+       "z": -635.02
+      }
+     ]
+    },
+    {
+     "text": "使用转移功能从灯塔转移到储备站",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -298.29,
+       "z": -780.45
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "65733403eefc2c312a759ddb",
@@ -2146,7 +2251,19 @@
     "factory"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在工厂以幸存状态通过“庭院大门”撤离点撤离\n必须要幸存状态，匆匆撤离不算数",
+     "type": "",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 29.99,
+       "z": 68.19
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "669fa39ee749756c920d02c8",
@@ -2195,7 +2312,19 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区幸存，并通过 Klimov 大街信号弹撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -180.61,
+       "z": 42.45
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a7aef2360157cb5e3029a5f",
@@ -2304,6 +2433,17 @@
        "map": "customs",
        "x": 194.7797,
        "z": 173.1325
+      }
+     ]
+    },
+    {
+     "text": "在海关找到任何有助于调查的信息",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 194.48,
+       "z": 173.05
       }
      ]
     }
@@ -2458,6 +2598,42 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "在海关实验楼的医疗实验室找到并获取精密工具",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 87.65,
+       "z": -141.87
+      },
+      {
+       "map": "customs",
+       "x": 87.52,
+       "z": -145.24
+      },
+      {
+       "map": "customs",
+       "x": 91.53,
+       "z": -159.94
+      },
+      {
+       "map": "customs",
+       "x": 88.13,
+       "z": -160.94
+      },
+      {
+       "map": "customs",
+       "x": 79.98,
+       "z": -153.44
+      },
+      {
+       "map": "customs",
+       "x": 76.56,
+       "z": -152.41
+      }
+     ]
+    },
     {
      "text": "使用转移功能从海关转移到工厂（在单次战局中）",
      "type": "findQuestItem",
@@ -2739,6 +2915,17 @@
      ]
     },
     {
+     "text": "在实验室将血液样本藏匿在 Sanitar 的办公室里",
+     "type": "",
+     "zones": [
+      {
+       "map": "the-lab",
+       "x": -133.49,
+       "z": -339.25
+      }
+     ]
+    },
+    {
      "text": "上交战局中找到的物品：LEDX 皮肤透照仪 1 个",
      "type": "plantQuestItem",
      "zones": [
@@ -2790,7 +2977,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "使用转移功能从灯塔转移到海岸线（在单次战局中）",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -325.25,
+       "z": -168.66
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5a03153686f77442d90e2171",
@@ -2842,6 +3041,17 @@
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "上交战局中找到的物品：气体分析仪 2 个",
+     "type": "",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 40.93,
+       "z": -11.02
+      }
+     ]
+    },
     {
      "text": "在日间工厂的医学实验室内藏匿气体分析仪 1 个",
      "type": "plantItem",
@@ -3603,7 +3813,19 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔找到并获取特定 BEAR 干员的档案",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -374.96,
+       "z": -631.64
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "69ce1f84ebbdbf36a200627c",
@@ -3673,6 +3895,17 @@
        "z": -638.8754
       }
      ]
+    },
+    {
+     "text": "在灯塔污水处理厂找到并获取泵站运行数据",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 51.27,
+       "z": -636.1
+      }
+     ]
     }
    ]
   },
@@ -3698,7 +3931,41 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔走私者占据的火车站站台安装第一个 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 7.91,
+       "z": -881.69
+      }
+     ]
+    },
+    {
+     "text": "在灯塔走私者占据的火车站站台安装第二个 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 6.55,
+       "z": -839.37
+      }
+     ]
+    },
+    {
+     "text": "在灯塔的森林转移点处安装第三个 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 107.08,
+       "z": -944.2
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "64e7b9bffd30422ed03dad38",
@@ -4588,7 +4855,19 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "67e993b1ac26bf29380a320b",
@@ -5614,7 +5893,19 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关以幸存状态通过“铁路通道”信号弹撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 193.93,
+       "z": -256.53
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "63966fe7ea74a47c2d3fc0e6",
@@ -5860,7 +6151,19 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "使用转移功能从森林转移到储备站",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 250.07,
+       "z": 349.29
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "666314bd920800278d0f6748",
@@ -5935,7 +6238,19 @@
     "ground-zero"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在中心区使用载具撤离点",
+     "type": "",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": -23.59,
+       "z": 117.58
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5d25e4ad86f77443e625e387",
@@ -6050,6 +6365,17 @@
        "map": "streets-of-tarkov",
        "x": 223.6565,
        "z": 369.44104
+      }
+     ]
+    },
+    {
+     "text": "通过Primorsky大道出租车载具撤离点撤离\n需要携带手机做黑车撤离才行",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -8.39,
+       "z": 459.11
       }
      ]
     }
@@ -6194,16 +6520,94 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/63966faeea19ac7ed845db2c",
    "maps": [
-    "ground-zero",
-    "customs",
     "woods",
-    "lighthouse",
-    "shoreline",
+    "customs",
     "interchange",
-    "streets-of-tarkov"
+    "streets-of-tarkov",
+    "ground-zero",
+    "lighthouse",
+    "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林幸存，并通过大桥载具撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -486.97,
+       "z": -507.2
+      }
+     ]
+    },
+    {
+     "text": "在海关幸存，并通过宿舍载具撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 181.99,
+       "z": 212.25
+      }
+     ]
+    },
+    {
+     "text": "在立交桥幸存，并通过发电站载具撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -309.99,
+       "z": -371.1
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区幸存，并通过Primorsky大道出租车载具撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -8.39,
+       "z": 459.11
+      }
+     ]
+    },
+    {
+     "text": "在中心区幸存，并通过警方封锁线载具撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": -23.59,
+       "z": 117.58
+      }
+     ]
+    },
+    {
+     "text": "在灯塔幸存，并通过通往军事基地的路载具撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -332.86,
+       "z": -781.52
+      }
+     ]
+    },
+    {
+     "text": "在海岸线幸存，并通过通往北方的路载具撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -542.94,
+       "z": -372.77
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5b47926a86f7747ccc057c15",
@@ -6485,6 +6889,17 @@
        "z": -136.191284
       }
      ]
+    },
+    {
+     "text": "在立交桥取得服装设计手册（二）",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -34.5,
+       "z": -133.75
+      }
+     ]
     }
    ]
   },
@@ -6539,7 +6954,41 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔侦察污水处理厂北部 BRDM 装甲车周边的游荡者阵地",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -68.85,
+       "z": -694.37
+      }
+     ]
+    },
+    {
+     "text": "在灯塔污水处理厂西南部侦察游荡者的警戒塔阵地",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 16.61,
+       "z": -452.0
+      }
+     ]
+    },
+    {
+     "text": "在灯塔污水处理厂侦察任意一座厂房屋顶区域\n一、二、三厂顶都可以",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -108.51,
+       "z": -731.67
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "60e71ccb5688f6424c7bfec4",
@@ -7634,23 +8083,6 @@
    "objectives": []
   },
   {
-   "id": "6aad740f5e7f204c2d088f42",
-   "name": "新起点",
-   "nameEn": "New Beginning",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 45,
-   "wiki": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
-   "maps": [
-    "customs",
-    "lighthouse",
-    "interchange",
-    "streets-of-tarkov",
-    "icebreaker"
-   ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "6aad73e67a336545ed0657f3",
    "name": "新起点",
    "nameEn": "New Beginning",
@@ -7660,6 +8092,19 @@
    "maps": [
     "reserve",
     "streets-of-tarkov",
+    "the-lab"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6aad73ddedf6e9696e0f60d4",
+   "name": "新起点",
+   "nameEn": "New Beginning",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 20,
+   "wiki": "https://www.eftarkov.com/task/6aad73ddedf6e9696e0f60d4",
+   "maps": [
     "the-lab"
    ],
    "prerequisites": [],
@@ -7683,19 +8128,6 @@
    "objectives": []
   },
   {
-   "id": "6aad73ddedf6e9696e0f60d4",
-   "name": "新起点",
-   "nameEn": "New Beginning",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 20,
-   "wiki": "https://www.eftarkov.com/task/6aad73ddedf6e9696e0f60d4",
-   "maps": [
-    "the-lab"
-   ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "6aad741ff8ee02b31009ca11",
    "name": "新起点",
    "nameEn": "New Beginning",
@@ -7707,6 +8139,23 @@
     "lighthouse",
     "interchange",
     "reserve",
+    "streets-of-tarkov",
+    "icebreaker"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6aad740f5e7f204c2d088f42",
+   "name": "新起点",
+   "nameEn": "New Beginning",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 45,
+   "wiki": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
+   "maps": [
+    "customs",
+    "lighthouse",
+    "interchange",
     "streets-of-tarkov",
     "icebreaker"
    ],
@@ -8111,7 +8560,19 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔 Prapor 手下的新营地内藏匿电子元件 3 个",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -55.31,
+       "z": 452.2
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "666314a50aa5c7436c00908a",
@@ -8689,11 +9150,23 @@
    "level": 27,
    "wiki": "https://www.eftarkov.com/task/66aa61663aa37705c5024277",
    "maps": [
-    "interchange",
-    "streets-of-tarkov"
+    "streets-of-tarkov",
+    "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "使用转移功能从街区转移到立交桥（在单次战局中）",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 292.71,
+       "z": 496.06
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "63a5cf262964a7488f5243ce",
@@ -8928,7 +9401,34 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在同场战局中找到并消灭 Knight",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 129.71,
+       "z": -71.24
+      },
+      {
+       "map": "woods",
+       "x": 207.0,
+       "z": -723.19
+      },
+      {
+       "map": "lighthouse",
+       "x": -100.2,
+       "z": -83.12
+      },
+      {
+       "map": "shoreline",
+       "x": -490.25,
+       "z": 251.46
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "675c085d59b0575973005f52",
@@ -9393,7 +9893,19 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "穿着 Kirasa-N 或 NFM THOR CRV 防弹衣，在灯塔通过“装甲列车”撤离点撤离",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 2.85,
+       "z": -869.94
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5a0327ba86f77456b9154236",
@@ -9517,6 +10029,17 @@
      ]
     },
     {
+     "text": "使用转移功能从森林转移到储备站",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 250.07,
+       "z": 349.29
+      }
+     ]
+    },
+    {
      "text": "在储备站 LAV 装甲车旁地下仓库顶的沙袋处藏匿 Bulbex 剪线器",
      "type": "plantItem",
      "zones": [
@@ -9594,8 +10117,8 @@
    "maps": [
     "customs",
     "reserve",
-    "lighthouse",
-    "woods"
+    "woods",
+    "lighthouse"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9631,6 +10154,17 @@
      ]
     },
     {
+     "text": "使用转移功能从海关转移到储备站",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 651.36,
+       "z": 125.79
+      }
+     ]
+    },
+    {
      "text": "将信件藏匿在储备站驻军总部的三楼",
      "type": "plantQuestItem",
      "zones": [
@@ -9638,6 +10172,17 @@
        "map": "reserve",
        "x": -127.39,
        "z": -20.96
+      }
+     ]
+    },
+    {
+     "text": "使用转移功能从森林转移到灯塔",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 486.33,
+       "z": 342.92
       }
      ]
     },
@@ -9689,7 +10234,30 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并消灭Kollontay 1 次",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -253.71,
+       "z": 140.01
+      }
+     ]
+    },
+    {
+     "text": "上交战局中找到的物品：PR-Taran警棍 1 个\n这个近战武器他百分百会携带",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -141.63,
+       "z": -17.75
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "64e7b971f9d6fa49d6769b44",
@@ -9702,7 +10270,19 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并消灭Kaban 1 次",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 74.02,
+       "z": 296.06
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "60c0c018f7afb4354815096a",
@@ -9716,7 +10296,30 @@
     "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并消灭Tagilla 1 次",
+     "type": "",
+     "zones": [
+      {
+       "map": "factory",
+       "x": 15.73,
+       "z": -5.76
+      }
+     ]
+    },
+    {
+     "text": "上交战局中找到的物品：BOSS鸭舌帽 1 个\n这个帽子他百分百会戴",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -157.12,
+       "z": -156.48
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5d25e44386f77409453bce7b",
@@ -9754,7 +10357,29 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并消灭 Reshala 1 次",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 429.36,
+       "z": 84.54
+      },
+      {
+       "map": "customs",
+       "x": 188.61,
+       "z": -119.57
+      },
+      {
+       "map": "customs",
+       "x": 194.23,
+       "z": 152.68
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a4532e48e82d8ffea0c3eae",
@@ -9825,7 +10450,19 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并消灭Shturman 1 次",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 32.83,
+       "z": -18.77
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5d25e43786f7740a212217fa",
@@ -9838,7 +10475,29 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "消灭 Reshala 的保镖 3 名",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 429.36,
+       "z": 84.54
+      },
+      {
+       "map": "customs",
+       "x": 188.61,
+       "z": -119.57
+      },
+      {
+       "map": "customs",
+       "x": 194.23,
+       "z": 152.68
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6179ad0a6e9dd54ac275e3f2",
@@ -9853,42 +10512,6 @@
    ],
    "prerequisites": [],
    "objectives": []
-  },
-  {
-   "id": "639136df4b15ca31f76bc31f",
-   "name": "猎人之路 - 管理者",
-   "nameEn": "The Huntsman Path - Administrator",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 17,
-   "wiki": "https://www.eftarkov.com/task/639136df4b15ca31f76bc31f",
-   "maps": [
-    "reserve"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在储备站火车站台上发射一枚黄色信号弹（在同场战局中）",
-     "type": "useItem",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": 89.29,
-       "z": -124.45
-      }
-     ]
-    },
-    {
-     "text": "在储备站的火车站台消灭任意敌对目标 6 名（在同场战局中）",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": 130.39,
-       "z": -139.45
-      }
-     ]
-    }
-   ]
   },
   {
    "id": "6a45208043b8d7604d00b8d5",
@@ -9927,6 +10550,42 @@
    ]
   },
   {
+   "id": "639136df4b15ca31f76bc31f",
+   "name": "猎人之路 - 管理者",
+   "nameEn": "The Huntsman Path - Administrator",
+   "trader": "5c0647fdd443bc2504c2d371",
+   "level": 17,
+   "wiki": "https://www.eftarkov.com/task/639136df4b15ca31f76bc31f",
+   "maps": [
+    "reserve"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在储备站火车站台上发射一枚黄色信号弹（在同场战局中）",
+     "type": "useItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 89.29,
+       "z": -124.45
+      }
+     ]
+    },
+    {
+     "text": "在储备站的火车站台消灭任意敌对目标 6 名（在同场战局中）",
+     "type": "shoot",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 130.39,
+       "z": -139.45
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "5d25e2e286f77444001e2e48",
    "name": "猎人之路 - 脱销",
    "nameEn": "The Huntsman Path - Sellout",
@@ -9937,7 +10596,24 @@
     "interchange"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并消灭Killa 1 次",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -29.96,
+       "z": -55.31
+      },
+      {
+       "map": "interchange",
+       "x": 13.54,
+       "z": -53.83
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5d25e44f86f77443e625e385",
@@ -9964,7 +10640,24 @@
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "找到并消灭Sanitar 1 次",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": 130.62,
+       "z": 96.09
+      },
+      {
+       "map": "shoreline",
+       "x": -325.4,
+       "z": 505.26
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5d25e45e86f77408251c4bfa",
@@ -10503,7 +11196,41 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "查看灯塔村庄附近路口的情况",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -196.15,
+       "z": -248.57
+      }
+     ]
+    },
+    {
+     "text": "查看灯塔主路上 UN 检查站周边的情况",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 13.31,
+       "z": 131.3
+      }
+     ]
+    },
+    {
+     "text": "查看灯塔污水处理厂两栋主厂房中间停车区域的情况",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -164.11,
+       "z": -747.47
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "5967733e86f774602332fc84",
@@ -10602,7 +11329,52 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在污水处理厂西边的警车处放置WI-FI摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 81.66,
+       "z": -553.72
+      }
+     ]
+    },
+    {
+     "text": "在污水处理厂东南角的黄色推土机处放置WI-FI摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -197.92,
+       "z": -431.44
+      }
+     ]
+    },
+    {
+     "text": "在污水处理厂北边工业区附近的军车处放置WI-FI摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -77.89,
+       "z": -785.03
+      }
+     ]
+    },
+    {
+     "text": "在污水处理厂附近南部大桥上的黄色公交车处放置WI-FI摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -11.33,
+       "z": -307.08
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "626148251ed3bb5bcc5bd9ed",
@@ -10648,7 +11420,19 @@
     "the-lab"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在实验室的隔离区内放置WI-FI摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "the-lab",
+       "x": -132.99,
+       "z": -360.11
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6391d90f4ed9512be67647df",
@@ -10661,7 +11445,45 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "获得V3 U盘",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -67.1,
+       "z": 111.98
+      },
+      {
+       "map": "lighthouse",
+       "x": -123.09,
+       "z": 95.27
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.28,
+       "z": 89.81
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.09,
+       "z": 87.72
+      }
+     ]
+    },
+    {
+     "text": "前往灯塔",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 355.69,
+       "z": 489.65
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6391d9144b15ca31f76bc323",
@@ -10674,7 +11496,45 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "获得V3 U盘",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -67.1,
+       "z": 111.98
+      },
+      {
+       "map": "lighthouse",
+       "x": -123.09,
+       "z": 95.27
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.28,
+       "z": 89.81
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.09,
+       "z": 87.72
+      }
+     ]
+    },
+    {
+     "text": "前往灯塔",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 355.69,
+       "z": 489.65
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6391d912f8e5dd32bf4e3ab2",
@@ -10687,7 +11547,45 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "获得V3 U盘",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -67.1,
+       "z": 111.98
+      },
+      {
+       "map": "lighthouse",
+       "x": -123.09,
+       "z": 95.27
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.28,
+       "z": 89.81
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.09,
+       "z": 87.72
+      }
+     ]
+    },
+    {
+     "text": "前往灯塔",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 355.69,
+       "z": 489.65
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "59674cd986f7744ab26e32f2",
@@ -11132,17 +12030,6 @@
    "objectives": []
   },
   {
-   "id": "5e381b0286f77420e3417a74",
-   "name": "纺织业 - 1",
-   "nameEn": "Textile - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 42,
-   "wiki": "https://www.eftarkov.com/task/5e381b0286f77420e3417a74",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5e383a6386f77465910ce1f3",
    "name": "纺织业 - 1",
    "nameEn": "Textile - Part 1",
@@ -11154,12 +12041,12 @@
    "objectives": []
   },
   {
-   "id": "5e4d4ac186f774264f758336",
-   "name": "纺织业 - 2",
-   "nameEn": "Textile - Part 2",
+   "id": "5e381b0286f77420e3417a74",
+   "name": "纺织业 - 1",
+   "nameEn": "Textile - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
-   "wiki": "https://www.eftarkov.com/task/5e4d4ac186f774264f758336",
+   "wiki": "https://www.eftarkov.com/task/5e381b0286f77420e3417a74",
    "maps": [],
    "prerequisites": [],
    "objectives": []
@@ -11171,6 +12058,17 @@
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5e4d515e86f77438b2195244",
+   "maps": [],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "5e4d4ac186f774264f758336",
+   "name": "纺织业 - 2",
+   "nameEn": "Textile - Part 2",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 42,
+   "wiki": "https://www.eftarkov.com/task/5e4d4ac186f774264f758336",
    "maps": [],
    "prerequisites": [],
    "objectives": []
@@ -11633,6 +12531,17 @@
        "z": -5.9064
       }
      ]
+    },
+    {
+     "text": "在海关取得青铜怀表",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 101.24,
+       "z": -6.0
+      }
+     ]
     }
    ]
   },
@@ -11833,7 +12742,19 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关找到前冠军的房间",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66058ccbc7f3584787181478",
@@ -12135,6 +13056,17 @@
    "prerequisites": [],
    "objectives": [
     {
+     "text": "上交在战局中找到的：6L31 5.45x39 AK-74 60发弹匣 3 个",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 452.29,
+       "z": 63.66
+      }
+     ]
+    },
+    {
      "text": "在森林找到上锁的地堡",
      "type": "visit",
      "zones": [
@@ -12155,11 +13087,22 @@
    "level": 37,
    "wiki": "https://www.eftarkov.com/task/66aba85403e0ee3101042877",
    "maps": [
-    "the-lab",
-    "streets-of-tarkov"
+    "streets-of-tarkov",
+    "the-lab"
    ],
    "prerequisites": [],
    "objectives": [
+    {
+     "text": "使用转移功能从塔科夫街区转移到实验室（在单次战局中）",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 211.91,
+       "z": 84.68
+      }
+     ]
+    },
     {
      "text": "在同场战局中侦查实验室的服务器机房",
      "type": "visit",
@@ -12374,7 +13317,30 @@
     "reserve"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "使用转移功能从海关转移到储备站",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 651.36,
+       "z": 125.79
+      }
+     ]
+    },
+    {
+     "text": "使用转移功能从森林转移到灯塔",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 486.33,
+       "z": 342.92
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "671a49f77d49aea42c029b5f",
@@ -12505,7 +13471,24 @@
     "woods"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "上交在森林交货点找到的包裹\n这个地方只能通过做BTR到列车停放处进入",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -618.15,
+       "z": 130.25
+      },
+      {
+       "map": "woods",
+       "x": -610.97,
+       "z": 138.9
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "673f2cd5d3346c2167020484",
@@ -12630,7 +13613,19 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "将竞技场广告海报放在海关 Scav 营地",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 205.73,
+       "z": -119.86
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "66058cb22cee99303f1ba067",
@@ -13243,12 +14238,40 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a88255e8636c03a2d09ba37",
    "maps": [
+    "streets-of-tarkov",
     "customs",
-    "reserve",
-    "streets-of-tarkov"
+    "reserve"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区将 TerraGroup“蓝色文件夹”材料藏匿在任意一个神秘符号房间内",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -133.8,
+       "z": 273.03
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 184.86,
+       "z": 228.11
+      }
+     ]
+    },
+    {
+     "text": "在海关将 TerraGroup“蓝色文件夹”材料藏匿在宿舍 314 神秘符号房间内",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 181.21,
+       "z": 184.02
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a8852bc184783d23e047902",
@@ -13272,7 +14295,19 @@
     "the-lab"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "将装有假数据的硬盘藏在实验室武器测试区附近的服务器机房内（在同场战局中完成）\n接受任务后邮件会给你一个硬盘，携带硬盘进入实验室",
+     "type": "",
+     "zones": [
+      {
+       "map": "the-lab",
+       "x": -188.18,
+       "z": -339.45
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a8820cb1f2b560baf0408a1",
@@ -13295,12 +14330,79 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a8814d20d25ca7b2908e13e",
    "maps": [
-    "customs",
     "woods",
+    "customs",
     "shoreline"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在森林山顶气象站处安装信号干扰器（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -213.21,
+       "z": -276.98
+      }
+     ]
+    },
+    {
+     "text": "在森林锯木厂警卫室内安装信号干扰器（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -25.93,
+       "z": 46.72
+      }
+     ]
+    },
+    {
+     "text": "使用转移功能从森林转移到海关（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -153.54,
+       "z": 397.23
+      }
+     ]
+    },
+    {
+     "text": "在海关主路旁的建筑工地二楼安装信号干扰器（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 227.03,
+       "z": -19.92
+      }
+     ]
+    },
+    {
+     "text": "使用转移功能从海关转移到海岸线（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 18.12,
+       "z": 138.65
+      }
+     ]
+    },
+    {
+     "text": "在海岸线疗养院行政大楼二楼档案室内安装信号干扰器（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -241.11,
+       "z": -148.7
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a8819620d25ca7b2908e14d",
@@ -13324,7 +14426,30 @@
     "customs"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在海关大桥附近便利店的空调机组处藏匿一个 Wi-Fi 摄像头（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 12.73,
+       "z": 38.49
+      }
+     ]
+    },
+    {
+     "text": "在海关向海岸线的转移点处发射一枚黄色信号弹（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 25.34,
+       "z": 136.56
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a88270efbd24b6243010e6d",
@@ -13348,7 +14473,45 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "获得V3 U盘",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -67.1,
+       "z": 111.98
+      },
+      {
+       "map": "lighthouse",
+       "x": -123.09,
+       "z": 95.27
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.28,
+       "z": 89.81
+      },
+      {
+       "map": "lighthouse",
+       "x": -116.09,
+       "z": 87.72
+      }
+     ]
+    },
+    {
+     "text": "前往灯塔",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 355.69,
+       "z": 489.65
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6a884d69d35a46046d0e808a",
@@ -13422,7 +14585,19 @@
     "factory"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "上交Prapor信使身上的信件",
+     "type": "",
+     "zones": [
+      {
+       "map": "factory",
+       "x": -19.15,
+       "z": 21.62
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "60e71dc67fcf9c556f325056",
@@ -13714,7 +14889,41 @@
     "lighthouse"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在灯塔废弃村庄内找到第一个游荡者物资藏匿点，并使用 MS2000 指示器标记",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -158.48,
+       "z": -381.65
+      }
+     ]
+    },
+    {
+     "text": "在灯塔废弃村庄内找到第二个游荡者物资藏匿点，并使用 MS2000 指示器标记",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -434.46,
+       "z": -327.37
+      }
+     ]
+    },
+    {
+     "text": "在灯塔海边洞穴内找到游荡者物资藏匿点，并使用 MS2000 指示器标记",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": 180.84,
+       "z": -486.47
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "596b455186f77457cb50eccb",
@@ -14121,6 +15330,17 @@
        "map": "shoreline",
        "x": -552.9468,
        "z": -128.2434
+      }
+     ]
+    },
+    {
+     "text": "在海岸线找到第二架无人机的坠毁点",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": 80.64,
+       "z": -172.69
       }
      ]
     },

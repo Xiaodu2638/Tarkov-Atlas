@@ -17,8 +17,10 @@ Steps run in dependency order:
   2. build_layers.py   floor PNGs + layers/index.json + hazards.json
   3. boss_relocate.py  apply curated Boss fixes to the API snapshot (idempotent;
                        a re-fetched snapshot would otherwise wipe them)
-  4. build_data.py     mapdata.json / markers.json / quests.json
-  5. build_story.py    story.json
+  4. site_calibrate.py fit site-pixel -> game affine from committed anchors
+                       (needs research/eftarkov/mapmarkers.json; skips if absent)
+  5. build_data.py     mapdata.json / markers.json / quests.json
+  6. build_story.py    story.json
 
 Requires the vendored Pillow/numpy in tools/pyext and tools/pylibs, and a
 headless Edge install for SVG rasterisation (see AGENTS.md).
@@ -65,6 +67,13 @@ def main() -> None:
         # build_data.py consumes the snapshot; it is idempotent, so running it
         # on every rebuild is free even when the snapshot was not re-fetched.
         run("boss_relocate.py", [])
+        # Needs research/eftarkov/mapmarkers.json (fetch_eftarkov.py --maps);
+        # offline fit, skipped with a note when the corpus has not been pulled.
+        if (ROOT / "research" / "eftarkov" / "mapmarkers.json").is_file():
+            run("site_calibrate.py", [])
+        else:
+            print("\n=== site_calibrate.py skipped (no research/eftarkov/mapmarkers.json) ===",
+                  flush=True)
         run("build_data.py", [])
         run("build_story.py", [])
 
