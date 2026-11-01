@@ -217,27 +217,32 @@ def parse_task(tid: str, html: str) -> dict:
     # Per-objective location cards: the site draws each objective's position on
     # its own SVG grid (/assets/maps/<mapId>/<floor>.svg + data-marker-x/y).
     # "obj" is the 1-based objective index and repeats when one objective is
-    # doable on several maps. These pixel points are what tools/site_calibrate.py
-    # turns into game coordinates (research/eftarkov/pxaffine.json).
+    # doable on several maps. Read the stage divs (one per floor, hidden ones
+    # hold the other floors' points) rather than the header link: multi-point
+    # objectives put a COMMA-separated marker list in it, and some cards have
+    # no link at all. These pixel points are what site_calibrate.py turns into
+    # game coordinates (research/eftarkov/pxaffine.json).
     locs = []
     for c in re.findall(r'<article class="task-og-card">([\s\S]*?)</article>', html):
         idx = re.search(r'task-og-index">(\d+)', c)
-        link = re.search(r'href="/map/([0-9a-f]{24})\?marker=([0-9a-f]{24})"', c)
-        stage = re.search(r'data-floor-key="([^"]*)"[^>]*'
-                          r'data-map-width="([\d.]+)"[^>]*data-map-height="([\d.]+)"', c)
-        m = re.search(r'data-marker-x="([\d.\-]+)"\s+data-marker-y="([\d.\-]+)"', c)
-        if not (idx and link and stage and m):
+        link = re.search(r'href="/map/([0-9a-f]{24})\?marker=', c)
+        if not idx or not link:
             continue
-        locs.append({
-            "obj": int(idx.group(1)),
-            "map": link.group(1),
-            "marker": link.group(2),
-            "floor": stage.group(1),
-            "w": float(stage.group(2)),
-            "h": float(stage.group(3)),
-            "x": float(m.group(1)),
-            "y": float(m.group(2)),
-        })
+        map_id = link.group(1)
+        for stage in re.finditer(
+                r'data-floor-key="([^"]*)"[^>]*'
+                r'data-map-width="([\d.]+)"[^>]*data-map-height="([\d.]+)"([\s\S]*?)(?=data-floor-key=|<button|$)', c):
+            for m in re.finditer(r'data-marker-x="([\d.\-]+)"\s+data-marker-y="([\d.\-]+)"',
+                                 stage.group(4)):
+                locs.append({
+                    "obj": int(idx.group(1)),
+                    "map": map_id,
+                    "floor": stage.group(1),
+                    "w": float(stage.group(2)),
+                    "h": float(stage.group(3)),
+                    "x": float(m.group(1)),
+                    "y": float(m.group(2)),
+                })
     rec["locations"] = locs
 
     m = re.search(r'<p class="text-stone-300 leading-relaxed[^"]*">([\s\S]*?)</p>', html)

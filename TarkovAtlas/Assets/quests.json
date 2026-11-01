@@ -522,14 +522,94 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abbc2bb71588b5b110f34a5",
    "maps": [
-    "customs",
     "woods",
+    "customs",
     "lighthouse",
     "shoreline",
     "reserve"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "摧毁森林列车停放处的摄像头 2 个",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -658.99,
+       "z": 147.6
+      },
+      {
+       "map": "woods",
+       "x": -656.95,
+       "z": 106.93
+      }
+     ]
+    },
+    {
+     "text": "摧毁海关宿舍楼的摄像头 3 个",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 234.88,
+       "z": 127.21
+      },
+      {
+       "map": "customs",
+       "x": 186.55,
+       "z": 169.08
+      },
+      {
+       "map": "customs",
+       "x": 171.81,
+       "z": 185.7
+      }
+     ]
+    },
+    {
+     "text": "摧毁灯塔污水处理厂内的摄像头 3 个",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -135.25,
+       "z": -756.54
+      },
+      {
+       "map": "lighthouse",
+       "x": -63.18,
+       "z": -726.0
+      },
+      {
+       "map": "lighthouse",
+       "x": -77.31,
+       "z": -754.89
+      }
+     ]
+    },
+    {
+     "text": "摧毁海岸线疗养院的摄像头 3 个",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -363.18,
+       "z": -98.09
+      },
+      {
+       "map": "shoreline",
+       "x": -268.05,
+       "z": -96.29
+      },
+      {
+       "map": "shoreline",
+       "x": -227.77,
+       "z": -85.23
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "6abf70a8e4732bc101051bf2",
@@ -1155,20 +1235,6 @@
    "objectives": []
   },
   {
-   "id": "66151401efb0539ae10875ae",
-   "name": "人靠衣装 - 1",
-   "nameEn": "Drip-Out - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 27,
-   "wiki": "https://www.eftarkov.com/task/66151401efb0539ae10875ae",
-   "maps": [
-    "reserve",
-    "the-lab"
-   ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "6613f3007f6666d56807c929",
    "name": "人靠衣装 - 1",
    "nameEn": "Drip-Out - Part 1",
@@ -1183,15 +1249,15 @@
    "objectives": []
   },
   {
-   "id": "6613f307fca4f2f386029409",
-   "name": "人靠衣装 - 2",
-   "nameEn": "Drip-Out - Part 2",
+   "id": "66151401efb0539ae10875ae",
+   "name": "人靠衣装 - 1",
+   "nameEn": "Drip-Out - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
-   "level": 42,
-   "wiki": "https://www.eftarkov.com/task/6613f307fca4f2f386029409",
+   "level": 27,
+   "wiki": "https://www.eftarkov.com/task/66151401efb0539ae10875ae",
    "maps": [
-    "lighthouse",
-    "icebreaker"
+    "reserve",
+    "the-lab"
    ],
    "prerequisites": [],
    "objectives": []
@@ -1203,6 +1269,20 @@
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/6615141bfda04449120269a7",
+   "maps": [
+    "lighthouse",
+    "icebreaker"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6613f307fca4f2f386029409",
+   "name": "人靠衣装 - 2",
+   "nameEn": "Drip-Out - Part 2",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 42,
+   "wiki": "https://www.eftarkov.com/task/6613f307fca4f2f386029409",
    "maps": [
     "lighthouse",
     "icebreaker"
@@ -5662,7 +5742,49 @@
     "streets-of-tarkov"
    ],
    "prerequisites": [],
-   "objectives": []
+   "objectives": [
+    {
+     "text": "在塔科夫街区消灭狙击 Scav 8 名",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": 43.25,
+       "z": -15.67
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -110.43,
+       "z": -8.17
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 83.71,
+       "z": 104.06
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -17.33,
+       "z": 222.93
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": -156.47,
+       "z": 384.55
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 57.0,
+       "z": 293.73
+      },
+      {
+       "map": "streets-of-tarkov",
+       "x": 93.58,
+       "z": 293.66
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "63a9b36cc31b00242d28a99f",
@@ -10514,42 +10636,6 @@
    "objectives": []
   },
   {
-   "id": "6a45208043b8d7604d00b8d5",
-   "name": "猎人之路 - 管理者",
-   "nameEn": "The Huntsman Path - Administrator",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 17,
-   "wiki": "https://www.eftarkov.com/task/6a45208043b8d7604d00b8d5",
-   "maps": [
-    "lighthouse"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在灯塔火车站发射一枚黄色信号弹（在同场战局中）",
-     "type": "useItem",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -5.75,
-       "z": -872.31
-      }
-     ]
-    },
-    {
-     "text": "在灯塔火车站范围内消灭任意目标 6 名（在同场战局中）",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -39.47,
-       "z": -863.11
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "639136df4b15ca31f76bc31f",
    "name": "猎人之路 - 管理者",
    "nameEn": "The Huntsman Path - Administrator",
@@ -10580,6 +10666,42 @@
        "map": "reserve",
        "x": 130.39,
        "z": -139.45
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a45208043b8d7604d00b8d5",
+   "name": "猎人之路 - 管理者",
+   "nameEn": "The Huntsman Path - Administrator",
+   "trader": "5c0647fdd443bc2504c2d371",
+   "level": 17,
+   "wiki": "https://www.eftarkov.com/task/6a45208043b8d7604d00b8d5",
+   "maps": [
+    "lighthouse"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在灯塔火车站发射一枚黄色信号弹（在同场战局中）",
+     "type": "useItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -5.75,
+       "z": -872.31
+      }
+     ]
+    },
+    {
+     "text": "在灯塔火车站范围内消灭任意目标 6 名（在同场战局中）",
+     "type": "shoot",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -39.47,
+       "z": -863.11
       }
      ]
     }
@@ -12030,23 +12152,23 @@
    "objectives": []
   },
   {
-   "id": "5e383a6386f77465910ce1f3",
-   "name": "纺织业 - 1",
-   "nameEn": "Textile - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 42,
-   "wiki": "https://www.eftarkov.com/task/5e383a6386f77465910ce1f3",
-   "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5e381b0286f77420e3417a74",
    "name": "纺织业 - 1",
    "nameEn": "Textile - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5e381b0286f77420e3417a74",
+   "maps": [],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "5e383a6386f77465910ce1f3",
+   "name": "纺织业 - 1",
+   "nameEn": "Textile - Part 1",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 42,
+   "wiki": "https://www.eftarkov.com/task/5e383a6386f77465910ce1f3",
    "maps": [],
    "prerequisites": [],
    "objectives": []
