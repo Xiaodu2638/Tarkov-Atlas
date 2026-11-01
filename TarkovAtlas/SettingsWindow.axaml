@@ -126,7 +126,7 @@
             <TextBlock Text="地图显示内容" FontSize="13" FontWeight="SemiBold" />
             <CheckBox x:Name="ExtractsCheck" Content="显示撤离点" />
             <CheckBox x:Name="BossesCheck" Content="显示 Boss 刷点" />
-            <CheckBox x:Name="SpawnsCheck" Content="显示出生点" />
+            <CheckBox x:Name="SpawnsCheck" Content="显示 PMC 出生点" />
             <CheckBox x:Name="TransitsCheck" Content="显示转移点" />
             <CheckBox x:Name="QuestMarkersCheck" Content="显示已追踪任务的地点标记（商人头像）" />
             <CheckBox x:Name="HazardsCheck" Content="显示危险区（雷区 / 狙击区 / 其他）" />

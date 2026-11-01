@@ -700,7 +700,7 @@ public partial class MainWindow : Window
         {
             rows.Add(new()
             {
-                Label = "出生点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.SpawnPmc),
+                Label = "PMC 出生点", Swatch = MapCanvas.PaletteBrush(MapCanvas.SwatchKind.SpawnPmc),
                 Icon = "loot-dead-scav",
                 Group = points,
                 Get = () => _settings.ShowSpawns, Set = v => _settings.ShowSpawns = v, Count = map?.Spawns.Count ?? 0,

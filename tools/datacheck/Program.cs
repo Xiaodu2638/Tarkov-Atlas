@@ -97,6 +97,15 @@ internal static class DataChecks
         {
             "customs", "woods", "interchange", "shoreline", "lighthouse", "streets-of-tarkov",
         };
+        // Upstream serves PMC insertion points for every map except the
+        // Icebreaker (1.2 map, the snapshot only has bot/boss entries there).
+        // Same class of guard as loot/caches: the scav-strict filter must not
+        // silently zero a served map's spawn layer.
+        var SpawnMaps = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "ground-zero", "customs", "factory", "woods", "interchange", "shoreline",
+            "reserve", "the-lab", "lighthouse", "streets-of-tarkov", "the-labyrinth", "terminal",
+        };
         foreach (var map in manifest.Maps)
         {
             var known = knownGeometryDefects.Contains(map.Key);
@@ -142,6 +151,14 @@ internal static class DataChecks
             {
                 Check($"buried caches present {map.Key}", map.Caches.Count > 0,
                     $"{map.Caches.Count} caches");
+            }
+            if (SpawnMaps.Contains(map.Key))
+            {
+                Check($"pmc spawns present {map.Key}", map.Spawns.Count > 0,
+                    $"{map.Spawns.Count} points");
+                Check($"no scav-side spawns {map.Key}",
+                    map.Spawns.All(s => !string.Equals(s.Side, "scav", StringComparison.OrdinalIgnoreCase)),
+                    $"{map.Spawns.Count(s => string.Equals(s.Side, "scav", StringComparison.OrdinalIgnoreCase))} scav");
             }
 
             // A few assets legitimately sit just past the edge (factory has 7).

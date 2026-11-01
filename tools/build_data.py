@@ -475,15 +475,17 @@ def main() -> None:
                 pos = s.get("position") or {}
                 if "x" not in pos:
                     continue
-                # The API also emits defender/boss/rogue positions in this list.
-                # Only points flagged "player" are real insertion spawns; keeping
-                # the rest painted USEC/rogue bots on the Lighthouse peninsula
-                # as if they were PMC spawns.
-                if "player" not in (s.get("categories") or []):
-                    continue
+                # The API's spawn list is the whole insertion-point pool. Points
+                # flagged "player" still include the scav-side set (a scav-mode
+                # player can start there, and AI scav/boss share the positions) -
+                # that is ~half the pool and painted bot nests as if they were
+                # PMC spawns. Keep strict PMC points only: category "player" and
+                # sides pmc/all, never scav.
+                cats = s.get("categories") or []
                 sides = s.get("sides") or []
-                spawns.append({"x": pos["x"], "z": pos["z"],
-                               "side": "scav" if "scav" in sides else "pmc"})
+                if "player" not in cats or "scav" in sides:
+                    continue
+                spawns.append({"x": pos["x"], "z": pos["z"], "side": "pmc"})
             for t in api.get("transits", []):
                 pos = t.get("position") or {}
                 if "x" not in pos:
