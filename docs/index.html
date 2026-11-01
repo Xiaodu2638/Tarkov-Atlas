@@ -86,8 +86,8 @@
     stroke-linecap:round;stroke-linejoin:round;
     transition:opacity .18s, transform .18s, filter .18s;
   }
-  .rail a:hover{color:var(--text);background:rgba(31,43,55,.55)}
-  .rail a:hover svg{opacity:.95;transform:translateX(1px)}
+  .rail nav a:hover{color:var(--text);background:rgba(31,43,55,.55)}
+  .rail nav a:hover svg{opacity:.95;transform:translateX(1px)}
   .rail a.active{
     color:var(--accent);
     background:linear-gradient(90deg, rgba(214,168,75,.16), rgba(214,168,75,.03) 68%, transparent);
@@ -107,14 +107,19 @@
     padding:11px;border-radius:10px;
     background:linear-gradient(135deg,#EDC368,#CB9838);
     box-shadow:0 8px 22px rgba(214,168,75,.20), inset 0 1px 0 rgba(255,255,255,.42);
-    transition:transform .18s, box-shadow .18s;
+    transition:transform .18s, box-shadow .18s, background .18s;
   }
   .rail .dl::after{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:linear-gradient(115deg, transparent 36%, rgba(255,255,255,.55) 50%, transparent 64%);
     transform:translateX(-120%);transition:transform .7s cubic-bezier(.22,.61,.36,1);
   }
-  .rail .dl:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(214,168,75,.32), inset 0 1px 0 rgba(255,255,255,.5)}
+  .rail .dl:hover{
+    color:#171106 !important;
+    background:linear-gradient(135deg,#F4CE79,#D6A84B);
+    transform:translateY(-1px);
+    box-shadow:0 12px 28px rgba(214,168,75,.32), inset 0 1px 0 rgba(255,255,255,.5);
+  }
   .rail .dl:hover::after{transform:translateX(120%)}
   .rail .meta{
     color:var(--muted);font-size:10.5px;text-align:center;
