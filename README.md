@@ -152,14 +152,14 @@ dotnet run --project tools/shotcheck  -c Release
 
 管线脚本在 `tools/`，输入在 `research/`，产物写入 `TarkovAtlas/Assets/`。
 **以下命令人可以直接跑，不需要任何 agent 辅助**；全部联网源以 eftarkov.com 为准
-（国内直连），tarkov.dev 仅作为「只有它才有的坐标数据」的可选覆盖层（`--td`）。
+（国内直连），tarkov.dev 提供「只有它才有的标记/坐标数据」（默认一起重拉，拉不到自动降级）。
 
 ```powershell
-python tools/update_data.py                  # 一键：重拉 eftarkov.com 任务+剧情 -> build_all -> 门禁 -> 等你审 diff
+python tools/update_data.py                  # 一键：重拉 eftarkov.com 任务+剧情 与 tarkov.dev 快照 -> build_all -> 门禁 -> 等你审 diff
 python tools/update_data.py --with-guides    # 同时增量下载新任务的地点攻略图
 python tools/update_data.py --dry-run        # 只拉快照看 research/ 的 diff，回滚不构建
 python tools/update_data.py --no-fetch       # 跳过联网，只跑 build_all + 门禁
-python tools/update_data.py --td             # 额外重拉 tarkov.dev 快照（撤离/Boss/出生点/任务坐标；间歇 422，慢）
+python tools/update_data.py --no-td          # 跳过 tarkov.dev 重拉（其端点间歇 422，拉不到时自动降级沿用现有快照）
 
 python tools/build_all.py                    # 离线全量重建（底图/楼层/Boss 修正/数据/剧情），可加 --check 连门禁一起跑
 python tools/build_all.py --only factory     # 只重建一张地图的底图与楼层
@@ -171,17 +171,19 @@ python tools/fetch_eftarkov.py --guides      # 只下载攻略配图 -> Assets/g
 ```
 
 `update_data.py` 是唯一的联网入口：`fetch_eftarkov.py` 拉任务名册（PVP+PVE 列表）、
-中文目标文本、前置关系与攻略配图，再依次跑 `build_all.py` 与门禁（`check.ps1` +
-`check_map_coverage.py`）。**它从不自动提交**——跑完打印 `git diff --stat` 让人
-先审快照再决定提交；任何一步失败自动把快照回滚，不留半成品。页面缓存在
-`.tmp/eftarkov-cache/`，改解析器后可 `--cache-only` 离线重放。
+中文目标文本、前置关系与攻略配图；tarkov.dev 快照（标记数据 + 任务坐标，只有它有）
+默认一起重拉，端点不可用时告警降级、沿用现有快照（`--no-td` 可显式跳过）。之后
+依次跑 `build_all.py` 与门禁（`check.ps1` + `check_map_coverage.py`）。**它从不
+自动提交**——跑完打印 `git diff --stat` 让人先审快照再决定提交；任何一步失败自动
+把快照回滚，不留半成品。页面缓存在 `.tmp/eftarkov-cache/`，改解析器后可
+`--cache-only` 离线重放。
 
 分步执行时按依赖顺序（`build_all.py` 已经按这个顺序全跑）：
 
 ```powershell
 python tools/build_assets.py   # 底图 + maps.json 清单（需要本机 Edge/Chrome）
 python tools/build_layers.py   # 楼层 PNG + layers/index.json + hazards.json
-python tools/boss_relocate.py  # Boss 人工修正表（幂等；--td 重拉后也无需手动补跑，build_all 会自动执行）
+python tools/boss_relocate.py  # Boss 人工修正表（幂等；重拉快照后也无需手动补跑，build_all 会自动执行）
 python tools/build_data.py     # mapdata.json + markers.json + quests.json（eftarkov 文本 + td 坐标覆盖）
 python tools/build_story.py    # story.json
 ```
@@ -191,7 +193,7 @@ python tools/build_story.py    # story.json
 ```
 research/
   eftarkov/     eftarkov.com 任务快照（名称/中文目标/前置/攻略图链接；fetch_eftarkov.py 产物）
-  api/          tarkov.dev 快照：标记数据（撤离/Boss/出生/雷区）+ 任务目标坐标（--td 重拉）
+  api/          tarkov.dev 快照：标记数据（撤离/Boss/出生/雷区）+ 任务目标坐标（默认随 update_data 重拉）
   upstream/     上游 data/maps.json（楼层与仿射来源）
   story/        剧情中文抓取（fetch_eftarkov.py 产物）+ 坐标标定表 coords.json
   svg/<地图 key>/  矢量源，一张地图一个子目录（破冰船为 14 个单层 SVG）
@@ -258,7 +260,7 @@ TarkovAtlas/                 应用主体（C# / Avalonia）
   Assets/story.json          剧情
 tools/                       数据管线（Python）+ 三套自检（C#）
   build_all.py               管线入口（离线；--check 连门禁一起跑）
-  update_data.py             联网更新入口（eftarkov.com 为主，--td 才碰 tarkov.dev）
+  update_data.py             联网更新入口（eftarkov.com 为主 + tarkov.dev 标记层，--no-td 跳过后者）
   fetch_eftarkov.py          eftarkov.com 抓取器（任务/剧情快照 + 攻略配图）
   build_assets.py            渲染 SVG（迷宫 warp 进解析栅格）→ 底图 + maps.json
   build_layers.py            楼层 PNG + layers/index.json + hazards.json

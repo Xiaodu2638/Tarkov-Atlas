@@ -264,6 +264,16 @@ BOSS_ZONE_FILTER = {
     "lighthouse": {"exUsecFree": (-60.0, 40.0, 220.0)},
 }
 
+# Maps where only some boss entries are meaningful. Terminal is a "any boss may
+# spawn randomly" map: the upstream table pins scattered vsRF/vsRFSniper points
+# and a batch of placeholder records (spawnChance .2 on an empty Zone2ScavPort29)
+# for Sanitar/Glukhar/Killa/Reshala/Tagilla - none of those are fixed spawns.
+# Only the Black Division patrol positions are real data there (user decision
+# 2026-11-01), so every other mob is dropped for this map.
+BOSS_MOB_ALLOW = {
+    "terminal": {"blackDivision"},
+}
+
 
 def IsHexId(value: str) -> bool:
     return len(value) == 24 and all(c in "0123456789abcdefABCDEF" for c in value)
@@ -436,6 +446,9 @@ def main() -> None:
                 })
             for b in api.get("bosses", []):
                 mob = b.get("mob") or ""
+                allow = BOSS_MOB_ALLOW.get(key)
+                if allow is not None and mob not in allow:
+                    continue
                 positions = []
                 for loc in b.get("spawnLocations", []):
                     for p in loc.get("positions", []):
