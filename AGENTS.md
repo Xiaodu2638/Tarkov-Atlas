@@ -112,7 +112,10 @@ research/                       管线输入，全部进 git
   story/coords.json             剧情坐标标定表（只含双源验证过的点）
   svg/<地图 key>/*.svg          矢量源，一张地图一个子目录
   svg/LICENSE.md                上游矢量图许可全文
-docs/                           界面截图（README 引用）
+docs/                           界面截图（README 引用）+ 宣传落地页
+  index.html                    单文件落地页（零依赖、零 JS 框架，可直接 file:// 打开或挂 GitHub Pages）
+  author.png                    作者头像（312×312，取自媒体主页）
+  logo-github.svg / logo-bilibili.svg   内联矢量标（内联 path，不引 CDN）
 ```
 
 `tools/pyext/`、`tools/pylibs/`、`tools/tile-cache/` 不进 git（见 `.gitignore`），其余源码与 `research/` 输入都随仓库分发。`app` 的构建和运行都不碰 Python。
@@ -241,5 +244,12 @@ docs/                           界面截图（README 引用）
 - `MapCanvas` 是性能关键路径：新增绘制要素必须复用画笔/文本缓存，且不得在平移时触发整图重采样。
 - 同一份映射只保留一处（例如头像 slug），避免两处表漂移。
 - 提交前 `git status --short` 必须干净。
-- **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_tag_move.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写。release 正文取 `docs/RELEASE-NOTES.md`）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ `python .tmp/gh_tag_move.py`（PATCH 移动 `v1.0.0` tag，幂等）→ `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。**`gh_release.py` 必须用脱离终端的方式跑**（`Start-Process` + 日志重定向，或 harness 的 background shell）：232 MB 走代理可超过任何前台超时，被中途杀掉会留下「旧资产已删、新资产没传」的空档（Release 一度 0 资产）；传完用 API 的 `assets[].digest` 与本地 `sha256` 对账。**先 push 后上传**——zip 必须是刚构建的那份，否则等于挂错版本（曾把旧数据构建传上去，杀掉重跑）。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
+- **发布到 GitHub**（remote 未配置；`.tmp/gh_push.py` / `gh_tag_move.py` / `gh_release.py` 在 gitignored 的 `.tmp/`，fresh clone 需按此说明重写。release 正文取 `docs/RELEASE-NOTES.md`——文件缺失时 `gh_release.py` 会静默退化成拿仓库名当正文，所以别删它）：`build.ps1` → 确认无运行实例 → `python .tmp/gh_push.py`（token 从 Windows 凭据管理器条目 `GitHub for Visual Studio - https://Xiaodu2638@github.com/` 读取、UTF-16 解码，不落盘不打印；master→main，走第 17 条的 HTTP 代理）→ `python .tmp/gh_tag_move.py`（PATCH 移动 `v1.0.0` tag，幂等）→ `python .tmp/gh_release.py` 上传 `dist/TarkovAtlas-win-x64.zip`（脚本幂等：同名资产先删再传）。**`gh_release.py` 必须用脱离终端的方式跑**（`Start-Process` + 日志重定向，或 harness 的 background shell）：232 MB 走代理可超过任何前台超时，被中途杀掉会留下「旧资产已删、新资产没传」的空档（Release 一度 0 资产）；传完用 API 的 `assets[].digest` 与本地 `sha256` 对账。**先 push 后上传**——zip 必须是刚构建的那份，否则等于挂错版本（曾把旧数据构建传上去，杀掉重跑）。仓库：`github.com/Xiaodu2638/Tarkov-Atlas`。
 - **官方已下线任务的剔除**：tarkov.dev 快照滞后于游戏版本，判断以 eftarkov.com 为准——`/task?q=<名>` 返回 0 且详情页被退回列表页 = 已下线（对照一个已知存在的任务 id 验行为）。确认后直接改快照 `research/api/tasks.json` + `tasks.zh.json`（删任务对象与其专属 zh 键，共享键保留）→ `build_data.py` 重建 → 核对 `git grep <id>` 无残留。
+- **宣传落地页 `docs/index.html`**：单文件、零外部依赖（无 CDN 字体/图标/JS 框架），双击即可预览，因此**不要**引入需要构建或联网的资源。
+  - 配色直接复用 `App.axaml` 的调色板（`#080C11` 底 / `#0E141B` 面板 / `#141C25` 卡片 / `#D6A84B` 强调金），新配色先往那里对齐。
+  - 截图与图标一律用**同目录相对路径**（`main.png`、`author.png`、`logo-github.svg`），因为该页与 `docs/*.png` 同级；从 `.tmp/` 草稿迁到 `docs/` 时必须批量改掉 `../../docs/` 前缀。
+  - 断点三档：`≤1080px` 收侧栏改顶栏、`≤760px` 单列、`≤420px` 首屏按钮撑满。**改布局后必须在这三档下逐一看过**——三个已踩的坑：① `.mark` 徽章样式若只写在 `.rail .brand .mark` 作用域，移动端顶栏的同名 span 会丢样式，渲染成 ``TTARKOV ATLAS``；② `.stage` 的 `grid-template-columns:1fr 300px` 若在窄屏没显式改成单列，固定 300px 列会把整行撑出视口，再被 `body{overflow-x:hidden}` 裁掉右半，看起来像"页面被切"；③ `≤420px` 里写 `.btn{width:100%}` 会连顶栏那个「下载」按钮一起拉满行宽、把品牌名挤成两行——要限定成 `.cta .btn`。
+  - 页脚作者块：头像 `author.png` + 两个带矢量图的平台链接，指向 `github.com/Xiaodu2638` 与 `space.bilibili.com/619029933`。
+  - **验证方式**：in-app browser 不接受 `file://`，先在 `docs/` 起 `python -m http.server 8765`；截图用 headless Edge `--force-prefers-reduced-motion`——**headless 截图不会推进 CSS 过渡/动画**，带 `.reveal{opacity:0}` 入场动画的区块会停在起始帧，看起来像整页发暗/元素没渲染，容易误判成布局坏了。
+  - 入场动画用 `translate`（独立属性）而不是 `transform`：`animation-fill-mode:forwards` 会永久锁定 `transform`，卡片上的悬停 `transform:translateY(-3px)` 就再也生效不了。同理，动画类（`.anim`/`.reveal`）必须由 JS 添加，脚本挂掉时内容要仍然可见。

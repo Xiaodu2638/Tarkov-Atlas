@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarkov Atlas — 副屏离线战术地图</title>
+<style>
+  :root{
+    --bg:#080C11; --panel:#0E141B; --card:#141C25;
+    --border:#25313D; --border2:#3A4856;
+    --text:#E8EDF2; --text2:#9EAEBB; --muted:#6D7D8B;
+    --accent:#D6A84B; --accent2:#E6BB60;
+    --side-w:232px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:"Segoe UI","Microsoft YaHei UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+
+  /* ================= side rail ================= */
+  .rail{
+    position:fixed;top:0;left:0;bottom:0;width:var(--side-w);z-index:60;
+    background:
+      radial-gradient(420px 220px at 0% 0%, rgba(214,168,75,.07), transparent 70%),
+      linear-gradient(180deg,#0C121A 0%, #0A0F16 55%, #090D13 100%);
+    border-right:1px solid var(--border);
+    display:flex;flex-direction:column;padding:24px 0 18px;
+  }
+  /* 右缘一道极细的金色高光，把侧栏从背景里"切"出来 */
+  .rail::after{
+    content:"";position:absolute;top:0;bottom:0;right:-1px;width:1px;
+    background:linear-gradient(180deg, transparent, rgba(214,168,75,.42) 22%, rgba(214,168,75,.10) 60%, transparent);
+    pointer-events:none;
+  }
+  .rail .brand{display:flex;align-items:center;gap:11px;padding:0 20px 20px}
+  .rail .brand .mark{
+    width:34px;height:34px;border-radius:10px;flex:none;
+    display:grid;place-items:center;font-weight:800;font-size:15px;color:#171106;
+    background:linear-gradient(145deg,#F2CB6E,#C4923A);
+    box-shadow:0 7px 18px rgba(214,168,75,.26), inset 0 1px 0 rgba(255,255,255,.45);
+  }
+  .rail .brand .t{font-weight:800;letter-spacing:.09em;font-size:12.5px;line-height:1.35}
+  .rail .brand .s{
+    display:block;color:var(--muted);font-size:10px;font-weight:500;
+    letter-spacing:.02em;margin-top:3px;
+  }
+  .rail nav{flex:1;overflow-y:auto;padding:4px 10px 8px 18px;position:relative}
+  .rail nav::-webkit-scrollbar{width:4px}
+  .rail nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+  /* 竖向导轨 + 会滑动的高亮光条（scrollspy 驱动） */
+  .rail nav .track{
+    position:absolute;left:12px;top:16px;bottom:16px;width:1px;
+    background:linear-gradient(180deg, transparent, var(--border) 10%, var(--border) 90%, transparent);
+  }
+  .rail nav .beam{
+    position:absolute;left:11px;top:0;width:2.5px;height:0;border-radius:2px;
+    background:linear-gradient(180deg,#F4D07C,#C4923A);
+    box-shadow:0 0 10px rgba(214,168,75,.75), 0 0 22px rgba(214,168,75,.3);
+    opacity:0;
+    transition:transform .3s cubic-bezier(.22,.61,.36,1),
+               height .3s cubic-bezier(.22,.61,.36,1),
+               opacity .25s ease;
+  }
+
+  .rail .group{
+    display:flex;align-items:center;gap:9px;
+    color:var(--muted);font-size:9.5px;letter-spacing:.22em;font-weight:700;
+    padding:20px 6px 9px;
+  }
+  .rail .group::after{
+    content:"";flex:1;height:1px;
+    background:linear-gradient(90deg, var(--border), transparent);
+  }
+  .rail a{
+    display:flex;align-items:center;gap:11px;color:var(--text2);text-decoration:none;
+    font-size:13px;letter-spacing:.01em;padding:9px 11px;border-radius:9px;
+    position:relative;transition:color .18s, background .18s, box-shadow .18s;
+  }
+  .rail a svg{
+    width:17px;height:17px;flex:none;opacity:.55;
+    stroke:currentColor;fill:none;stroke-width:1.6;
+    stroke-linecap:round;stroke-linejoin:round;
+    transition:opacity .18s, transform .18s, filter .18s;
+  }
+  .rail a:hover{color:var(--text);background:rgba(31,43,55,.55)}
+  .rail a:hover svg{opacity:.95;transform:translateX(1px)}
+  .rail a.active{
+    color:var(--accent);
+    background:linear-gradient(90deg, rgba(214,168,75,.16), rgba(214,168,75,.03) 68%, transparent);
+    box-shadow:inset 0 0 0 1px rgba(214,168,75,.16);
+  }
+  .rail a.active svg{opacity:1;filter:drop-shadow(0 0 7px rgba(214,168,75,.5))}
+
+  .rail .foot{padding:14px 14px 0;position:relative}
+  .rail .foot::before{
+    content:"";position:absolute;top:0;left:14px;right:14px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--border) 18%, var(--border) 82%, transparent);
+  }
+  .rail .dl{
+    position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    color:#171106 !important;font-weight:800;font-size:13px;letter-spacing:.02em;
+    padding:11px;border-radius:10px;
+    background:linear-gradient(135deg,#EDC368,#CB9838);
+    box-shadow:0 8px 22px rgba(214,168,75,.20), inset 0 1px 0 rgba(255,255,255,.42);
+    transition:transform .18s, box-shadow .18s;
+  }
+  .rail .dl::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(115deg, transparent 36%, rgba(255,255,255,.55) 50%, transparent 64%);
+    transform:translateX(-120%);transition:transform .7s cubic-bezier(.22,.61,.36,1);
+  }
+  .rail .dl:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(214,168,75,.32), inset 0 1px 0 rgba(255,255,255,.5)}
+  .rail .dl:hover::after{transform:translateX(120%)}
+  .rail .meta{
+    color:var(--muted);font-size:10.5px;text-align:center;
+    margin-top:12px;line-height:1.7;letter-spacing:.02em;
+  }
+
+  /* ================= main ================= */
+  .main{margin-left:var(--side-w);display:flex;flex-direction:column;min-height:100vh}
+  .main > header,
+  .main > section,
+  .main > footer{width:100%}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 40px}
+  section{flex:1}
+
+  header{
+    position:relative;padding:88px 0 64px;overflow:hidden;
+    background:
+      radial-gradient(1000px 460px at 70% -10%, rgba(214,168,75,.10), transparent 62%),
+      radial-gradient(640px 400px at 6% 6%, rgba(111,191,139,.05), transparent 60%);
+  }
+  header::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(37,49,61,.28) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(37,49,61,.28) 1px,transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(900px 500px at 50% 0%, #000 0%, transparent 78%);
+            mask-image:radial-gradient(900px 500px at 50% 0%, #000 0%, transparent 78%);
+  }
+  .hero{position:relative;z-index:1}
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--accent);
+    border:1px solid rgba(214,168,75,.35);background:rgba(214,168,75,.07);
+    padding:6px 13px;border-radius:999px;letter-spacing:.05em;margin-bottom:26px;
+  }
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+  h1{font-size:clamp(34px,4.6vw,54px);line-height:1.14;font-weight:800;letter-spacing:-.01em}
+  h1 .gold{color:var(--accent)}
+  .sub{margin-top:20px;font-size:16.5px;color:var(--text2);max-width:620px;line-height:1.75}
+  .sub b{color:var(--text);font-weight:600}
+  .cta{margin-top:32px;display:flex;gap:13px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+    padding:13px 24px;border-radius:10px;font-size:15px;font-weight:600;transition:.18s;
+  }
+  .btn.primary{background:var(--accent);color:#171207}
+  .btn.primary:hover{background:var(--accent2);transform:translateY(-1px)}
+  .btn.ghost{color:var(--text2);border:1px solid var(--border2)}
+  .btn.ghost:hover{color:var(--text);border-color:var(--muted)}
+
+  .stage{
+    margin-top:56px;position:relative;border-radius:16px;
+    border:1px solid var(--border);background:var(--panel);
+    padding:24px;display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:stretch;
+  }
+  .stage .shot{
+    border-radius:10px;overflow:hidden;border:1px solid var(--border);
+    background:var(--card);display:flex;
+  }
+  .stage .shot img{width:100%;height:100%;object-fit:cover;display:block}
+  .mini{
+    border-radius:10px;overflow:hidden;border:1px solid var(--border2);
+    background:#04070B;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 22px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(214,168,75,.12) inset;
+  }
+  .mini img{width:100%;display:block;opacity:.94}
+  .tag{
+    position:absolute;background:rgba(8,12,17,.86);border:1px solid var(--border2);
+    color:var(--text2);font-size:11.5px;padding:5px 10px;border-radius:7px;
+    backdrop-filter:blur(6px);
+  }
+  .tag.t1{top:16px;right:20px;color:var(--accent);border-color:rgba(214,168,75,.4)}
+  .tag.t2{bottom:16px;left:20px}
+
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--border);border:1px solid var(--border);border-radius:14px;
+    overflow:hidden;margin-top:52px;
+  }
+  .stat{background:var(--panel);padding:28px 24px}
+  .stat .n{font-size:36px;font-weight:800;color:var(--accent);letter-spacing:-.02em}
+  .stat .n small{font-size:18px;color:var(--text2);font-weight:600;margin-left:2px}
+  .stat .d{margin-top:8px;color:var(--text2);font-size:13px;line-height:1.6}
+
+  section{padding:84px 0}
+  section.alt{background:var(--panel);border-block:1px solid var(--border)}
+  .sec-head{max-width:600px;margin-bottom:44px}
+  .sec-head .no{color:var(--accent);font-size:12px;letter-spacing:.18em;font-weight:700;margin-bottom:13px}
+  .sec-head h2{font-size:30px;font-weight:800;line-height:1.25}
+  .sec-head p{margin-top:14px;color:var(--text2);line-height:1.75;font-size:15.5px}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{
+    background:var(--card);border:1px solid var(--border);border-radius:13px;padding:24px;
+    transition:border-color .2s, transform .2s;
+  }
+  .card:hover{border-color:var(--border2);transform:translateY(-2px)}
+  .card .ic{
+    width:42px;height:42px;border-radius:10px;display:grid;place-items:center;
+    background:rgba(214,168,75,.1);border:1px solid rgba(214,168,75,.28);margin-bottom:16px;
+    font-size:19px;
+  }
+  .card h3{font-size:16px;font-weight:700;margin-bottom:9px}
+  .card p{color:var(--text2);font-size:13.5px;line-height:1.8}
+  .card p b{color:var(--text);font-weight:600}
+
+  /* ---------- 三步流程：编号徽章 + 卡片之间连线 ---------- */
+  .flow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;counter-reset:step}
+  .step{
+    position:relative;padding:26px 24px 24px;border-radius:14px;
+    background:linear-gradient(160deg, rgba(21,29,39,.96), rgba(15,21,29,.96));
+    border:1px solid var(--border);
+    transition:border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .step::before{
+    counter-increment:step;content:"0" counter(step);
+    display:inline-flex;align-items:center;justify-content:center;
+    width:36px;height:36px;border-radius:11px;margin-bottom:18px;
+    font-size:13px;font-weight:800;letter-spacing:.02em;color:var(--accent);
+    background:linear-gradient(150deg, rgba(214,168,75,.16), rgba(214,168,75,.05));
+    border:1px solid rgba(214,168,75,.3);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  /* 卡片之间的引导线 */
+  .step:not(:last-child)::after{
+    content:"";position:absolute;top:44px;right:-18px;width:18px;height:1px;
+    background:linear-gradient(90deg, rgba(214,168,75,.55), rgba(214,168,75,.05));
+    transform-origin:left center;
+  }
+  .step:hover{
+    border-color:rgba(214,168,75,.42);transform:translateY(-3px);
+    box-shadow:0 18px 42px rgba(0,0,0,.42), 0 0 0 1px rgba(214,168,75,.06) inset;
+  }
+  .step:hover::before{color:var(--accent2);border-color:rgba(214,168,75,.55)}
+  .step h3{font-size:15.5px;font-weight:700;margin-bottom:9px}
+  .step p{color:var(--text2);font-size:13px;line-height:1.8}
+  .step p b{color:var(--text);font-weight:600}
+
+  /* 逐张入场（JS 给 .flow 加 .anim 后才隐藏，避免脚本失败时内容不可见） */
+  .flow.anim .step{opacity:0}
+  .flow.anim .step.in{
+    animation:stepIn .62s cubic-bezier(.22,.61,.36,1) forwards;
+    animation-delay:calc(var(--i, 0) * 110ms);
+  }
+  @keyframes stepIn{
+    from{opacity:0;translate:0 24px}
+    to  {opacity:1;translate:0 0}
+  }
+  .flow.anim .step.in::before{animation:chipIn .55s ease-out backwards;animation-delay:calc(var(--i, 0) * 110ms + 180ms)}
+  @keyframes chipIn{
+    0%  {box-shadow:0 0 0 0 rgba(214,168,75,.55), inset 0 1px 0 rgba(255,255,255,.06)}
+    100%{box-shadow:0 0 0 12px rgba(214,168,75,0), inset 0 1px 0 rgba(255,255,255,.06)}
+  }
+  /* 引导线从左往右"画"出来 */
+  .flow.anim .step.in::after{
+    animation:lineIn .5s ease-out backwards;
+    animation-delay:calc(var(--i, 0) * 110ms + 260ms);
+  }
+  @keyframes lineIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+  .offline{
+    display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+    background:linear-gradient(135deg, rgba(214,168,75,.09), rgba(214,168,75,.02));
+    border:1px solid rgba(214,168,75,.3);border-radius:14px;padding:28px 32px;
+  }
+  .offline .big{font-size:22px;font-weight:800}
+  .offline .big .gold{color:var(--accent)}
+  .offline .note{color:var(--text2);font-size:13.5px;line-height:1.7;flex:1;min-width:250px}
+  .pills{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{
+    background:var(--panel);border:1px solid var(--border2);color:var(--text2);
+    padding:8px 16px;border-radius:999px;font-size:12.5px;white-space:nowrap;
+  }
+
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .frame{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}
+  .frame img{width:100%;display:block}
+  .frame .cap{padding:13px 16px;font-size:12.5px;color:var(--text2);border-top:1px solid var(--border)}
+  .frame .cap b{color:var(--text);display:block;margin-bottom:3px;font-size:13px}
+
+  footer{border-top:1px solid var(--border);padding:48px 0 56px;background:var(--panel)}
+  footer .top{display:flex;gap:26px;flex-wrap:wrap;align-items:center}
+  footer .links{margin-left:auto;display:flex;gap:20px}
+  footer a{color:var(--text2);text-decoration:none;font-size:13px}
+  footer a:hover{color:var(--accent2)}
+  .legal{
+    margin-top:24px;padding-top:20px;border-top:1px solid var(--border);
+    color:var(--muted);font-size:12px;line-height:1.9;max-width:840px;
+  }
+  .legal b{color:var(--text2);font-weight:600}
+
+  /* ---------- author card (footer) ---------- */
+  .author{
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:24px 30px;margin-bottom:44px;
+  }
+  .author .ava{
+    width:56px;height:56px;border-radius:50%;flex:none;object-fit:cover;
+    border:2px solid rgba(214,168,75,.55);
+    box-shadow:0 6px 20px rgba(0,0,0,.45);
+  }
+  .author .who .name{font-size:16.5px;font-weight:800}
+  .author .who .role{color:var(--muted);font-size:12.5px;margin-top:3px}
+  .author .links{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  .author .links a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    background:var(--panel);border:1px solid var(--border2);color:var(--text2);
+    padding:9px 16px;border-radius:9px;font-size:13px;font-weight:600;transition:.15s;
+  }
+  .author .links a:hover{color:var(--accent2);border-color:var(--accent);transform:translateY(-1px)}
+  .author .links a .lg{width:16px;height:16px;flex:none}
+
+  /* ================= FX: 背景扫描线 + 呼吸光 ================= */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(214,168,75,.028) 0 1px, transparent 1px 3px);
+    opacity:.55;mix-blend-mode:screen;
+  }
+  body::after{
+    content:"";position:fixed;inset:-30% -10%;z-index:0;pointer-events:none;
+    background:radial-gradient(closest-side, rgba(214,168,75,.09), transparent 70%);
+    animation:breathe 14s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%,100%{transform:translate3d(-6%, -4%, 0) scale(1)}
+    50%    {transform:translate3d(8%, 6%, 0) scale(1.12)}
+  }
+  .main{position:relative;z-index:1}
+
+  /* ================= FX: 入场动画 ================= */
+  @keyframes rise{
+    from{opacity:0;transform:translateY(18px)}
+    to  {opacity:1;transform:none}
+  }
+  .reveal{opacity:0}
+  .reveal.in{animation:rise .62s cubic-bezier(.22,.61,.36,1) forwards}
+
+  /* ================= FX: 标题辉光 + 逐字 ================= */
+  h1 .gold{
+    color:var(--accent);
+    text-shadow:0 0 24px rgba(214,168,86,.45), 0 0 60px rgba(214,168,86,.18);
+    animation:gild 5s ease-in-out infinite;
+  }
+  @keyframes gild{
+    0%,100%{text-shadow:0 0 24px rgba(214,168,86,.38), 0 0 60px rgba(214,168,86,.14)}
+    50%    {text-shadow:0 0 30px rgba(214,168,86,.62), 0 0 84px rgba(214,168,86,.26)}
+  }
+
+  /* ================= FX: 卡片悬停描边流光 ================= */
+  .card{position:relative;overflow:hidden}
+  .card::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(115deg, transparent 35%, rgba(214,168,75,.16) 50%, transparent 65%);
+    transform:translateX(-120%);
+    transition:transform .75s cubic-bezier(.22,.61,.36,1);
+  }
+  .card:hover::after{transform:translateX(120%)}
+
+  /* ================= FX: 扫描光带（hero 预览框） ================= */
+  .stage{overflow:hidden}
+  .stage::before{
+    content:"";position:absolute;left:0;right:0;top:-40%;height:40%;
+    background:linear-gradient(180deg, transparent, rgba(214,235,255,.055), transparent);
+    animation:sweep 7.5s linear infinite;pointer-events:none;
+  }
+  @keyframes sweep{
+    from{transform:translateY(0)}
+    to  {transform:translateY(360%)}
+  }
+
+  /* ================= FX: 网格底纹呼吸（hero） ================= */
+  header::after{animation:gridPulse 9s ease-in-out infinite}
+  @keyframes gridPulse{
+    0%,100%{opacity:.55}
+    50%    {opacity:1}
+  }
+
+  /* ================= FX: 侧栏光条滑动（见 .rail nav .beam） ================= */
+
+  /* ================= FX: 滚动进度条 ================= */
+  #progress{
+    position:fixed;top:0;left:0;height:2px;width:0;z-index:200;
+    background:linear-gradient(90deg, var(--accent), var(--accent2));
+    box-shadow:0 0 12px rgba(214,168,75,.75);
+    transition:width .08s linear;
+  }
+
+  /* ================= FX: 数字滚动 = **/
+  .stat .n{font-variant-numeric:tabular-nums}
+  .stat .v{display:inline-block;min-width:1ch}
+  /* 计数过程中数字带金色微光，滚动到位的瞬间最亮 */
+  .stat .v.ticking{
+    color:var(--accent2);
+    text-shadow:0 0 16px rgba(230,187,96,.55);
+  }
+
+  /* 尊重系统"减少动态效果" */
+  @media (prefers-reduced-motion: reduce){
+    body::before, body::after, .stage::before, header::after,
+    h1 .gold{animation:none !important}
+    .reveal{opacity:1;animation:none !important}
+    .card::after{display:none}
+    .flow.anim .step{opacity:1}
+    .flow.anim .step.in{animation:none !important}
+    .flow.anim .step.in::before{animation:none !important}
+    .flow.anim .step.in::after{animation:none !important}
+    .rail nav .beam{transition:none}
+  }
+
+  .mobilebar{display:none}
+  @media (max-width: 1080px){
+    .rail{display:none}
+    .main{margin-left:0}
+    .mobilebar{
+      display:flex;position:sticky;top:0;z-index:60;align-items:center;gap:10px;
+      padding:12px 20px;background:rgba(8,12,17,.92);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .mobilebar .logo{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+    .mobilebar .btn{white-space:nowrap}
+    .mobilebar .logo .mark{
+      width:26px;height:26px;border-radius:8px;color:#171106;
+      display:grid;place-items:center;font-weight:800;font-size:13px;flex:none;
+      background:linear-gradient(145deg,#F2CB6E,#C4923A);
+      box-shadow:0 4px 12px rgba(214,168,75,.25), inset 0 1px 0 rgba(255,255,255,.45);
+    }
+  }
+  @media (max-width: 760px){
+    .wrap{padding:0 20px}
+    .grid3,.flow,.grid2,.strip{grid-template-columns:1fr}
+    /* 单列时卡片之间没有横向间隙，引导线会飘在卡片外 */
+    .step:not(:last-child)::after{display:none}
+    .stats{grid-template-columns:1fr 1fr}
+    /* 桌面预览框是「主图 + 300px 固定侧图」两栏，窄屏必须叠成单栏，
+       否则固定 300px 列把整行撑出视口，被 overflow-x:hidden 切掉右半。 */
+    .stage{grid-template-columns:1fr;padding:14px;gap:14px;margin-top:36px}
+    .tag{font-size:10.5px;padding:4px 8px}
+    .tag.t1{top:10px;right:12px}
+    .tag.t2{bottom:10px;left:12px}
+    h1{font-size:clamp(28px,8vw,40px)}
+    .sub{font-size:15px}
+    section{padding:56px 0}
+    footer .top{flex-direction:column;align-items:flex-start}
+    .author{padding:20px}
+    .author .links{margin-left:0;width:100%}
+    .author .links a{flex:1;justify-content:center}
+  }
+  @media (max-width: 420px){
+    .stats{grid-template-columns:1fr}
+    .cta{flex-direction:column}
+    /* 只让首屏 CTA 撑满，不要把顶栏那个「下载」按钮也拉满行宽 */
+    .cta .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<aside class="rail">
+  <div class="brand">
+    <span class="mark">T</span>
+    <span class="t">TARKOV ATLAS<span class="s">离线战术地图 · Windows</span></span>
+  </div>
+  <nav id="railnav">
+    <i class="track"></i><i class="beam" id="railbeam"></i>
+    <div class="group">总览</div>
+    <a href="#top" class="active">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.4 9.4 10 3.7l6.6 5.7v6.5a1.1 1.1 0 0 1-1.1 1.1h-3.2v-4.5H7.7v4.5H4.5a1.1 1.1 0 0 1-1.1-1.1z"/></svg>首页</a>
+    <div class="group">功能</div>
+    <a href="#features">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M9.9 2.9 11.6 7l4.1 1.7-4.1 1.7-1.7 4.1-1.7-4.1L4.1 8.7 8.2 7z"/><path d="m15.5 13.2.75 1.85 1.85.75-1.85.75-.75 1.85-.75-1.85L12.9 15.8l1.85-.75z"/></svg>六大特性</a>
+    <a href="#locate">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="5.5"/><path d="M10 1.9v3.2M10 14.9v3.2M1.9 10h3.2M14.9 10h3.2"/><circle cx="10" cy="10" r="1.15" fill="currentColor" stroke="none"/></svg>截图即定位</a>
+    <div class="group">上手</div>
+    <a href="#how">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.7"/><path d="m12.8 7.2-1.6 4-4 1.6 1.6-4z"/></svg>三步开始</a>
+    <a href="#offline">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4.2" y="8.6" width="11.6" height="8" rx="2"/><path d="M7.3 8.6V6.5a2.7 2.7 0 0 1 5.4 0v2.1"/><circle cx="10" cy="12.6" r=".9" fill="currentColor" stroke="none"/></svg>离线承诺</a>
+    <div class="group">更多</div>
+    <a href="#shots">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.9" y="4.2" width="14.2" height="11.6" rx="2.1"/><circle cx="7.2" cy="8.2" r="1.15"/><path d="m3.6 14.3 4-3.4 2.7 2.2 2.5-2 3.4 2.8"/></svg>界面速览</a>
+    <a href="#faq">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.7"/><path d="M7.9 8.1a2.1 2.1 0 1 1 2.9 1.95c-.55.24-.8.7-.8 1.35"/><circle cx="10" cy="14" r=".85" fill="currentColor" stroke="none"/></svg>常见问题</a>
+  </nav>
+  <div class="foot">
+    <a class="dl" href="https://github.com/Xiaodu2638/Tarkov-Atlas/releases/tag/v1.0.0" target="_blank" rel="noopener">⬇ 下载 v1.0.0</a>
+    <div class="meta">非官方社区工具<br>完全离线 · 免安装</div>
+  </div>
+</aside>
+
+<div class="mobilebar">
+  <div class="logo"><span class="mark">T</span>TARKOV ATLAS</div>
+  <div style="flex:1"></div>
+  <a class="btn primary" style="padding:9px 16px;font-size:13px"
+     href="https://github.com/Xiaodu2638/Tarkov-Atlas/releases/tag/v1.0.0" target="_blank" rel="noopener">下载</a>
+</div>
+
+<div class="main" id="top">
+
+  <header>
+    <div class="wrap hero">
+      <span class="kicker"><span class="dot"></span>v1.0 · Windows x64 · 免安装</span>
+      <h1>副屏地图？<br>一个<span class="gold">悬浮窗</span>就够了。</h1>
+      <p class="sub">
+        Tarkov Atlas 是一块<b>不遮挡游戏</b>的离线战术地图：撤离点、Boss 刷点、雷区、物资、
+        这一局该做的任务，全部标在图上。游戏里截一张图，<b>位置与楼层自动就位</b>——零窗口切换。
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/Xiaodu2638/Tarkov-Atlas/releases/tag/v1.0.0" target="_blank" rel="noopener">
+          下载 v1.0.0 <span class="arrow">→</span></a>
+        <a class="btn ghost" href="#how">它怎么工作</a>
+      </div>
+
+      <div class="stage">
+        <div class="shot"><img src="main.png" alt="Tarkov Atlas 主界面 — 街区地图放大至 483%"></div>
+        <div class="mini"><img src="overlay.png" alt="悬浮小窗 — 跟随玩家位置"></div>
+        <span class="tag t1">悬浮窗 · 置顶</span>
+        <span class="tag t2">主窗口 · 森林 · 483%</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="n"><span class="v" data-count="13">13</span><small>张</small></div><div class="d">高清离线底图<br>上北下南 · 52 个楼层</div></div>
+        <div class="stat"><div class="n"><span class="v" data-count="468">468</span><small>条</small></div><div class="d">离线任务库<br>官方中文名 · 搜索直达</div></div>
+        <div class="stat"><div class="n"><span class="v" data-count="255">255</span><small>个任务</small></div><div class="d">随包地点攻略图<br>点「前往」即达</div></div>
+        <div class="stat"><div class="n"><span class="v" data-count="0">0</span><small>请求</small></div><div class="d">运行时完全离线<br>不向任何服务器发数据</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="no">FEATURES</div>
+        <h2>为「正在打游戏的我」设计的每一样东西</h2>
+        <p>所有标记逐项可开关；所有操作都为副屏场景重新想过——不是把网页地图塞进窗口。</p>
+      </div>
+      <div class="grid3">
+        <div class="card"><div class="ic">🎯</div><h3>截图即定位</h3>
+          <p>游戏内截一张图，<b>坐标 · 楼层 · 朝向</b>自动解析。不用 alt-tab——箭头已经在图上了。</p></div>
+        <div class="card"><div class="ic">🛰️</div><h3>战局自动识图</h3>
+          <p>监听游戏日志识别当前战局地图，进入海关就自动切到海关。<b>你只需要打游戏</b>。</p></div>
+        <div class="card"><div class="ic">📌</div><h3>任务标在图上</h3>
+          <p>468 条离线任务，搜中文名秒出结果；「前往」一键落到目标点位，<b>255 个任务</b>的随包攻略图随手可查。</p></div>
+        <div class="card"><div class="ic">🗺️</div><h3>楼层自动跟随</h3>
+          <p>工厂三层、实验室三层、破冰船十六层——按玩家高度<b>自动切到所在楼层</b>，也可手动锁定。</p></div>
+        <div class="card"><div class="ic">🛡️</div><h3>Boss 与危险区</h3>
+          <p>Boss 头像 + 巡逻范围圈，雷区/狙击区红色危险面。<b>数据跟随游戏版本</b>持续修正。</p></div>
+        <div class="card"><div class="ic">🖥️</div><h3>为副屏而生</h3>
+          <p>无边框悬浮窗：左键拖图、右键拖窗、滚轮光标锚缩放；主窗口最小化到托盘，<b>常驻不碍事</b>。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="locate" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="no">SIGNATURE</div>
+        <h2>截图即定位——全片的这一帧</h2>
+        <p>这是 Tarkov Atlas 与所有网页地图的本质区别：定位发生在<b>你按下截图键的那一刻</b>，而不是你打开浏览器之后。</p>
+      </div>
+      <div class="grid2">
+        <div class="card"><div class="ic">⚡</div><h3>0.8 秒内完成</h3>
+          <p>600ms 目录轮询 + 台账 diff，截图写入完成前定位就开始；金色箭头、所在楼层、朝向一并就位。</p></div>
+        <div class="card"><div class="ic">🧠</div><h3>零学习成本</h3>
+          <p>没有「先点这里再点那里」的流程。你唯一要做的事——<b>像平时一样截图</b>。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="no">GET STARTED</div>
+        <h2>三步，然后忘掉它的存在</h2>
+        <p>没有登录、没有配置向导、没有要常驻的浏览器标签页。</p>
+      </div>
+      <div class="flow">
+        <div class="step"><h3>解压并运行</h3>
+          <p>下载 zip，解压整个目录，运行 TarkovAtlas.exe。原生 AOT 构建，<b>不装 .NET 运行时</b>。</p></div>
+        <div class="step"><h3>指一下游戏目录</h3>
+          <p>设置里指到 Escape from Tarkov 的 Logs 与截图目录——一次性的事，之后它自己盯着。</p></div>
+        <div class="step"><h3>去打游戏</h3>
+          <p>悬浮窗常驻副屏或角落。进战局自动切图，截图自动落点，<b>忘了它在运行才说明它成功了</b>。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="offline" class="alt">
+    <div class="wrap">
+      <div class="offline">
+        <div class="big">运行时 <span class="gold">0</span> 网络请求</div>
+        <div class="note">底图、任务库、剧情、攻略图全部打包在本地。「打开 Wiki」只是用系统浏览器开个网页——应用本身不连接任何服务器，也不上传任何东西。</div>
+        <div class="pills">
+          <span class="pill">无账号</span><span class="pill">无遥测</span><span class="pill">无上传</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="shots">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="no">SCREENS</div>
+        <h2>界面速览</h2>
+        <p>任务追踪、主地图、设置——都是同一套克制的设计语言。</p>
+      </div>
+      <div class="strip">
+        <div class="frame"><img src="quests.png" alt="任务追踪抽屉">
+          <div class="cap"><b>任务追踪</b>468 条任务 · 中文搜索 · 地图联动过滤</div></div>
+        <div class="frame"><img src="main.png" alt="主界面">
+          <div class="cap"><b>行动地图</b>点位/物资双组图例 · 楼层选择 · 撤离点过滤</div></div>
+        <div class="frame"><img src="settings.png" alt="设置">
+          <div class="cap"><b>设置</b>截图与日志目录 · 悬浮窗行为 · 一应开关</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="no">FAQ</div>
+        <h2>常见问题</h2>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>需要管理员权限？</h3>
+          <p>是。全局热键与游戏目录读取需要提权，首次运行 Windows 会弹 UAC 确认。</p></div>
+        <div class="card"><h3>会被封号吗？</h3>
+          <p>工具只读取本地日志与截图文件名，不注入、不修改游戏进程，不联网。<b>请勿用于雷达等作弊用途</b>——那是明确禁止的。</p></div>
+        <div class="card"><h3>支持哪些地图？</h3>
+          <p>13 张：中心区、海关、工厂、森林、立交桥、海岸线、储备站、实验室、灯塔、街区、迷宫、码头、破冰船。</p></div>
+        <div class="card"><h3>怎么卸载？</h3>
+          <p>删掉解压目录即可，干净无残留；进度保存在 %APPDATA%\TarkovAtlas，一并删除即完全清除。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="author">
+        <img class="ava" src="author.png" alt="Sleepydu 头像">
+        <div class="who">
+          <div class="name">Sleepydu</div>
+          <div class="role">Tarkov Atlas 作者 · 玩家社区开发者</div>
+        </div>
+        <div class="links">
+          <a href="https://github.com/Xiaodu2638" target="_blank" rel="noopener"><img class="lg" src="logo-github.svg" alt="">GitHub · Xiaodu2638</a>
+          <a href="https://space.bilibili.com/619029933" target="_blank" rel="noopener"><img class="lg" src="logo-bilibili.svg" alt="">Bilibili · Sleepydu</a>
+        </div>
+      </div>
+      <div class="top">
+        <div class="logo"><span class="mark">T</span>TARKOV ATLAS</div>
+        <div class="links">
+          <a href="https://github.com/Xiaodu2638/Tarkov-Atlas" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/Xiaodu2638/Tarkov-Atlas/releases/tag/v1.0.0" target="_blank" rel="noopener">下载 v1.0.0</a>
+          <a href="https://github.com/Xiaodu2638/Tarkov-Atlas/blob/main/THIRD-PARTY-NOTICES.md" target="_blank" rel="noopener">第三方声明</a>
+        </div>
+      </div>
+      <div class="legal">
+        Tarkov Atlas 是玩家社区的非官方工具，与 Battlestate Games（《逃离塔科夫》开发商）无任何隶属或合作关系。
+        本工具仅用于本地离线查看公开地理信息，<b>禁止商用，禁止用于作弊、透视、雷达等任何破坏游戏公平性的用途</b>。
+        地图矢量素材遵循 CC BY-NC-SA 4.0（the-hideout/tarkov-dev-svg-maps），几何与任务数据遵循 MIT（the-hideout/tarkov-dev），
+        详见仓库 THIRD-PARTY-NOTICES.md。
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- 入场动画：进入视口再显现（.flow 里的卡片单独逐张入场） ---- */
+    if(!reduce){
+      var targets = document.querySelectorAll('.hero, .sec-head, .grid3, .grid2, .offline, .strip, .author');
+      targets.forEach(function(el){ el.classList.add('reveal'); });
+      var ro = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); }
+        });
+      }, {rootMargin:'0px 0px -10% 0px', threshold:.1});
+      targets.forEach(function(el){ ro.observe(el); });
+
+      /* ---- 三步流程：逐张升起 ---- */
+      var flow = document.querySelector('.flow');
+      if(flow){
+        var steps = Array.prototype.slice.call(flow.querySelectorAll('.step'));
+        steps.forEach(function(el, i){ el.style.setProperty('--i', i); });
+        flow.classList.add('anim');
+        var so = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){ e.target.classList.add('in'); so.unobserve(e.target); }
+          });
+        }, {threshold:.2});
+        steps.forEach(function(el){ so.observe(el); });
+      }
+    }
+
+    var links = document.querySelectorAll('#railnav a[href^="#"]');
+    var map = {};
+    links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+
+    /* ---- 侧栏滑动光条：跟随当前高亮项 ---- */
+    var nav = document.getElementById('railnav');
+    var beam = document.getElementById('railbeam');
+    function moveBeam(a){
+      if(!beam || !nav || !a) return;
+      beam.style.height = a.offsetHeight + 'px';
+      beam.style.transform = 'translateY(' + a.offsetTop + 'px)';
+      beam.style.opacity = '1';
+    }
+    moveBeam(document.querySelector('#railnav a.active'));
+
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){ a.classList.remove('active'); });
+          var a = map[e.target.id];
+          if(a){ a.classList.add('active'); moveBeam(a); }
+        }
+      });
+    }, {rootMargin:'-40% 0px -55% 0px'});
+    ['top','features','locate','how','offline','shots','faq'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) obs.observe(el);
+    });
+    addEventListener('resize', function(){
+      moveBeam(document.querySelector('#railnav a.active'));
+    });
+
+    /* ---- 顶部滚动进度条 ---- */
+    var bar = document.getElementById('progress');
+    function onScroll(){
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    }
+    addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    /* ---- 数字滚动：只改 .v 里的数字，保住后面 <small> 单位 ----
+       所有数字共用同一个起点和同一段时长 -> 同时停止；目标值越大，每秒
+       跳的数值越多，视觉上就是「各自按自己的速度爬升、最后一起到位」。 */
+    if(!reduce){
+      var nums = Array.prototype.slice.call(document.querySelectorAll('.stat .n .v'));
+      var DUR = 1500;
+      var started = false;
+
+      function startAll(){
+        if(started) return;
+        started = true;
+        var items = nums.map(function(el){
+          var target = parseInt(el.dataset.count, 10);
+          var ok = isFinite(target) && target > 0;
+          if(ok){ el.textContent = '0'; el.classList.add('ticking'); }
+          return {el:el, target:target, ok:ok, last:-1};
+        });
+        var t0 = null;
+        function frame(t){
+          if(t0 === null) t0 = t;
+          var p = Math.min(1, (t - t0) / DUR);
+          var eased = 1 - Math.pow(1 - p, 3);
+          var done = p >= 1;
+          for(var i = 0; i < items.length; i++){
+            var it = items[i];
+            if(!it.ok) continue;
+            var v = done ? it.target : Math.round(it.target * eased);
+            if(v !== it.last){ it.el.textContent = v; it.last = v; }
+            if(done) it.el.classList.remove('ticking');
+          }
+          if(!done) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      var co = new IntersectionObserver(function(entries){
+        if(entries.some(function(e){ return e.isIntersecting; })){
+          co.disconnect();
+          startAll();
+        }
+      }, {threshold:.45});
+      if(nums.length) co.observe(nums[0]);
+    }
+  })();
+</script>
+
+</body>
+</html>
