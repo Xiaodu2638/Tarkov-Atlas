@@ -211,6 +211,17 @@ public partial class MainWindow : Window
                 SelectMapListItem(map);
                 await SelectMapAsync(map, remember: true);
             }
+
+            // A fresh raid re-arms auto-layer: a floor picked by hand during the
+            // previous raid must not suppress this one (same-map raids never hit
+            // SelectMapAsync's mapChanged reset). Then re-pick from the freshest
+            // known height so the floor is right before the next screenshot lands.
+            if (_currentMap?.Key == e.MapKey)
+            {
+                _manualLayerPick = false;
+                var latest = GetLatestPin(e.MapKey);
+                if (latest is not null) AutoSelectLayerForHeight(latest.Y);
+            }
         });
     }
 
@@ -1133,13 +1144,15 @@ public partial class MainWindow : Window
             ShowToast(msg);
         }
 
-        if (latestInfo is not null) AutoSelectLayerForHeight(latestInfo.Y);
-
+        // Switch map first, then pick the floor: LoadFloorLayers runs inside
+        // SelectMapAsync and only trusts a height applied afterwards.
         if (latestMap is not null && _settings.AutoSwitchMap && latestMap.Key != _currentMap?.Key)
         {
             SelectMapListItem(latestMap);
             await SelectMapAsync(latestMap, remember: true);
         }
+
+        if (latestInfo is not null && latestMap?.Key == _currentMap?.Key) AutoSelectLayerForHeight(latestInfo.Y);
         SyncOverlayPlayer();
     }
 

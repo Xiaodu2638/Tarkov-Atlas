@@ -128,6 +128,9 @@ public sealed class GameLogService : IDisposable
             _logFile = latest.FullName;
             _position = 0;
             _tail = "";
+            // New game session: a raid on the same map as last time must fire
+            // MapDetected again, or MainWindow never re-arms auto-layer.
+            LastLocationId = null;
             Status = "已连接 " + latest.Name;
         }
 
@@ -155,9 +158,14 @@ public sealed class GameLogService : IDisposable
         _tail = (_tail + text);
         if (_tail.Length > 65536) _tail = _tail[^65536..];
 
-        // Newest raid marker for a known map; same-as-last is filtered below.
-        var id = GameLogParsing.NewestRaidLocation(_tail, MapRepository.LocationToMap.ContainsKey);
-        if (id is null) return;        if (string.Equals(id, LastLocationId, StringComparison.OrdinalIgnoreCase)) return;
+        // A raid marker in the freshly read chunk is a raid that just started
+        // (or the app just connected mid-raid) — announce it even when the map
+        // equals the last one. Backfilling from the old tail stays id-deduped.
+        var known = (Func<string, bool>)MapRepository.LocationToMap.ContainsKey;
+        var idFresh = GameLogParsing.NewestRaidLocation(text, known);
+        var id = idFresh ?? GameLogParsing.NewestRaidLocation(_tail, known);
+        if (id is null) return;
+        if (idFresh is null && string.Equals(id, LastLocationId, StringComparison.OrdinalIgnoreCase)) return;
 
         if (!MapRepository.LocationToMap.TryGetValue(id, out var mapKey)) return;
         LastLocationId = id;
