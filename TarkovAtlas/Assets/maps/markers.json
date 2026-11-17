@@ -3177,9 +3177,9 @@
     {
      "name": "老加油站",
      "en": "ex_customs_scav_gasstation",
-     "faction": "scav",
-     "x": 310.71,
-     "z": -174.95
+     "faction": "shared",
+     "x": 310.55,
+     "z": -174.53
     },
     {
      "name": "通往军事基地的铁路",
@@ -3191,9 +3191,9 @@
     {
      "name": "十字路口",
      "en": "ex_customs_pmc_crossroads",
-     "faction": "pmc",
-     "x": -336.33,
-     "z": -86.39
+     "faction": "shared",
+     "x": -336.25,
+     "z": -86.33
     },
     {
      "name": "行政区大门",
@@ -3229,13 +3229,6 @@
      "faction": "scav",
      "x": 205.59,
      "z": 3.31
-    },
-    {
-     "name": "十字路口",
-     "en": "ex_customs_scav_crossroads",
-     "faction": "scav",
-     "x": -336.18,
-     "z": -86.27
     },
     {
      "name": "4号仓库",
@@ -3320,13 +3313,6 @@
      "faction": "pmc",
      "x": 181.08,
      "z": 213.25
-    },
-    {
-     "name": "老加油站",
-     "en": "ex_customs_pmc_gasstation",
-     "faction": "pmc",
-     "x": 310.39,
-     "z": -174.12
     },
     {
      "name": "石间小道",
@@ -6862,16 +6848,9 @@
     {
      "name": "3号门",
      "en": "Gate 3",
-     "faction": "scav",
-     "x": 58.71,
-     "z": 60.87
-    },
-    {
-     "name": "3号门",
-     "en": "Gate 3",
-     "faction": "pmc",
-     "x": 58.43,
-     "z": 63.3
+     "faction": "shared",
+     "x": 58.57,
+     "z": 62.08
     },
     {
      "name": "走私者小道",
@@ -8204,9 +8183,9 @@
     {
      "name": "UN路障",
      "en": "UN Roadblock",
-     "faction": "scav",
-     "x": -535.24,
-     "z": 287.05
+     "faction": "shared",
+     "x": -535.68,
+     "z": 286.91
     },
     {
      "name": "旧火车站",
@@ -8246,16 +8225,9 @@
     {
      "name": "郊区",
      "en": "Outskirts",
-     "faction": "pmc",
-     "x": 349.04,
-     "z": 358.58
-    },
-    {
-     "name": "UN路障",
-     "en": "UN Roadblock",
-     "faction": "pmc",
-     "x": -536.12,
-     "z": 286.77
+     "faction": "shared",
+     "x": 348.1,
+     "z": 359.32
     },
     {
      "name": "Scav地堡",
@@ -8270,13 +8242,6 @@
      "faction": "scav",
      "x": -142.25,
      "z": 422.4
-    },
-    {
-     "name": "郊区",
-     "en": "Outskirts",
-     "faction": "scav",
-     "x": 347.16,
-     "z": 360.07
     },
     {
      "name": "RUAF 大门",
@@ -11407,9 +11372,9 @@
     {
      "name": "铁路撤离点",
      "en": "ex_interchange_scav_railway",
-     "faction": "scav",
-     "x": 474.57,
-     "z": -433.74
+     "faction": "shared",
+     "x": 474.69,
+     "z": -433.87
     },
     {
      "name": "安全屋撤离点",
@@ -11419,16 +11384,9 @@
      "z": 44.06
     },
     {
-     "name": "铁路撤离点",
-     "en": "ex_interchange_pmc_railway",
-     "faction": "pmc",
-     "x": 474.82,
-     "z": -433.99
-    },
-    {
      "name": "EMERCOM 检查站",
      "en": "ex_interchange_pmc_emercom",
-     "faction": "pmc",
+     "faction": "shared",
      "x": -321.56,
      "z": 266.74
     },
@@ -11445,13 +11403,6 @@
      "faction": "pmc",
      "x": 598.0,
      "z": 71.29999999999998
-    },
-    {
-     "name": "EMERCOM 检查站",
-     "en": "ex_interchange_scav_emercom",
-     "faction": "scav",
-     "x": -321.56,
-     "z": 266.74
     },
     {
      "name": "发电站载具撤离点",
@@ -16429,7 +16380,7 @@
     {
      "name": "通往海关的路",
      "en": "Scav Road to Customs",
-     "faction": "scav",
+     "faction": "shared",
      "x": -859.05,
      "z": 0.49
     },
@@ -16439,13 +16390,6 @@
      "faction": "scav",
      "x": -296.95,
      "z": -100.89
-    },
-    {
-     "name": "通往海关的路",
-     "en": "Road to Customs",
-     "faction": "pmc",
-     "x": -859.05,
-     "z": 0.49
     },
     {
      "name": "铁路桥",
@@ -28928,7 +28872,7 @@
     {
      "name": "通往海岸线的路",
      "en": "Shorl_free_scav",
-     "faction": "scav",
+     "faction": "shared",
      "x": -364.4,
      "z": -121.4
     },
@@ -28980,13 +28924,6 @@
      "faction": "shared",
      "x": -68.3,
      "z": 318.11
-    },
-    {
-     "name": "通往海岸线的路",
-     "en": "Shorl_free",
-     "faction": "pmc",
-     "x": -364.4,
-     "z": -121.4
     }
    ],
    "bosses": [

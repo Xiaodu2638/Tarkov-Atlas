@@ -188,6 +188,49 @@ LABEL_ZH = {
     "Urban Clothes": "Urban 服装店", "Village": "村庄", "Weather Station": "气象站",
 }
 
+def merge_shared_extracts(extracts, tol=8.0):
+    """Collapse PMC/SCAV extract pairs that are the *same* gate into one
+    faction="shared" pin. Same gate = same display name reported within `tol`
+    metres: the snapshot lists both sides of a two-sided exit separately
+    (ex_customs_pmc_crossroads / ex_customs_scav_crossroads, 0.2 m apart).
+
+    Differently named pairs are NOT merged even when their coordinates are
+    close (ZB-1011 vs 工厂远角, 拖车停车场 vs 拖车停车场工人棚屋,
+    宿舍载具撤离点 vs 老路大门): those are distinct exits that happen to
+    stand next to each other, and the two sides hold different points."""
+    mergeable = {"pmc", "scav"}
+    out, used = [], set()
+    for i, a in enumerate(extracts):
+        if i in used:
+            continue
+        if a.get("faction") not in mergeable:
+            out.append(a)
+            continue
+        partner = None
+        for j in range(i + 1, len(extracts)):
+            b = extracts[j]
+            if j in used or b.get("faction") not in mergeable:
+                continue
+            if b["faction"] == a["faction"] or b["name"] != a["name"]:
+                continue
+            if math.hypot(a["x"] - b["x"], a["z"] - b["z"]) <= tol:
+                partner = j
+                break
+        if partner is None:
+            out.append(a)
+            continue
+        b = extracts[partner]
+        used.add(partner)
+        out.append({
+            "name": a["name"],
+            "en": a["en"],
+            "faction": "shared",
+            "x": round((a["x"] + b["x"]) / 2, 2),
+            "z": round((a["z"] + b["z"]) / 2, 2),
+        })
+    return out
+
+
 # Extract display names, keyed by the API's extract id (or its English name when
 # the id is human-readable). The zh table (maps.zh.json) is machine translated:
 # it renders "ex_customs_scav_medgate" as 17号仓库 (that is the warehouse *17*
@@ -614,6 +657,13 @@ def main() -> None:
             else:
                 keep_extracts.append(placed)
         extracts = keep_extracts
+
+        # An exit usable by both sides is one physical gate; the snapshot lists
+        # it twice (ex_customs_pmc_crossroads + ex_customs_scav_crossroads at the
+        # same metres), which drew two overlapping diamonds. Collapse each
+        # PMC/SCAV pair into one "shared" pin. Different names on the same gate
+        # (ZB-1011 vs 工厂远角) keep both, joined, so nothing is lost.
+        extracts = merge_shared_extracts(extracts)
 
         keep_spawns = []
         for s in spawns:

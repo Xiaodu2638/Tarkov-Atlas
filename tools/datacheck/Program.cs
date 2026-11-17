@@ -369,9 +369,23 @@ internal static class DataChecks
             customsExtracts.Any(e => e.En == "ex_customs_scav_medgate"
                                      && e.Name == "医疗楼外大门"),
             string.Join(",", customsExtracts.Where(e => e.En.Contains("medgate")).Select(e => e.Name)));
-        Check("customs scav crossroads is Chinese",
-            customsExtracts.Any(e => e.En == "ex_customs_scav_crossroads" && e.Name == "十字路口"),
-            string.Join(",", customsExtracts.Where(e => e.En.Contains("crossroads")).Select(e => e.Name)));
+        Check("customs crossroads is a shared pin named 十字路口",
+            customsExtracts.Count(e => e.Name == "十字路口" && e.Faction == "shared"
+                                       && e.En.Contains("crossroads")) == 1,
+            string.Join(",", customsExtracts.Where(e => e.En.Contains("crossroads"))
+                .Select(e => e.Faction + ":" + e.Name)));
+        // Same name + same spot = one gate listed twice (must be shared); a
+        // different name nearby is a separate exit, not a duplicate.
+        Check("no PMC/SCAV pair duplicates one gate",
+            !manifest.Maps.Any(m =>
+                m.Extracts.Any(a => a.Faction == "pmc" && m.Extracts.Any(b =>
+                    b.Faction == "scav" && a.Name == b.Name &&
+                    Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Z - b.Z) * (a.Z - b.Z)) <= 8.0))),
+            string.Join(",", manifest.Maps.Where(m =>
+                m.Extracts.Any(a => a.Faction == "pmc" && m.Extracts.Any(b =>
+                    b.Faction == "scav" && a.Name == b.Name &&
+                    Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Z - b.Z) * (a.Z - b.Z)) <= 8.0)))
+                .Select(m => m.Key)));
         Check("retired PMC RUAF exit is gone",
             customsExtracts.All(e => !(e.En == "RUAF Roadblock" && e.Faction == "pmc")),
             string.Join(",", customsExtracts.Where(e => e.En.StartsWith("RUAF")).Select(e => e.Faction + ":" + e.Name)));
