@@ -3182,7 +3182,7 @@
      "z": -174.95
     },
     {
-     "name": "Railroad to Reserve",
+     "name": "通往军事基地的铁路",
      "en": "ex_customs_pmc_rail_milbase",
      "faction": "scav",
      "x": 489.06,
@@ -3210,14 +3210,7 @@
      "z": 214.01
     },
     {
-     "name": "RUAF路障",
-     "en": "RUAF Roadblock",
-     "faction": "pmc",
-     "x": -10.25,
-     "z": -138.45
-    },
-    {
-     "name": "RUAF路障",
+     "name": "RUAF 路障",
      "en": "RUAF Roadblock_scav",
      "faction": "scav",
      "x": -9.44,
@@ -3238,7 +3231,7 @@
      "z": 3.31
     },
     {
-     "name": "Crossroads",
+     "name": "十字路口",
      "en": "ex_customs_scav_crossroads",
      "faction": "scav",
      "x": -336.18,
@@ -3280,7 +3273,7 @@
      "z": 46.68
     },
     {
-     "name": "17号仓库",
+     "name": "医疗楼外大门",
      "en": "ex_customs_scav_medgate",
      "faction": "scav",
      "x": 62.26,
@@ -8272,7 +8265,7 @@
      "z": -705.8
     },
     {
-     "name": "RUAF路障",
+     "name": "RUAF 路障",
      "en": "RUAF Roadblock",
      "faction": "scav",
      "x": -142.25,
@@ -8286,7 +8279,7 @@
      "z": 360.07
     },
     {
-     "name": "RUAF大门",
+     "name": "RUAF 大门",
      "en": "RUAF Gate",
      "faction": "pmc",
      "x": -142.4999999999999,

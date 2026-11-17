@@ -188,6 +188,40 @@ LABEL_ZH = {
     "Urban Clothes": "Urban 服装店", "Village": "村庄", "Weather Station": "气象站",
 }
 
+# Extract display names, keyed by the API's extract id (or its English name when
+# the id is human-readable). The zh table (maps.zh.json) is machine translated:
+# it renders "ex_customs_scav_medgate" as 17号仓库 (that is the warehouse *17*
+# label next door, not the gate), leaves "ex_customs_scav_crossroads" in English
+# while its PMC twin reads 十字路口, and still lists RUAF Roadblock for PMCs even
+# though the game retired that PMC exit. Machine output can't be patched upstream,
+# so the names players actually see are pinned here. Values are the in-game
+# Chinese strings; anything not listed falls back to maps_zh -> raw name.
+EXTRACT_ZH = {
+    # customs
+    "ex_customs_scav_medgate": "医疗楼外大门",
+    "ex_customs_scav_crossroads": "十字路口",
+    "ex_customs_pmc_crossroads": "十字路口",
+    "RUAF Roadblock": "RUAF 路障",
+    "RUAF Roadblock_scav": "RUAF 路障",
+    "ex_customs_pmc_rail_milbase": "通往军事基地的铁路",
+    "ex_customs_scav_rail_milbase": "通往军事基地的铁路",
+    "ex_customs_pmc_zb1011": "ZB-1011",
+    "ex_customs_pmc_zb1013": "ZB-1013",
+    # woods
+    "RUAF Gate": "RUAF 大门",
+    # reserve / others keep their official alphanumeric names
+    "EXFIL_Bunker_D2": "D-2",
+    "ZB-014": "ZB-014",
+    "ZB-016": "ZB-016",
+}
+
+# PMC exits the game has retired but the frozen tarkov.dev snapshot still lists.
+# Keyed per map, matched by English name. Removed here rather than in the JSON so
+# the next snapshot rebuild doesn't resurrect them.
+EXTRACT_RETIRED = {
+    "customs": {"RUAF Roadblock"},
+}
+
 # Trader display names. The API only exposes object ids, and the translator table
 # keys nicknames as "<id> Nickname", which is what used to leak hex ids into the UI.
 TRADER_ZH = {
@@ -439,7 +473,9 @@ def main() -> None:
                 # anything that does not actually fall inside this map's artwork.
                 if not inside(pos):
                     continue
-                zh_name = maps_zh.get(e["name"], e["name"])
+                if e["name"] in EXTRACT_RETIRED.get(key, ()):
+                    continue
+                zh_name = EXTRACT_ZH.get(e["name"]) or maps_zh.get(e["name"], e["name"])
                 extracts.append({
                     "name": zh_name, "en": e["name"], "faction": e.get("faction", "pmc"),
                     "x": pos["x"], "z": pos["z"],

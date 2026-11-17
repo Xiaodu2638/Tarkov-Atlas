@@ -358,6 +358,31 @@ internal static class DataChecks
                 string.Join("; ", unexpected.Concat(areaLevel).Take(5)));
         }
 
+        // ---- extract names ------------------------------------------------
+        // The zh table is machine translated and produced three player-visible
+        // errors: Warehouse 17 for the med-block gate, an English "Crossroads"
+        // next to its Chinese PMC twin, and a PMC RUAF exit the game retired.
+        // EXTRACT_ZH / EXTRACT_RETIRED in build_data pin the real strings.
+        var customsExtracts = manifest.Maps.FirstOrDefault(m => m.Key == "customs")?.Extracts
+                              ?? new List<ExtractPoint>();
+        Check("customs med-block gate is named 医疗楼外大门",
+            customsExtracts.Any(e => e.En == "ex_customs_scav_medgate"
+                                     && e.Name == "医疗楼外大门"),
+            string.Join(",", customsExtracts.Where(e => e.En.Contains("medgate")).Select(e => e.Name)));
+        Check("customs scav crossroads is Chinese",
+            customsExtracts.Any(e => e.En == "ex_customs_scav_crossroads" && e.Name == "十字路口"),
+            string.Join(",", customsExtracts.Where(e => e.En.Contains("crossroads")).Select(e => e.Name)));
+        Check("retired PMC RUAF exit is gone",
+            customsExtracts.All(e => !(e.En == "RUAF Roadblock" && e.Faction == "pmc")),
+            string.Join(",", customsExtracts.Where(e => e.En.StartsWith("RUAF")).Select(e => e.Faction + ":" + e.Name)));
+        Check("no extract keeps a bare ASCII English name",
+            manifest.Maps.All(m => m.Extracts.All(e =>
+                e.Name.Any(ch => ch > 0x7F) || e.Name.StartsWith("ZB-") || e.Name == "D-2")),
+            string.Join(",", manifest.Maps
+                .SelectMany(m => m.Extracts)
+                .Where(e => !e.Name.Any(ch => ch > 0x7F) && !e.Name.StartsWith("ZB-") && e.Name != "D-2")
+                .Select(e => e.En).Distinct().Take(5)));
+
         // ---- floor coverage regressions -----------------------------------
         // The Lab, Interchange and Factory are the maps users reported as
         // missing levels. All need a base-artwork entry plus their overlays.
