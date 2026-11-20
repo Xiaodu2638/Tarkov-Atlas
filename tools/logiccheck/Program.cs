@@ -259,9 +259,11 @@ internal static class LogicChecks
         // 14. Live service resolution: the sidebar and markers must never print a
         //     raw 24-hex trader id, must keep the trader's English nickname, and
         //     story jumps must only point at maps that exist.
+        //     Default mode is PVP, so TotalCount counts PVP-tagged tasks only.
         var service = new QuestService();
         service.Load();
-        Check("service loads every task", service.TotalCount == db.Quests.Count,
+        Check("service loads every PVP task",
+            service.TotalCount == db.Quests.Count(q => QuestModes.Matches(q, QuestModes.Pvp)),
             $"{service.TotalCount}/{db.Quests.Count}");
 
         var badDisplay = service.Quests
@@ -315,7 +317,10 @@ internal static class LogicChecks
         // Regression: Chinese titles with " - N" suffixes. Normalize must keep
         // CJK (it used to strip it, leaving only "2" which matched dozens of
         // part-2 tasks or none at all when the dash spacing differed).
-        var spaced = service.Quests.FirstOrDefault(q => q.Name.Contains(" - "));
+        // Pick a task from the ACTIVE mode's roster - a season-only task is
+        // filtered out under PVP, and searching would (correctly) find nothing.
+        var spaced = service.Quests.FirstOrDefault(q =>
+            q.Name.Contains(" - ") && QuestModes.Matches(q, service.CurrentMode));
         if (spaced is not null)
         {
             var tight = spaced.Name.Replace(" ", "");   // user drops the spaces
@@ -327,6 +332,126 @@ internal static class LogicChecks
                 service.VisibleQuests.Count <= 3, service.VisibleQuests.Count.ToString());
             service.SetQuery("");
             service.Apply();
+        }
+
+        // Raid-mode task isolation. The roster is one tagged database:
+        //   pvp  = tasks tagged pvp (519)
+        //   pvps = pvp ∪ season (553) - season servers add a batch on top of PVP
+        //   pve  = tasks tagged pve (518, ~30 exclusive)
+        // The counts only have to be sane (the site decides them), but the
+        // relationships must hold, and switching modes must change the roster.
+        var allQuests = service.Quests.ToList();
+        var pvpN = allQuests.Count(q => QuestModes.Matches(q, QuestModes.Pvp));
+        var pvpsN = allQuests.Count(q => QuestModes.Matches(q, QuestModes.Pvps));
+        var pveN = allQuests.Count(q => QuestModes.Matches(q, QuestModes.Pve));
+        Check("pvp roster is large", pvpN > 400, pvpN.ToString());
+        Check("pve roster is large", pveN > 400, pveN.ToString());
+        Check("pvps includes all pvp tasks", pvpsN >= pvpN, $"{pvpsN}/{pvpN}");
+        Check("pvps is pvp plus season-only tasks", pvpsN > pvpN, $"{pvpsN}/{pvpN}");
+        Check("pvp and pve have exclusive tasks",
+            allQuests.Any(q => QuestModes.Matches(q, QuestModes.Pvp) && !QuestModes.Matches(q, QuestModes.Pve)) &&
+            allQuests.Any(q => QuestModes.Matches(q, QuestModes.Pve) && !QuestModes.Matches(q, QuestModes.Pvp)),
+            $"pve-only={allQuests.Count(q => QuestModes.Matches(q, QuestModes.Pve) && !QuestModes.Matches(q, QuestModes.Pvp))}");
+        var seasonOnly = allQuests.Where(q => q.Modes.Contains("season") && !q.Modes.Contains("pvp")).ToList();
+        Check("season-only tasks exist and stay out of pvp",
+            seasonOnly.Count > 0 &&
+            seasonOnly.All(q => !QuestModes.Matches(q, QuestModes.Pvp)) &&
+            seasonOnly.All(q => QuestModes.Matches(q, QuestModes.Pvps)),
+            $"{seasonOnly.Count} season-only");
+        Check("every task carries mode tags", allQuests.All(q => q.Modes.Count > 0),
+            allQuests.Count(q => q.Modes.Count == 0).ToString());
+
+        service.SetMode(QuestModes.Pve);
+        Check("switching to pve narrows the roster", service.TotalCount == pveN,
+            $"{service.TotalCount}/{pveN}");
+        service.SetMode(QuestModes.Pvps);
+        Check("switching to pvps widens the roster", service.TotalCount == pvpsN,
+            $"{service.TotalCount}/{pvpsN}");
+        service.SetMode(QuestModes.Pvp);
+        Check("switching back to pvp restores the roster", service.TotalCount == pvpN,
+            $"{service.TotalCount}/{pvpN}");
+
+        // Progress must be per mode: ticking a task in PVP must not appear in
+        // PVE, and each mode writes its own file. Uses a throwaway data dir so
+        // the author's real checklist is never touched.
+        var probeDir = Path.Combine(Path.GetTempPath(), "atlas-modeprog-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(probeDir);
+        var prevDataDir = Environment.GetEnvironmentVariable("TARKOVATLAS_DATA_DIR");
+        try
+        {
+            Environment.SetEnvironmentVariable("TARKOVATLAS_DATA_DIR", probeDir);
+            typeof(AppPaths).GetField("_dataDir",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                ?.SetValue(null, null);
+
+            var iso = new QuestService();
+            iso.SetMode(QuestModes.Pvp);
+            iso.Load();
+            var target = iso.Quests.First(q => QuestModes.Matches(q, QuestModes.Pvp));
+            iso.SetCompleted(target.Id, true);
+            iso.FlushProgress();
+
+            var files = Directory.GetFiles(probeDir, "quest-progress-*.json").Select(Path.GetFileName).ToList();
+            Check("pvp progress written to its own file",
+                files.Any(f => f == "quest-progress-pvp.json"), string.Join(",", files));
+
+            iso.SetMode(QuestModes.Pve);
+            Check("pve starts with an empty checklist", iso.CompletedCount == 0,
+                iso.CompletedCount.ToString());
+
+            iso.SetMode(QuestModes.Pvp);
+            Check("pvp keeps its own tick after a round trip", iso.IsCompleted(target.Id), target.Name);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("TARKOVATLAS_DATA_DIR", prevDataDir);
+            typeof(AppPaths).GetField("_dataDir",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                ?.SetValue(null, null);
+            try { Directory.Delete(probeDir, true); } catch { }
+        }
+
+        // Legacy migration: the pre-mode quest-progress.json belonged to PVP, so
+        // the first PVP load must adopt it (seed quest-progress-pvp.json) and
+        // leave PVPS/PVE empty. Players must not lose their checklist when they
+        // start the new build.
+        var migDir = Path.Combine(Path.GetTempPath(), "atlas-migrate-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(migDir);
+        var prevDir2 = Environment.GetEnvironmentVariable("TARKOVATLAS_DATA_DIR");
+        try
+        {
+            Environment.SetEnvironmentVariable("TARKOVATLAS_DATA_DIR", migDir);
+            typeof(AppPaths).GetField("_dataDir",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                ?.SetValue(null, null);
+
+            var ticked = service.Quests.First(q => QuestModes.Matches(q, QuestModes.Pvp));
+            var seed = new QuestProgressFile();
+            seed.Completed[ticked.Id] = true;
+            File.WriteAllText(Path.Combine(migDir, "quest-progress.json"),
+                JsonSerializer.Serialize(seed, AppJsonContext.Default.QuestProgressFile));
+
+            var mig = new QuestService();
+            mig.SetMode(QuestModes.Pvp);
+            mig.Load();
+            Check("legacy progress is adopted by pvp on first run", mig.IsCompleted(ticked.Id), ticked.Name);
+            Check("legacy file seeds quest-progress-pvp.json",
+                File.Exists(Path.Combine(migDir, "quest-progress-pvp.json")));
+
+            mig.SetMode(QuestModes.Pvps);
+            Check("pvps does not inherit legacy progress", mig.CompletedCount == 0,
+                mig.CompletedCount.ToString());
+            mig.SetMode(QuestModes.Pve);
+            Check("pve does not inherit legacy progress", mig.CompletedCount == 0,
+                mig.CompletedCount.ToString());
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("TARKOVATLAS_DATA_DIR", prevDir2);
+            typeof(AppPaths).GetField("_dataDir",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                ?.SetValue(null, null);
+            try { Directory.Delete(migDir, true); } catch { }
         }
 
         // Raid detection from the game log. 1.3.0.0 moved application logs

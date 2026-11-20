@@ -825,11 +825,21 @@ def main() -> None:
             "level": eq.get("level", 0),
             "wiki": eq.get("source", ""),
             "maps": map_keys,
+            "modes": eq.get("modes") or ["pvp"],
             "prerequisites": [p["id"] for p in eq.get("prerequisites") or []
                               if p.get("status") in ("complete", "active")],
             "objectives": objectives,
         })
     out_tasks.sort(key=lambda t: (t["name"]))
+
+    # Raid-mode roster sanity: PVE and PVP each own ~30 tasks the other lacks,
+    # and the season list is PVP plus its season-only batch. A snapshot that
+    # lost the tags would silently show every task in every mode.
+    mode_counts = {m: sum(1 for t in out_tasks if m in t["modes"])
+                   for m in ("pvp", "pve", "season")}
+    print("modes: " + "  ".join(f"{m}={n}" for m, n in mode_counts.items()))
+    if mode_counts["season"] and mode_counts["pvp"] and mode_counts["season"] < mode_counts["pvp"]:
+        print("warning: 赛季列表应包含全部 PVP 任务（站点赛季=PvP+赛季专属）")
 
     # Markers live in their own file so rebaking mapdata (artwork metadata) never
     # touches task/POI points, mirroring the toolbox's split of 底图 vs 任务点位.

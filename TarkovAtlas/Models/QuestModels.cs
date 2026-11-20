@@ -190,6 +190,13 @@ public sealed class Quest
     public List<string> Prerequisites { get; set; } = new();
     /// <summary>Map keys this task can be progressed on (objectives' maps first).</summary>
     public List<string> Maps { get; set; } = new();
+    /// <summary>
+    /// Raid modes whose task list contains this task: "pvp", "pve", "season".
+    /// Most tasks belong to several (PVP and PVE share ~490), the season batch
+    /// is PVP plus its own ~34 tasks, and ~30 tasks exist in only one of PVP or
+    /// PVE. Empty means an old snapshot - treat as PVP so nothing disappears.
+    /// </summary>
+    public List<string> Modes { get; set; } = new();
     public List<QuestObjective> Objectives { get; set; } = new();
 
     [JsonIgnore] public string Title => Name;
@@ -243,6 +250,57 @@ public sealed class ObjectiveZone
     public string Map { get; set; } = "";
     public double X { get; set; }
     public double Z { get; set; }
+}
+
+/// <summary>
+/// The three raid modes the app exposes for the task system. They are a
+/// *filter* over one tagged task database, not three databases:
+///
+///   pvp   - the site's PVP list (~519 tasks)
+///   pvps  - game-side "PVP S": PVP plus the season-only batch (~553)
+///   pve   - the site's PVE list (~518, ~30 tasks exclusive to PVE)
+///
+/// Progress is stored per mode, so ticking a task in PVPS never touches the
+/// PVP checklist. Map/loot/overlay settings stay global - only the task
+/// system is isolated.
+/// </summary>
+public static class QuestModes
+{
+    public const string Pvp = "pvp";
+    public const string Pvps = "pvps";
+    public const string Pve = "pve";
+
+    public static readonly string[] All = { Pvp, Pvps, Pve };
+
+    public static string Normalize(string? mode) =>
+        mode is Pvp or Pvps or Pve ? mode : Pvp;
+
+    /// <summary>Short label for the mode switcher.</summary>
+    public static string Label(string mode) => Normalize(mode) switch
+    {
+        Pvps => "PVP S",
+        Pve => "PVE",
+        _ => "PVP",
+    };
+
+    /// <summary>
+    /// True when the task belongs to this mode's roster. A task with no mode
+    /// tags (older quests.json) is treated as PVP so nothing silently vanishes.
+    /// </summary>
+    public static bool Matches(Quest quest, string mode)
+    {
+        var tags = quest.Modes;
+        if (tags is null || tags.Count == 0)
+            return Normalize(mode) != Pve;
+
+        return Normalize(mode) switch
+        {
+            // Season servers are PVP plus the season batch.
+            Pvps => tags.Contains("pvp") || tags.Contains("season"),
+            Pve => tags.Contains("pve"),
+            _ => tags.Contains("pvp"),
+        };
+    }
 }
 
 public sealed class QuestRow : INotifyPropertyChanged

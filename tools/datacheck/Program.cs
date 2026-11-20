@@ -31,6 +31,26 @@ internal static class DataChecks
         Check("traders listed", manifest.Traders.Count >= 10, manifest.Traders.Count.ToString());
         Check("tasks loaded", quests.Quests.Count > 400, quests.Quests.Count.ToString());
 
+        // Raid-mode tagging: without it every mode shows the same mixed list.
+        // PVE has ~30 exclusive tasks, PVP has ~30 the other way, and the season
+        // batch rides on top of PVP (~34 more).
+        var modeCounts = new[] { QuestModes.Pvp, QuestModes.Pvps, QuestModes.Pve }
+            .Select(m => quests.Quests.Count(q => QuestModes.Matches(q, m)))
+            .ToArray();
+        Check("every task is tagged with a raid mode",
+            quests.Quests.All(q => q.Modes.Count > 0),
+            $"{quests.Quests.Count(q => q.Modes.Count == 0)} untagged");
+        Check("pvp/pve rosters are both substantial",
+            modeCounts[0] > 400 && modeCounts[2] > 400,
+            $"pvp={modeCounts[0]} pve={modeCounts[2]}");
+        Check("pvps is a superset of pvp",
+            modeCounts[1] > modeCounts[0],
+            $"pvps={modeCounts[1]} pvp={modeCounts[0]}");
+        Check("pvp and pve are not the same roster",
+            quests.Quests.Any(q => QuestModes.Matches(q, QuestModes.Pvp) && !QuestModes.Matches(q, QuestModes.Pve)) &&
+            quests.Quests.Any(q => QuestModes.Matches(q, QuestModes.Pve) && !QuestModes.Matches(q, QuestModes.Pvp)),
+            $"pve-only={quests.Quests.Count(q => QuestModes.Matches(q, QuestModes.Pve) && !QuestModes.Matches(q, QuestModes.Pvp))}");
+
         // Loot/cache markers only appear at a per-map zoom gate. The gate flips
         // to the small-map value below a world-footprint cut-off, so a bounds
         // edit that moves a map across it silently changes when its loot shows

@@ -12,6 +12,11 @@
    "maps": [
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -27,6 +32,11 @@
     "woods",
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -39,6 +49,11 @@
    "wiki": "https://www.eftarkov.com/task/5edac63b930f5454f51e128b",
    "maps": [
     "the-lab"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -74,6 +89,27 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5979ed3886f77431307dc512",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a8d4ea68a0ba8e3c5036b95",
+   "name": "……为了受选者的至高利益",
+   "nameEn": "...for the Good of the Chosen [KORD BREACH]",
+   "trader": "638f541a29ffd1183d187f57",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a8d4ea68a0ba8e3c5036b95",
+   "maps": [
+    "lighthouse"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -86,6 +122,11 @@
    "wiki": "https://www.eftarkov.com/task/6391359b9444fb141f4e6ee6",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -128,6 +169,11 @@
     "woods",
     "shoreline",
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -176,6 +222,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -223,6 +274,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -251,6 +307,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/596a1e6c86f7741ddc2d3206",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -262,6 +323,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abf93f0e6a93c846b0fe382",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -275,6 +341,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -286,6 +357,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abbbc647aea5f936906e29d",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -297,6 +373,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abbbde75f084d06ce014688",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -317,6 +398,11 @@
     "reserve",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -328,6 +414,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abbae9ee591db528505e3e9",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -339,6 +430,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6aba7f65443c3da4df01bb3e",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -350,6 +446,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abfae3485f9ebf648025acc",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -361,6 +462,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abfafda95e39cdaad0bda27",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -373,6 +479,11 @@
    "wiki": "https://www.eftarkov.com/task/6abbb8845baa9031ac068833",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -399,6 +510,11 @@
    "maps": [
     "lighthouse",
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -434,6 +550,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abb92e1505493a036006ee0",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -445,6 +566,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abb86cddcebb0efbc0fda8f",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -456,17 +582,27 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abf92bee6a93c846b0fe37d",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
   {
    "id": "6abd18fed383d797d602d6c9",
    "name": "万圣节：新型疫苗",
-   "nameEn": "A New Vaccine",
+   "nameEn": "Halloween: A New Vaccine",
    "trader": "54cb57776803fa99248b456e",
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abd18fed383d797d602d6c9",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -478,6 +614,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abd0ff5d383d797d602d6c4",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -489,6 +630,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6aba7df2bb9829de330494c7",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -500,6 +646,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abfb582eac8c75de80bd930",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -511,6 +662,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6aba40a15ef26da1360746b8",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -527,6 +683,11 @@
     "lighthouse",
     "shoreline",
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -619,6 +780,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6abf70a8e4732bc101051bf2",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -630,6 +796,71 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5ac3475486f7741d6224abd3",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a4f528221e50974ab006f6f",
+   "name": "不速之客 - 1",
+   "nameEn": "Uninvited Guests - Part 1 [KORD BREACH]",
+   "trader": "54cb50c76803fa8b248b4571",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f528221e50974ab006f6f",
+   "maps": [
+    "shoreline",
+    "woods",
+    "lighthouse",
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "找到并获取军用物资箱",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -712.58,
+       "z": 100.84
+      },
+      {
+       "map": "shoreline",
+       "x": -514.23,
+       "z": 240.74
+      },
+      {
+       "map": "shoreline",
+       "x": -220.73,
+       "z": 194.77
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a4f53f6be2cd3a87c0b708d",
+   "name": "不速之客 - 2",
+   "nameEn": "Uninvited Guests - Part 2 [KORD BREACH]",
+   "trader": "656f0f98d80a697f855d34b1",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f53f6be2cd3a87c0b708d",
+   "maps": [
+    "woods",
+    "lighthouse",
+    "shoreline",
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -641,6 +872,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/69788d4e963f08d9140bce19",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -652,6 +886,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/69788c2bac719606e40b4e77",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -663,6 +900,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6978907718bd6d7cbd0e8b8e",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -674,6 +914,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/69788db3878a4385d10c0718",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -686,6 +929,37 @@
    "wiki": "https://www.eftarkov.com/task/683425dd8f5b18d29a05d9d1",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a5ea98f7e1e8250e20dc5bc",
+   "name": "两害相权（PVP 赛季）",
+   "nameEn": "Between Two Fires [Season PvP]",
+   "trader": "579dc571d53a0658a154fbec",
+   "level": 10,
+   "wiki": "https://www.eftarkov.com/task/6a5ea98f7e1e8250e20dc5bc",
+   "maps": [
+    "customs"
+   ],
+   "modes": [
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -711,6 +985,9 @@
    "wiki": "https://www.eftarkov.com/task/66058ccf06ef1d50a60c1f48",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": [
@@ -753,6 +1030,37 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a5eaa4c9dd9659e63089ead",
+   "name": "两难抉择（PVP 赛季）",
+   "nameEn": "Decisions, Decisions [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a5eaa4c9dd9659e63089ead",
+   "maps": [
+    "customs"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -778,6 +1086,9 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -802,6 +1113,11 @@
    "wiki": "https://www.eftarkov.com/task/666314bf1cd52e3d040a2e78",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -886,6 +1202,11 @@
    "level": 25,
    "wiki": "https://www.eftarkov.com/task/5ae4495086f77443c122bc40",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -897,6 +1218,11 @@
    "level": 25,
    "wiki": "https://www.eftarkov.com/task/5ae4497b86f7744cf402ed00",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -908,6 +1234,11 @@
    "level": 25,
    "wiki": "https://www.eftarkov.com/task/5ae4495c86f7744e87761355",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -919,6 +1250,11 @@
    "level": 25,
    "wiki": "https://www.eftarkov.com/task/5ae4496986f774459e77beb6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -931,6 +1267,11 @@
    "wiki": "https://www.eftarkov.com/task/5a0449d586f77474e66227b7",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -955,6 +1296,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a8b8266f47489e5720a63b7",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -968,6 +1314,11 @@
    "maps": [
     "the-labyrinth",
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1007,6 +1358,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/61e6e60c5ca3b3783662be27",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1018,6 +1374,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/61e6e5e0f5b9633f6719ed95",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1029,6 +1390,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/61e6e621bfeab00251576265",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1040,6 +1406,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/61e6e60223374d168a4576a6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1051,6 +1422,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/61e6e615eea2935bc018a2c5",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1063,6 +1439,11 @@
    "wiki": "https://www.eftarkov.com/task/639135d89444fb141f4e6eea",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1089,6 +1470,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -1114,6 +1500,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1125,6 +1516,11 @@
    "level": 50,
    "wiki": "https://www.eftarkov.com/task/67af4c1cc0e59d55e2010b97",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1137,6 +1533,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27b87686f77460de0252a8",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1214,6 +1615,11 @@
    "level": 12,
    "wiki": "https://www.eftarkov.com/task/666314b0acf8442f8b0531a1",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1231,19 +1637,10 @@
     "woods",
     "shoreline"
    ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "6613f3007f6666d56807c929",
-   "name": "人靠衣装 - 1",
-   "nameEn": "Drip-Out - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 27,
-   "wiki": "https://www.eftarkov.com/task/6613f3007f6666d56807c929",
-   "maps": [
-    "reserve",
-    "the-lab"
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -1259,6 +1656,30 @@
     "reserve",
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6613f3007f6666d56807c929",
+   "name": "人靠衣装 - 1",
+   "nameEn": "Drip-Out - Part 1",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 27,
+   "wiki": "https://www.eftarkov.com/task/6613f3007f6666d56807c929",
+   "maps": [
+    "reserve",
+    "the-lab"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1272,6 +1693,11 @@
    "maps": [
     "lighthouse",
     "icebreaker"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -1287,6 +1713,11 @@
     "lighthouse",
     "icebreaker"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1299,6 +1730,11 @@
    "wiki": "https://www.eftarkov.com/task/5d2495a886f77425cd51e403",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1327,6 +1763,90 @@
    ]
   },
   {
+   "id": "6a4f82d2c871d92f960543c6",
+   "name": "以人类之名……",
+   "nameEn": "In the Name of Humanity... [KORD BREACH]",
+   "trader": "638f541a29ffd1183d187f57",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f82d2c871d92f960543c6",
+   "maps": [
+    "interchange",
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在立交桥的 Burger Spot 洗手间找到隐藏的门禁卡面板（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -52.43,
+       "z": -124.14
+      }
+     ]
+    },
+    {
+     "text": "在立交桥找到隐藏的 TerraGroup 安全屋（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -44.69,
+       "z": 43.46
+      }
+     ]
+    },
+    {
+     "text": "在立交桥找到并进入 14 号集装箱（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": -61.52,
+       "z": -277.34
+      }
+     ]
+    },
+    {
+     "text": "使用转移功能从立交桥转移到塔科夫街区（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "interchange",
+       "x": 273.06,
+       "z": -441.79
+      }
+     ]
+    },
+    {
+     "text": "将碳纤维手提箱藏匿在塔科夫街区 Pinewood 酒店餐厅三楼阳台处（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -113.95,
+       "z": 131.88
+      }
+     ]
+    },
+    {
+     "text": "在塔科夫街区坠入污水河的有轨电车处发射一枚黄色信号弹（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -247.92,
+       "z": 214.11
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "63966fd9ea19ac7ed845db30",
    "name": "以牙还牙",
    "nameEn": "Payback",
@@ -1335,6 +1855,11 @@
    "wiki": "https://www.eftarkov.com/task/63966fd9ea19ac7ed845db30",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1362,6 +1887,11 @@
     "lighthouse",
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1374,6 +1904,11 @@
    "wiki": "https://www.eftarkov.com/task/5a03296886f774569778596a",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1422,6 +1957,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -1446,6 +1986,11 @@
    "wiki": "https://www.eftarkov.com/task/639136fa9444fb141f4e6eee",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1486,6 +2031,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/596b36c586f77450d6045ad2",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1498,6 +2048,11 @@
    "wiki": "https://www.eftarkov.com/task/596a0e1686f7741ddf17dbee",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1523,6 +2078,11 @@
    "wiki": "https://www.eftarkov.com/task/5b478ff486f7744d184ecbbf",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1553,6 +2113,11 @@
    "wiki": "https://www.eftarkov.com/task/5ac3477486f7741d651d6885",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1612,6 +2177,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -1657,6 +2227,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/69789660b2187365e70bb94a",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1668,6 +2241,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/697895b6c639962b2e0cf268",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1681,6 +2257,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1693,6 +2274,11 @@
    "wiki": "https://www.eftarkov.com/task/674600a366e6a521aa05eb66",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1774,6 +2360,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -1786,6 +2377,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25e4d586f77443e625e388",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1811,6 +2407,11 @@
    "wiki": "https://www.eftarkov.com/task/608974af4b05530f55550c21",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1882,6 +2483,11 @@
     "customs",
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -1905,44 +2511,13 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6663148ca9290f9e0806cca1",
    "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "6a763c7bd31fb1191903fc15",
-   "name": "全方位支援",
-   "nameEn": "All-Inclusive Support",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 1,
-   "wiki": "https://www.eftarkov.com/task/6a763c7bd31fb1191903fc15",
-   "maps": [
-    "lighthouse"
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在灯塔山间的废弃湖边小屋发射一枚红色信号弹",
-     "type": "",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -378.74,
-       "z": -635.02
-      }
-     ]
-    },
-    {
-     "text": "使用转移功能从灯塔转移到储备站",
-     "type": "",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -298.29,
-       "z": -780.45
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "65733403eefc2c312a759ddb",
@@ -1953,6 +2528,11 @@
    "wiki": "https://www.eftarkov.com/task/65733403eefc2c312a759ddb",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -1988,6 +2568,11 @@
    "level": 45,
    "wiki": "https://www.eftarkov.com/task/68400926706e0a55e90b0007",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2000,6 +2585,11 @@
    "wiki": "https://www.eftarkov.com/task/68400953506db3b4db0700e7",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2045,6 +2635,11 @@
    "level": 20,
    "wiki": "https://www.eftarkov.com/task/6746053b5b555b53460d9896",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2057,6 +2652,11 @@
    "wiki": "https://www.eftarkov.com/task/64f731ab83cfca080a361e42",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2125,6 +2725,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68341eb25619c8e2a9031501",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2136,6 +2739,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cc1da30b620a34e6e86",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2147,6 +2753,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68341f6fe2e7ef70a3060a0a",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2158,6 +2767,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cc208308761cf390993",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2169,6 +2781,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6834202a186efa3c5b07f9a2",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2180,6 +2795,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cc5bb83da7ba474aba9",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2191,6 +2809,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/683421515619c8e2a9031511",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2202,6 +2823,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cc72cee99303f1ba069",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2213,6 +2837,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68342265a8d674b5740b31f0",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2224,6 +2851,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cc9ae4719735349b9ea",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2235,6 +2865,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/697895277d31587eab080266",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2246,6 +2879,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/69789418b2187365e70bb947",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2258,6 +2894,11 @@
    "wiki": "https://www.eftarkov.com/task/6740b60c60a98cad1b0e0aa0",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2275,6 +2916,22 @@
    ]
   },
   {
+   "id": "6a4f658002d214b87f065c47",
+   "name": "决断的后果",
+   "nameEn": "Consequences of Our Decisions [KORD BREACH]",
+   "trader": "5a7c2eca46aef81a7ca2145d",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f658002d214b87f065c47",
+   "maps": [
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
    "id": "597a160786f77477531d39d2",
    "name": "出于好奇",
    "nameEn": "Out of Curiosity",
@@ -2283,6 +2940,11 @@
    "wiki": "https://www.eftarkov.com/task/597a160786f77477531d39d2",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2330,6 +2992,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2355,6 +3022,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2378,6 +3050,11 @@
    "level": 50,
    "wiki": "https://www.eftarkov.com/task/67af4c1a6c3ebfd8e6034916",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2390,6 +3067,11 @@
    "wiki": "https://www.eftarkov.com/task/639136e84ed9512be67647db",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2416,6 +3098,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2440,6 +3127,11 @@
    "wiki": "https://www.eftarkov.com/task/5979f9ba86f7740f6c3fe9f2",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2492,6 +3184,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2539,6 +3236,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2573,6 +3275,11 @@
    "wiki": "https://www.eftarkov.com/task/597a0f5686f774273b74f676",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2620,6 +3327,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2650,6 +3362,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2675,6 +3392,11 @@
    "maps": [
     "customs",
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2771,6 +3493,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6764174c86addd02bc033d68",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2783,6 +3510,11 @@
    "wiki": "https://www.eftarkov.com/task/5a68661a86f774500f48afb0",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2862,6 +3594,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -2886,6 +3623,11 @@
    "wiki": "https://www.eftarkov.com/task/5a68665c86f774255929b4c7",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2921,6 +3663,11 @@
    "level": 18,
    "wiki": "https://www.eftarkov.com/task/5a68667486f7742607157d28",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -2933,6 +3680,11 @@
    "wiki": "https://www.eftarkov.com/task/5a68669a86f774255929b4d4",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -2980,6 +3732,11 @@
    "maps": [
     "factory",
     "the-lab"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3031,6 +3788,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5ac3464c86f7741d651d6877",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3042,6 +3804,11 @@
    "level": 20,
    "wiki": "https://www.eftarkov.com/task/6740a2c17e3818d5bb0648b6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3055,6 +3822,11 @@
    "maps": [
     "lighthouse",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3081,6 +3853,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3093,6 +3870,11 @@
    "wiki": "https://www.eftarkov.com/task/669fa399033a3ce9870338a8",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3118,6 +3900,11 @@
    "wiki": "https://www.eftarkov.com/task/59689ee586f7740d1570bbd5",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3167,6 +3954,11 @@
     "woods",
     "ground-zero"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -3194,6 +3986,58 @@
    ]
   },
   {
+   "id": "6a4f82e11b7350af050b2e1c",
+   "name": "历史展望",
+   "nameEn": "Historical Prospects [KORD BREACH]",
+   "trader": "638f541a29ffd1183d187f57",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f82e11b7350af050b2e1c",
+   "maps": [
+    "customs",
+    "woods",
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "将 3 个 PMC 狗牌藏匿在海关宿舍楼 314 房间内",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 184.36,
+       "z": 183.48
+      }
+     ]
+    },
+    {
+     "text": "将 3 个 PMC 狗牌藏匿在森林废弃村庄的祭祀圈内",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -135.51,
+       "z": -683.29
+      }
+     ]
+    },
+    {
+     "text": "将 3 个 PMC 狗牌藏匿在塔科夫街区 Nikitskaya 大街 8 号二层公寓的祭祀圈内",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -149.05,
+       "z": 271.24
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "6a7af2e48fddc3979d0510b8",
    "name": "双手插袋",
    "nameEn": "Akimbo",
@@ -3202,6 +4046,11 @@
    "wiki": "https://www.eftarkov.com/task/6a7af2e48fddc3979d0510b8",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -3215,6 +4064,11 @@
    "wiki": "https://www.eftarkov.com/task/6744aca8d3346c216702c583",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3267,6 +4121,11 @@
     "reserve",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3279,6 +4138,11 @@
    "wiki": "https://www.eftarkov.com/task/6572e876dc0d635f633a5714",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3420,6 +4284,11 @@
    "maps": [
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -3443,6 +4312,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/665eec1f5e47a79f8605565a",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3455,6 +4329,11 @@
    "wiki": "https://www.eftarkov.com/task/665eeca45d86b6c8aa03c79d",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3502,6 +4381,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3513,6 +4397,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/665eeca92f7aedcc900b0437",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3526,6 +4415,11 @@
    "maps": [
     "woods",
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3603,6 +4497,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5c1141f386f77430ff393792",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -3615,6 +4514,11 @@
    "wiki": "https://www.eftarkov.com/task/5edab736cc183c769d778bc2",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3663,6 +4567,11 @@
    "maps": [
     "reserve",
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3776,6 +4685,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -3834,6 +4748,11 @@
    "maps": [
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -3879,33 +4798,13 @@
     "streets-of-tarkov",
     "the-lab"
    ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "6a764367850f975dc00bc5bd",
-   "name": "呼号“孔雀石”",
-   "nameEn": "Callsign Malachite",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 1,
-   "wiki": "https://www.eftarkov.com/task/6a764367850f975dc00bc5bd",
-   "maps": [
-    "lighthouse"
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在灯塔找到并获取特定 BEAR 干员的档案",
-     "type": "",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -374.96,
-       "z": -631.64
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "69ce1f84ebbdbf36a200627c",
@@ -3916,6 +4815,11 @@
    "wiki": "https://www.eftarkov.com/task/69ce1f84ebbdbf36a200627c",
    "maps": [
     "icebreaker"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3951,6 +4855,11 @@
    "wiki": "https://www.eftarkov.com/task/6179b3bdc7560e13d23eeb8d",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -3997,6 +4906,11 @@
    "level": 18,
    "wiki": "https://www.eftarkov.com/task/5969f90786f77420d2328015",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4009,6 +4923,11 @@
    "wiki": "https://www.eftarkov.com/task/6a763f35ce9a947b4d0918b6",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4057,6 +4976,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4069,6 +4993,11 @@
    "wiki": "https://www.eftarkov.com/task/5ede55112c95834b583f052a",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4162,6 +5091,11 @@
     "lighthouse",
     "icebreaker"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4173,6 +5107,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5c112d7e86f7740d6f647486",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4185,6 +5124,11 @@
    "wiki": "https://www.eftarkov.com/task/666314c5a9290f9e0806cca5",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4241,6 +5185,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -4283,6 +5232,11 @@
     "lighthouse",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4296,6 +5250,11 @@
    "maps": [
     "ground-zero",
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4343,6 +5302,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -4377,6 +5341,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5bc4776586f774512d07cf05",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4388,6 +5357,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/5bc479e586f7747f376c7da3",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4399,6 +5373,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/5bc47dbf86f7741ee74e93b9",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4410,6 +5389,11 @@
    "level": 17,
    "wiki": "https://www.eftarkov.com/task/5bc480a686f7741af0342e29",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4426,6 +5410,11 @@
     "shoreline",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4437,6 +5426,11 @@
    "level": 33,
    "wiki": "https://www.eftarkov.com/task/5bc4856986f77454c317bea7",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4448,6 +5442,11 @@
    "level": 33,
    "wiki": "https://www.eftarkov.com/task/5bc4893c86f774626f5ebf3e",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4461,6 +5460,25 @@
    "maps": [
     "ground-zero"
    ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5ea048d1e364bcf9052508",
+   "name": "声东击西 - 1（PVP 赛季）",
+   "nameEn": "Create a Distraction - Part 1 [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a5ea048d1e364bcf9052508",
+   "maps": [
+    "ground-zero"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4473,6 +5491,9 @@
    "wiki": "https://www.eftarkov.com/task/66058cbd9f59e625462acc8e",
    "maps": [
     "ground-zero"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4499,6 +5520,25 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5ea1022adb59a1d9068db4",
+   "name": "声东击西 - 2（PVP 赛季）",
+   "nameEn": "Create a Distraction - Part 2 [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a5ea1022adb59a1d9068db4",
+   "maps": [
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4511,6 +5551,9 @@
    "wiki": "https://www.eftarkov.com/task/66058cbf2f19c31a5a1337ec",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": []
@@ -4525,6 +5568,11 @@
    "maps": [
     "reserve",
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4571,6 +5619,11 @@
    "wiki": "https://www.eftarkov.com/task/60896b7bfa70fc097863b8f5",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4623,6 +5676,11 @@
     "woods",
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4635,6 +5693,11 @@
    "wiki": "https://www.eftarkov.com/task/597a171586f77405ba6887d3",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4685,6 +5748,11 @@
     "shoreline",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4700,6 +5768,11 @@
     "interchange",
     "streets-of-tarkov",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4781,6 +5854,11 @@
    "maps": [
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -4850,6 +5928,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -4900,6 +5983,11 @@
     "reserve",
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4920,6 +6008,11 @@
     "reserve",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -4933,6 +6026,38 @@
    "maps": [
     "customs",
     "lighthouse"
+   ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "找到并获取竞技场裁判的黑料",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a5eab1d11ef8ccb6404a1af",
+   "name": "天降大礼（PVP 赛季）",
+   "nameEn": "Surprise Gift [Season PvP]",
+   "trader": "638f541a29ffd1183d187f57",
+   "level": 35,
+   "wiki": "https://www.eftarkov.com/task/6a5eab1d11ef8ccb6404a1af",
+   "maps": [
+    "customs",
+    "lighthouse"
+   ],
+   "modes": [
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -4959,6 +6084,9 @@
    "maps": [
     "customs",
     "lighthouse"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5001,6 +6129,11 @@
    "maps": [
     "streets-of-tarkov",
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5048,6 +6181,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -5084,6 +6222,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -5118,6 +6261,11 @@
    "level": 20,
    "wiki": "https://www.eftarkov.com/task/673f629c5b555b53460cf827",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5129,6 +6277,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5b47891f86f7744d1b23c571",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5141,6 +6294,11 @@
    "wiki": "https://www.eftarkov.com/task/657315e1dccd301f1301416a",
    "maps": [
     "ground-zero"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5188,6 +6346,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -5228,6 +6391,11 @@
    "maps": [
     "icebreaker"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5240,6 +6408,11 @@
    "wiki": "https://www.eftarkov.com/task/669fa3a08b4a64b332041ff7",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5279,6 +6452,11 @@
    "level": 50,
    "wiki": "https://www.eftarkov.com/task/67af4c17f4f1fb58a907f8f6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5291,6 +6469,11 @@
    "wiki": "https://www.eftarkov.com/task/67a09761e720611a6a01f288",
    "maps": [
     "the-labyrinth"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5337,6 +6520,11 @@
    "level": 50,
    "wiki": "https://www.eftarkov.com/task/67af4c169d95ad16e004fd86",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5349,6 +6537,11 @@
    "wiki": "https://www.eftarkov.com/task/6089743983426423753cd58a",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5375,6 +6568,11 @@
    "maps": [
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5387,6 +6585,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27bb3d86f77411ea361a21",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5433,6 +6636,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/666314a31cd52e3d040a2e76",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5445,6 +6653,11 @@
    "wiki": "https://www.eftarkov.com/task/638fcd23dc65553116701d33",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5470,6 +6683,11 @@
    "wiki": "https://www.eftarkov.com/task/608a768d82e40b3c727fd17d",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5498,6 +6716,11 @@
     "lighthouse",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5510,6 +6733,11 @@
    "wiki": "https://www.eftarkov.com/task/6744ab1def61d56e020b5c56",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5556,6 +6784,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -5601,6 +6834,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6663148ed7f171c4c20226c1",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5612,6 +6850,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6663149196a9349baa021baa",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5625,6 +6868,11 @@
    "maps": [
     "shoreline",
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5694,6 +6942,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -5740,6 +6993,11 @@
    "wiki": "https://www.eftarkov.com/task/639136f086e646067c176a8b",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5801,6 +7059,11 @@
     "reserve",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5813,6 +7076,11 @@
    "wiki": "https://www.eftarkov.com/task/675c1570526ff496850895d9",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5854,6 +7122,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5865,6 +7138,23 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68341846186efa3c5b07f989",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5e9d8b9dd9659e63089e88",
+   "name": "平衡之力 - 1（PVP 赛季）",
+   "nameEn": "Balancing - Part 1 [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a5e9d8b9dd9659e63089e88",
+   "maps": [],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5876,6 +7166,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cb7c7f3584787181476",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5887,6 +7180,23 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68341a0b2f0e2a7eb90b62d4",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5e9e7cb544112ece0e7c74",
+   "name": "平衡之力 - 2（PVP 赛季）",
+   "nameEn": "Balancing - Part 2 [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a5e9e7cb544112ece0e7c74",
+   "maps": [],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5898,6 +7208,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cb9e8e4f17985230805",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -5910,6 +7223,11 @@
    "wiki": "https://www.eftarkov.com/task/669fa3979b0ce3feae01a130",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -5956,6 +7274,11 @@
    "maps": [
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -6001,8 +7324,65 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6672d9def1c88688a707d042",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
+  },
+  {
+   "id": "6a4f5c207368e70cae00e6ec",
+   "name": "开倒车",
+   "nameEn": "Reverse Gear [KORD BREACH]",
+   "trader": "54cb50c76803fa8b248b4571",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f5c207368e70cae00e6ec",
+   "maps": [
+    "shoreline",
+    "ground-zero",
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "从海岸线水电站旁的乌拉尔卡车上取回 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -185.9,
+       "z": 140.49
+      }
+     ]
+    },
+    {
+     "text": "从海岸线走私营地溪流旁的挖掘机处取回 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -593.12,
+       "z": -192.79
+      }
+     ]
+    },
+    {
+     "text": "从中心区 Mira 大道旁的卡车车厢处取回 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": 126.91,
+       "z": 70.81
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "675c3507a06634b5110e3c18",
@@ -6013,6 +7393,11 @@
    "wiki": "https://www.eftarkov.com/task/675c3507a06634b5110e3c18",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6030,6 +7415,27 @@
    ]
   },
   {
+   "id": "6a4f833633bd1e904c091ef2",
+   "name": "引领潮流",
+   "nameEn": "Riding the Wave [KORD BREACH]",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f833633bd1e904c091ef2",
+   "maps": [
+    "ground-zero",
+    "woods",
+    "shoreline",
+    "streets-of-tarkov",
+    "the-lab",
+    "icebreaker"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
    "id": "63966fe7ea74a47c2d3fc0e6",
    "name": "归还人情",
    "nameEn": "Return the Favor",
@@ -6038,6 +7444,11 @@
    "wiki": "https://www.eftarkov.com/task/63966fe7ea74a47c2d3fc0e6",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6074,6 +7485,11 @@
    "wiki": "https://www.eftarkov.com/task/67a09636b8725511260bc421",
    "maps": [
     "ground-zero"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6125,6 +7541,11 @@
     "reserve",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6138,6 +7559,11 @@
    "maps": [
     "customs",
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6175,6 +7601,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6186,6 +7617,11 @@
    "level": 12,
    "wiki": "https://www.eftarkov.com/task/666314bafd5ca9577902e03a",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6198,6 +7634,11 @@
    "wiki": "https://www.eftarkov.com/task/6a5c1578f2689567c30eb0f3",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6223,6 +7664,11 @@
    "wiki": "https://www.eftarkov.com/task/5b478d0f86f7744d190d91b5",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6272,6 +7718,11 @@
     "woods",
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -6298,6 +7749,11 @@
     "factory",
     "woods",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6346,6 +7802,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6358,6 +7819,11 @@
    "wiki": "https://www.eftarkov.com/task/657315e270bb0b8dba00cc48",
    "maps": [
     "ground-zero"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6383,6 +7849,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25e4ad86f77443e625e387",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6420,6 +7891,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -6443,6 +7919,11 @@
    "level": 38,
    "wiki": "https://www.eftarkov.com/task/60e71c48c1bfa3050473b8e5",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6454,6 +7935,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5d25e46e86f77409453bce7c",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6466,6 +7952,11 @@
    "wiki": "https://www.eftarkov.com/task/64f3176921045e77405d63b5",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6511,6 +8002,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/60e71bb4e456d449cd47ca75",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6523,6 +8019,11 @@
    "wiki": "https://www.eftarkov.com/task/5ac3467986f7741d6224abc2",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6582,6 +8083,11 @@
    "maps": [
     "factory",
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6649,6 +8155,11 @@
     "ground-zero",
     "lighthouse",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6742,6 +8253,11 @@
     "woods",
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -6769,6 +8285,48 @@
    ]
   },
   {
+   "id": "6a4f8263880234875007d5fa",
+   "name": "情报的代价",
+   "nameEn": "Price for Information [KORD BREACH]",
+   "trader": "638f541a29ffd1183d187f57",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f8263880234875007d5fa",
+   "maps": [
+    "shoreline",
+    "lighthouse",
+    "woods",
+    "reserve"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "使用转移功能从海岸线转移到灯塔（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": 377.85,
+       "z": -230.57
+      }
+     ]
+    },
+    {
+     "text": "使用转移功能从灯塔转移到储备站（在同场战局中完成）",
+     "type": "",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -298.29,
+       "z": -780.45
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "68341b407559f4e6d50bc0ce",
    "name": "惊喜（PVE）",
    "nameEn": "Surprise [PVE ZONE]",
@@ -6776,6 +8334,23 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68341b407559f4e6d50bc0ce",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5e9f85afa16442590ef9c6",
+   "name": "惊喜（PVP 赛季）",
+   "nameEn": "Surprise [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a5e9f85afa16442590ef9c6",
+   "maps": [],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6787,6 +8362,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058cbb06ef1d50a60c1f46",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6799,6 +8377,11 @@
    "wiki": "https://www.eftarkov.com/task/59c512ad86f7741f0d09de9b",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -6813,6 +8396,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6825,6 +8413,11 @@
    "wiki": "https://www.eftarkov.com/task/59c50c8886f7745fed3193bf",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -6839,6 +8432,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6850,6 +8448,11 @@
    "level": 36,
    "wiki": "https://www.eftarkov.com/task/59ca29fb86f77445ab465c87",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6867,6 +8470,11 @@
     "reserve",
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6881,6 +8489,11 @@
     "woods",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6892,6 +8505,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/67a096ed77dd677f600804ba",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -6904,6 +8522,11 @@
    "wiki": "https://www.eftarkov.com/task/5ae449b386f77446d8741719",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -6952,6 +8575,11 @@
     "customs",
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -6987,6 +8615,11 @@
    "wiki": "https://www.eftarkov.com/task/5ae4498786f7744bde357695",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7036,6 +8669,11 @@
     "lighthouse",
     "icebreaker"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -7048,6 +8686,11 @@
    "wiki": "https://www.eftarkov.com/task/6a76457a80a94c0cbf0b07ae",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -7062,55 +8705,13 @@
    "maps": [
     "icebreaker"
    ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "6a7637fed31fb1191903fc07",
-   "name": "战争迷雾",
-   "nameEn": "Fog of War",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 1,
-   "wiki": "https://www.eftarkov.com/task/6a7637fed31fb1191903fc07",
-   "maps": [
-    "lighthouse"
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在灯塔侦察污水处理厂北部 BRDM 装甲车周边的游荡者阵地",
-     "type": "",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -68.85,
-       "z": -694.37
-      }
-     ]
-    },
-    {
-     "text": "在灯塔污水处理厂西南部侦察游荡者的警戒塔阵地",
-     "type": "",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": 16.61,
-       "z": -452.0
-      }
-     ]
-    },
-    {
-     "text": "在灯塔污水处理厂侦察任意一座厂房屋顶区域\n一、二、三厂顶都可以",
-     "type": "",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -108.51,
-       "z": -731.67
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "60e71ccb5688f6424c7bfec4",
@@ -7120,8 +8721,75 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/60e71ccb5688f6424c7bfec4",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
+  },
+  {
+   "id": "6a4f79d1b62a467c220e4acd",
+   "name": "打破锁链",
+   "nameEn": "Break the Chain [KORD BREACH]",
+   "trader": "5a7c2eca46aef81a7ca2145d",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f79d1b62a467c220e4acd",
+   "maps": [
+    "customs",
+    "woods"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "摧毁海关烂尾楼附近工厂烟囱上的信号中继器",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 139.52,
+       "z": -61.29
+      }
+     ]
+    },
+    {
+     "text": "摧毁海关输电铁塔上的信号中继器",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 402.38,
+       "z": 211.73
+      }
+     ]
+    },
+    {
+     "text": "摧毁森林山顶的信号中继器",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": -188.88,
+       "z": -252.92
+      }
+     ]
+    },
+    {
+     "text": "摧毁森林信号塔上的信号中继器",
+     "type": "",
+     "zones": [
+      {
+       "map": "woods",
+       "x": 232.04,
+       "z": -708.11
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "657315df034d76585f032e01",
@@ -7132,6 +8800,11 @@
    "wiki": "https://www.eftarkov.com/task/657315df034d76585f032e01",
    "maps": [
     "ground-zero"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7167,6 +8840,11 @@
    "level": 50,
    "wiki": "https://www.eftarkov.com/task/60effd818b669d08a35bfad5",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -7179,6 +8857,11 @@
    "wiki": "https://www.eftarkov.com/task/5ac345dc86f774288030817f",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7225,6 +8908,11 @@
    "wiki": "https://www.eftarkov.com/task/674492b6909d2013670a347a",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7285,6 +8973,11 @@
     "lighthouse",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -7344,6 +9037,28 @@
     "reserve",
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a4f602f02d214b87f065c40",
+   "name": "披着狼皮的羊",
+   "nameEn": "Sheep in Wolf's Clothing [KORD BREACH]",
+   "trader": "579dc571d53a0658a154fbec",
+   "level": 20,
+   "wiki": "https://www.eftarkov.com/task/6a4f602f02d214b87f065c40",
+   "maps": [
+    "the-lab",
+    "icebreaker"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -7357,6 +9072,11 @@
    "maps": [
     "woods",
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7394,6 +9114,11 @@
    "maps": [
     "the-lab",
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7477,6 +9202,11 @@
    "maps": [
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -7545,6 +9275,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -7599,6 +9334,11 @@
    "level": 12,
    "wiki": "https://www.eftarkov.com/task/5ac346a886f7744e1b083d67",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -7611,6 +9351,11 @@
    "wiki": "https://www.eftarkov.com/task/5ae4493d86f7744b8e15aa8f",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7638,6 +9383,11 @@
     "woods",
     "customs",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7678,6 +9428,11 @@
    "wiki": "https://www.eftarkov.com/task/5967725e86f774601a446662",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7720,6 +9475,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -7759,6 +9519,11 @@
    "wiki": "https://www.eftarkov.com/task/5ae449c386f7744bde357697",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7805,6 +9570,11 @@
    "level": 6,
    "wiki": "https://www.eftarkov.com/task/5c0d190cd09282029f5390d8",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -7817,6 +9587,11 @@
    "wiki": "https://www.eftarkov.com/task/5fd9fad9c1ce6b1a3b486d00",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7845,6 +9620,58 @@
    ]
   },
   {
+   "id": "6a4f5a3d6bfb56d6de0b2dd8",
+   "name": "撒网行动",
+   "nameEn": "Cast the Net [KORD BREACH]",
+   "trader": "54cb50c76803fa8b248b4571",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f5a3d6bfb56d6de0b2dd8",
+   "maps": [
+    "shoreline",
+    "ground-zero",
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在海岸线水电站旁的乌拉尔卡车上安装 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -185.9,
+       "z": 140.49
+      }
+     ]
+    },
+    {
+     "text": "在海岸线走私营地溪流旁的挖掘机处安装 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -593.12,
+       "z": -192.79
+      }
+     ]
+    },
+    {
+     "text": "在中心区 Mira 大道旁的卡车车厢处安装 Wi-Fi 摄像头",
+     "type": "",
+     "zones": [
+      {
+       "map": "ground-zero",
+       "x": 126.91,
+       "z": 70.81
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "5c51aac186f77432ea65c552",
    "name": "收藏家",
    "nameEn": "Collector",
@@ -7852,6 +9679,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5c51aac186f77432ea65c552",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -7864,6 +9696,11 @@
    "wiki": "https://www.eftarkov.com/task/675c15fbf7da9792a4059871",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -7932,6 +9769,11 @@
    "level": 5,
    "wiki": "https://www.eftarkov.com/task/59c9392986f7742f6923add2",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -7944,6 +9786,11 @@
    "wiki": "https://www.eftarkov.com/task/657315e4a6af4ab4b50f3459",
    "maps": [
     "ground-zero"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8004,6 +9851,26 @@
    ]
   },
   {
+   "id": "6a4f7a63e41198323708563b",
+   "name": "数字拼图",
+   "nameEn": "Digital Puzzle [KORD BREACH]",
+   "trader": "5a7c2eca46aef81a7ca2145d",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f7a63e41198323708563b",
+   "maps": [
+    "ground-zero",
+    "woods",
+    "shoreline",
+    "streets-of-tarkov",
+    "the-lab"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
    "id": "596b43fb86f77457ca186186",
    "name": "敲诈者",
    "nameEn": "The Extortionist",
@@ -8012,6 +9879,11 @@
    "wiki": "https://www.eftarkov.com/task/596b43fb86f77457ca186186",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8070,18 +9942,10 @@
    "maps": [
     "lighthouse"
    ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "6a76422ae432ba0a190a7fe4",
-   "name": "断尾行动",
-   "nameEn": "Lose the Tail",
-   "trader": "54cb50c76803fa8b248b4571",
-   "level": 1,
-   "wiki": "https://www.eftarkov.com/task/6a76422ae432ba0a190a7fe4",
-   "maps": [
-    "lighthouse"
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8095,6 +9959,11 @@
    "wiki": "https://www.eftarkov.com/task/657315ddab5a49b71f098853",
    "maps": [
     "ground-zero"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8121,6 +9990,9 @@
    "maps": [
     "the-lab"
    ],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8133,6 +10005,9 @@
    "wiki": "https://www.eftarkov.com/task/6761ff17cdc36bd66102e9d0",
    "maps": [
     "the-lab"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8148,6 +10023,9 @@
     "reserve",
     "streets-of-tarkov",
     "the-lab"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8166,6 +10044,9 @@
     "the-lab",
     "icebreaker"
    ],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8182,6 +10063,9 @@
     "interchange",
     "streets-of-tarkov",
     "icebreaker"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8201,6 +10085,25 @@
     "streets-of-tarkov",
     "icebreaker"
    ],
+   "modes": [
+    "pvp"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6aad73ddedf6e9696e0f60d4",
+   "name": "新起点",
+   "nameEn": "New Beginning",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 20,
+   "wiki": "https://www.eftarkov.com/task/6aad73ddedf6e9696e0f60d4",
+   "maps": [
+    "the-lab"
+   ],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8216,18 +10119,28 @@
     "streets-of-tarkov",
     "the-lab"
    ],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
   {
-   "id": "6aad73ddedf6e9696e0f60d4",
+   "id": "6aad740f5e7f204c2d088f42",
    "name": "新起点",
    "nameEn": "New Beginning",
    "trader": "5ac3b934156ae10c4430e83c",
-   "level": 20,
-   "wiki": "https://www.eftarkov.com/task/6aad73ddedf6e9696e0f60d4",
+   "level": 45,
+   "wiki": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
    "maps": [
-    "the-lab"
+    "customs",
+    "lighthouse",
+    "interchange",
+    "streets-of-tarkov",
+    "icebreaker"
+   ],
+   "modes": [
+    "pve"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8245,6 +10158,9 @@
     "streets-of-tarkov",
     "the-lab",
     "icebreaker"
+   ],
+   "modes": [
+    "pve"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8264,22 +10180,8 @@
     "streets-of-tarkov",
     "icebreaker"
    ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "6aad740f5e7f204c2d088f42",
-   "name": "新起点",
-   "nameEn": "New Beginning",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 45,
-   "wiki": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
-   "maps": [
-    "customs",
-    "lighthouse",
-    "interchange",
-    "streets-of-tarkov",
-    "icebreaker"
+   "modes": [
+    "pve"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8294,6 +10196,11 @@
    "maps": [
     "ground-zero",
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8329,6 +10236,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/69ce21e990144e437802b1e0",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8341,6 +10253,11 @@
    "wiki": "https://www.eftarkov.com/task/6086c852c945025d41566124",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8444,6 +10361,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -8490,6 +10412,11 @@
    "wiki": "https://www.eftarkov.com/task/6179b4d1bca27a099552e04e",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8548,6 +10475,11 @@
    "wiki": "https://www.eftarkov.com/task/675c03d1f7da9792a405549a",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8672,29 +10604,20 @@
    ]
   },
   {
-   "id": "6a763a2fce9a947b4d0918a6",
-   "name": "无法接通的号码",
-   "nameEn": "Number Temporarily Unavailable",
-   "trader": "54cb50c76803fa8b248b4571",
+   "id": "6a4f83001b7350af050b2e1f",
+   "name": "无人应答",
+   "nameEn": "Unanswered Calls [KORD BREACH]",
+   "trader": "54cb57776803fa99248b456e",
    "level": 1,
-   "wiki": "https://www.eftarkov.com/task/6a763a2fce9a947b4d0918a6",
+   "wiki": "https://www.eftarkov.com/task/6a4f83001b7350af050b2e1f",
    "maps": [
-    "lighthouse"
+    "ground-zero"
+   ],
+   "modes": [
+    "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在灯塔 Prapor 手下的新营地内藏匿电子元件 3 个",
-     "type": "",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -55.31,
-       "z": 452.2
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "666314a50aa5c7436c00908a",
@@ -8704,6 +10627,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/666314a50aa5c7436c00908a",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8716,6 +10644,11 @@
    "wiki": "https://www.eftarkov.com/task/67a096577e86e067eb045733",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8744,6 +10677,34 @@
    ]
   },
   {
+   "id": "6a4f64f1ca96a0831f08433a",
+   "name": "最后冲刺",
+   "nameEn": "Final Stretch [KORD BREACH]",
+   "trader": "579dc571d53a0658a154fbec",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f64f1ca96a0831f08433a",
+   "maps": [
+    "streets-of-tarkov"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在塔科夫街区 Fence 的藏匿点找到并获取笔记本电脑",
+     "type": "",
+     "zones": [
+      {
+       "map": "streets-of-tarkov",
+       "x": -88.62,
+       "z": 239.9
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "63a9ae24009ffc6a551631a5",
    "name": "最好的差事",
    "nameEn": "Best Job in the World",
@@ -8753,6 +10714,11 @@
    "maps": [
     "lighthouse",
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -8770,6 +10736,11 @@
     "shoreline",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8781,6 +10752,11 @@
    "level": 50,
    "wiki": "https://www.eftarkov.com/task/67af4c1405c58dc6f7056667",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8792,6 +10768,11 @@
    "level": 25,
    "wiki": "https://www.eftarkov.com/task/6a959d33b9b22567ed0d0a4e",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8804,6 +10785,11 @@
    "wiki": "https://www.eftarkov.com/task/67a09724972c11a3f5077324",
    "maps": [
     "the-labyrinth"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -8867,6 +10853,11 @@
     "lighthouse",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -8890,6 +10881,11 @@
    "level": 20,
    "wiki": "https://www.eftarkov.com/task/5ae327c886f7745c7b3f2f3f",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8901,6 +10897,11 @@
    "level": 26,
    "wiki": "https://www.eftarkov.com/task/5ae3270f86f77445ba41d4dd",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8912,6 +10913,11 @@
    "level": 17,
    "wiki": "https://www.eftarkov.com/task/5ae3277186f7745973054106",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8923,6 +10929,11 @@
    "level": 5,
    "wiki": "https://www.eftarkov.com/task/5ac2426c86f774138762edfe",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8934,6 +10945,11 @@
    "level": 29,
    "wiki": "https://www.eftarkov.com/task/5ae3280386f7742a41359364",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8945,6 +10961,11 @@
    "level": 7,
    "wiki": "https://www.eftarkov.com/task/5ac2428686f77412450b42bf",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8956,6 +10977,11 @@
    "level": 26,
    "wiki": "https://www.eftarkov.com/task/5ac244eb86f7741356335af1",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8967,6 +10993,11 @@
    "level": 10,
    "wiki": "https://www.eftarkov.com/task/5ae3267986f7742a413592fe",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8978,6 +11009,11 @@
    "level": 2,
    "wiki": "https://www.eftarkov.com/task/5ac23c6186f7741247042bad",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -8989,6 +11025,11 @@
    "level": 23,
    "wiki": "https://www.eftarkov.com/task/5b47799d86f7746c5d6a5fd8",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9000,6 +11041,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/639872f9decada40426d3447",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9011,6 +11057,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/639872fa9b4fb827b200d8e5",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9022,6 +11073,11 @@
    "level": 22,
    "wiki": "https://www.eftarkov.com/task/639872fc93ae507d5858c3a6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9033,6 +11089,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/639872fe8871e1272b10ccf6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9044,6 +11105,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/64f83bb69878a0569d6ecfbe",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9055,6 +11121,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/64f83bcdde58fc437700d8fa",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9066,6 +11137,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/676529af9c90953d090882e7",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9077,6 +11153,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/64f83bd983cfca080a362c82",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9088,6 +11169,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/5ac244c486f77413e12cf945",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9099,6 +11185,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/5ac242ab86f77412464f68b4",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9110,6 +11201,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/5b47749f86f7746c5d6a5fd4",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9121,6 +11217,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/5b477b6f86f7747290681823",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9132,6 +11233,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/639873003693c63d86328f25",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9143,6 +11249,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/5b477f7686f7744d1b23c4d2",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9154,6 +11265,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/63987301e11ec11ff5504036",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9165,6 +11281,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/5b47825886f77468074618d3",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9176,6 +11297,11 @@
    "level": 37,
    "wiki": "https://www.eftarkov.com/task/5edac020218d181e29451446",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9188,6 +11314,11 @@
    "wiki": "https://www.eftarkov.com/task/67a0970f05d1611ed90be75d",
    "maps": [
     "the-labyrinth"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9214,6 +11345,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9225,6 +11361,11 @@
    "level": 20,
    "wiki": "https://www.eftarkov.com/task/6740a3f4eca8acb2d2055159",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9237,6 +11378,11 @@
    "wiki": "https://www.eftarkov.com/task/639282134ed9512be67647ed",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9275,6 +11421,11 @@
     "streets-of-tarkov",
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -9303,6 +11454,11 @@
     "woods",
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9316,6 +11472,11 @@
    "maps": [
     "woods",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9370,6 +11531,11 @@
     "the-labyrinth",
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -9396,6 +11562,11 @@
     "lighthouse",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9408,6 +11579,11 @@
    "wiki": "https://www.eftarkov.com/task/59689fbd86f7740d137ebfc4",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9442,6 +11618,11 @@
     "woods",
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9453,6 +11634,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/596a218586f77420d232807c",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9466,6 +11652,11 @@
    "maps": [
     "icebreaker"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9478,6 +11669,11 @@
    "wiki": "https://www.eftarkov.com/task/59c124d686f774189b3c843f",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9522,6 +11718,11 @@
     "lighthouse",
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -9561,6 +11762,11 @@
    "wiki": "https://www.eftarkov.com/task/675c085d59b0575973005f52",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9620,6 +11826,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -9644,6 +11855,11 @@
    "wiki": "https://www.eftarkov.com/task/6179afd0bca27a099552e040",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9670,6 +11886,11 @@
    "maps": [
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9682,6 +11903,10 @@
    "wiki": "https://www.eftarkov.com/task/67a0975992ad467b1906d468",
    "maps": [
     "the-labyrinth"
+   ],
+   "modes": [
+    "pvp",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -9696,6 +11921,9 @@
    "maps": [
     "the-labyrinth"
    ],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9708,6 +11936,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27b75b86f7742e97191958",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9771,6 +12004,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9783,6 +12021,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27bbf886f774333a418eeb",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9830,6 +12073,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -9866,6 +12114,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -9890,6 +12143,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27bc6986f7741c7358402b",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9917,6 +12175,11 @@
     "lighthouse",
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9930,6 +12193,11 @@
    "maps": [
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -9942,6 +12210,11 @@
    "wiki": "https://www.eftarkov.com/task/5b478b1886f7744d1b23c57d",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -9990,6 +12263,11 @@
    "maps": [
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10001,6 +12279,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5d24b81486f77439c92d6ba8",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10013,6 +12296,11 @@
    "wiki": "https://www.eftarkov.com/task/6a763df2161e4b45b1015663",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10037,6 +12325,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5a0327ba86f77456b9154236",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10049,6 +12342,11 @@
    "wiki": "https://www.eftarkov.com/task/5ae448f286f77448d73c0131",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10087,6 +12385,56 @@
    ]
   },
   {
+   "id": "6a4f8365d46563d5d90b6ccc",
+   "name": "爆炸区域净空",
+   "nameEn": "Stay Clear of Blast Zone [KORD BREACH]",
+   "trader": "5c0647fdd443bc2504c2d371",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f8365d46563d5d90b6ccc",
+   "maps": [
+    "shoreline"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在海岸线疗养院西侧围栏缺口埋藏一块 TP-200 TNT 炸药",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -127.17,
+       "z": -94.13
+      }
+     ]
+    },
+    {
+     "text": "在海岸线疗养院北侧围栏缺口埋藏一块 TP-200 TNT 炸药",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -127.52,
+       "z": -67.51
+      }
+     ]
+    },
+    {
+     "text": "在海岸线疗养院东侧围栏缺口埋藏一块 TP-200 TNT 炸药",
+     "type": "",
+     "zones": [
+      {
+       "map": "shoreline",
+       "x": -374.76,
+       "z": -94.83
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "64f5deac39e45b527a7c4232",
    "name": "爱国者的使命",
    "nameEn": "Job for a Patriot",
@@ -10097,6 +12445,11 @@
     "ground-zero",
     "shoreline",
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -10110,6 +12463,11 @@
    "wiki": "https://www.eftarkov.com/task/6089732b59b92115597ad789",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10136,6 +12494,11 @@
    "maps": [
     "woods",
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10182,6 +12545,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/666314a1920800278d0f6746",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10193,6 +12561,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/60e71ce009d7c801eb0c0ec6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10204,6 +12577,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68ee1c18b4e5bc9a68018cd7",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10215,6 +12593,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/5c0be13186f7746f016734aa",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10226,6 +12609,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5d25e4ca86f77409dd5cdf2c",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10241,6 +12629,11 @@
     "reserve",
     "woods",
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10342,6 +12735,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10354,6 +12752,11 @@
    "wiki": "https://www.eftarkov.com/task/6578eb36e5020875d64645cd",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10391,6 +12794,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -10416,6 +12824,11 @@
    "maps": [
     "factory",
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10453,6 +12866,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -10477,6 +12895,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25e2c386f77443e7549029",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10513,6 +12936,11 @@
    "maps": [
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10524,6 +12952,11 @@
    "level": 17,
    "wiki": "https://www.eftarkov.com/task/5d25e2d886f77442734d335e",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10542,6 +12975,11 @@
     "interchange",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10558,6 +12996,11 @@
     "reserve",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10570,6 +13013,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25e2ee86f77443e35162ea",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10595,6 +13043,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25e43786f7740a212217fa",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10632,44 +13085,13 @@
     "lighthouse",
     "icebreaker"
    ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "639136df4b15ca31f76bc31f",
-   "name": "猎人之路 - 管理者",
-   "nameEn": "The Huntsman Path - Administrator",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 17,
-   "wiki": "https://www.eftarkov.com/task/639136df4b15ca31f76bc31f",
-   "maps": [
-    "reserve"
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在储备站火车站台上发射一枚黄色信号弹（在同场战局中）",
-     "type": "useItem",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": 89.29,
-       "z": -124.45
-      }
-     ]
-    },
-    {
-     "text": "在储备站的火车站台消灭任意敌对目标 6 名（在同场战局中）",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "reserve",
-       "x": 130.39,
-       "z": -139.45
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "6a45208043b8d7604d00b8d5",
@@ -10680,6 +13102,11 @@
    "wiki": "https://www.eftarkov.com/task/6a45208043b8d7604d00b8d5",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10708,6 +13135,47 @@
    ]
   },
   {
+   "id": "639136df4b15ca31f76bc31f",
+   "name": "猎人之路 - 管理者",
+   "nameEn": "The Huntsman Path - Administrator",
+   "trader": "5c0647fdd443bc2504c2d371",
+   "level": 17,
+   "wiki": "https://www.eftarkov.com/task/639136df4b15ca31f76bc31f",
+   "maps": [
+    "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在储备站火车站台上发射一枚黄色信号弹（在同场战局中）",
+     "type": "useItem",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 89.29,
+       "z": -124.45
+      }
+     ]
+    },
+    {
+     "text": "在储备站的火车站台消灭任意敌对目标 6 名（在同场战局中）",
+     "type": "shoot",
+     "zones": [
+      {
+       "map": "reserve",
+       "x": 130.39,
+       "z": -139.45
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "5d25e2e286f77444001e2e48",
    "name": "猎人之路 - 脱销",
    "nameEn": "The Huntsman Path - Sellout",
@@ -10716,6 +13184,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25e2e286f77444001e2e48",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10748,6 +13221,11 @@
     "lighthouse",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10760,6 +13238,11 @@
    "wiki": "https://www.eftarkov.com/task/5edab4b1218d181e29451435",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10792,6 +13275,11 @@
     "reserve",
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10805,6 +13293,11 @@
    "maps": [
     "factory",
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -10842,6 +13335,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -10877,6 +13375,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10889,6 +13392,11 @@
    "wiki": "https://www.eftarkov.com/task/69ce213a298a6529b30d7134",
    "maps": [
     "icebreaker"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -10913,6 +13421,11 @@
     "icebreaker",
     "the-labyrinth"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10924,6 +13437,11 @@
    "level": 17,
    "wiki": "https://www.eftarkov.com/task/5d25d2c186f77443e35162e5",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10935,6 +13453,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/5d25aed386f77442734d25d2",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10946,6 +13469,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/5d25c81b86f77443e625dd71",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10959,6 +13487,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -10971,6 +13504,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25b6be86f77444001e1b89",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11030,6 +13568,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11051,6 +13594,11 @@
     "streets-of-tarkov",
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11065,6 +13613,11 @@
     "woods",
     "lighthouse",
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -11081,6 +13634,11 @@
     "lighthouse",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11093,6 +13651,11 @@
    "wiki": "https://www.eftarkov.com/task/60896e28e4a85c72ef3fa301",
    "maps": [
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11130,6 +13693,11 @@
    "maps": [
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11141,6 +13709,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68db9c7557bc51a8c804c14b",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11153,6 +13726,11 @@
    "wiki": "https://www.eftarkov.com/task/626bd75e47ea7f506e5493c5",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11190,6 +13768,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -11215,6 +13798,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -11239,6 +13827,11 @@
    "wiki": "https://www.eftarkov.com/task/6391372c8ba6894d155e77d7",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11269,6 +13862,11 @@
     "customs",
     "woods",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11304,6 +13902,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/6663149cfd5ca9577902e037",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11316,6 +13919,11 @@
    "wiki": "https://www.eftarkov.com/task/6a764077161e4b45b101566e",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11355,6 +13963,20 @@
    ]
   },
   {
+   "id": "6a4f5b7a5bf30a99be02698c",
+   "name": "知己知彼",
+   "nameEn": "Know Your Enemy [KORD BREACH]",
+   "trader": "54cb50c76803fa8b248b4571",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f5b7a5bf30a99be02698c",
+   "maps": [],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
    "id": "5967733e86f774602332fc84",
    "name": "短缺",
    "nameEn": "Shortage",
@@ -11362,6 +13984,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5967733e86f774602332fc84",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11374,6 +14001,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27b7d686f77460d847e6a6",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11437,6 +14069,11 @@
    "maps": [
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11449,6 +14086,11 @@
    "wiki": "https://www.eftarkov.com/task/626148334149f1149b5b12ca",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11506,6 +14148,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/626148251ed3bb5bcc5bd9ed",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11517,6 +14164,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6261482fa4eb80027c4f2e11",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11528,6 +14180,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6261483ac48e6c62a440fab7",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11540,6 +14197,11 @@
    "wiki": "https://www.eftarkov.com/task/6261483dc4874104f230c0cd",
    "maps": [
     "the-lab"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11565,6 +14227,11 @@
    "wiki": "https://www.eftarkov.com/task/6391d90f4ed9512be67647df",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11617,6 +14284,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -11667,6 +14339,11 @@
    "wiki": "https://www.eftarkov.com/task/6391d912f8e5dd32bf4e3ab2",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11722,6 +14399,11 @@
     "woods",
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11734,6 +14416,11 @@
    "wiki": "https://www.eftarkov.com/task/5d25e48186f77443e625e386",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11782,6 +14469,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -11829,6 +14521,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -11845,6 +14542,26 @@
    ]
   },
   {
+   "id": "6a4f5fda45f72a73f3089a8a",
+   "name": "禁忌知识",
+   "nameEn": "Forbidden Knowledge [KORD BREACH]",
+   "trader": "579dc571d53a0658a154fbec",
+   "level": 20,
+   "wiki": "https://www.eftarkov.com/task/6a4f5fda45f72a73f3089a8a",
+   "maps": [
+    "ground-zero",
+    "woods",
+    "shoreline",
+    "streets-of-tarkov",
+    "the-lab"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
    "id": "658027799634223183395339",
    "name": "禁止打劫",
    "nameEn": "No Swiping",
@@ -11854,6 +14571,11 @@
    "maps": [
     "shoreline",
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11884,6 +14606,11 @@
    "wiki": "https://www.eftarkov.com/task/675c3582f6ddc329a90f9c6d",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11923,6 +14650,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a5424ae135497b9df0c68be",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11935,6 +14667,11 @@
    "wiki": "https://www.eftarkov.com/task/64f6aafd67e11a7c6206e0d0",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -11981,6 +14718,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -11994,6 +14736,11 @@
    "maps": [
     "ground-zero"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12006,6 +14753,11 @@
    "wiki": "https://www.eftarkov.com/task/6578ec473dbd035d04531a8d",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12052,6 +14804,11 @@
    "maps": [
     "icebreaker"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12063,6 +14820,11 @@
    "level": 50,
    "wiki": "https://www.eftarkov.com/task/67af4c1991ee75c6d7060a16",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12074,6 +14836,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/697878057aa1273126030fb0",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12085,6 +14850,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/697877e0c639962b2e0cf24f",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12098,6 +14866,11 @@
    "maps": [
     "reserve",
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12148,17 +14921,11 @@
    "level": 36,
    "wiki": "https://www.eftarkov.com/task/5d4bec3486f7743cac246665",
    "maps": [],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
-   "id": "5e381b0286f77420e3417a74",
-   "name": "纺织业 - 1",
-   "nameEn": "Textile - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 42,
-   "wiki": "https://www.eftarkov.com/task/5e381b0286f77420e3417a74",
-   "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12170,6 +14937,27 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5e383a6386f77465910ce1f3",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "5e381b0286f77420e3417a74",
+   "name": "纺织业 - 1",
+   "nameEn": "Textile - Part 1",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 42,
+   "wiki": "https://www.eftarkov.com/task/5e381b0286f77420e3417a74",
+   "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12181,6 +14969,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5e4d515e86f77438b2195244",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12192,6 +14985,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5e4d4ac186f774264f758336",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12203,6 +15001,11 @@
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/6663149f1d3ec95634095e75",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12215,6 +15018,11 @@
    "wiki": "https://www.eftarkov.com/task/65802b627b44fa5e14638899",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12246,6 +15054,11 @@
    "maps": [
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -12271,6 +15084,27 @@
    "maps": [
     "the-labyrinth"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a4f789e78d54a8494027cbf",
+   "name": "绝望反击",
+   "nameEn": "Desperate Assault [KORD BREACH]",
+   "trader": "5a7c2eca46aef81a7ca2145d",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a4f789e78d54a8494027cbf",
+   "maps": [
+    "the-lab"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12284,6 +15118,11 @@
    "maps": [
     "factory",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12322,6 +15161,11 @@
     "reserve",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12334,6 +15178,11 @@
    "wiki": "https://www.eftarkov.com/task/639136d68ba6894d155e77cf",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12371,6 +15220,11 @@
    "maps": [
     "lighthouse"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -12406,6 +15260,11 @@
    "wiki": "https://www.eftarkov.com/task/6740a15566e6a521aa051b15",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12453,6 +15312,11 @@
     "customs",
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -12488,6 +15352,11 @@
    "wiki": "https://www.eftarkov.com/task/63a88045abf76d719f42d715",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12547,6 +15416,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -12581,6 +15455,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5c1128e386f7746565181106",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12593,6 +15472,11 @@
    "wiki": "https://www.eftarkov.com/task/5edabd13218d181e29451442",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12641,6 +15525,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -12676,6 +15565,11 @@
    "wiki": "https://www.eftarkov.com/task/6179b3a12153c15e937d52bc",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12735,6 +15629,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -12769,6 +15668,11 @@
    "level": 40,
    "wiki": "https://www.eftarkov.com/task/60e71d23c1bfa3050473b8e6",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12781,6 +15685,11 @@
    "wiki": "https://www.eftarkov.com/task/674605df60a98cad1b0ec799",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12825,6 +15734,11 @@
    "level": 38,
    "wiki": "https://www.eftarkov.com/task/671a59e43d73dac1360765cc",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12837,6 +15751,11 @@
    "wiki": "https://www.eftarkov.com/task/666314b8312343839d032d24",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12863,6 +15782,37 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在海关找到前冠军的房间",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 182.13,
+       "z": 164.97
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a5ea488b544112ece0e7c82",
+   "name": "良心作祟 - 1（PVP 赛季）",
+   "nameEn": "Against the Conscience - Part 1 [Season PvP]",
+   "trader": "579dc571d53a0658a154fbec",
+   "level": 10,
+   "wiki": "https://www.eftarkov.com/task/6a5ea488b544112ece0e7c82",
+   "maps": [
+    "customs"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -12887,6 +15837,9 @@
    "wiki": "https://www.eftarkov.com/task/66058ccbc7f3584787181478",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": [
@@ -12932,6 +15885,23 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/68342446a8d674b5740b31fc",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5ea590b544112ece0e7c98",
+   "name": "良心作祟 - 2（PVP 赛季）",
+   "nameEn": "Against the Conscience - Part 2 [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 1,
+   "wiki": "https://www.eftarkov.com/task/6a5ea590b544112ece0e7c98",
+   "maps": [],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12943,6 +15913,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66058ccde8e4f17985230807",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12956,6 +15929,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12967,6 +15945,11 @@
    "level": 36,
    "wiki": "https://www.eftarkov.com/task/67b45467814ab0ffa000c7e7",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -12979,6 +15962,11 @@
    "wiki": "https://www.eftarkov.com/task/639135a7e705511c8a4a1b78",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13004,6 +15992,11 @@
    "wiki": "https://www.eftarkov.com/task/65734c186dc1e402c80dc19e",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13040,6 +16033,11 @@
    "wiki": "https://www.eftarkov.com/task/64f5aac4b63b74469b6c14c2",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13105,6 +16103,11 @@
     "lighthouse",
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -13117,6 +16120,11 @@
    "wiki": "https://www.eftarkov.com/task/5969f9e986f7741dde183a50",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13175,6 +16183,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -13211,6 +16224,11 @@
    "maps": [
     "streets-of-tarkov",
     "the-lab"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13272,6 +16290,26 @@
    ]
   },
   {
+   "id": "6a4f5f87c72b01b42201fc68",
+   "name": "袋子里有什么？",
+   "nameEn": "What's in the Bag? [KORD BREACH]",
+   "trader": "579dc571d53a0658a154fbec",
+   "level": 20,
+   "wiki": "https://www.eftarkov.com/task/6a4f5f87c72b01b42201fc68",
+   "maps": [
+    "ground-zero",
+    "woods",
+    "shoreline",
+    "streets-of-tarkov",
+    "the-lab"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
    "id": "5a27c99a86f7747d2c6bdd8e",
    "name": "西方来客",
    "nameEn": "Friend From the West",
@@ -13279,6 +16317,11 @@
    "level": 9,
    "wiki": "https://www.eftarkov.com/task/5a27c99a86f7747d2c6bdd8e",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -13293,6 +16336,11 @@
     "reserve",
     "lighthouse",
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13351,6 +16399,11 @@
    "wiki": "https://www.eftarkov.com/task/6396700fea19ac7ed845db32",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13426,6 +16479,26 @@
    ]
   },
   {
+   "id": "6a4f5eed0aba4eefcd0b1cc7",
+   "name": "解密之匙",
+   "nameEn": "Key to Understanding [KORD BREACH]",
+   "trader": "579dc571d53a0658a154fbec",
+   "level": 20,
+   "wiki": "https://www.eftarkov.com/task/6a4f5eed0aba4eefcd0b1cc7",
+   "maps": [
+    "ground-zero",
+    "woods",
+    "shoreline",
+    "streets-of-tarkov",
+    "the-lab"
+   ],
+   "modes": [
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
    "id": "67460662d0fbbc74ca0f7229",
    "name": "识时务者为俊杰",
    "nameEn": "Choose Your Friends Wisely",
@@ -13437,6 +16510,11 @@
     "woods",
     "lighthouse",
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13474,6 +16552,11 @@
    "maps": [
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -13498,6 +16581,11 @@
    "wiki": "https://www.eftarkov.com/task/6573397ef3f8344c4575cd87",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13544,6 +16632,11 @@
    "wiki": "https://www.eftarkov.com/task/5ae449d986f774453a54a7e1",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13592,6 +16685,11 @@
    "maps": [
     "woods"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -13621,6 +16719,11 @@
    "wiki": "https://www.eftarkov.com/task/673f2cd5d3346c2167020484",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13669,6 +16772,11 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -13709,6 +16817,11 @@
    "maps": [
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -13734,6 +16847,37 @@
    "maps": [
     "customs"
    ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "将竞技场广告海报放在海关 Scav 营地",
+     "type": "",
+     "zones": [
+      {
+       "map": "customs",
+       "x": 205.73,
+       "z": -119.86
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a5e9a5e11ef8ccb6404a18b",
+   "name": "赚点快钱 - 1（PVP 赛季）",
+   "nameEn": "Easy Money - Part 1 [Season PvP]",
+   "trader": "58330581ace78e27b8b10cee",
+   "level": 10,
+   "wiki": "https://www.eftarkov.com/task/6a5e9a5e11ef8ccb6404a18b",
+   "maps": [
+    "customs"
+   ],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -13758,6 +16902,9 @@
    "wiki": "https://www.eftarkov.com/task/66058cb22cee99303f1ba067",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13802,6 +16949,23 @@
    "level": 10,
    "wiki": "https://www.eftarkov.com/task/6834158f2f0e2a7eb90b62c8",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5e9c2d9dd9659e63089e7d",
+   "name": "赚点快钱 - 2（PVP 赛季）",
+   "nameEn": "Easy Money - Part 2 [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 10,
+   "wiki": "https://www.eftarkov.com/task/6a5e9c2d9dd9659e63089e7d",
+   "maps": [],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -13813,6 +16977,9 @@
    "level": 10,
    "wiki": "https://www.eftarkov.com/task/66058cb5ae4719735349b9e8",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -13825,6 +16992,11 @@
    "wiki": "https://www.eftarkov.com/task/626bd75c71bd851e971b82a5",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13850,6 +17022,11 @@
    "wiki": "https://www.eftarkov.com/task/5c0d0f1886f77457b8210226",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13887,6 +17064,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -13921,6 +17103,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6942b44f891369fc790e385a",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -13933,6 +17120,11 @@
    "wiki": "https://www.eftarkov.com/task/67a0972e77dd677f600804bd",
    "maps": [
     "the-labyrinth"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -13991,6 +17183,11 @@
     "factory",
     "woods",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14301,6 +17498,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/5c139eb686f7747878361a6f",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14312,6 +17514,23 @@
    "level": 35,
    "wiki": "https://www.eftarkov.com/task/6834287b7559f4e6d50bc0fa",
    "maps": [],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6a5ead1011ef8ccb6404a1c3",
+   "name": "迟来的奖励（PVP 赛季）",
+   "nameEn": "Postponed Reward [Season PvP]",
+   "trader": "6617beeaa9cfa777ca915b7c",
+   "level": 35,
+   "wiki": "https://www.eftarkov.com/task/6a5ead1011ef8ccb6404a1c3",
+   "maps": [],
+   "modes": [
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14323,6 +17542,9 @@
    "level": 35,
    "wiki": "https://www.eftarkov.com/task/67e993f5ed537409f009da75",
    "maps": [],
+   "modes": [
+    "pvp"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14338,6 +17560,11 @@
     "shoreline",
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14349,6 +17576,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a881bcf20dba6e9d70597a3",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14363,6 +17595,11 @@
     "streets-of-tarkov",
     "customs",
     "reserve"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14403,6 +17640,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a8852bc184783d23e047902",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14415,6 +17657,11 @@
    "wiki": "https://www.eftarkov.com/task/6a880acc9216d0f5aa078305",
    "maps": [
     "the-lab"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14441,6 +17688,11 @@
    "maps": [
     "the-lab"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14455,6 +17707,11 @@
     "woods",
     "customs",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14534,6 +17791,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a8819620d25ca7b2908e14d",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14546,6 +17808,11 @@
    "wiki": "https://www.eftarkov.com/task/6a880f5d9438980c42076efe",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14581,6 +17848,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a88270efbd24b6243010e6d",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14593,6 +17865,11 @@
    "wiki": "https://www.eftarkov.com/task/625d700cc48e6c62a440fab5",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14643,6 +17920,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a884d69d35a46046d0e808a",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14655,6 +17937,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27b9de86f77464e5044585",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14681,6 +17968,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -14706,6 +17998,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -14729,6 +18026,11 @@
    "level": 27,
    "wiki": "https://www.eftarkov.com/task/60e71dc67fcf9c556f325056",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14741,6 +18043,11 @@
    "wiki": "https://www.eftarkov.com/task/5979eee086f774311955e614",
    "maps": [
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14776,6 +18083,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/59ca1a6286f774509a270942",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14788,6 +18100,11 @@
    "wiki": "https://www.eftarkov.com/task/5b4794cb86f774598100d5d4",
    "maps": [
     "woods"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14823,6 +18140,11 @@
    "level": 12,
    "wiki": "https://www.eftarkov.com/task/666314c10aa5c7436c00908c",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14835,6 +18157,11 @@
    "wiki": "https://www.eftarkov.com/task/60e71dc0a94be721b065bbfc",
    "maps": [
     "interchange"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": []
@@ -14849,6 +18176,11 @@
    "maps": [
     "lighthouse",
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14878,6 +18210,11 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/66631489acf8442f8b05319f",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -14890,6 +18227,11 @@
    "wiki": "https://www.eftarkov.com/task/61904daa7d0d857927447b9c",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14926,6 +18268,11 @@
    "wiki": "https://www.eftarkov.com/task/669fa39c64ea11e84c0642a6",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -14974,6 +18321,11 @@
    "maps": [
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -15009,6 +18361,11 @@
    "wiki": "https://www.eftarkov.com/task/6a764462e432ba0a190a7fe9",
    "maps": [
     "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -15057,6 +18414,11 @@
    "maps": [
     "factory"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -15070,6 +18432,11 @@
    "maps": [
     "reserve",
     "customs"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -15197,6 +18564,11 @@
    "maps": [
     "reserve"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -15225,6 +18597,11 @@
     "woods",
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -15237,6 +18614,11 @@
    "wiki": "https://www.eftarkov.com/task/639135bbc115f907b14700a6",
    "maps": [
     "streets-of-tarkov"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -15319,6 +18701,11 @@
    "maps": [
     "interchange"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -15384,6 +18771,11 @@
    "maps": [
     "streets-of-tarkov"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -15407,6 +18799,11 @@
    "level": 17,
    "wiki": "https://www.eftarkov.com/task/5d25e4b786f77408251c4bfc",
    "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": []
   },
@@ -15419,6 +18816,11 @@
    "wiki": "https://www.eftarkov.com/task/5a27b80086f774429a5d7e20",
    "maps": [
     "shoreline"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [
@@ -15489,6 +18891,11 @@
    "maps": [
     "shoreline"
    ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
    "prerequisites": [],
    "objectives": [
     {
@@ -15535,6 +18942,11 @@
    "wiki": "https://www.eftarkov.com/task/669fa39b91b0a8c9680fc467",
    "maps": [
     "factory"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
    ],
    "prerequisites": [],
    "objectives": [

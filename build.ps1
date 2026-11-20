@@ -90,6 +90,14 @@ $missing = @($required | Where-Object { -not (Test-Path (Join-Path $target $_)) 
 if (-not (Test-Path $exe)) { throw "publish produced no EXE in $target" }
 if ($missing.Count -gt 0) { throw ("missing assets in output: " + ($missing -join ", ")) }
 
+# Personal state must never ship: the author's task checklist and settings live
+# in %APPDATA%, but a stray copy in the publish tree would hand the player
+# someone else's progress (and a local screenshots path).
+$personal = @(Get-ChildItem $target -Recurse -File -Include "quest-progress*.json","settings.json","crash.log" -ErrorAction SilentlyContinue)
+if ($personal.Count -gt 0) {
+    throw ("refusing to package personal state: " + (($personal | ForEach-Object { $_.FullName.Substring($target.Length) }) -join ", "))
+}
+
 $sizeMb = [Math]::Round((Get-ChildItem $target -Recurse -File | Measure-Object Length -Sum).Sum / 1MB, 1)
 $zip = Join-Path $OutputRoot "TarkovAtlas-$Runtime.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }

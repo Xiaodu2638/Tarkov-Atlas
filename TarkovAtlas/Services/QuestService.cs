@@ -26,10 +26,24 @@ public sealed class QuestService
     private string? _mapKey;
     private bool _followMap = true;
 
+    /// <summary>
+    /// Raid mode whose tasks and progress are active (pvp / pvps / pve).
+    /// Switching it reloads the checklist and re-filters the roster; the task
+    /// database itself stays one tagged collection.
+    /// </summary>
+    public string CurrentMode { get; private set; } = QuestModes.Pvp;
+
+    public void SetMode(string mode)
+    {
+        CurrentMode = QuestModes.Normalize(mode);
+        LoadProgress();
+        BuildStoryRows();
+    }
+
     public ObservableCollection<QuestRow> VisibleQuests { get; } = new();
     public IReadOnlyList<Quest> Quests => _quests;
     public IReadOnlyDictionary<string, TraderInfo> Traders => _traders;
-    public int TotalCount => _quests.Count;
+    public int TotalCount => _quests.Count(q => QuestModes.Matches(q, CurrentMode));
     public int CompletedCount => _completed.Count(kv => kv.Value);
     public int TrackedCount => _tracked.Count;
     public string DatabaseDate { get; private set; } = "";
@@ -112,10 +126,33 @@ public sealed class QuestService
 
     private void LoadProgress()
     {
+        _completed.Clear();
+        _tracked.Clear();
+        _storyDone.Clear();
+        _storyObjectiveDone.Clear();
+        LoadWarning = null;
+
+        var path = AppPaths.QuestProgressFile(CurrentMode);
         try
         {
-            if (!File.Exists(AppPaths.QuestProgressFile)) return;
-            var file = JsonSerializer.Deserialize(File.ReadAllText(AppPaths.QuestProgressFile),
+            // First run in this mode: seed the PVP checklist from the pre-mode
+            // file (all progress made before modes existed was PVP), and let
+            // PVPS/PVE start empty - they are separate checklists by design.
+            if (!File.Exists(path))
+            {
+                var legacy = AppPaths.QuestProgressFile();
+                if (CurrentMode == QuestModes.Pvp && File.Exists(legacy))
+                {
+                    try
+                    {
+                        File.Copy(legacy, path, overwrite: false);
+                    }
+                    catch (Exception ex) { AppPaths.LogCrash(ex); }
+                }
+            }
+
+            if (!File.Exists(path)) return;
+            var file = JsonSerializer.Deserialize(File.ReadAllText(path),
                 AppJsonContext.Default.QuestProgressFile);
             if (file is null) return;
             foreach (var (id, done) in file.Completed) _completed[id] = done;
@@ -139,9 +176,9 @@ public sealed class QuestService
         catch (Exception ex)
         {
             // Keep the damaged file instead of overwriting it on the next save.
-            try { File.Copy(AppPaths.QuestProgressFile, AppPaths.QuestProgressFile + ".bad", overwrite: true); }
+            try { File.Copy(path, path + ".bad", overwrite: true); }
             catch { }
-            LoadWarning = "任务进度文件损坏，已备份为 quest-progress.json.bad，进度从零开始。";
+            LoadWarning = "任务进度文件损坏，已备份为 " + Path.GetFileName(path) + ".bad，进度从零开始。";
             AppPaths.LogCrash(ex);
         }
     }
@@ -184,7 +221,7 @@ public sealed class QuestService
                 StoryDone = _storyDone.ToList(),
                 StoryObjectiveDone = _storyObjectiveDone.ToList(),
             };
-            AppPaths.WriteAllTextAtomic(AppPaths.QuestProgressFile,
+            AppPaths.WriteAllTextAtomic(AppPaths.QuestProgressFile(CurrentMode),
                 JsonSerializer.Serialize(data, AppJsonContext.Default.QuestProgressFile));
         }
         catch (Exception ex)
@@ -231,6 +268,10 @@ public sealed class QuestService
 
         foreach (var quest in _quests)
         {
+            // Mode first: a PVE checklist must not show PVP-only tasks (and the
+            // season batch belongs to PVPS alone).
+            if (!QuestModes.Matches(quest, CurrentMode)) continue;
+
             var done = IsCompleted(quest.Id);
             if (_filter == 1 && done) continue;
             if (_filter == 2 && !done) continue;
@@ -367,6 +408,7 @@ public sealed class QuestService
         foreach (var quest in _quests)
         {
             if (!IsTracked(quest.Id)) continue;
+            if (!QuestModes.Matches(quest, CurrentMode)) continue;
 
             foreach (var objective in quest.Objectives)
             {

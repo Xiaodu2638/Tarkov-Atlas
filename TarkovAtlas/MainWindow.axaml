@@ -37,6 +37,32 @@
                          Foreground="{StaticResource StatusLiveText}" VerticalAlignment="Center" />
             </StackPanel>
           </Border>
+
+          <!-- Raid-mode switch: one compact pill that opens a menu, so the header
+               still fits when the window is narrow. The drawer keeps its own
+               three-way switch; both stay in sync via UpdateQuestModeButtons(). -->
+          <Button x:Name="HeaderModeButton" Classes="ghost" Padding="0"
+                  ToolTip.Tip="切换任务模式（PVP / PVP S / PVE）——三种模式的任务进度相互独立">
+            <Button.Flyout>
+              <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                <MenuItem x:Name="HeaderModePvpItem" Header="PVP" Tag="pvp" Click="QuestMode_Click" />
+                <MenuItem x:Name="HeaderModePvpsItem" Header="PVP S（含赛季任务）" Tag="pvps" Click="QuestMode_Click" />
+                <MenuItem x:Name="HeaderModePveItem" Header="PVE" Tag="pve" Click="QuestMode_Click" />
+              </MenuFlyout>
+            </Button.Flyout>
+            <Border Background="{StaticResource StatusLiveBg}" BorderBrush="{StaticResource StatusLiveBorder}"
+                    BorderThickness="1" CornerRadius="12" Padding="10,4">
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <Ellipse x:Name="HeaderModeDot" Width="7" Height="7" Fill="{StaticResource Accent}"
+                         VerticalAlignment="Center" />
+                <TextBlock x:Name="HeaderModeText" Text="PVP" FontSize="11" FontWeight="SemiBold"
+                           Foreground="{StaticResource StatusLiveText}" VerticalAlignment="Center" />
+                <TextBlock Text="▾" FontSize="9" Foreground="{StaticResource TextMuted}"
+                           VerticalAlignment="Center" />
+              </StackPanel>
+            </Border>
+          </Button>
+
           <TextBlock x:Name="CursorCoordText" Text="X —  Z —" FontSize="11"
                      Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" />
         </StackPanel>
@@ -220,13 +246,24 @@
               Background="{StaticResource PanelDeepBg}" BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="1,0,0,0">
         <Grid RowDefinitions="52,*">
           <Border Grid.Row="0" Background="{StaticResource PanelHeaderBg}" BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="0,0,0,1" Padding="14,0">
-            <Grid ColumnDefinitions="*,Auto">
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
               <StackPanel VerticalAlignment="Center" Spacing="1">
                 <TextBlock Text="任务追踪" FontSize="14" FontWeight="SemiBold" />
                 <TextBlock x:Name="QuestCountText" Text="0 个任务" FontSize="9.5"
                            Foreground="{StaticResource TextMuted}" />
               </StackPanel>
-              <Button Grid.Column="1" Classes="ghost" Content="✕" Click="CloseQuestDrawer_Click" />
+              <Border Grid.Column="1" VerticalAlignment="Center" Background="{StaticResource PanelDeepBg}"
+                      BorderBrush="{StaticResource OverlayChromeBorder}" BorderThickness="1" CornerRadius="6" Padding="2">
+                <StackPanel Orientation="Horizontal" Spacing="2">
+                  <Button x:Name="QuestModePvpButton" Classes="ghost" Content="PVP" FontSize="10"
+                          Padding="8,3" Click="QuestMode_Click" Tag="pvp" />
+                  <Button x:Name="QuestModePvpsButton" Classes="ghost" Content="PVP S" FontSize="10"
+                          Padding="8,3" Click="QuestMode_Click" Tag="pvps" />
+                  <Button x:Name="QuestModePveButton" Classes="ghost" Content="PVE" FontSize="10"
+                          Padding="8,3" Click="QuestMode_Click" Tag="pve" />
+                </StackPanel>
+              </Border>
+              <Button Grid.Column="2" Classes="ghost" Content="✕" Click="CloseQuestDrawer_Click" />
             </Grid>
           </Border>
 

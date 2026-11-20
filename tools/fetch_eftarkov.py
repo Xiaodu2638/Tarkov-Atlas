@@ -43,7 +43,12 @@ BASE = "https://www.eftarkov.com"
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36")
 HEADERS = {"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9"}
-MODES = ("pvp", "pve")
+# The site's own mode picker offers PVP / PVE / 赛季(season). "PVPS" is a
+# game-side matchmaking option, not a site mode: the site answers ?mode=pvps
+# with the plain PVP list, and the season list is PVP plus ~34 season-only
+# tasks. So the roster is tagged pvp / pve / season and PVPS is derived as
+# pvp ∪ season downstream instead of being crawled.
+MODES = ("pvp", "pve", "season")
 WORKERS = 6
 
 
@@ -252,54 +257,67 @@ def parse_task(tid: str, html: str) -> dict:
     return rec
 
 
-def task_list(refresh: bool, cache_only: bool) -> list[str]:
-    """Every non-season task id: crawl the PVP and PVE list pages."""
-    ids: list[str] = []
-    seen: set[str] = set()
+def task_list(refresh: bool, cache_only: bool) -> dict[str, list[str]]:
+    """Task id -> the modes whose list page contains it.
+
+    A task can appear in more than one mode (most of PVP is also in PVE and in
+    the season list), and that overlap is what lets the app filter a raid mode
+    without keeping three copies of the database. The season list is a superset
+    of PVP - the site adds its season-only tasks there.
+    """
+    modes_of: dict[str, list[str]] = {}
     for mode in MODES:
         page = 1
+        seen_here: set[str] = set()
         while True:
             html = fetch(f"{BASE}/task?mode={mode}&page={page}",
                          cache_name=f"list-{mode}-{page}.html",
                          refresh=refresh, cache_only=cache_only)
             found = re.findall(r'href="/task/([0-9a-f]{24})"', html)
-            fresh = [i for i in found if i not in seen]
+            fresh = [i for i in found if i not in seen_here]
             for i in fresh:
-                seen.add(i)
-                ids.append(i)
+                seen_here.add(i)
+                modes_of.setdefault(i, [])
+                if mode not in modes_of[i]:
+                    modes_of[i].append(mode)
             pages = [int(p) for p in re.findall(rf"/task\?mode={mode}&(?:amp;)?page=(\d+)", html)]
             last = max(pages) if pages else page
             if page >= last or not found:
                 break
             page += 1
-        log(f"{mode}: 列表共 {len(ids)} 个任务")
-    return ids
+        log(f"{mode}: 列表共 {len(seen_here)} 个任务")
+    return modes_of
 
 
 def fetch_tasks(refresh: bool, cache_only: bool) -> int:
-    ids = task_list(refresh, cache_only)
+    modes_of = task_list(refresh, cache_only)
+    ids = list(modes_of)
     if not ids:
         die("任务列表为空，站点结构可能变了")
 
     def one(tid: str) -> dict:
         html = fetch(f"{BASE}/task/{tid}", cache_name=f"task-{tid}.html",
                      refresh=refresh, cache_only=cache_only)
-        return parse_task(tid, html)
+        rec = parse_task(tid, html)
+        rec["modes"] = modes_of.get(tid) or ["pvp"]
+        return rec
 
     recs = parallel(one, ids)
     recs.sort(key=lambda r: r["name"])
     EF.mkdir(parents=True, exist_ok=True)
     db = {
         "generatedAt": datetime.date.today().isoformat(),
-        "source": f"{BASE}/task (PVP + PVE 任务列表；不含赛季任务)",
+        "source": f"{BASE}/task (PVP + PVE + 赛季 任务列表)",
         "tasks": recs,
     }
     (EF / "tasks.json").write_text(
         json.dumps(db, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     no_en = [r for r in recs if not r["nameEn"]]
+    counts = {m: sum(1 for r in recs if m in r["modes"]) for m in MODES}
     log(f"tasks.json: {len(recs)} 条，缺英文名 {len(no_en)}，"
         f"有目标 {sum(1 for r in recs if r['objectives'])}，"
         f"有配图 {sum(1 for r in recs if r['guideImages'])}")
+    log("按模式: " + "  ".join(f"{m}={counts[m]}" for m in MODES))
     return len(recs)
 
 

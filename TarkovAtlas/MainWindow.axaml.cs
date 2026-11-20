@@ -86,6 +86,7 @@ public partial class MainWindow : Window
             _settings = _settingsService.Load();
             _settings.Normalize();
             _repo.Load();
+            _quests.SetMode(_settings.QuestMode);
             _quests.Load();
 
             MapCountText.Text = $"{_repo.Maps.Count} 张";
@@ -110,6 +111,7 @@ public partial class MainWindow : Window
             StoryHideDoneCheck.IsChecked = _settings.StoryHideDone;
             _quests.RefreshStoryView();
             StoryList.ItemsSource = _quests.StoryView;
+            UpdateQuestModeButtons();
             RefreshQuestCounts();
             _quests.SetFilter(_settings.QuestFilter);
             _quests.SetQuery("");
@@ -1393,6 +1395,92 @@ public partial class MainWindow : Window
         Persist();
         _deferQuestSort = false;
         RefreshQuestScope();
+    }
+
+    /// <summary>
+    /// Switch the task system's raid mode (PVP / PVP S / PVE). Each mode has its
+    /// own checklist file, so this reloads progress, re-filters the roster and
+    /// re-pushes tracked markers. Map and display settings are unaffected.
+    /// </summary>
+    private void QuestMode_Click(object? sender, RoutedEventArgs e)
+    {
+        // Reached from the header flyout (MenuItem.Tag) and the drawer buttons
+        // (Button.Tag); both carry the mode string in Tag.
+        var mode = sender switch
+        {
+            Button b => b.Tag as string,
+            MenuItem m => m.Tag as string,
+            _ => null,
+        };
+        if (mode is null) return;
+
+        var normalized = QuestModes.Normalize(mode);
+        if (normalized == _settings.QuestMode) return;
+
+        _settings.QuestMode = normalized;
+        Persist();
+        _quests.SetMode(normalized);
+        _deferQuestSort = false;
+        UpdateQuestModeButtons();
+        RefreshQuestScope();
+        RefreshQuestCounts();
+        if (_quests.LoadWarning is not null) ShowToast(_quests.LoadWarning);
+    }
+
+    /// <summary>
+    /// Reflect the active raid mode on both switchers: the header pill (with its
+    /// flyout menu) and the drawer's three-way button row.
+    /// </summary>
+    private void UpdateQuestModeButtons()
+    {
+        var active = QuestModes.Normalize(_settings.QuestMode);
+
+        // Header pill: label + dot.
+        if (HeaderModeText is not null) HeaderModeText.Text = QuestModes.Label(active);
+        if (HeaderModeDot is not null)
+        {
+            HeaderModeDot.Fill = Palette.Brush(active switch
+            {
+                QuestModes.Pve => Palette.Success,
+                QuestModes.Pvps => Palette.Accent,
+                _ => Palette.Accent,
+            });
+        }
+        if (HeaderModeButton is not null)
+        {
+            ToolTip.SetTip(HeaderModeButton,
+                $"当前任务模式：{QuestModes.Label(active)}（切换后任务进度独立保存）");
+        }
+        foreach (var (item, mode) in new[]
+                 {
+                     (HeaderModePvpItem, QuestModes.Pvp),
+                     (HeaderModePvpsItem, QuestModes.Pvps),
+                     (HeaderModePveItem, QuestModes.Pve),
+                 })
+        {
+            if (item is null) continue;
+            item.FontWeight = mode == active ? FontWeight.SemiBold : FontWeight.Normal;
+        }
+
+        // Drawer three-way switch.
+        foreach (var (button, mode) in new[]
+                 {
+                     (QuestModePvpButton, QuestModes.Pvp),
+                     (QuestModePvpsButton, QuestModes.Pvps),
+                     (QuestModePveButton, QuestModes.Pve),
+                 })
+        {
+            if (button is null) continue;
+            var on = mode == active;
+            button.FontWeight = on ? FontWeight.SemiBold : FontWeight.Normal;
+            button.Opacity = on ? 1.0 : 0.55;
+            button.Background = on
+                ? Palette.Brush(Palette.Accent)
+                : Avalonia.Media.Brushes.Transparent;
+            button.Foreground = on
+                ? Palette.Brush(Palette.TextOnAccent)
+                : Palette.Brush(Palette.TextMuted);
+        }
     }
 
     /// <summary>Recompute the quest list for the current map + search + filter.

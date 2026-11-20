@@ -59,7 +59,15 @@ public static class AppPaths
     }
 
     public static string SettingsFile => Path.Combine(DataDir, "settings.json");
-    public static string QuestProgressFile => Path.Combine(DataDir, "quest-progress.json");
+    /// <summary>
+    /// Task progress is stored per raid mode, so a PVE checklist can never tick
+    /// a PVP task off. The legacy flat file is the PVP checklist's origin (all
+    /// progress that existed before modes were introduced belongs to PVP).
+    /// </summary>
+    public static string QuestProgressFile(string? mode = null) =>
+        string.IsNullOrWhiteSpace(mode)
+            ? Path.Combine(DataDir, "quest-progress.json")
+            : Path.Combine(DataDir, $"quest-progress-{QuestModes.Normalize(mode)}.json");
     public static string CrashLog => Path.Combine(DataDir, "crash.log");
 
     public static string DefaultScreenshotsDir =>

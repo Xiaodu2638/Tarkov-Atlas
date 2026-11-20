@@ -81,6 +81,11 @@ public sealed class AppSettings
     public int QuestFilter { get; set; }
     /// <summary>Only show tasks that can be progressed on the selected map.</summary>
     public bool QuestFollowsMap { get; set; } = true;
+    /// <summary>
+    /// Active raid mode for the task system (pvp / pvps / pve). Task progress is
+    /// stored per mode; every other setting stays global.
+    /// </summary>
+    public string QuestMode { get; set; } = QuestModes.Pvp;
     /// <summary>Hide completed chapters in the main-story tab (display only; the
     /// ticks themselves live in the progress file).</summary>
     public bool StoryHideDone { get; set; }
@@ -115,6 +120,7 @@ public sealed class AppSettings
         OverlayZoom = Math.Clamp(OverlayZoom, 0.5, 12);
         if (OverlayAnchor is not ("top" or "middle" or "bottom")) OverlayAnchor = "middle";
         if (ExtractFilter is not ("all" or "pmc" or "scav" or "shared")) ExtractFilter = "all";
+        QuestMode = QuestModes.Normalize(QuestMode);
     HiddenPoiKinds = HiddenPoiKinds.Distinct().ToList();
     }
 }
