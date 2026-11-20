@@ -41,6 +41,8 @@ python tools/fetch_eftarkov.py             # 单独跑抓取器（--tasks/--stor
 
 改了代码要做任何运行时验证之前**先重跑 `build.ps1`**：验证脚本打的是 `dist/` 里的 exe，代码提交了但 dist 没重发，测到的就是旧版本（曾把「功能正常」误判成「左键拖拽没反应」）。
 
+**改完 `.axaml` 必须确认真的重编译了**：增量 build 偶尔只花 1 秒就报「已成功」，XAML 改动没进程序集，界面上看不到新控件（曾因此以为模式切换按钮没做出来）。判据是耗时明显 >5s 且输出里有编译动作；不放心就 `Remove-Item -Recurse TarkovAtlas\obj, TarkovAtlas\bin` 再 build。改动 XAML 后别用编辑器批量替换——把文件写成非 UTF-8 会立刻炸 `AVLN1001`，改前 `Copy-Item` 备份最稳。
+
 重发布 `dist` 前先确认没有 TarkovAtlas 实例在运行：提权实例会锁住 `TarkovAtlas.exe` / `av_libglesv2.dll` / zip，`build.ps1` 打包到一半才报 `PermissionDenied`。
 
 产物：`dist/TarkovAtlas-win-x64/TarkovAtlas.exe`（约 20 MB 原生 exe，整个目录约 274 MB，需同目录的 `av_libglesv2.dll`、`libSkiaSharp.dll`、`libHarfBuzzSharp.dll` 与 `Assets/`；`Scripts/ocr.ps1` 已内嵌进 exe，不随包分发）。脚本同时打一个同名 zip；`-NoAot` 跳过 AOT，`-OutputRoot <dir>` 换输出目录。
@@ -83,7 +85,7 @@ TarkovAtlas/                    应用主体（C# / Avalonia）
     maps/layers/index.json      楼层图索引
     maps/layers/<key>/*.png     楼层叠加图（与底图共用像素网格）
     maps/hazards.json           雷区 / 狙击区 / 其它危险区多边形
-    quests.json                 任务库（553 条）
+    quests.json                 任务库（582 条，每条带 modes 标签：pvp/pve/season）
     story.json                  剧情（10 章 / 254 目标）
     bosses/*.png                Boss 头像
     traders/*.png               商人头像
@@ -185,6 +187,23 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 - **× 是最小化到托盘，不是退出**：`ShutdownMode = OnExplicitShutdown`（App.axaml.cs），MainWindow.OnClosing 在非退出路径取消关闭并 `Hide()`；真正的退出只有托盘菜单「退出」（`ExitApplication` → 置 `_shuttingDown = true` → `desktop.Shutdown()`），它复用 OnClosing 的 teardown。托盘由 `InitTrayIcon` 在 OnOpened 里挂，失败静默降级。别把 ShutdownMode 改回去——主窗口一关进程就没了。
 - **动效统一走 `Services/UiFx.cs`**：`FadeIn` / `FadeOutAndCollapse` / `AnimateWidth`，150–220ms ease-out。已应用：任务抽屉（滑出+淡入）、图例面板、toast、地图切换画布淡入、悬浮窗开关、标题栏三键（App.axaml 里 CaptionButtons 的 BrushTransition）。新增过渡复用它，不要在每个 call site 手写 Animation；也别把时长调长——超过 ~250ms 就会显得拖沓。
 
+### 4.7 任务模式隔离（PVP / PVP S / PVE）
+- **一份打了标签的库，不是三份库**：`quests.json` 每条带 `modes: ["pvp"]` / `["pve"]` / `["pvp","season"]`。站点只有三种列表：PVP 519、PVE 518、赛季 524；`?mode=pvps` 站点不认、返回的就是 PVP。**PVP S 是游戏侧匹配选项，等于 PVP + 赛季**，所以 `QuestModes.Matches()` 里 pvps = `pvp ∪ season`（553 条），pvp = 仅 `pvp`（519），pve = `pve`（518）。
+- **PVP 与 PVE 各约 30 条独占任务**（同名不同版本，如「专业热身 - 1（PVP）」vs「（PVE）」）；赛季独占 34 条。改动名册口径先查 `fetch_eftarkov.py` 的 `MODES` 与 `build_data.py` 的 mode 计数输出。
+- **进度按模式分文件**：`AppPaths.QuestProgressFile(mode)` → `quest-progress-{pvp,pvps,pve}.json`。`QuestService.CurrentMode` / `SetMode()` 切换时重载进度并重建剧情行；`Apply()` / `BuildMarkers()` / `TotalCount` 全部按模式过滤，漏一处就会出现「勾了 PVE 的任务却显示在 PVP」。
+- **迁移只在 PVP 首次触发**：`LoadProgress()` 里若 `-pvp.json` 不存在且旧的扁平 `quest-progress.json` 存在才复制（复制不删除）。新用户目录为空，永远不触发。PVPS/PVE 刻意从空开始——别顺手把旧进度也分给它们。
+- **配置不隔离**：只有任务系统按模式走。地图选择、图例开关、悬浮窗几何、热键全是 `settings.json` 单份全局值，唯一新增的是 `AppSettings.QuestMode`。
+- **两个入口同步**：顶栏胶囊（`HeaderModeButton` + MenuFlyout，A1 方案，窄窗口也不挤）和任务抽屉三段按钮都调同一个 `QuestMode_Click`，`UpdateQuestModeButtons()` 负责把两边状态一起刷新——新增第三个入口时要一并加进去。
+- **个人数据绝不进仓库/发布包**：进度与 `settings.json` 写在 `%APPDATA%\TarkovAtlas\`。`.gitignore` 已挡 `quest-progress*.json` / `settings.json` / `crash.log`；`build.ps1` 打包前扫 `dist`，命中就 `throw`（作者的真实进度曾差点随包发出去）。加新的持久化文件时两处都要补。
+
+### 4.8 自动切楼层
+- **只有两条驱动，别混**：① 日志链路 `GameLogService.MapDetected` → `OnMapDetected`，只负责切地图，顺带复位 `_manualLayerPick` 并按该图最新截图的 Y 重选楼层；② 截图链路 `OnNewScreenshotAsync` / `ScanScreenshotsAsync` → `AutoSelectLayerForHeight(y)`，**楼层真正由截图文件名里的 Y 决定**。纯日志、无截图时永远落在「保存的选择 or 第 0 层」。
+- **`_hasPlayerHeight` 只在 `AutoSelectLayerForHeight` 里置位**；`SelectMapAsync` 在 `mapChanged` 时把它和 `_lastPlayerY` 清零（跨图沿用高度会选错楼）。想加新的选层触发点，必须自己置位。
+- **`_manualLayerPick` 是「用户手动选过」的粘性锁**：为 true 时自动选层整个跳过。复位点有两个——换地图（`SelectMapAsync`）和新战局（`OnMapDetected`）；同图连排战局不经过 `mapChanged`，靠后者。
+- **扫描路径顺序必须是「先切图、后选层」**：`LoadFloorLayers` 在 `SelectMapAsync` 内部跑，反过来会拿旧楼层表套新截图的 Y。
+- **日志去重要分清「新块」和「旧尾巴」**：`ReadLatest()` 只在本次新读到的文本里出现战局标记行才算新开局（同图连排两局也要发事件）；从累积 `_tail` 回填的仍按 id 去重。换连新日志文件时重置 `LastLocationId`。
+- **`layers/index.json` 没有 interior/location 字段**：楼层只按 `minHeight`/`maxHeight` 匹配 Y。别指望从 rcid 直接映射到楼层。
+
 ---
 
 ## 5. 约束与已知的坑
@@ -197,7 +216,7 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 6. **不要加 NuGet 外网依赖**：只能用 `.nuget-packages` 里的离线缓存。
 7. **别 `git clean -xdf`**：会连 `research/` 的矢量源一起删掉（`tools/pyext`、`tools/pylibs`、`tools/tile-cache` 也会没）。
 8. **文件写入偶发 `file no longer exists — re-read`** 是沙箱常态，重读再写即可，不是逻辑错误。往 `.tmp/` 丢临时脚本时**别用标准库模块名**（`struct.py` 会盖住 stdlib 的 `struct`，因为 CWD 在 `sys.path` 里）。
-9. **上游端点现状（实测）**：`eftarkov.com` 国内直连可用（任务列表 `/task?mode=pvp|pve&page=N` 每页 20 条；`/task/<id>` 详情页里「任务攻略」块除 `/uploads/infoImg/*` 之外还内嵌交互式小地图 `/assets/maps/*.svg` 与 `quest_objective.png` 标记图标——抓配图必须按 `infoImg` 过滤，否则每个任务凭空多 2 张“图”；任务 id 是 BSG 24-hex，与 tarkov.dev 同 id 空间）。**位置卡（`task-og-card`，目标像素源）别依赖页头 `/map/<id>?marker=<hex>` 链接解析点位**：多点目标（如「摧毁摄像头 3 个」）该链接是 URL 编码逗号串（`marker=a%2Cb%2Cc…`），且点位分散在多个 `data-task-og-stage` div（非当前楼层的带 `hidden`）——按「单 hex 链接 + 首个 stage」抓会**整卡静默丢失**（万圣节任务坐标缺失就是这么来的）；链接只取 map id，点位逐 stage 遍历 `data-marker-x/y`。疫区场景（工厂 `486a0d05…`/实验室 `9fc7b946…`）不在 13 图内，位置卡自动跳过属正确行为。`assets.tarkov.dev` 403；`api.tarkov.dev/graphql` 可用但间歇 422 "GraphQL server unavailable"（2026-08 起上游 issue 在册，可连发多次，重试也未必好；update_data.py 按退避重试，4 次失败则告警降级沿用现有快照，不阻断流水线）——**请求必须带浏览器 UA + Content-Type/Accept，否则 Cloudflare 直接 403**；`data.tarkov.dev` 在本机连 DNS 都不解析。GitHub 与 fandom wiki 可访问。真实拉取若持续失败，换网络环境重跑，不要改脚本硬编码假数据。
+9. **上游端点现状（实测）**：`eftarkov.com` 国内直连可用（任务列表 `/task?mode=pvp|pve|season&page=N` 每页 20 条；`/task/<id>` 详情页里「任务攻略」块除 `/uploads/infoImg/*` 之外还内嵌交互式小地图 `/assets/maps/*.svg` 与 `quest_objective.png` 标记图标——抓配图必须按 `infoImg` 过滤，否则每个任务凭空多 2 张“图”；任务 id 是 BSG 24-hex，与 tarkov.dev 同 id 空间）。**位置卡（`task-og-card`，目标像素源）别依赖页头 `/map/<id>?marker=<hex>` 链接解析点位**：多点目标（如「摧毁摄像头 3 个」）该链接是 URL 编码逗号串（`marker=a%2Cb%2Cc…`），且点位分散在多个 `data-task-og-stage` div（非当前楼层的带 `hidden`）——按「单 hex 链接 + 首个 stage」抓会**整卡静默丢失**（万圣节任务坐标缺失就是这么来的）；链接只取 map id，点位逐 stage 遍历 `data-marker-x/y`。疫区场景（工厂 `486a0d05…`/实验室 `9fc7b946…`）不在 13 图内，位置卡自动跳过属正确行为。`assets.tarkov.dev` 403；`api.tarkov.dev/graphql` 可用但间歇 422 "GraphQL server unavailable"（2026-08 起上游 issue 在册，可连发多次，重试也未必好；update_data.py 按退避重试，4 次失败则告警降级沿用现有快照，不阻断流水线）——**请求必须带浏览器 UA + Content-Type/Accept，否则 Cloudflare 直接 403**；`data.tarkov.dev` 在本机连 DNS 都不解析。GitHub 与 fandom wiki 可访问。真实拉取若持续失败，换网络环境重跑，不要改脚本硬编码假数据。
 10. **`render_svg()` 用 `<img>` 渲染，窗口比例和 SVG viewBox 不一致时会 letterbox**：画面被等比缩小居中，而 affine 假设画面铺满画布，于是所有标记整体偏移。所以 SVG 一律经 `svg_canvas()` 出图（按自身比例渲染 → 同一 `turn` 旋转 → 拉伸到目标尺寸），底图和楼层共用这条路径；不要再直接 `render_svg()` 到目标画布尺寸。
 11. **冰破船的层必须用与底图相同的渲染身份**：`research/svg/icebreaker/*.svg` 共享同一 viewBox（`1000 1500 3000 5400`），每个文件里只有 `display:block` 的那个组是有效内容。必须按**与底图完全相同的目标尺寸与 `turn`** 渲染（`bake_svg_layer` 已如此），任何裁剪/二次缩放都会重新引入错位。
 12. **`render_svg()` 的 `only_layer` 只允许隐藏顶层组**：这些 SVG 把每层作为根 `<svg>` 的直接子 `<g>`，层内还有 `Floor` / `Wall` / `Stairs` 等嵌套组。早期用 `^  <g` 缩进正则匹配顶层组，文件被压成单行后匹配数为 0，「隐藏其它层」静默失效、整份文档全被渲染；后来改成匹配任意 `<g id>` 又把**层内**的嵌套组一起隐藏，底图直接变成纯背景色。现在统一走 `top_level_group_ids()`（`ElementTree` 解析，只取根节点的直接子组）。新增地图的层过滤必须复用它，不要再用正则猜缩进。
@@ -210,6 +229,7 @@ docs/                           界面截图（README 引用）+ 宣传落地页
 15. **悬浮窗拖窗不用 DIP 增量**：`e.GetPosition` 是相对已移动的窗口的，负反馈导致窗口只跟到光标位移的 40–73%；`GetCursorPos`（物理像素，与 `Window.Position` 同系）+ 按下时抓取偏移才 100% 跟手。`BeginMoveDrag` 只认左键，右键无效。
 16. **数据管线缩进陷阱**：`build_data.py` 里曾有一段 12 空格的代码被 8 空格的 `for` 头吞成循环体，12 张地图的 loot/caches 静默清零而三套自检照样全绿（当时没有非空断言）。改完 `build_*.py` 重跑后，必须 diff 产物：`git diff` 之外，用 Python 按 `maps.<key>.<field>` 逐字段对比 HEAD 版本，确认**只有预期字段变化**。datacheck 现已有 BTR/loot/caches 逐图非空断言兜底，但只覆盖已知类别。
 17. **推送 / 发布的网络路径**：本机 `github.com:443` 直连不通（`api.github.com` 通）。git push 走 v2rayN 混合端口的 HTTP 代理 `-c http.proxy=http://127.0.0.1:10808`；`socks5h://` scheme 会 Connection reset，别用。代理没开时 push 秒败，先探端口再推。
+    **Release 资产上传必须绕开代理**：`uploads.github.com:443` 可直连，但经 10808 传 240 MB 会被中途重置（`ConnectionResetError 10054`），`requests` 反复重试也一样。正确做法是 `curl.exe --noproxy '*' --http1.1 --retry 5 -T dist/TarkovAtlas-win-x64.zip <upload_url>?name=...`（实测 87 秒传完）。**上传前先确认 Release 现有资产**——`gh_release.py` 是先删同名资产再传，中途失败会留下「零资产」空档（踩过两次，只能立刻补传）。`Start-Process` 脱离终端跑时务必重定向 stdout/stderr 并加 `-u`（无缓冲），否则进程被杀时日志是 0 字节、完全看不出错在哪。
 18. **历史已用 git filter-repo 清理过**（第三方工具箱、含个人路径的 HANDOVER.md），`.git` 约 474 MB。绝不能再把 `工具箱*/` 或任何本机路径提交进来；`.gitignore` 已挡住，改 ignore 规则时留意。
 
 两个大文件：`MainWindow.axaml.cs`（约 2k 行，所有 UI 交互：地图切换、楼层、图例、任务抽屉、日志监听）和 `Controls/MapCanvas.cs`（约 1.6k 行，全部绘制 + 指针手势）。改行为先在这两处找，不要去 Models 里猜。悬浮窗的手势在 `OverlayWindow.axaml.cs`（画布 `IsHitTestVisible=false`，事件由窗口层转发给 `MapCanvas.Begin/Move/EndHostPan`）。
