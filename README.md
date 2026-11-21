@@ -68,7 +68,6 @@
 - 每个有坐标的任务带「跳转到地图 ▸」按钮：单地图任务直接切图并对准目标；多地图任务
   （非击杀类）会弹出地图选择菜单。
 - 「标记完成 / 取消」、全部 / 未完成 / 已完成筛选。
-- 任务识别：**任务页面截图 OCR**（Windows 自带离线 OCR + 模糊匹配）。
 - 「打开 Wiki」在浏览器打开 `https://www.eftarkov.com/task/{id}`；「任务地点图」在应用内
   的图片查看器中显示**随包内置**的标注图（285 个任务 / 1622 张，207 MB），完全离线。
 
@@ -89,7 +88,6 @@
 - Windows 10 1809 / Windows 11，x64。
 - 运行发布版**不需要** .NET；只需系统 VC++ 运行库（Windows 10/11 自带）。
 - 启动会弹 UAC 提权提示（为了全局热键）。
-- OCR 需要 Windows OCR 语言包；英文系统默认可用。
 
 ## 直接运行
 
@@ -241,7 +239,6 @@ SVG（共享 viewBox `1000 1500 3000 5400`）：`build_layers.py` 通过 `ICE_FL
 - 底图为主楼层静态图，不随截图 `y` 值切换楼层（坐标会显示高度）。
 - 破冰船 16 层的层名沿用上游英文。
 - 截图文件名不含地图 ID；边界重叠时依赖日志或当前选中地图判断。
-- OCR 识别率受截图分辨率与语言包影响。
 - 海岸线楼层内容区偏小，待重新烘焙。
 
 ## 项目结构
@@ -254,12 +251,11 @@ TarkovAtlas/                 应用主体（C# / Avalonia）
   MainWindow.axaml(.cs)      地图列表、图例、任务抽屉、日志监听
   OverlayWindow.axaml(.cs)   正方形跟随式悬浮窗
   SettingsWindow.axaml(.cs)  设置
-  QuestScanWindow.cs         OCR 候选
   MapPickWindow.cs           多地图任务选择
   ImageViewerWindow.cs       应用内图片查看器（任务地点图）
   Controls/MapCanvas.cs      全部绘制（性能关键路径）
   Models/                    地图、任务、设置、截图
-  Services/                  数据加载、日志监听、截图、OCR、热键、持久化
+  Services/                  数据加载、日志监听、截图、热键、持久化
   Assets/maps/               底图 + mapdata.json + layers/ + hazards.json
   Assets/{bosses,traders,legend,guides}/
   Assets/quests.json         本地化任务库

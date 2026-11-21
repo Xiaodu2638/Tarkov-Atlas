@@ -68,8 +68,3 @@ Tarkov Atlas 是玩家社区的非官方、非商业工具，与 Battlestate Gam
 - **SkiaSharp** — MIT — https://github.com/mono/SkiaSharp
 - **HarfBuzzSharp** — MIT — https://github.com/mono/SkiaSharp
 - **ANGLE / libEGL / libGLESv2** — BSD-style — https://chromium.googlesource.com/angle/angle
-
-## Windows OCR
-
-可选的截图任务识别通过 Windows PowerShell 调用本机 `Windows.Media.Ocr`。
-截图与识别文本不会上传到任何服务器。

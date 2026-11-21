@@ -10,7 +10,7 @@ public sealed class QuestService
     // Keep CJK: most titles are Chinese ("枪弹专家 - 2"), and stripping every
     // non-ASCII letter left queries like "枪弹专家-2" as just "2" - matching
     // dozens of "- 2" tasks or none at all (the raw Contains fallback breaks on
-    // the " - " spacing). Word-based Similarity/OCR scoring needs the words too.
+    // the " - " spacing). The search key needs the words intact too.
     private static readonly Regex NonAlnum = new(@"[^0-9a-z\u4e00-\u9fff\u3400-\u4dbf]+", RegexOptions.Compiled);
 
     private readonly List<Quest> _quests = new();
@@ -344,58 +344,6 @@ public sealed class QuestService
 
     public TraderInfo? FindTrader(string id) => _traders.TryGetValue(id, out var t) ? t : null;
 
-        public IReadOnlyList<QuestCandidate> MatchText(string text, int maxResults = 40)
-    {
-        var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(Normalize)
-            .Where(l => l.Length >= 3)
-            .ToList();
-        if (lines.Count == 0) return Array.Empty<QuestCandidate>();
-
-        var joined = string.Join(" ", lines);
-        var candidates = new List<QuestCandidate>();
-
-        foreach (var quest in _quests)
-        {
-            double best = 0;
-            string evidence = "";
-            foreach (var title in new[] { quest.Name, quest.NameEn })
-            {
-                var probe = Normalize(title);
-                if (probe.Length < 3) continue;
-
-                if (joined.Contains(probe, StringComparison.Ordinal))
-                {
-                    if (best < 1.0) { best = 1.0; evidence = "整段命中"; }
-                    continue;
-                }
-
-                foreach (var line in lines)
-                {
-                    if (line.Contains(probe, StringComparison.Ordinal) ||
-                        (probe.Contains(line, StringComparison.Ordinal) && line.Length >= Math.Max(5, probe.Length * 0.6)))
-                    {
-                        if (best < 0.97) { best = 0.97; evidence = "行内命中"; }
-                        break;
-                    }
-                    var score = Similarity(probe, line);
-                    if (score > best) { best = score; evidence = "模糊匹配"; }
-                }
-            }
-
-            if (best >= 0.6)
-                candidates.Add(new QuestCandidate { Quest = quest, Score = Math.Round(best, 3), Evidence = evidence });
-        }
-
-        return candidates
-            .GroupBy(c => c.Quest.Id)
-            .Select(g => g.OrderByDescending(x => x.Score).First())
-            .OrderByDescending(c => c.Score)
-            .ThenBy(c => c.Quest.Name)
-            .Take(maxResults)
-            .ToList();
-    }
-
     /// <summary>
     /// Markers for the tasks that can be progressed on the given map. Only
     /// tracked tasks contribute, and only objectives that carry coordinates.
@@ -590,42 +538,5 @@ public sealed class QuestService
             .Replace('–', '-')
             .Replace('—', '-');
         return NonAlnum.Replace(lower, " ").Trim();
-    }
-
-    private static double Similarity(string a, string b)
-    {
-        if (a.Length == 0 || b.Length == 0) return 0;
-        if (a == b) return 1;
-
-        var aw = a.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        var bw = b.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        var common = aw.Intersect(bw, StringComparer.Ordinal).Count();
-        var jaccard = common / (double)Math.Max(1, aw.Union(bw, StringComparer.Ordinal).Count());
-
-        var distance = Levenshtein(a, b, 12);
-        var lev = 1.0 - distance / (double)Math.Max(a.Length, b.Length);
-        return Math.Max(jaccard, lev);
-    }
-
-    private static int Levenshtein(string a, string b, int cap)
-    {
-        if (Math.Abs(a.Length - b.Length) > cap) return cap + 1;
-        var prev = new int[b.Length + 1];
-        var cur = new int[b.Length + 1];
-        for (var j = 0; j <= b.Length; j++) prev[j] = j;
-        for (var i = 1; i <= a.Length; i++)
-        {
-            cur[0] = i;
-            var rowMin = cur[0];
-            for (var j = 1; j <= b.Length; j++)
-            {
-                var cost = a[i - 1] == b[j - 1] ? 0 : 1;
-                cur[j] = Math.Min(Math.Min(cur[j - 1] + 1, prev[j] + 1), prev[j - 1] + cost);
-                rowMin = Math.Min(rowMin, cur[j]);
-            }
-            if (rowMin > cap) return cap + 1;
-            (prev, cur) = (cur, prev);
-        }
-        return prev[b.Length];
     }
 }

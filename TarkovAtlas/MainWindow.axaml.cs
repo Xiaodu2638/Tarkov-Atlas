@@ -8,7 +8,6 @@ using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using TarkovAtlas.Controls;
@@ -25,7 +24,6 @@ public partial class MainWindow : Window
     private readonly ScreenshotService _screenshots = new();
     private readonly GameLogService _logs = new();
     private readonly GlobalHotkeyService _hotkeys = new();
-    private readonly OcrService _ocr = new();
     private readonly LocalGuideService _localGuides = new();
     // ObservableCollection, not List<T>: the ListBox is bound once and only sees
     // the items that exist at binding time, so a plain List left the sidebar
@@ -1852,51 +1850,6 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             ShowToast("无法打开浏览器: " + ex.Message);
-        }
-    }
-
-    private async void OcrQuestButton_Click(object? sender, RoutedEventArgs e)
-    {
-        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
-        {
-            Title = "选择任务页面截图",
-            AllowMultiple = false,
-            FileTypeFilter = new[]
-            {
-                new FilePickerFileType("图片")
-                {
-                    Patterns = new[] { "*.png", "*.jpg", "*.jpeg", "*.bmp", "*.webp" },
-                },
-            },
-        });
-        var path = files.Count > 0 ? files[0].TryGetLocalPath() : null;
-        if (string.IsNullOrWhiteSpace(path)) return;
-
-        OcrStatusText.IsVisible = true;
-        OcrStatusText.Text = "正在用 Windows OCR 识别截图…";
-        try
-        {
-            var result = await _ocr.RecognizeAsync(path);
-            if (!result.Ok)
-            {
-                OcrStatusText.Text = "OCR 失败：" + result.Error;
-                return;
-            }
-
-            var candidates = _quests.MatchText(result.Text);
-            OcrStatusText.Text = candidates.Count == 0
-                ? "未匹配到任务名；可在下方列表手动搜索勾选。"
-                : $"识别到 {candidates.Count} 个候选任务。";
-
-            var dialog = new QuestScanWindow("截图任务识别",
-                "请核对 OCR 候选；未收录的任务可稍后在任务库更新后使用。",
-                candidates, result.Text);
-            await dialog.ShowDialog(this);
-        }
-        catch (Exception ex)
-        {
-            AppPaths.LogCrash(ex);
-            OcrStatusText.Text = "OCR 出错：" + ex.Message;
         }
     }
 

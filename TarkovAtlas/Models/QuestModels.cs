@@ -382,15 +382,6 @@ public sealed class QuestRow : INotifyPropertyChanged
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
 
-public sealed class QuestCandidate
-{
-    public Quest Quest { get; init; } = new();
-    public double Score { get; init; }
-    public string Evidence { get; init; } = "";
-    public bool Selected { get; set; } = true;
-    public string ScoreText => $"{Score * 100:0}%";
-}
-
 /// <summary>A quest objective marker to draw on the map, with the giver avatar.</summary>
 public sealed class QuestMarker
 {

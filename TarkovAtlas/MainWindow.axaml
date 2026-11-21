@@ -131,7 +131,7 @@
 
           <Border Grid.Row="3" BorderBrush="{StaticResource DividerBg}" BorderThickness="0,1,0,0" Padding="12,10">
             <StackPanel Spacing="7">
-              <Button x:Name="QuestToggleButton" Classes="accent" Content="任务追踪  ·  截图识别"
+              <Button x:Name="QuestToggleButton" Classes="accent" Content="任务追踪"
                       HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                       Click="QuestToggleButton_Click" />
               <Grid ColumnDefinitions="*,*" ColumnSpacing="7">
@@ -273,19 +273,14 @@
                 <StackPanel Grid.Row="0" Margin="12,10,12,6" Spacing="7">
                   <TextBox x:Name="QuestSearchBox" Watermark="搜索全部任务（名称 / 英文名 / 商人）"
                            TextChanged="QuestSearchBox_TextChanged" />
-                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
-                    <ComboBox Grid.Column="0" x:Name="QuestFilterBox" SelectedIndex="0"
-                              SelectionChanged="QuestFilterBox_SelectionChanged">
-                      <ComboBoxItem Content="全部任务" />
-                      <ComboBoxItem Content="未完成" />
-                      <ComboBoxItem Content="已完成" />
-                    </ComboBox>
-                    <Button Grid.Column="1" Content="截图识别" Click="OcrQuestButton_Click" />
-                  </Grid>
+                  <ComboBox x:Name="QuestFilterBox" SelectedIndex="0" HorizontalAlignment="Stretch"
+                            SelectionChanged="QuestFilterBox_SelectionChanged">
+                    <ComboBoxItem Content="全部任务" />
+                    <ComboBoxItem Content="未完成" />
+                    <ComboBoxItem Content="已完成" />
+                  </ComboBox>
                   <CheckBox x:Name="QuestFollowMapCheck" Content="只显示当前地图可做的任务（搜索时自动放开）"
                             IsChecked="True" Click="QuestFollowMapCheck_Click" FontSize="10" />
-                  <TextBlock x:Name="OcrStatusText" Text="" FontSize="9.5"
-                             Foreground="{StaticResource TextMuted}" IsVisible="False" TextWrapping="Wrap" />
                 </StackPanel>
 
                 <Border Grid.Row="1" Margin="12,0,12,6" Padding="8,5" Background="{StaticResource CardAltBg}"

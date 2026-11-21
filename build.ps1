@@ -69,7 +69,6 @@ if (Test-Path $target) { Remove-Item $target -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $target | Out-Null
 Get-ChildItem $result.Dir -File | Where-Object { $_.Extension -ne ".pdb" } |
     Copy-Item -Destination $target -Force
-# Scripts/ is embedded in the assembly (OcrService), so it is not shipped.
 # docs/ holds repository screenshots, not runtime data.
 Copy-Item (Join-Path $result.Dir "Assets") $target -Recurse -Force
 # The licence and third-party notice must travel with the binary: the map art is
