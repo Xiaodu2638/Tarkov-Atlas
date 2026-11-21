@@ -222,6 +222,11 @@ def grab(h: int, out: pathlib.Path, settle: float = 2.2,
     force_front(h)
     park_mouse()
     time.sleep(settle)
+    # 等待期间别的窗口（编辑器/终端/浏览器）可能抢走前台，截到的就是它们。
+    # 抓屏前再顶一次，并把光标挪开，然后立刻截。
+    force_front(h)
+    park_mouse()
+    time.sleep(0.4)
     l, t, r, b = box_fn(h)
     out.parent.mkdir(parents=True, exist_ok=True)
     ImageGrab.grab(bbox=(l, t, r, b), all_screens=True).save(out)
@@ -235,8 +240,12 @@ def grab(h: int, out: pathlib.Path, settle: float = 2.2,
 # --------------------------------------------------------------------------- driver
 
 
-def seed_settings() -> None:
-    """把应用状态调成适合截图的样子，并清掉一次性的截图目录。"""
+def seed_settings(show_overlay: bool = True) -> None:
+    """把应用状态调成适合截图的样子，并清掉一次性的截图目录。
+
+    悬浮窗是否随启动显示由本次要拍的步骤决定：它的创建是异步的，只拍主界面
+    时若仍设成 True，它可能在 hide_overlay() 之后才出现，结果糊在截图右缘。
+    """
     path = pathlib.Path(os.environ.get("APPDATA", "")) / "TarkovAtlas" / "settings.json"
     data = {}
     if path.is_file():
@@ -245,7 +254,7 @@ def seed_settings() -> None:
         except Exception:
             data = {}
     data["selectedMap"] = MAIN_MAP
-    data["overlayVisibleOnStartup"] = True
+    data["overlayVisibleOnStartup"] = show_overlay
     data["deleteScreenshotsAfterScan"] = False
     data["scanOnStartup"] = False
     data["autoSwitchMap"] = False    # 否则游戏日志会把当前地图自动切走
@@ -260,13 +269,13 @@ def seed_settings() -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def restart() -> int:
+def restart(show_overlay: bool = True) -> int:
     if not EXE.is_file():
         raise SystemExit(f"未找到 {EXE}，先跑 build.ps1")
     # 先杀掉残留实例：它会把当前地图周期性写回 settings.json，盖掉 seed 的值
     subprocess.run(["taskkill", "/IM", "TarkovAtlas.exe", "/F"], capture_output=True)
     time.sleep(1.5)
-    seed_settings()
+    seed_settings(show_overlay)
     subprocess.Popen([str(EXE)], cwd=str(EXE_DIR), env=os.environ.copy())
     h = wait_win("Tarkov Atlas")
     if not h:
@@ -378,7 +387,7 @@ def hide_overlay() -> None:
 
 def main() -> None:
     steps = sys.argv[1:] or ["main", "quests", "settings", "overlay"]
-    h = restart()
+    h = restart(show_overlay="overlay" in steps)
 
     if "overlay" in steps:
         # 悬浮窗的地图跟随主窗口：森林接近正方形，能铺满方形透明窗，
@@ -402,6 +411,10 @@ def main() -> None:
         grab(h, DOCS / "main.png")
 
     if "quests" in steps:
+        # 任务列表按当前地图过滤，固定成和 main.png 同一张图，截图之间才自洽；
+        # 日志识别可能在启动时把地图自动切走，所以这里显式选。
+        select_map("海关")
+        time.sleep(1.5)
         invoke("QuestToggleButton")
         time.sleep(2.5)
         grab(h, DOCS / "quests.png")
