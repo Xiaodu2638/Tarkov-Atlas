@@ -1,0 +1,221 @@
+name: Monthly data refresh & release
+
+# 两条链路，互不阻塞（详见 AGENTS.md「发布」一节）：
+#  1) 每月 15 日 09:00（Asia/Shanghai）刷新 eftarkov.com 快照 -> 重建 -> 门禁 -> 开 PR 等人工审阅。
+#     仓库约定脚本从不自动提交，数据变更必须先看 diff 再合入。
+#  2) 数据 PR 合并进 main 后，本文件自动构建 NativeAOT 产物并发布 Release，
+#     tag 末位 +1（v1.0.0 -> v1.0.1 -> v1.0.2 …）。
+# 手动触发：Actions 页面 Run workflow。
+on:
+  schedule:
+    # 01:00 UTC = 09:00 Asia/Shanghai
+    - cron: '0 1 15 * *'
+  push:
+    branches: [main]
+    paths:
+      - 'research/**'
+      - 'TarkovAtlas/Assets/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: monthly-data-refresh
+  cancel-in-progress: false
+
+env:
+  AVALONIA_TELEMETRY_OPTOUT: '1'
+  PYTHONIOENCODING: utf-8
+  DOTNET_NOLOGO: '1'
+
+jobs:
+  # ---------------------------------------------------------------- 数据刷新
+  refresh:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    # windows-latest 是硬要求：check 项目 target net10.0-windows，
+    # build_assets.py 还要用本机 Edge 栅格化 SVG。
+    runs-on: windows-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepare repo-local caches
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path .tmp,.nuget-packages,.dotnet-home | Out-Null
+          "NUGET_PACKAGES=$PWD/.nuget-packages" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "DOTNET_CLI_HOME=$PWD/.dotnet-home"  | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "TEMP=$PWD/.tmp"                     | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "TMP=$PWD/.tmp"                      | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      # tools/pyext 与 tools/pylibs 被 .gitignore 排除，CI 必须自己装。
+      - name: Install python deps into repo
+        shell: pwsh
+        run: |
+          python -m pip install --target tools/pylibs requests
+          python -m pip install --target tools/pyext pillow
+
+      # build_assets 需要 Edge/Chrome；缺失时明确失败，别让它走到模糊的报错。
+      - name: Require Edge for SVG rasterisation
+        shell: pwsh
+        run: |
+          $c = @(
+            "$env:ProgramFiles\Microsoft\Edge\Application\msedge.exe",
+            "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe",
+            "$env:ProgramFiles\Google\Chrome\Application\chrome.exe"
+          )
+          $hit = $c | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $hit) { throw 'No Edge/Chrome found for SVG rasterisation' }
+          "EDGE_PATH=$hit" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "using $hit"
+
+      # 瓦片缓存不进 git。储备站 2-5 层与海关 4 层需要它；缺失时会现场下载
+      # tarkov.dev 瓦片（该端点间歇 422）。用 cache 兜住，避免每次重下。
+      - name: Restore tile cache
+        uses: actions/cache@v4
+        with:
+          path: tools/tile-cache
+          key: tile-cache-${{ github.run_id }}
+          restore-keys: tile-cache-
+
+      # update_data 自带回滚：任一步失败会把快照还原到拉取前。
+      - name: Refresh data and run gates
+        shell: pwsh
+        run: python tools/update_data.py --with-guides
+
+      - name: Summarise diff
+        if: always()
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path .tmp | Out-Null
+          git diff --stat | Tee-Object -FilePath .tmp/diff-stat.txt | Out-String -Width 200
+          if (Test-Path .tmp/diff-stat.txt) {
+            Add-Content $env:GITHUB_STEP_SUMMARY '### Data diff'
+            Add-Content $env:GITHUB_STEP_SUMMARY '```'
+            Get-Content .tmp/diff-stat.txt | Add-Content $env:GITHUB_STEP_SUMMARY
+            Add-Content $env:GITHUB_STEP_SUMMARY '```'
+          }
+
+      - name: Open pull request
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          git config user.name 'Xiaodu'
+          git config user.email '89345327+Xiaodu2638@users.noreply.github.com'
+          git add -A research TarkovAtlas/Assets
+          # 注意：PowerShell 的 if(<native cmd>) 判断的是**输出**而非退出码，
+          # 而 --quiet 恰好无输出，写成 if(git diff --quiet) 会永远走 no-changes 分支。
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host 'no data changes; skipping PR'
+            exit 0
+          }
+          $month = Get-Date -Format 'yyyy-MM'
+          $branch = "data/monthly-$month"
+          git checkout -B $branch
+          git commit -m "data: 每月数据刷新 $month（eftarkov.com 快照 + 重建产物）"
+          # 分支可能因重跑已存在；普通推送，必要时带上游。
+          git push -u origin $branch --force-with-lease
+          $body = "由每月数据刷新 workflow 自动生成。`n`n审阅要点：research/ 快照 diff 是否只有预期变化；门禁（check.ps1 + check_map_coverage）已在 CI 中通过。`n`n合并后会自动构建并发布 Release。`n`n" + (Get-Content .tmp/diff-stat.txt -Raw)
+          $existing = gh pr list --head $branch --state open --json number --jq '.[0].number'
+          if ([string]::IsNullOrWhiteSpace($existing)) {
+            gh pr create --title "data: 每月数据刷新 $month" --body $body --base main --head $branch
+          } else {
+            gh pr edit $existing --body $body
+            Write-Host "updated existing PR #$existing"
+          }
+
+  # ---------------------------------------------------------------- 构建发布
+  # 只在 main 收到数据变更（即 PR 已合并）或手动触发时执行。
+  release:
+    # 只在 main 收到数据变更（PR 已合并）时发布。workflow_dispatch 不触发它：
+    # 手动触发时 release 与 refresh 并行，会在数据 PR 还没合并时就把未审阅数据发出去。
+    if: github.event_name == 'push'
+    runs-on: windows-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Prepare repo-local caches
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path .tmp,.nuget-packages,.dotnet-home | Out-Null
+          "NUGET_PACKAGES=$PWD/.nuget-packages" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "DOTNET_CLI_HOME=$PWD/.dotnet-home"  | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "TEMP=$PWD/.tmp"                     | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "TMP=$PWD/.tmp"                      | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      # tag 末位 +1：v1.0.0 -> v1.0.1 -> …. 没有历史 tag 时起步 v1.0.0。
+      # 用 [version] 排序，避免 v1.0.10 被当成小于 v1.0.9。
+      - name: Compute next version
+        id: ver
+        shell: pwsh
+        run: |
+          git fetch --tags --force | Out-Null
+          $tags = @(git tag --list 'v*' | Where-Object { $_ -match '^v(\d+)\.(\d+)\.(\d+)$' })
+          if ($tags.Count -eq 0) {
+            $next = 'v1.0.0'
+          } else {
+            $latest = $tags | Sort-Object { [version]($_.Substring(1)) } -Descending | Select-Object -First 1
+            $null = $latest -match '^v(\d+)\.(\d+)\.(\d+)$'
+            $next = 'v{0}.{1}.{2}' -f $Matches[1], $Matches[2], ([int]$Matches[3] + 1)
+          }
+          "last tag: $($tags | Sort-Object { [version]($_.Substring(1)) } -Descending | Select-Object -First 1)"
+          "next tag: $next"
+          "next=$next" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+
+      # NativeAOT 优先、失败回退自包含；产物落 dist/ 并打 zip。
+      - name: Build
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File ./build.ps1
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          $tag = '${{ steps.ver.outputs.next }}'
+          $zip = 'dist/TarkovAtlas-win-x64.zip'
+          if (-not (Test-Path $zip)) { throw "missing $zip" }
+          $sha = (git rev-parse HEAD).Trim()
+          $size = [Math]::Round((Get-Item $zip).Length / 1MB, 1)
+          # 不能用 here-string：@"…"@ 的结束符必须在行首，缩进后会解析失败。
+          $notes = @(
+            '每月数据刷新后自动发布。',
+            '',
+            ('产物：TarkovAtlas-win-x64.zip（{0} MB），NativeAOT 优先，失败回退自包含。' -f $size),
+            '',
+            ('提交：{0}' -f $sha)
+          ) -join "`n"
+          gh release create $tag $zip --title "Tarkov Atlas $tag" --notes $notes --target $sha
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-logs-${{ github.run_id }}
+          path: |
+            .tmp/*.log
+            .tmp/**/*.log
+          if-no-files-found: ignore
+          retention-days: 14
