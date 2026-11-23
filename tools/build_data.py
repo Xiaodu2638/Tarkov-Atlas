@@ -830,7 +830,9 @@ def main() -> None:
                               if p.get("status") in ("complete", "active")],
             "objectives": objectives,
         })
-    out_tasks.sort(key=lambda t: (t["name"]))
+    # 与 fetch_eftarkov 同理：站点有同名任务（「新起点」有 11 个），只按 name
+    # 排序时并列项顺序由上游输入顺序决定，重跑会产生纯顺序抖动。用 id 做次级键。
+    out_tasks.sort(key=lambda t: (t["name"], t.get("id", "")))
 
     # Raid-mode roster sanity: PVE and PVP each own ~30 tasks the other lacks,
     # and the season list is PVP plus its season-only batch. A snapshot that

@@ -303,7 +303,11 @@ def fetch_tasks(refresh: bool, cache_only: bool) -> int:
         return rec
 
     recs = parallel(one, ids)
-    recs.sort(key=lambda r: r["name"])
+    # 只按 name 排序不够稳：站点有 27 个同名任务（「新起点」就有 11 个），
+    # sort 是稳定的，并列项的先后取决于 as_completed 的到达顺序，于是每次
+    # 重抓都会产出几十到几百行纯顺序抖动，把真实数据变化淹没在 diff 里。
+    # 用 (name, id) 做全序，id 是 BSG 24-hex、生来唯一且稳定。
+    recs.sort(key=lambda r: (r["name"], r["id"]))
     EF.mkdir(parents=True, exist_ok=True)
     db = {
         "generatedAt": datetime.date.today().isoformat(),

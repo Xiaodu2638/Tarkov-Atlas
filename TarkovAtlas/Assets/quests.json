@@ -591,12 +591,12 @@
    "objectives": []
   },
   {
-   "id": "6abd18fed383d797d602d6c9",
+   "id": "6abd0ff5d383d797d602d6c4",
    "name": "万圣节：新型疫苗",
    "nameEn": "Halloween: A New Vaccine",
    "trader": "54cb57776803fa99248b456e",
    "level": 1,
-   "wiki": "https://www.eftarkov.com/task/6abd18fed383d797d602d6c9",
+   "wiki": "https://www.eftarkov.com/task/6abd0ff5d383d797d602d6c4",
    "maps": [],
    "modes": [
     "pvp",
@@ -607,12 +607,12 @@
    "objectives": []
   },
   {
-   "id": "6abd0ff5d383d797d602d6c4",
+   "id": "6abd18fed383d797d602d6c9",
    "name": "万圣节：新型疫苗",
    "nameEn": "Halloween: A New Vaccine",
    "trader": "54cb57776803fa99248b456e",
    "level": 1,
-   "wiki": "https://www.eftarkov.com/task/6abd0ff5d383d797d602d6c4",
+   "wiki": "https://www.eftarkov.com/task/6abd18fed383d797d602d6c9",
    "maps": [],
    "modes": [
     "pvp",
@@ -1646,25 +1646,6 @@
    "objectives": []
   },
   {
-   "id": "66151401efb0539ae10875ae",
-   "name": "人靠衣装 - 1",
-   "nameEn": "Drip-Out - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 27,
-   "wiki": "https://www.eftarkov.com/task/66151401efb0539ae10875ae",
-   "maps": [
-    "reserve",
-    "the-lab"
-   ],
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "6613f3007f6666d56807c929",
    "name": "人靠衣装 - 1",
    "nameEn": "Drip-Out - Part 1",
@@ -1684,15 +1665,15 @@
    "objectives": []
   },
   {
-   "id": "6615141bfda04449120269a7",
-   "name": "人靠衣装 - 2",
-   "nameEn": "Drip-Out - Part 2",
+   "id": "66151401efb0539ae10875ae",
+   "name": "人靠衣装 - 1",
+   "nameEn": "Drip-Out - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
-   "level": 42,
-   "wiki": "https://www.eftarkov.com/task/6615141bfda04449120269a7",
+   "level": 27,
+   "wiki": "https://www.eftarkov.com/task/66151401efb0539ae10875ae",
    "maps": [
-    "lighthouse",
-    "icebreaker"
+    "reserve",
+    "the-lab"
    ],
    "modes": [
     "pvp",
@@ -1709,6 +1690,25 @@
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/6613f307fca4f2f386029409",
+   "maps": [
+    "lighthouse",
+    "icebreaker"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6615141bfda04449120269a7",
+   "name": "人靠衣装 - 2",
+   "nameEn": "Drip-Out - Part 2",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 42,
+   "wiki": "https://www.eftarkov.com/task/6615141bfda04449120269a7",
    "maps": [
     "lighthouse",
     "icebreaker"
@@ -10126,26 +10126,6 @@
    "objectives": []
   },
   {
-   "id": "6aad740f5e7f204c2d088f42",
-   "name": "新起点",
-   "nameEn": "New Beginning",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 45,
-   "wiki": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
-   "maps": [
-    "customs",
-    "lighthouse",
-    "interchange",
-    "streets-of-tarkov",
-    "icebreaker"
-   ],
-   "modes": [
-    "pve"
-   ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "6aad74057a336545ed065807",
    "name": "新起点",
    "nameEn": "New Beginning",
@@ -10157,6 +10137,26 @@
     "interchange",
     "streets-of-tarkov",
     "the-lab",
+    "icebreaker"
+   ],
+   "modes": [
+    "pve"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "6aad740f5e7f204c2d088f42",
+   "name": "新起点",
+   "nameEn": "New Beginning",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 45,
+   "wiki": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
+   "maps": [
+    "customs",
+    "lighthouse",
+    "interchange",
+    "streets-of-tarkov",
     "icebreaker"
    ],
    "modes": [
@@ -13094,47 +13094,6 @@
    "objectives": []
   },
   {
-   "id": "6a45208043b8d7604d00b8d5",
-   "name": "猎人之路 - 管理者",
-   "nameEn": "The Huntsman Path - Administrator",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "level": 17,
-   "wiki": "https://www.eftarkov.com/task/6a45208043b8d7604d00b8d5",
-   "maps": [
-    "lighthouse"
-   ],
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ],
-   "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在灯塔火车站发射一枚黄色信号弹（在同场战局中）",
-     "type": "useItem",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -5.75,
-       "z": -872.31
-      }
-     ]
-    },
-    {
-     "text": "在灯塔火车站范围内消灭任意目标 6 名（在同场战局中）",
-     "type": "shoot",
-     "zones": [
-      {
-       "map": "lighthouse",
-       "x": -39.47,
-       "z": -863.11
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "639136df4b15ca31f76bc31f",
    "name": "猎人之路 - 管理者",
    "nameEn": "The Huntsman Path - Administrator",
@@ -13170,6 +13129,47 @@
        "map": "reserve",
        "x": 130.39,
        "z": -139.45
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6a45208043b8d7604d00b8d5",
+   "name": "猎人之路 - 管理者",
+   "nameEn": "The Huntsman Path - Administrator",
+   "trader": "5c0647fdd443bc2504c2d371",
+   "level": 17,
+   "wiki": "https://www.eftarkov.com/task/6a45208043b8d7604d00b8d5",
+   "maps": [
+    "lighthouse"
+   ],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": [
+    {
+     "text": "在灯塔火车站发射一枚黄色信号弹（在同场战局中）",
+     "type": "useItem",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -5.75,
+       "z": -872.31
+      }
+     ]
+    },
+    {
+     "text": "在灯塔火车站范围内消灭任意目标 6 名（在同场战局中）",
+     "type": "shoot",
+     "zones": [
+      {
+       "map": "lighthouse",
+       "x": -39.47,
+       "z": -863.11
       }
      ]
     }
@@ -14930,22 +14930,6 @@
    "objectives": []
   },
   {
-   "id": "5e383a6386f77465910ce1f3",
-   "name": "纺织业 - 1",
-   "nameEn": "Textile - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "level": 42,
-   "wiki": "https://www.eftarkov.com/task/5e383a6386f77465910ce1f3",
-   "maps": [],
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ],
-   "prerequisites": [],
-   "objectives": []
-  },
-  {
    "id": "5e381b0286f77420e3417a74",
    "name": "纺织业 - 1",
    "nameEn": "Textile - Part 1",
@@ -14962,12 +14946,12 @@
    "objectives": []
   },
   {
-   "id": "5e4d515e86f77438b2195244",
-   "name": "纺织业 - 2",
-   "nameEn": "Textile - Part 2",
+   "id": "5e383a6386f77465910ce1f3",
+   "name": "纺织业 - 1",
+   "nameEn": "Textile - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
-   "wiki": "https://www.eftarkov.com/task/5e4d515e86f77438b2195244",
+   "wiki": "https://www.eftarkov.com/task/5e383a6386f77465910ce1f3",
    "maps": [],
    "modes": [
     "pvp",
@@ -14984,6 +14968,22 @@
    "trader": "5ac3b934156ae10c4430e83c",
    "level": 42,
    "wiki": "https://www.eftarkov.com/task/5e4d4ac186f774264f758336",
+   "maps": [],
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ],
+   "prerequisites": [],
+   "objectives": []
+  },
+  {
+   "id": "5e4d515e86f77438b2195244",
+   "name": "纺织业 - 2",
+   "nameEn": "Textile - Part 2",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "level": 42,
+   "wiki": "https://www.eftarkov.com/task/5e4d515e86f77438b2195244",
    "maps": [],
    "modes": [
     "pvp",

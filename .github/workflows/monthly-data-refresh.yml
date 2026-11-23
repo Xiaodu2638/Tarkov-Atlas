@@ -61,11 +61,15 @@ jobs:
           "TMP=$PWD/.tmp"                      | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
       # tools/pyext 与 tools/pylibs 被 .gitignore 排除，CI 必须自己装。
+      # numpy 不能漏：build_assets / build_layers / site_calibrate 都 import numpy，
+      # 本机它躺在 tools/pylibs 里，CI 不装就会在第一步就 ImportError。
       - name: Install python deps into repo
         shell: pwsh
         run: |
-          python -m pip install --target tools/pylibs requests
+          python -m pip install --target tools/pylibs requests numpy
           python -m pip install --target tools/pyext pillow
+          # 装完立刻自检，别让它拖到 build_assets 才炸。
+          python -c "import sys; sys.path.insert(0,'tools/pylibs'); sys.path.insert(0,'tools/pyext'); import numpy, requests; from PIL import Image; print('deps ok')"
 
       # build_assets 需要 Edge/Chrome；缺失时明确失败，别让它走到模糊的报错。
       - name: Require Edge for SVG rasterisation

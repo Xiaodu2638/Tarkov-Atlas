@@ -35,6 +35,9 @@ tools/tile-cache/
 tools/pyext/
 tools/pylibs/
 
+# 指令文件迁移备份：AGENTS.md 已是唯一来源，*.bak 只作本地留档
+*.md.bak
+
 # 个人状态（任务进度 / 设置）：运行时写在 %APPDATA%，绝不进仓库或发布包
 quest-progress*.json
 settings.json
