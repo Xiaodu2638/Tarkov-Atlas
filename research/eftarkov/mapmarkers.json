@@ -1123,15 +1123,6 @@
     "y": 399.174
    },
    {
-    "id": "6a9d64c567427d9591d15801",
-    "category": "SCAV",
-    "floor": "1",
-    "title": "Gate Near Medblock",
-    "task_id": null,
-    "x": 1472.222,
-    "y": 251.697
-   },
-   {
     "id": "6a9caf7f41f18d2255c55b01",
     "category": "Knight",
     "floor": "1",
@@ -1393,15 +1384,6 @@
     "y": 888.638
    },
    {
-    "id": "6ac8e516d3adae6d5dc64001",
-    "category": "PMC",
-    "floor": "1",
-    "title": "Railroad to reserve",
-    "task_id": null,
-    "x": 620.243,
-    "y": 1041.527
-   },
-   {
     "id": "6a9d7cc3731533cf5beff001",
     "category": "Reshala",
     "floor": "1",
@@ -1465,15 +1447,6 @@
     "y": 482.505
    },
    {
-    "id": "6ac61cba783cd61d4e151101",
-    "category": "PMC",
-    "floor": "-1",
-    "title": "ZB-013",
-    "task_id": null,
-    "x": 1198.556,
-    "y": 295.962
-   },
-   {
     "id": "6ab1368f627d6956a68d3801",
     "category": "开关",
     "floor": "1",
@@ -1492,6 +1465,24 @@
     "y": 345.604
    },
    {
+    "id": "6a9d628ddfbcaa08f4f93501",
+    "category": "SCAV",
+    "floor": "1",
+    "title": "ZB-1011",
+    "task_id": null,
+    "x": 351.377,
+    "y": 345.604
+   },
+   {
+    "id": "6ac61cba783cd61d4e151101",
+    "category": "PMC",
+    "floor": "-1",
+    "title": "ZB-1013",
+    "task_id": null,
+    "x": 1198.556,
+    "y": 295.962
+   },
+   {
     "id": "6ac52db82de1a1333d828b01",
     "category": "钥匙",
     "floor": "-1",
@@ -1499,42 +1490,6 @@
     "task_id": null,
     "x": 1201.409,
     "y": 305.872
-   },
-   {
-    "id": "6ae4f9d3285495910e1c1801",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "万圣节：意外援助",
-    "task_id": "6abb7e59dcebb0efbc0fda7b",
-    "x": 1150.644,
-    "y": 871.655
-   },
-   {
-    "id": "6ae4ff1e310b219c7b294e01",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 1129.96,
-    "y": 853.814
-   },
-   {
-    "id": "6ae4ff576d48eee17abeff01",
-    "category": "任务地点",
-    "floor": "2",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 1226.764,
-    "y": 937.739
-   },
-   {
-    "id": "6ae4ffbde9039dd57e49b901",
-    "category": "任务地点",
-    "floor": "2",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 1256.308,
-    "y": 971.046
    },
    {
     "id": "6aa3286f68e9c4c25ebd8501",
@@ -1870,6 +1825,15 @@
     "y": 220.305
    },
    {
+    "id": "6a9d64c567427d9591d15801",
+    "category": "SCAV",
+    "floor": "1",
+    "title": "医疗楼外大门",
+    "task_id": null,
+    "x": 1472.222,
+    "y": 251.697
+   },
+   {
     "id": "6a9d60aa3083afa140021401",
     "category": "PMC",
     "floor": "1",
@@ -1936,7 +1900,16 @@
     "id": "6a9d625b57840f5c71825e01",
     "category": "PMC",
     "floor": "1",
-    "title": "地下室锅炉房（合作撤离点）",
+    "title": "地下室锅炉房（合作撤离）",
+    "task_id": null,
+    "x": 1360.079,
+    "y": 471.381
+   },
+   {
+    "id": "6aeb8c959e2e661787d27d01",
+    "category": "SCAV",
+    "floor": "1",
+    "title": "地下室锅炉房（合作撤离）",
     "task_id": null,
     "x": 1360.079,
     "y": 471.381
@@ -2176,15 +2149,6 @@
     "y": 672.132
    },
    {
-    "id": "6a9d628ddfbcaa08f4f93501",
-    "category": "SCAV",
-    "floor": "1",
-    "title": "工厂远角",
-    "task_id": null,
-    "x": 351.377,
-    "y": 345.604
-   },
-   {
     "id": "6aa98a1721f9911d91db1901",
     "category": "任务地点",
     "floor": "1",
@@ -2311,6 +2275,15 @@
     "y": 149.018
    },
    {
+    "id": "6a9d646082e2156f4581c701",
+    "category": "SCAV",
+    "floor": "1",
+    "title": "拖车停车场",
+    "task_id": null,
+    "x": 2239.807,
+    "y": 149.018
+   },
+   {
     "id": "6ac25290bcd9862ba3b99201",
     "category": "地图标注",
     "floor": "1",
@@ -2318,15 +2291,6 @@
     "task_id": null,
     "x": 2023.48,
     "y": 155.791
-   },
-   {
-    "id": "6a9d646082e2156f4581c701",
-    "category": "SCAV",
-    "floor": "1",
-    "title": "拖车停车场工人棚屋",
-    "task_id": null,
-    "x": 2239.807,
-    "y": 149.018
    },
    {
     "id": "6abc7e511db5b49b205d7601",
@@ -3322,7 +3286,16 @@
     "id": "6a9d6389d12800e179cc4301",
     "category": "SCAV",
     "floor": "1",
-    "title": "通往军事基地的铁路",
+    "title": "通往储备站的铁路",
+    "task_id": null,
+    "x": 620.243,
+    "y": 1041.527
+   },
+   {
+    "id": "6ac8e516d3adae6d5dc64001",
+    "category": "PMC",
+    "floor": "1",
+    "title": "通往储备站的铁路",
     "task_id": null,
     "x": 620.243,
     "y": 1041.527
@@ -3367,7 +3340,7 @@
     "id": "6a9d60040e86fd3c8d383001",
     "category": "PMC",
     "floor": "1",
-    "title": "铁路通道（信号棒）",
+    "title": "铁路通道（信号弹）",
     "task_id": null,
     "x": 1247.59,
     "y": 43.051
@@ -4566,8 +4539,8 @@
     "floor": "-1",
     "title": "这是什么梗？",
     "task_id": "66d9cbb67b491f9d5304f6e6",
-    "x": 589.823,
-    "y": 893.934
+    "x": 691.81,
+    "y": 646.195
    },
    {
     "id": "6aa333da0937b115fefb7101",
@@ -5350,24 +5323,6 @@
     "task_id": "6752f6d83038f7df520c83e8",
     "x": 2417.785,
     "y": 2112.892
-   },
-   {
-    "id": "6ae4fe3f1dfc7040464bad01",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 2513.361,
-    "y": 2130.141
-   },
-   {
-    "id": "6ae4fe832debdf136336e301",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 2509.123,
-    "y": 2049.068
    },
    {
     "id": "6ac2565c4d672089328e9201",
@@ -6819,8 +6774,8 @@
     "floor": "1",
     "title": "14-4 KORD 站点 K.Arshavin 钥匙卡 (修复)",
     "task_id": null,
-    "x": 1563.314,
-    "y": 253.382
+    "x": 1571.0,
+    "y": 263.0
    },
    {
     "id": "6abcc08d740ad5f4441b0801",
@@ -8675,33 +8630,6 @@
     "task_id": "666314c3acf8442f8b0531a3",
     "x": 1029.019,
     "y": 1019.734
-   },
-   {
-    "id": "6ae5021319823df97c247001",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 932.566,
-    "y": 351.655
-   },
-   {
-    "id": "6ae5025e07bf0a1c6d11ea01",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 837.261,
-    "y": 353.497
-   },
-   {
-    "id": "6ae50298ebebe5789fc64001",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 796.915,
-    "y": 364.627
    },
    {
     "id": "6ac25d6a8626742cb7b4af01",
@@ -10735,8 +10663,8 @@
     "floor": "1",
     "title": "Glukhar",
     "task_id": null,
-    "x": 218.131,
-    "y": 375.936
+    "x": 193.991,
+    "y": 293.888
    },
    {
     "id": "6a9e95eb4f2f3ffd1a3a7501",
@@ -10782,6 +10710,15 @@
     "task_id": null,
     "x": 745.298,
     "y": 844.759
+   },
+   {
+    "id": "6afa1b8cde0178463d2b8701",
+    "category": "Glukhar",
+    "floor": "1",
+    "title": "Glukhar",
+    "task_id": null,
+    "x": 810.196,
+    "y": 209.224
    },
    {
     "id": "6ac260c6c7a1d59efb7f3301",
@@ -11547,33 +11484,6 @@
     "task_id": null,
     "x": 770.522,
     "y": 177.667
-   },
-   {
-    "id": "6ae5016d0a4b9a85971dd701",
-    "category": "任务地点",
-    "floor": "2",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 159.296,
-    "y": 293.574
-   },
-   {
-    "id": "6ae501a555cca013b2d79901",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 230.896,
-    "y": 321.211
-   },
-   {
-    "id": "6ae501c265a4addc88f2c301",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 245.792,
-    "y": 297.36
    },
    {
     "id": "6a9e8f9414ea7bc4c376bc01",
@@ -13871,8 +13781,8 @@
     "floor": "2",
     "title": "实验室钥匙卡·黑",
     "task_id": null,
-    "x": 877.654,
-    "y": 180.675
+    "x": 882.167,
+    "y": 181.344
    },
    {
     "id": "6ac26e28e1d58ddad7723a01",
@@ -15185,51 +15095,6 @@
     "y": 1185.281
    },
    {
-    "id": "6ae4fb827791c36a3ddb4101",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "万圣节：巧合？",
-    "task_id": "6abbb8845baa9031ac068833",
-    "x": 664.879,
-    "y": 296.758
-   },
-   {
-    "id": "6ae4f9115342fe8dda15f001",
-    "category": "任务地点",
-    "floor": "2",
-    "title": "万圣节：意外援助",
-    "task_id": "6abb7e59dcebb0efbc0fda7b",
-    "x": 723.6,
-    "y": 402.184
-   },
-   {
-    "id": "6ae5005762e6aaa82bc0ac01",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 683.853,
-    "y": 291.684
-   },
-   {
-    "id": "6ae5007ebfac56fc11722201",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 612.119,
-    "y": 322.18
-   },
-   {
-    "id": "6ae500ca4c74e295a653de01",
-    "category": "任务地点",
-    "floor": "2",
-    "title": "万圣节：蒙蔽敌人",
-    "task_id": "6abbc2bb71588b5b110f34a5",
-    "x": 626.132,
-    "y": 293.266
-   },
-   {
     "id": "6ac258b0d55ef05b392e6d01",
     "category": "地图标注",
     "floor": "1",
@@ -15282,15 +15147,6 @@
     "task_id": "6a7ae35b2dbf91eb050af95a",
     "x": 631.516,
     "y": 958.915
-   },
-   {
-    "id": "6ab6f5b88acb8cb5d3db1801",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "全方位支援",
-    "task_id": "6a763c7bd31fb1191903fc15",
-    "x": 926.74,
-    "y": 413.641
    },
    {
     "id": "6aafce2e862e953d8c3bed01",
@@ -15435,15 +15291,6 @@
     "task_id": null,
     "x": 834.889,
     "y": 455.067
-   },
-   {
-    "id": "6ab6fdcf8335ab4c0b011d01",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "呼号“孔雀石”",
-    "task_id": "6a764367850f975dc00bc5bd",
-    "x": 922.974,
-    "y": 417.024
    },
    {
     "id": "6aa9a700f3f500698c3b1a01",
@@ -15642,33 +15489,6 @@
     "task_id": null,
     "x": 534.285,
     "y": 923.069
-   },
-   {
-    "id": "6ab6f3d5814e26e0d0943901",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "战争迷雾",
-    "task_id": "6a7637fed31fb1191903fc07",
-    "x": 617.847,
-    "y": 353.862
-   },
-   {
-    "id": "6ab6f410308e9da9a0343e01",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "战争迷雾",
-    "task_id": "6a7637fed31fb1191903fc07",
-    "x": 533.271,
-    "y": 596.444
-   },
-   {
-    "id": "6ab6f42aae6b9d5563738f01",
-    "category": "任务地点",
-    "floor": "3",
-    "title": "战争迷雾",
-    "task_id": "6a7637fed31fb1191903fc07",
-    "x": 657.266,
-    "y": 316.558
    },
    {
     "id": "6abc93ca52cbfe45eb262901",
@@ -15984,15 +15804,6 @@
     "task_id": "6179b4d1bca27a099552e04e",
     "x": 364.475,
     "y": 342.178
-   },
-   {
-    "id": "6ab6f5100f4e29827f1d7a01",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "无法接通的号码",
-    "task_id": "6a763a2fce9a947b4d0918a6",
-    "x": 607.088,
-    "y": 1501.918
    },
    {
     "id": "6ac257dce03fde81c1d92301",
@@ -17776,15 +17587,6 @@
     "task_id": null,
     "x": 283.265,
     "y": 1069.601
-   },
-   {
-    "id": "6acd023b5aebe9fa263b3301",
-    "category": "任务地点",
-    "floor": "1",
-    "title": "以人类之名……",
-    "task_id": null,
-    "x": 1156.97,
-    "y": 1043.968
    },
    {
     "id": "6abce0eceb935af8ecf3a701",
@@ -21089,8 +20891,8 @@
     "floor": "1",
     "title": "蓝图与技术文档",
     "task_id": null,
-    "x": 523.666,
-    "y": 766.078
+    "x": 509.414,
+    "y": 687.995
    },
    {
     "id": "6a9f0f49a37ee27da9bad601",
@@ -21098,8 +20900,8 @@
     "floor": "1",
     "title": "蓝图与技术文档",
     "task_id": null,
-    "x": 523.666,
-    "y": 766.078
+    "x": 528.648,
+    "y": 725.69
    },
    {
     "id": "6a9f0f6d60111aa8d976f401",
@@ -21107,8 +20909,8 @@
     "floor": "1",
     "title": "蓝图与技术文档",
     "task_id": null,
-    "x": 523.666,
-    "y": 766.078
+    "x": 567.205,
+    "y": 435.922
    },
    {
     "id": "6a9f0f895efc30d3ad037501",
@@ -21134,8 +20936,8 @@
     "floor": "1",
     "title": "蓝图与技术文档",
     "task_id": null,
-    "x": 992.936,
-    "y": 453.105
+    "x": 839.339,
+    "y": 318.508
    },
    {
     "id": "6a9f10cb0a6a2cda31220d01",
@@ -21170,8 +20972,8 @@
     "floor": "1",
     "title": "蓝图与技术文档",
     "task_id": null,
-    "x": 716.79,
-    "y": 529.603
+    "x": 755.256,
+    "y": 636.377
    },
    {
     "id": "6a9f116efd622cb95cef7e01",
@@ -21555,96 +21357,6 @@
     "y": 672.211
    },
    {
-    "id": "6abd299c17545bddc173be01",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#1",
-    "task_id": null,
-    "x": 753.11,
-    "y": 380.397
-   },
-   {
-    "id": "6abd2c0bcb260bd2b3d34801",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#10",
-    "task_id": null,
-    "x": 568.338,
-    "y": 1672.838
-   },
-   {
-    "id": "6abd2a3f7102bf7f8536e201",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#2",
-    "task_id": null,
-    "x": 806.776,
-    "y": 638.458
-   },
-   {
-    "id": "6abd2a716b62d43adbdaa201",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#3",
-    "task_id": null,
-    "x": 720.715,
-    "y": 677.224
-   },
-   {
-    "id": "6abd2a978402239dad6ca601",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#4",
-    "task_id": null,
-    "x": 629.577,
-    "y": 660.954
-   },
-   {
-    "id": "6abd2ae1718e2a462e1dfa01",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#5",
-    "task_id": null,
-    "x": 796.168,
-    "y": 793.557
-   },
-   {
-    "id": "6abd2b0d372d2ae3ddbb6101",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#6",
-    "task_id": null,
-    "x": 749.512,
-    "y": 941.44
-   },
-   {
-    "id": "6abd2b3de4b34ec8c2a76201",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#7",
-    "task_id": null,
-    "x": 754.283,
-    "y": 1095.494
-   },
-   {
-    "id": "6abd2b6af7dd0d7755a31901",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#8",
-    "task_id": null,
-    "x": 576.691,
-    "y": 1081.946
-   },
-   {
-    "id": "6abd2ba538d0e8c11827cc01",
-    "category": "损坏的电箱",
-    "floor": "1",
-    "title": "损坏的电箱#9",
-    "task_id": null,
-    "x": 603.454,
-    "y": 1187.444
-   },
-   {
     "id": "6abd2d43bf164a95bdad9a01",
     "category": "开关",
     "floor": "1",
@@ -21679,6 +21391,96 @@
     "task_id": null,
     "x": 529.845,
     "y": 659.858
+   },
+   {
+    "id": "6abd299c17545bddc173be01",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#1",
+    "task_id": null,
+    "x": 753.11,
+    "y": 380.397
+   },
+   {
+    "id": "6abd2c0bcb260bd2b3d34801",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#10",
+    "task_id": null,
+    "x": 568.338,
+    "y": 1672.838
+   },
+   {
+    "id": "6abd2a3f7102bf7f8536e201",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#2",
+    "task_id": null,
+    "x": 806.776,
+    "y": 638.458
+   },
+   {
+    "id": "6abd2a716b62d43adbdaa201",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#3",
+    "task_id": null,
+    "x": 720.715,
+    "y": 677.224
+   },
+   {
+    "id": "6abd2a978402239dad6ca601",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#4",
+    "task_id": null,
+    "x": 629.577,
+    "y": 660.954
+   },
+   {
+    "id": "6abd2ae1718e2a462e1dfa01",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#5",
+    "task_id": null,
+    "x": 796.168,
+    "y": 793.557
+   },
+   {
+    "id": "6abd2b0d372d2ae3ddbb6101",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#6",
+    "task_id": null,
+    "x": 749.512,
+    "y": 941.44
+   },
+   {
+    "id": "6abd2b3de4b34ec8c2a76201",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#7",
+    "task_id": null,
+    "x": 754.283,
+    "y": 1095.494
+   },
+   {
+    "id": "6abd2b6af7dd0d7755a31901",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#8",
+    "task_id": null,
+    "x": 576.691,
+    "y": 1081.946
+   },
+   {
+    "id": "6abd2ba538d0e8c11827cc01",
+    "category": "损坏的电箱",
+    "floor": "1",
+    "title": "电箱#9",
+    "task_id": null,
+    "x": 603.454,
+    "y": 1187.444
    },
    {
     "id": "6abd24d8e5162a038fffcd01",

@@ -139,24 +139,31 @@
    }
   },
   "streets-of-tarkov": {
-   "*": {
-    "a": -0.498169,
-    "b": -0.003767,
-    "c": 332.383789,
-    "d": 0.000863,
-    "e": 0.496967,
-    "f": -305.705945
+   "2": {
+    "a": -0.497577,
+    "b": -0.001219,
+    "c": 329.130403,
+    "d": -0.001219,
+    "e": 0.497577,
+    "f": -306.547586
    },
    "stats": {
-    "anchors": 18,
+    "anchors": 3,
     "by": {
-     "story": 8,
-     "zone": 7,
-     "label": 3
+     "story": 1,
+     "zone": 2
     },
-    "pool": 23,
-    "looMedianM": 2.42,
-    "looMaxM": 8.73
+    "pool": 3,
+    "looMedianM": 1.06,
+    "looMaxM": 1.26,
+    "floors": [
+     "2"
+    ],
+    "floorFails": [
+     "f1:LOO error median 3.7 m max 10.6 m (too large)",
+     "f3:seed <3 anchors / degenerate",
+     "f4:seed <3 anchors / degenerate"
+    ]
    }
   },
   "the-lab": {

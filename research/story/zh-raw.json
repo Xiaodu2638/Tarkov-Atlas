@@ -350,6 +350,78 @@
     "title": "将钥匙卡插入对讲机读卡器",
     "map": "",
     "marker": ""
+   },
+   {
+    "id": "6aea5f5be53ca10802b1c002",
+    "title": "将钥匙卡插入对讲机读卡器",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea5f5b7fc5bcf192780e03",
+    "title": "到达港口终点站",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea5f5b990b5db4dfffe904",
+    "title": "通过安检",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a28fcfae9356c451b02",
+    "title": "找到装有罚没装备的军械库",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a284a281257dc0d6703",
+    "title": "找到钥匙卡以开启检修通道",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a282426423cc4b22504",
+    "title": "打开港口大楼内检修通道的门锁",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a282d5d81975fa43505",
+    "title": "找到进入港口油库的路线",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a28fbc46c5b3c808906",
+    "title": "设法恢复泵站的供电",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a287a0fa690c1f8f307",
+    "title": "排干泵站内的积水",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a28881856b90758fd08",
+    "title": "获得前往码头区域大门的钥匙",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a28b25fdd5a46681909",
+    "title": "找到通往码头的出口",
+    "map": "",
+    "marker": ""
+   },
+   {
+    "id": "6aea6a28cce1ce20ecdff20a",
+    "title": "逃离塔科夫",
+    "map": "",
+    "marker": ""
    }
   ]
  },
@@ -643,7 +715,7 @@
     "id": "6ab88f0efe034d2473ae1f09",
     "title": "获取观察室钥匙",
     "map": "6733700029c367a3d40b02af",
-    "marker": "6ab893b0372417c0be4a5601"
+    "marker": "6ab893ebb9f0f51fbc04dc01"
    },
    {
     "id": "6ab88f0e3b2393003232030a",
@@ -715,7 +787,7 @@
     "id": "6ab82ae066cd03d6031a8601",
     "title": "调查俄罗斯邮政办公室",
     "map": "5714dc692459777137212e12",
-    "marker": "6ab82b4ab5532042f6524501"
+    "marker": "6ab82bc100e69be328fbe901"
    },
    {
     "id": "6ab82ae0baf8e913e3c8f702",
@@ -763,7 +835,7 @@
     "id": "6ab78fa54d57c01e02ecb804",
     "title": "找到并获取“蓝冰”燃料催化剂的相关研究文件",
     "map": "55f2d3fd4bdc2d5f408b4567",
-    "marker": "6ab792f6e446cbdbee9c5301"
+    "marker": "6ab79315cc3bc2e524398501"
    },
    {
     "id": "6ab78fa591bc873c6e978a05",
@@ -1237,7 +1309,7 @@
     "id": "6ab8c6a5a8c508edcde72c03",
     "title": "把 AMG-10 液压油交给 Prapor",
     "map": "5704e5fad2720bc05b8b4567",
-    "marker": "6ab8e004a47599b693a31101"
+    "marker": "6ab8e0201974c7840fe7d501"
    },
    {
     "id": "6ab8c6a5f886b549a26f1e04",
