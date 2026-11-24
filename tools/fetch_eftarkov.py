@@ -227,8 +227,13 @@ def parse_task(tid: str, html: str) -> dict:
     # objectives put a COMMA-separated marker list in it, and some cards have
     # no link at all. These pixel points are what site_calibrate.py turns into
     # game coordinates (research/eftarkov/pxaffine.json).
+    # The site adds per-card attributes over time (id="task-objective-guide-N"),
+    # so match the class anywhere in the opening tag instead of the exact
+    # "<article class=\"task-og-card\">" string: an exact match silently yields
+    # zero cards and every task loses its coordinates.
     locs = []
-    for c in re.findall(r'<article class="task-og-card">([\s\S]*?)</article>', html):
+    for c in re.findall(r'<article[^>]*class="[^"]*\btask-og-card\b[^"]*"[^>]*>([\s\S]*?)</article>',
+                        html):
         idx = re.search(r'task-og-index">(\d+)', c)
         link = re.search(r'href="/map/([0-9a-f]{24})\?marker=', c)
         if not idx or not link:

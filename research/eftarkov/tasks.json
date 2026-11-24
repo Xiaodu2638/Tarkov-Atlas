@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-20",
+ "generatedAt": "2026-11-24",
  "source": "https://www.eftarkov.com/task (PVP + PVE + 赛季 任务列表)",
  "tasks": [
   {
@@ -409,1096 +409,6 @@
    "locations": [],
    "description": "又见面了，小伙子。我这儿的食品储备暂时出现了短缺，像肉罐头这样容易长期保存的食物更是急需。你能帮我解决这个问题吗？我需要储备几听牛肉罐头。我知道有几个地方可以找到宝贵的库存——当然是从我们的 Scav 朋友们那里大方拿过来就是了。海关的混混们曾经在厂区附近的加油站里囤积了一些食品——说不定在那儿还能找到些库存。他们在宿舍楼里还有另一处仓库，那里的好东西可不止罐装食品。但现在我只对罐头感兴趣，所以除此以外的东西就任你支配了。成交吗？我知道这两伙混混是狼狈为奸的，但为了防止他们自己人盗窃仓库，他们的领导人交换了对方仓库的钥匙，因此对你来说应该不成问题。",
    "updated": "2026-10-29",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abf93f0e6a93c846b0fe382",
-   "source": "https://www.eftarkov.com/task/6abf93f0e6a93c846b0fe382",
-   "name": "万圣节：初步成果",
-   "nameEn": "Halloween: First Results",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "消灭受到实验型疫苗催泪弹影响的感染者 15 名"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abf70a8e4732bc101051bf2",
-     "name": "万圣节：高风险，高回报",
-     "status": "完成"
-    },
-    {
-     "id": "6abfae3485f9ebf648025acc",
-     "name": "万圣节：大局为重",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abf93f0e6a93c846b0fe382.webp",
-   "locations": [],
-   "description": "原型疫苗已经起效了，但它只能减缓感染的进程。我已经制备了一种抗体血清，打算直接在感染者身上进行测试。手动注射药物实在太危险，所以我们准备尝试通过气体扩散的方式给药。\n\n\n\n为此我们需要弄到一些催泪弹，这种东西本来就相当少见，现在城市里更是寥寥无几了。如果你能弄到这种装备的话，就把它们带给我。如果找不到也没关系，那些手里还留着催泪弹的人肯定愿意做笔交易，用你手头的贵重物品去换就好。作为报酬，我会给你一份样品，当然是实验性质的。试着用它来对付感染者，看看效果到底怎么样。",
-   "updated": "2026-11-04",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abb7e434f0ef29f16066d77",
-   "source": "https://www.eftarkov.com/task/6abb7e434f0ef29f16066d77",
-   "name": "万圣节：初步检查",
-   "nameEn": "Halloween: Initial Examination",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [
-    "灯塔"
-   ],
-   "objectives": [
-    "上交疫苗货物"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abb7e59dcebb0efbc0fda7b",
-     "name": "(冲突)\n万圣节：意外援助",
-     "status": ""
-    },
-    {
-     "id": "6abb7e59dcebb0efbc0fda7b",
-     "name": "(接受)\n万圣节：意外援助",
-     "status": ""
-    },
-    {
-     "id": "6abd18fed383d797d602d6c9",
-     "name": "万圣节：新型疫苗",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abb7e434f0ef29f16066d77.webp",
-   "locations": [],
-   "description": "你好，我知道Skier交给你一项差事，让你运送一批疫苗。这也正是我现在联系你的原因。\n\n\n\n我们至今还没有确定病毒的具体毒株，甚至连这批制剂是否真的与这种病毒有关都不清楚。你手里的这批“疫苗”，它的来源、储存条件乃至有效成分都没有经过任何检查。可Skier却已经擅自做了决定，觉得这些都无关紧要！\n\n\n\n如果你最后真的把这批货交到了他手里，不知真相的民众肯定会一拥而上，把疫苗一抢而空，这批药物如果真的存在问题，后果将会不堪设想。我希望你不要这么做，把这批疫苗交给我才是最负责任的做法。无论这批疫苗最后将流向何处，我都有必要先对其进行检查。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abbbc647aea5f936906e29d",
-   "source": "https://www.eftarkov.com/task/6abbbc647aea5f936906e29d",
-   "name": "万圣节：化敌为友",
-   "nameEn": "Halloween: Enemy of My Enemy",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "把线索交给 Therapist"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abbb8845baa9031ac068833",
-     "name": "万圣节：巧合？",
-     "status": "完成"
-    },
-    {
-     "id": "6abbbde75f084d06ce014688",
-     "name": "(接受)\n万圣节：化敌为友—达成协议",
-     "status": ""
-    },
-    {
-     "id": "6abbc2bb71588b5b110f34a5",
-     "name": "万圣节：蒙蔽敌人",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abbbc647aea5f936906e29d.webp",
-   "locations": [],
-   "description": "行吧，操他妈的！这下全都说得通了。原来这次瘟疫又是TerraGroup那帮混蛋故意弄出来的！整个塔科夫又他妈成了他们的试验场，跟上次一模一样！你说他们之前塞给老子的那批疫苗？那也是整个阴谋的一部分！那个狗屁疫苗就是用来触发感染新阶段的催化剂！\n\n\n\n那帮狗娘养的从头到尾都在盯着这一切：隔离措施多久能建立起来，人们用什么手段反抗，有没有人能研制出解药。咱们这些人在他们的实验报告里不过就是一群小自鼠罢了。所以有件事老子得说清楚，这事儿可不能全怪我！是他们把那批鬼东西塞给我的，老子压根就不知道里面到底装了什么！\n\n\n\n看来是时候停止跟Therapist内斗了，我们俩的恩怨可以先放放。与其继续跟她较劲，不如先给那些把咱们耍得团团转的混蛋一点颜色瞧瞧。把这些文件交给她，让她好好看看。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abbbde75f084d06ce014688",
-   "source": "https://www.eftarkov.com/task/6abbbde75f084d06ce014688",
-   "name": "万圣节：化敌为友—达成协议",
-   "nameEn": "Halloween: Enemy of My Enemy - An Agreement",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "上交线索"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abbbc647aea5f936906e29d",
-     "name": "(接受)\n万圣节：化敌为友",
-     "status": ""
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abbbde75f084d06ce014688.webp",
-   "locations": [],
-   "description": "你好。我已经听说Skier想再次与我取得联系。坦白说，经历了之前的种种事情后，我并不怎么愿意再和他打交道。\n\n\n\n不过，如果他真的掌握了有关这次疫情的来源，以及真正成因的情报，我还是愿意调查的。把你找到的所有资料都带给我。如果这些情报足以佐证他的说法，我会试着把我们之前的矛盾抛在脑后。",
-   "updated": "2026-11-10",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abb99516cdfa16e93028439",
-   "source": "https://www.eftarkov.com/task/6abb99516cdfa16e93028439",
-   "name": "万圣节：危险地带",
-   "nameEn": "Halloween: Danger Zone",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [
-    "中心区",
-    "海关",
-    "森林",
-    "灯塔",
-    "海岸线",
-    "立交桥",
-    "储备站",
-    "塔科夫街区"
-   ],
-   "objectives": [
-    "在中心区或海关消灭任意目标 15 名",
-    "在森林或立交桥消灭任意目标 15 名",
-    "在海岸线或塔科夫街区消灭任意目标 15 名",
-    "在灯塔或储备站消灭任意目标 15 名"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abb86cddcebb0efbc0fda8f",
-     "name": "万圣节：收缩管控",
-     "status": "完成"
-    },
-    {
-     "id": "6abb92e1505493a036006ee0",
-     "name": "万圣节：收紧管控",
-     "status": "完成"
-    },
-    {
-     "id": "6abbae9ee591db528505e3e9",
-     "name": "万圣节：原型研发",
-     "status": "完成"
-    },
-    {
-     "id": "6abbb8845baa9031ac068833",
-     "name": "万圣节：巧合？",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abb99516cdfa16e93028439.webp",
-   "locations": [],
-   "description": "现在整个塔科夫都乱成一锅粥了。谁要是在不该咳嗽的地方咳上一声，立马就会被人拿枪指着脑袋。那些老大们也开始收紧管控，在检查站挨个搜查，看到谁稍微有点不对劲，二话不说就直接开枪。不过说来也巧，眼下闹出的这些乱子搞不好还对老子有利。名声这东西可真有意思，关键就看你囊不能抓住机会出手。\n\n\n\n既然所有人都认定老子跟这档子破事脱不了干系，那老子就让他们瞧瞧，什么才叫真正控制住局面！人手、枪支、食物、弹药，老子全都安排妥当了。隔离区的秩序全靠我手底下的狗腿们在管，只要有傻瓜蛋出现一点点感染迹象就统统赶走。你也必须在我这搭把手，只要发现可疑的人，就赶紧把他们解决掉，别等他们把半个塔科夫都给感染了再后悔！\n\n\n\n当然，我也给你准备了些好东西，就当是酬劳了。我可以法外开恩，允许你接触那些感染者的尸体。听说Therapist愿意花大价钱收购尸体上搞来的什么组织样本。老子可没兴趣亲自在那些恶心玩意儿身上动刀子。不过你要是愿意干，就尽管拿着手术刀往死人堆里冲，想弄多少样本就弄多少，然后带去Therapist那儿让她头疼。只要能从那个老婊子身上多榨点钱出来，何乐而不为呢。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abbae9ee591db528505e3e9",
-   "source": "https://www.eftarkov.com/task/6abbae9ee591db528505e3e9",
-   "name": "万圣节：原型研发",
-   "nameEn": "Halloween: Prototyping",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "获取全新 TG-Vi-24 原型疫苗 2 个",
-    "上交物品"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abb99516cdfa16e93028439",
-     "name": "万圣节：危险地带",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abbae9ee591db528505e3e9.webp",
-   "locations": [],
-   "description": "听说Therapist最近在给她手底下那帮人发放一种新疫苗。好家伙，居然还是个他妈的原型制剂！至于这玩意儿到底有没有用，老子现在才懒得管呢。重要的是，这东西现在抢手得很！既然如此，老子当然也得弄点来。先留点给手底下的弟兄们，剩下的就卖给那些愿意掏钱的家伙。\n\n\n\n总之，Therapist手底下那帮走狗现在正带着这些原型疫苗到处跑。你会讨价还价吧？很好！是时候让老子看看你的本事了！去跳蚤市场转转，四处打听一下，看看能不能弄到这东西。现在先别忙着去找Therapist，赶着去她那儿最多也就能听到一堆狗屁说教，甚至不会是什么好话，哈哈！",
-   "updated": "2026-11-17",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6aba7f65443c3da4df01bb3e",
-   "source": "https://www.eftarkov.com/task/6aba7f65443c3da4df01bb3e",
-   "name": "万圣节：后续检查",
-   "nameEn": "Halloween: Follow-Up Examination",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [
-    "工厂疫区",
-    "实验室疫区",
-    "在互动地图上查看位置"
-   ],
-   "objectives": [
-    "在实验室或工厂疫区找到身穿防化服的科学家尸体",
-    "使用医疗工具解剖科学家尸体",
-    "在实验室或者工厂疫区获得血液样本",
-    "上交血液样本"
-   ],
-   "prerequisites": [
-    {
-     "id": "6aba40a15ef26da1360746b8",
-     "name": "万圣节：致命流言",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [
-    "https://www.eftarkov.com/uploads/infoImg/202610310341237737.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310343371265.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310629162202.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310345021121.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310346183679.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310347035088.webp"
-   ],
-   "cover": "https://www.eftarkov.com/uploads/task/6aba7f65443c3da4df01bb3e.webp",
-   "locations": [
-    {
-     "obj": 1,
-     "map": "486a0d0506ddba9385ac6dfa",
-     "floor": "2",
-     "w": 1600.0,
-     "h": 1600.0,
-     "x": 751.926,
-     "y": 382.574
-    },
-    {
-     "obj": 1,
-     "map": "486a0d0506ddba9385ac6dfa",
-     "floor": "1",
-     "w": 1600.0,
-     "h": 1600.0,
-     "x": 1079.781,
-     "y": 706.506
-    },
-    {
-     "obj": 1,
-     "map": "486a0d0506ddba9385ac6dfa",
-     "floor": "1",
-     "w": 1600.0,
-     "h": 1600.0,
-     "x": 483.096,
-     "y": 962.531
-    },
-    {
-     "obj": 1,
-     "map": "9fc7b946a559923da6eb78f8",
-     "floor": "-1",
-     "w": 2460.0,
-     "h": 2070.0,
-     "x": 1726.683,
-     "y": 610.386
-    },
-    {
-     "obj": 1,
-     "map": "9fc7b946a559923da6eb78f8",
-     "floor": "1",
-     "w": 2460.0,
-     "h": 2070.0,
-     "x": 1299.475,
-     "y": 1104.0
-    },
-    {
-     "obj": 1,
-     "map": "9fc7b946a559923da6eb78f8",
-     "floor": "1",
-     "w": 2460.0,
-     "h": 2070.0,
-     "x": 814.615,
-     "y": 1708.882
-    }
-   ],
-   "description": "下午好，看来塔科夫还是不肯放过我们，哪怕是消停片刻.没错，我已经知道病毒蔓延的事情了。\n\n\n\n类似的情况在不久之前就已经上演过一回。那时候，在多方努力下—一你应该知道，我也为平息前一次疫情出了不少力——我们成功阻止了疾病的蔓延。看来这次我又得出手了，好在我们已经知道该从哪里着手。\n\n\n\n首先，我们必须先确认引发这次瘟疫的病原体是否与上次疫情是同一种。为了查明这一点，你得想办法给我弄一份感染者的血液样本来。请记住，我要的不是”新鲜”的样本，现场杀死感染者后取样毫无意义。血样必须来自感染病毒后自行死亡的人。只有这样，我才能确保病毒在进入患者体内后经历了完整的发病与病情进展过程。眼下情况紧急，我们绝不能因为粗心大意而浪费宝贵的时间。前往感染区域，寻找那些身穿防护服的实验室工作人员。我的直觉告诉我，这次疫情暴发后最先受到冲击一定是这些人。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abfae3485f9ebf648025acc",
-   "source": "https://www.eftarkov.com/task/6abfae3485f9ebf648025acc",
-   "name": "万圣节：大局为重",
-   "nameEn": "Halloween: For the Greater Good",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "将感染数据交给 Skier"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abf93f0e6a93c846b0fe382",
-     "name": "万圣节：初步成果",
-     "status": "完成"
-    },
-    {
-     "id": "6abfafda95e39cdaad0bda27",
-     "name": "(接受)\n万圣节：大局为重-达成协议",
-     "status": ""
-    },
-    {
-     "id": "6abfb582eac8c75de80bd930",
-     "name": "万圣节：最后一搏",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abfae3485f9ebf648025acc.webp",
-   "locations": [],
-   "description": "我把目前收集到的数据与上一次疫情暴发时的记录进行了对比，发现两者之间有太多相似之处，绝不可能只是巧合。虽然病毒株发生了变异，感染者对我们治疗手段的反应也有所不同，但整体的进展情况却几乎一模一样。\n\n\n\nSkier仍然死守着他的那套说辞，声称自己是被人陷害的。我可不会轻易相信他的一面之词。不过，既然这个滑头放出话来说自己掌握了些重量级情报，我还是愿意看看的，顺带也可以和他分享一些我对这次公共卫生事件的研究成果。通过比对现有的情报，我们也许能搞清楚集团的人究竟打算在城市里进行什么实验，以及我们该如何应对。现在出发，把我的研究结果交给Skier。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abfafda95e39cdaad0bda27",
-   "source": "https://www.eftarkov.com/task/6abfafda95e39cdaad0bda27",
-   "name": "万圣节：大局为重-达成协议",
-   "nameEn": "Halloween: For the Greater Good - An Agreement",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "上交感染数据"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abfafda95e39cdaad0bda27",
-     "name": "(接受)\n万圣节：大局为重-达成协议",
-     "status": ""
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abfafda95e39cdaad0bda27.webp",
-   "locations": [],
-   "description": "听说那个老娘们儿终于肯主动联系了？说是想把她手里关于这次感染的数据交给我。行吧，至少也算有点进展。\n\n\n\n把她给你的东西全都拿过来。我倒要看看她究竞捣鼓出了什么名堂，最重要的是，她手头的那些数据到底有没有点屁用。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abbb8845baa9031ac068833",
-   "source": "https://www.eftarkov.com/task/6abbb8845baa9031ac068833",
-   "name": "万圣节：巧合？",
-   "nameEn": "Halloween: Coincidence?",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [
-    "灯塔",
-    "在互动地图上查看位置"
-   ],
-   "objectives": [
-    "在灯塔找到信号源",
-    "在信号源区域内找到线索",
-    "上交找到的线索"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abb99516cdfa16e93028439",
-     "name": "万圣节：危险地带",
-     "status": "完成"
-    },
-    {
-     "id": "6abbbc647aea5f936906e29d",
-     "name": "万圣节：化敌为友",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [
-    "https://www.eftarkov.com/uploads/infoImg/202610310417282891.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310417299928.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310417316202.webp"
-   ],
-   "cover": "https://www.eftarkov.com/uploads/task/6abbb8845baa9031ac068833.webp",
-   "locations": [
-    {
-     "obj": 2,
-     "map": "5704e4dad2720bb55b8b4567",
-     "floor": "1",
-     "w": 1100.0,
-     "h": 1700.0,
-     "x": 664.879,
-     "y": 296.758
-    }
-   ],
-   "description": "听着，这场瘟疫在塔科夫的蔓延情况实在是太有规律了。这儿出现的感染苗头刚压下去，紧接着又轮到另一个地方出乱子，简直就像有人在故意试探隔离措施，打探我们到底能承受多大压力一样。这种事可不会无缘无故地发生。\n\n\n\n除此之外，我手下的弟兄们还在灯塔那边截获了一个可疑信号。至于这他妈到底意味着什么，老子也不知道，但这么多事凑在一起，就算是三岁小孩也该知道事情不对劲了。你去灯塔走一趟，找到信号源，再把周围仔仔细细搜查一遍。要是发现什么有用的东西，立刻带回来交给我。我倒要看看这帮狗娘养的到底在折腾什么名堂。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abb7e59dcebb0efbc0fda7b",
-   "source": "https://www.eftarkov.com/task/6abb7e59dcebb0efbc0fda7b",
-   "name": "万圣节：意外援助",
-   "nameEn": "Halloween: Unexpected Help",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [
-    "海关",
-    "灯塔",
-    "在互动地图上查看位置"
-   ],
-   "objectives": [
-    "在灯塔污水处理厂找到并获取疫苗",
-    "在海关二层宿舍楼 105 房内藏匿疫苗"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abb7e434f0ef29f16066d77",
-     "name": "(冲突)\n万圣节：初步检查",
-     "status": ""
-    },
-    {
-     "id": "6aba7df2bb9829de330494c7",
-     "name": "万圣节：最佳防御",
-     "status": "完成"
-    },
-    {
-     "id": "6abb7e434f0ef29f16066d77",
-     "name": "(接受)\n万圣节：初步检查",
-     "status": ""
-    },
-    {
-     "id": "6abb86cddcebb0efbc0fda8f",
-     "name": "万圣节：收缩管控",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [
-    "https://www.eftarkov.com/uploads/infoImg/202610310406289164.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310406411975.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202609301042298707.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202609301042334461.webp"
-   ],
-   "cover": "https://www.eftarkov.com/uploads/task/6abb7e59dcebb0efbc0fda7b.webp",
-   "locations": [
-    {
-     "obj": 1,
-     "map": "5704e4dad2720bb55b8b4567",
-     "floor": "2",
-     "w": 1100.0,
-     "h": 1700.0,
-     "x": 723.6,
-     "y": 402.184
-    },
-    {
-     "obj": 2,
-     "map": "56f40101d2720b2a4d8b45d6",
-     "floor": "1",
-     "w": 2400.0,
-     "h": 1200.0,
-     "x": 1150.644,
-     "y": 871.655
-    }
-   ],
-   "description": "Therapist和她手底下那帮自作聪明的家伙还在那儿磨磨蹭蹭，查来查去也没搞出个名堂，我却早就把问题解决了。老子弄到的可是一批货真价实的疫苗，不是什么土法炮制的垃圾玩意儿。供货的人很专业，我和他们打交道都好几年了。据他们说，这批疫苗早在上一轮疫情爆发的时候就研发好了，只不过当时没能运进塔科夫而己。瞧瞧，名利双收的生意等得不就是我嘛！\n\n\n\n行了，废话少说。去灯塔的水处理厂取一批疫苗，然后把官藏到海关的双层宿舍楼里。那边会有人等着接货。还有，你他妈可千万别把这批货弄丢了，不然老子非拧断你的脖子不可。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abb92e1505493a036006ee0",
-   "source": "https://www.eftarkov.com/task/6abb92e1505493a036006ee0",
-   "name": "万圣节：收紧管控",
-   "nameEn": "Halloween: Tightening the Quarantine",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "上交在战局中找到的物品：任意能够治疗重度出血的医疗包 7 个",
-    "上交战局中找到的物品：任意医用药膏 3 个",
-    "上交战局中找到的物品：任意手术包 3 个"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abd18fed383d797d602d6c9",
-     "name": "(冲突)\n万圣节：新型疫苗",
-     "status": ""
-    },
-    {
-     "id": "6abd18fed383d797d602d6c9",
-     "name": "(接受)\n万圣节：新型疫苗",
-     "status": ""
-    },
-    {
-     "id": "6abb99516cdfa16e93028439",
-     "name": "万圣节：危险地带",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abb92e1505493a036006ee0.webp",
-   "locations": [],
-   "description": "他妈的，就是你这个该死的两面三刀的叛徒把我的疫苗拖去了Therapist那边？这批货最后不还是回到了老子手上。你当时是不是也有种感觉，觉得整件事总有哪里不对劲？\n\n\n\n自从那批疫苗发出去以后，死的人反而越来越多了。那些感染者转眼间就会变成疯子，而且一个个都他妈难缠得要命，想干掉他们可得费不少劲。给老子供货的那帮混蛋现在全都消失得无影无踪，留下一堆烂摊子让我收拾！结果呢？最后居然是他妈的我来背这口黑锅！Therapist那个老巫婆早就把是谁弄来的疫苗、又是谁把疫苗分发出去的嚷嚷得半个塔科夫都知道了。\n\n\n\n所以眼下这个烂摊子咱们只能靠自己收拾了。干掉那些感染者，把还没被感染的区域隔离起来。另外，你最好想清楚自己到底站在哪一边。要是你跑去帮Therapist，就别他妈再回来求老子。我这儿可不养吃里扒外的叛徒！\n\n\n\n别的不多扯了，现在有件事要你去办：尽可能多地搜集医疗物资，有多少弄多少。我会把这些东西分给手底下的弟兄们，以防情况进一步恶化。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abb86cddcebb0efbc0fda8f",
-   "source": "https://www.eftarkov.com/task/6abb86cddcebb0efbc0fda8f",
-   "name": "万圣节：收缩管控",
-   "nameEn": "Halloween: Tightening the Quarantine",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "上交在战局中找到的物品：任意能够治疗重度出血的医疗包 5 个",
-    "上交战局中找到的物品：任意医用药膏 2 个",
-    "上交战局中找到的物品：任意手术包 2 个"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abd0ff5d383d797d602d6c4",
-     "name": "(冲突)\n万圣节：新型疫苗",
-     "status": ""
-    },
-    {
-     "id": "6abb7e59dcebb0efbc0fda7b",
-     "name": "万圣节：意外援助",
-     "status": "完成"
-    },
-    {
-     "id": "6abb99516cdfa16e93028439",
-     "name": "万圣节：危险地带",
-     "status": "完成"
-    },
-    {
-     "id": "6abd0ff5d383d797d602d6c4",
-     "name": "(接受)\n万圣节：新型疫苗",
-     "status": ""
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abb86cddcebb0efbc0fda8f.webp",
-   "locations": [],
-   "description": "操他妈的，这下全完蛋了！自从那批疫苗发出去以后，死的人反而越来越多了。那些感染者转眼间就会变成疯子，而且一个个都他妈难缠得要命，想干掉他们可得费不少劲。给老子供货的那帮混蛋现在全都消失得无影无踪，留下一堆烂摊子让我收拾！结果呢？最后居然是他妈的我来背这口黑锅！Therapist那个老巫婆早就把是谁弄来的疫苗、又是谁把疫苗分发出去的嚷嚷得半个塔科夫都知道了。\n\n\n\n所以眼下这个烂摊子咱们只能靠自己收拾了。尤其是你，你小子也脱不了干系。说的好像是我把那些狗屁疫苗带进来的一样！\n\n\n\n咱们得干掉那些感染者，把还没被感染的区域隔离起来。另外，你最好想清楚自己到底站在哪一边。要是你跑去帮Therapist，就别他妈再回来求老子。我这儿可不养吃里扒外的叛徒！\n\n\n\n现在有件事要你去办：尽可能多地搜集医疗物资，有多少弄多少。我会把这些东西分给手底下的弟兄们，以防情况进一步恶化。",
-   "updated": "2026-11-01",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abf92bee6a93c846b0fe37d",
-   "source": "https://www.eftarkov.com/task/6abf92bee6a93c846b0fe37d",
-   "name": "万圣节：敌情研究",
-   "nameEn": "Studying the Enemy",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "上交感染者组织样本 2 个"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abf70a8e4732bc101051bf2",
-     "name": "万圣节：高风险，高回报",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abf92bee6a93c846b0fe37d.webp",
-   "locations": [],
-   "description": "你好。我听说Skier并没有销毁那些感染者的尸体，而是把它们存放在冷藏集装箱里。我并不打算亲自去找他，但这些样本或许能为疫苗研发提供很大的帮助。\n\n\n\n帮我从那些尸体上获取一些组织样本。掌握的样本越多，我就越能准确地研究病毒发生的变化。我不建议你直接去找Skier。至少目前，他肯定不会卖给你任何东西。你可以试着和其他PMC谈谈，或者去跳蚤市场碰碰运气。我愿意为这份任务支付丰厚的报酬。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abd18fed383d797d602d6c9",
-   "source": "https://www.eftarkov.com/task/6abd18fed383d797d602d6c9",
-   "name": "万圣节：新型疫苗",
-   "nameEn": "Halloween: A New Vaccine",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [
-    "工厂疫区",
-    "实验室疫区"
-   ],
-   "objectives": [
-    "以幸存状态撤离工厂或实验室疫区"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abb92e1505493a036006ee0",
-     "name": "(冲突)\n万圣节：收紧管控",
-     "status": ""
-    },
-    {
-     "id": "6abb7e434f0ef29f16066d77",
-     "name": "万圣节：初步检查",
-     "status": "完成"
-    },
-    {
-     "id": "6abb92e1505493a036006ee0",
-     "name": "(接受)\n万圣节：收紧管控",
-     "status": ""
-    },
-    {
-     "id": "6abf70a8e4732bc101051bf2",
-     "name": "万圣节：高风险，高回报",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abd18fed383d797d602d6c9.webp",
-   "locations": [],
-   "description": "你好。我已经拿到了Skier那批化学制剂的分析结果。那些东西根本不是什么疫苗，而是经过特别设计，用来加速现有毒株变异速度的催化剂。你干出的好事让这场瘟疫以前所未有的速度继续恶化了下去，感染者也更具攻击性，而我们之前采用的抑制手段正逐渐失去效果。\n\n\n\n如果你还打算站在我这边，接下来就必须直接深入感染区域展开行动。我需要一位能够进入感染区核心地带一一也就是工厂或者实验室的得力助手，你要做的不只是评估现场情况，最重要的是，你必须能活着回来。我们首先得弄清楚眼下到底是什么情况。只有查清真相后，我们才能找到阻止疫情蔓延的方法。",
-   "updated": "2026-11-05",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abd0ff5d383d797d602d6c4",
-   "source": "https://www.eftarkov.com/task/6abd0ff5d383d797d602d6c4",
-   "name": "万圣节：新型疫苗",
-   "nameEn": "Halloween: A New Vaccine",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [
-    "工厂疫区",
-    "实验室疫区"
-   ],
-   "objectives": [
-    "以幸存状态撤离工厂疫区",
-    "以幸存状态撤离实验室疫区",
-    "上交 2000 美元",
-    "获取使用撤离点所需的特殊物品"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abb86cddcebb0efbc0fda8f",
-     "name": "(冲突)\n万圣节：收缩管控",
-     "status": ""
-    },
-    {
-     "id": "6abb86cddcebb0efbc0fda8f",
-     "name": "(接受)\n万圣节：收缩管控",
-     "status": ""
-    },
-    {
-     "id": "6abf70a8e4732bc101051bf2",
-     "name": "万圣节：高风险，高回报",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abd0ff5d383d797d602d6c4.webp",
-   "locations": [],
-   "description": "你好。我已经拿到了Skier那批化学制剂的分析结果。没错，就是你帮着他洒遍整个塔科夫的那些东西。当时我不得不通过中间人以高得离谱的价格把它买回来。这回你可是欠我一个大人情，小伙子。\n\n\n\n让我们说回正题：你散布出去的根本不是什么疫苗，而是经过特别设计，用来加速现有毒株变异速度的催化剂。你干出的好事让这场瘟疫以前所未有的速度继续恶化了下去，感染者也更具攻击性，而我们之前采用的抑制手段正逐渐失去效果。\n\n\n\n如果你决定继续站在我这边，接下来就必须直接深入感染区域展开行动。我需要一位能够进入感染区核心地带一一也就是工厂或者实验室的得力助手，你要做的不只是评估现场情况，最重要的是，你必须能活着回来。我们首先得弄清楚眼下到底是什么情况。只有查清真相后，我们才能找到阻止疫情蔓延的方法。",
-   "updated": "2026-11-01",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6aba7df2bb9829de330494c7",
-   "source": "https://www.eftarkov.com/task/6aba7df2bb9829de330494c7",
-   "name": "万圣节：最佳防御",
-   "nameEn": "Halloween: The Best Defense",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [
-    "实验室疫区"
-   ],
-   "objectives": [
-    "前往实验室疫区",
-    "在实验室疫区消灭感染者 10 名"
-   ],
-   "prerequisites": [
-    {
-     "id": "6aba40a15ef26da1360746b8",
-     "name": "万圣节：致命流言",
-     "status": "完成"
-    },
-    {
-     "id": "6abb7e59dcebb0efbc0fda7b",
-     "name": "万圣节：意外援助",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [
-    "https://www.eftarkov.com/uploads/infoImg/202610310153416677.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310154091478.webp"
-   ],
-   "cover": "https://www.eftarkov.com/uploads/task/6aba7df2bb9829de330494c7.webp",
-   "locations": [],
-   "description": "那些鬼扯传闻现在可不只仅限于咱们俩之间了。你听说了吗？就连那些帮派都开始联手，打算把那些疯子封死在实验室和工广里，阻正感染进一步扩散。那帮家伙可是很久没握手言和了，看来情况是真他妈的严重起来了。\n\n\n\n说来也巧，就在这一切开始之前，我派了一队人进了实验室。本来是想让他们进去搜刮一番，看看能捞到什么好东西他们甚至还成功跟我联系上了，可紧接着通讯就断了。我只听见有人大喊了一声，说灯全灭了。之后整整一分钟，我听到的全是些恐怖片里才有的骇人动静。\n\n\n\n过去看看情况吧，说不定那群死鬼里面还有人侥幸捡了一条命。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abfb582eac8c75de80bd930",
-   "source": "https://www.eftarkov.com/task/6abfb582eac8c75de80bd930",
-   "name": "万圣节：最后一搏",
-   "nameEn": "Halloween: The Final Push",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [],
-   "objectives": [
-    "消灭受到实验型疫苗催泪弹影响的感染者 15 名",
-    "消灭感染 Tagilla"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abfae3485f9ebf648025acc",
-     "name": "万圣节：大局为重",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abfb582eac8c75de80bd930.webp",
-   "locations": [],
-   "description": "Skier提供的数据帮助我研制出了新版本的疫苗。我们会采用和上次一样的方法进行测试，通过催泪瓦斯手榴弹来释放药剂。获取实验样品的方式也和之前一样。拿到样品后，就用它来对付感染者，并消灭那些受到气体影响的目标。\n\n\n\n另外，我仍然需要新鲜的病毒样本。前往感染区域，尽可能多地消灭病毒携带者。之后，我的人会负责收集研究所需的样本。",
-   "updated": "2026-11-05",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6aba40a15ef26da1360746b8",
-   "source": "https://www.eftarkov.com/task/6aba40a15ef26da1360746b8",
-   "name": "万圣节：致命流言",
-   "nameEn": "Halloween: Rumors",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [
-    "工厂疫区"
-   ],
-   "objectives": [
-    "前往工厂疫区",
-    "在工厂疫区消灭感染者 10 名"
-   ],
-   "prerequisites": [
-    {
-     "id": "6aba7df2bb9829de330494c7",
-     "name": "万圣节：最佳防御",
-     "status": "完成"
-    },
-    {
-     "id": "6aba7f65443c3da4df01bb3e",
-     "name": "万圣节：后续检查",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [
-    "https://www.eftarkov.com/uploads/infoImg/202610310153416677.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310153463943.webp"
-   ],
-   "cover": "https://www.eftarkov.com/uploads/task/6aba40a15ef26da1360746b8.webp",
-   "locations": [],
-   "description": "嘿，伙计，都还好吗？我这有个差事等着你去办。最近有些鬼扯传言传遍了整个塔科夫就连我手底下那帮人也跟楼道里嚼舌根的老太婆似的，整天议论个不停。你问他们都在议论些什么？据他们说，城市里又出现了新一轮瘟疫，沾上了就变得疯疯癫癫的。甚至还说什么只有特定的几个地方会出现这种病症！\n\n\n\n要是换作平时，我肯定不会把这种鬼话当回事。但塔科夫以前也不是没发生过这种破事。你去工厂调查一下，回来把你看到的情况都告诉我。只要你能好好去办，好处少不了你的。要是路上碰到那些疯子，直接干掉他们。省得这帮混蛋整天拿这些屁话分散我手下弟兄们的注意力。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abbc2bb71588b5b110f34a5",
-   "source": "https://www.eftarkov.com/task/6abbc2bb71588b5b110f34a5",
-   "name": "万圣节：蒙蔽敌人",
-   "nameEn": "Halloween: Blind the Enemy",
-   "trader": "58330581ace78e27b8b10cee",
-   "traderName": "Skier",
-   "level": 1,
-   "maps": [
-    "海关",
-    "森林",
-    "灯塔",
-    "海岸线",
-    "储备站",
-    "在互动地图上查看位置"
-   ],
-   "objectives": [
-    "上交 RDA-78 疫苗",
-    "摧毁森林列车停放处的摄像头 2 个",
-    "摧毁海关宿舍楼的摄像头 3 个",
-    "摧毁灯塔污水处理厂内的摄像头 3 个",
-    "摧毁储备站火车站的摄像头 3 个",
-    "摧毁海岸线疗养院的摄像头 3 个"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abbbc647aea5f936906e29d",
-     "name": "万圣节：化敌为友",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [
-    "https://www.eftarkov.com/uploads/infoImg/202610310428541534.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310430319134.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310433049179.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310434229173.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310434483723.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310438315518.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310439102303.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310439534016.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310443134258.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310443445214.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310444361593.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310445276505.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310446511689.webp",
-    "https://www.eftarkov.com/uploads/infoImg/202610310448106943.webp"
-   ],
-   "cover": "https://www.eftarkov.com/uploads/task/6abbc2bb71588b5b110f34a5.webp",
-   "locations": [
-    {
-     "obj": 2,
-     "map": "5704e3c2d2720bac5b8b4567",
-     "floor": "1",
-     "w": 2800.0,
-     "h": 2800.0,
-     "x": 2513.361,
-     "y": 2130.141
-    },
-    {
-     "obj": 2,
-     "map": "5704e3c2d2720bac5b8b4567",
-     "floor": "1",
-     "w": 2800.0,
-     "h": 2800.0,
-     "x": 2509.123,
-     "y": 2049.068
-    },
-    {
-     "obj": 3,
-     "map": "56f40101d2720b2a4d8b45d6",
-     "floor": "3",
-     "w": 2400.0,
-     "h": 1200.0,
-     "x": 1129.96,
-     "y": 853.814
-    },
-    {
-     "obj": 3,
-     "map": "56f40101d2720b2a4d8b45d6",
-     "floor": "2",
-     "w": 2400.0,
-     "h": 1200.0,
-     "x": 1226.764,
-     "y": 937.739
-    },
-    {
-     "obj": 3,
-     "map": "56f40101d2720b2a4d8b45d6",
-     "floor": "2",
-     "w": 2400.0,
-     "h": 1200.0,
-     "x": 1256.308,
-     "y": 971.046
-    },
-    {
-     "obj": 4,
-     "map": "5704e4dad2720bb55b8b4567",
-     "floor": "3",
-     "w": 1100.0,
-     "h": 1700.0,
-     "x": 683.853,
-     "y": 291.684
-    },
-    {
-     "obj": 4,
-     "map": "5704e4dad2720bb55b8b4567",
-     "floor": "3",
-     "w": 1100.0,
-     "h": 1700.0,
-     "x": 612.119,
-     "y": 322.18
-    },
-    {
-     "obj": 4,
-     "map": "5704e4dad2720bb55b8b4567",
-     "floor": "2",
-     "w": 1100.0,
-     "h": 1700.0,
-     "x": 626.132,
-     "y": 293.266
-    },
-    {
-     "obj": 5,
-     "map": "5704e5fad2720bc05b8b4567",
-     "floor": "2",
-     "w": 1200.0,
-     "h": 1000.0,
-     "x": 159.296,
-     "y": 293.574
-    },
-    {
-     "obj": 5,
-     "map": "5704e5fad2720bc05b8b4567",
-     "floor": "3",
-     "w": 1200.0,
-     "h": 1000.0,
-     "x": 230.896,
-     "y": 321.211
-    },
-    {
-     "obj": 5,
-     "map": "5704e5fad2720bc05b8b4567",
-     "floor": "3",
-     "w": 1200.0,
-     "h": 1000.0,
-     "x": 245.792,
-     "y": 297.36
-    },
-    {
-     "obj": 6,
-     "map": "5704e554d2720bac5b8b456e",
-     "floor": "1",
-     "w": 1700.0,
-     "h": 1100.0,
-     "x": 932.566,
-     "y": 351.655
-    },
-    {
-     "obj": 6,
-     "map": "5704e554d2720bac5b8b456e",
-     "floor": "3",
-     "w": 1700.0,
-     "h": 1100.0,
-     "x": 837.261,
-     "y": 353.497
-    },
-    {
-     "obj": 6,
-     "map": "5704e554d2720bac5b8b456e",
-     "floor": "3",
-     "w": 1700.0,
-     "h": 1100.0,
-     "x": 796.915,
-     "y": 364.627
-    }
-   ],
-   "description": "看来Therapist 研制的疫苗还真他妈管用。不过要是数量不够，光有疫苗也没多大用。所以隔离措施还得继续维持。要老子说，隔离区的管控还得再加强。宁可把几个倒霉蛋拦在外头，也总比让剩下的地方都感染了强。不然到时候收拾整个塔科夫的还是咱们。\n\n\n\n不过眼下咱们还有更要紧的事要办。TerraGroup那帮混蛋一直在暗中监视咱们，还通过他们的信号发射器不断向外传输数据。咱们现在要做的，就是让这些玩意儿彻底瘫痪。找到那些设备，把它们统统砸个稀巴烂！老子早就受够了给那帮狗娘养的当实验小白鼠！\n\n\n\n还有一件事：给我弄点疫苗回来，能用的那种。听说Therapist开发了疫苗，名字叫RDA-78。我打算给手底下的弟兄们用，当然....我还有其他几个主顾也需要。",
-   "updated": "2026-10-31",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6abf70a8e4732bc101051bf2",
-   "source": "https://www.eftarkov.com/task/6abf70a8e4732bc101051bf2",
-   "name": "万圣节：高风险，高回报",
-   "nameEn": "Halloween: High-Risk, High-Reward",
-   "trader": "54cb57776803fa99248b456e",
-   "traderName": "Therapist",
-   "level": 1,
-   "maps": [
-    "工厂疫区",
-    "实验室疫区"
-   ],
-   "objectives": [
-    "在工厂或实验室疫区消灭感染者 30 名"
-   ],
-   "prerequisites": [
-    {
-     "id": "6abd0ff5d383d797d602d6c4",
-     "name": "万圣节：新型疫苗",
-     "status": "完成"
-    },
-    {
-     "id": "6abd18fed383d797d602d6c9",
-     "name": "万圣节：新型疫苗",
-     "status": "完成"
-    },
-    {
-     "id": "6abf92bee6a93c846b0fe37d",
-     "name": "万圣节：敌情研究",
-     "status": "完成"
-    },
-    {
-     "id": "6abf93f0e6a93c846b0fe382",
-     "name": "万圣节：初步成果",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6abf70a8e4732bc101051bf2.webp",
-   "locations": [],
-   "description": "情况正在变得越来越糟。我们正在加强隔离区的安全措施，但光是向着所有长得像感染者的人胡乱开火并不能解决问题。事到如今，我需要变异病毒的完整样本，而获取这些样本的唯一途径，就是从刚刚被击杀的感染者身上采集。\n\n\n\n我想请你深入感染区域的核心地带，也就是工厂和实验室疫区，尽可能多地消灭病毒携带者。之后，我的人会负责收集尸体，并将样本送去进行研究。如果一切顺利，我会把第一批原型疫苗交给你。以眼下的情况来看，这些疫苗恐怕比等重的黄金还要宝贵。",
-   "updated": "2026-11-01",
    "modes": [
     "pvp",
     "pve",
@@ -2890,6 +1800,34 @@
    ]
   },
   {
+   "id": "6613f3007f6666d56807c929",
+   "source": "https://www.eftarkov.com/task/6613f3007f6666d56807c929",
+   "name": "人靠衣装 - 1",
+   "nameEn": "Drip-Out - Part 1",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "traderName": "Ragman",
+   "level": 27,
+   "maps": [
+    "储备站",
+    "实验室"
+   ],
+   "objectives": [
+    "击杀掠夺者 100 名",
+    "上交在战局中找到的 WARTECH 品牌装备 50 件"
+   ],
+   "prerequisites": [],
+   "guideImages": [],
+   "cover": "https://www.eftarkov.com/uploads/task/6613f3007f6666d56807c929.webp",
+   "locations": [],
+   "description": "嘿哟，兄弟。我有件事要请你帮忙。所以是这样，我找到机会开了一条全新的生产线，但总有些疯狗在不该把狗鼻子伸进去的地方疯狂狗叫，结果就是我本来要拿去卖的商品全被这些刺头抢走了，现在已经散遍整个塔科夫根本没法追回来了。大兄弟，帮我这一把好吗？",
+   "updated": "2026-10-29",
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ]
+  },
+  {
    "id": "66151401efb0539ae10875ae",
    "source": "https://www.eftarkov.com/task/66151401efb0539ae10875ae",
    "name": "人靠衣装 - 1",
@@ -2918,26 +1856,26 @@
    ]
   },
   {
-   "id": "6613f3007f6666d56807c929",
-   "source": "https://www.eftarkov.com/task/6613f3007f6666d56807c929",
-   "name": "人靠衣装 - 1",
-   "nameEn": "Drip-Out - Part 1",
+   "id": "6613f307fca4f2f386029409",
+   "source": "https://www.eftarkov.com/task/6613f307fca4f2f386029409",
+   "name": "人靠衣装 - 2",
+   "nameEn": "Drip-Out - Part 2",
    "trader": "5ac3b934156ae10c4430e83c",
    "traderName": "Ragman",
-   "level": 27,
+   "level": 42,
    "maps": [
-    "储备站",
-    "实验室"
+    "灯塔",
+    "破冰船"
    ],
    "objectives": [
-    "击杀掠夺者 100 名",
-    "上交在战局中找到的 WARTECH 品牌装备 50 件"
+    "击杀游荡者 100 名",
+    "上交在战局中找到的 LBT 品牌装备 50 件"
    ],
    "prerequisites": [],
    "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6613f3007f6666d56807c929.webp",
+   "cover": "https://www.eftarkov.com/uploads/task/6613f307fca4f2f386029409.webp",
    "locations": [],
-   "description": "嘿哟，兄弟。我有件事要请你帮忙。所以是这样，我找到机会开了一条全新的生产线，但总有些疯狗在不该把狗鼻子伸进去的地方疯狂狗叫，结果就是我本来要拿去卖的商品全被这些刺头抢走了，现在已经散遍整个塔科夫根本没法追回来了。大兄弟，帮我这一把好吗？",
+   "description": "信不信由你，我的生意这下是真的起飞了，还在不断发展壮大！我觉得是时候继续扩张产品线了。帮你的好兄弟一把，我就当你答应咯？",
    "updated": "2026-10-29",
    "modes": [
     "pvp",
@@ -2970,34 +1908,6 @@
    ],
    "guideImages": [],
    "cover": "https://www.eftarkov.com/uploads/task/6615141bfda04449120269a7.webp",
-   "locations": [],
-   "description": "信不信由你，我的生意这下是真的起飞了，还在不断发展壮大！我觉得是时候继续扩张产品线了。帮你的好兄弟一把，我就当你答应咯？",
-   "updated": "2026-10-29",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
-   "id": "6613f307fca4f2f386029409",
-   "source": "https://www.eftarkov.com/task/6613f307fca4f2f386029409",
-   "name": "人靠衣装 - 2",
-   "nameEn": "Drip-Out - Part 2",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "traderName": "Ragman",
-   "level": 42,
-   "maps": [
-    "灯塔",
-    "破冰船"
-   ],
-   "objectives": [
-    "击杀游荡者 100 名",
-    "上交在战局中找到的 LBT 品牌装备 50 件"
-   ],
-   "prerequisites": [],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6613f307fca4f2f386029409.webp",
    "locations": [],
    "description": "信不信由你，我的生意这下是真的起飞了，还在不断发展壮大！我觉得是时候继续扩张产品线了。帮你的好兄弟一把，我就当你答应咯？",
    "updated": "2026-10-29",
@@ -13437,6 +12347,10 @@
    "traderName": "Fence",
    "level": 20,
    "maps": [
+    "中心区",
+    "森林",
+    "海岸线",
+    "塔科夫街区",
     "实验室",
     "破冰船"
    ],
@@ -13448,7 +12362,7 @@
    "cover": "https://www.eftarkov.com/uploads/task/6a4f602f02d214b87f065c40.webp",
    "locations": [],
    "description": "是时候干点正事了。我已经成功锁定了一处集团绝密设施的位置，除了那些佣兵以外，整个塔科夫应该没有其他人知道它的存在。如果我的推演准确无误的话，他们应该还没来得及光顾那里。\n\n\n\n我正在想办法把我的人送进设施里。不，你不会真的以为我打算让你掺和我的秘密行动吧？别担心，我还是会找点事情给你做的。只要你愿意接，我是绝对不会让你后悔的。\n\n\n\n为了能让我的人不受那些恐怖佣兵的打扰安全进出设施，必须想办法制造点动静，把他们的注意力从清查集团资产上引开。和军团交手了这么多次，你手里应该存了不少他们的装备吧？\n\n\n\n那就利用好这一点，打乱他们的行动。",
-   "updated": "2026-11-19",
+   "updated": "2026-11-24",
    "modes": [
     "season"
    ]
@@ -14958,6 +13872,42 @@
    ]
   },
   {
+   "id": "6aad74057a336545ed065807",
+   "source": "https://www.eftarkov.com/task/6aad74057a336545ed065807",
+   "name": "新起点",
+   "nameEn": "New Beginning",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "traderName": "Ragman",
+   "level": 35,
+   "maps": [
+    "灯塔",
+    "立交桥",
+    "塔科夫街区",
+    "实验室",
+    "破冰船"
+   ],
+   "objectives": [
+    "任意地图击杀 PMC 20 名",
+    "击杀游荡者 30 名",
+    "以幸存状态撤离实验室",
+    "使用转移功能从塔科夫街区转移到立交桥",
+    "从立交桥幸存撤离",
+    "上交在战局中找到物品：任意 PMC 玩偶 3 个",
+    "上交在战局中找到物品：任意 Scav 玩偶 3 个",
+    "上交在战局中找到物品：任意 Boss 玩偶 3 个",
+    "上交在战局中找到物品：任意 商人 玩偶 3 个"
+   ],
+   "prerequisites": [],
+   "guideImages": [],
+   "cover": "https://www.eftarkov.com/uploads/task/6aad74057a336545ed065807.webp",
+   "locations": [],
+   "description": "每次看到你都很高兴！最近怎么样，没闲得发慌吧？什么，我又开始重复相同的话了？哎呀，得了吧，和你开个玩笑而已嘛！\n\n\n\n好了，现在谈正经事。任务清单又添加了新项目，这意味着我们哥俩在塔科夫的声望还是足够响的。你肯定也知道，在塔科夫地界，没点名望别说做点正经生意，那简直是寸步难行啊。所以我们得把这一票干得漂亮点，新的清单刚刚到我手上……\n\n\n\n什么？你已经办完几项了？不错啊，容易点总是好事。人生总得向前看嘛，兄弟！不然的话，我们一个个都活不长啦。去吧，向制定这份清单的大佬们展示展示你的身手！",
+   "updated": "2026-10-29",
+   "modes": [
+    "pve"
+   ]
+  },
+  {
    "id": "6aad740f5e7f204c2d088f42",
    "source": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
    "name": "新起点",
@@ -14996,42 +13946,6 @@
    "cover": "https://www.eftarkov.com/uploads/task/6aad740f5e7f204c2d088f42.webp",
    "locations": [],
    "description": "嘿，兄弟！照你像是上辈子就住在塔科夫的这股狠劲，你肯定已经知道我找你要说的是什么了。没错，就是那份名单，本地的大人物都在瞧着的那种，关键时刻你可不能掉链子啊！\n\n\n\n那么这一切轮回的意义又是什么呢？没错，我们迄今为止所做的一切，并不是全部徒劳，而是为了展现我们才是塔科夫的真正强者。那些任务还是原样，只不过有些微小的变动。\n\n\n\n没错，难度每次都在上升，但生活本身也不正是如此吗？好了，出发吧。",
-   "updated": "2026-10-29",
-   "modes": [
-    "pve"
-   ]
-  },
-  {
-   "id": "6aad74057a336545ed065807",
-   "source": "https://www.eftarkov.com/task/6aad74057a336545ed065807",
-   "name": "新起点",
-   "nameEn": "New Beginning",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "traderName": "Ragman",
-   "level": 35,
-   "maps": [
-    "灯塔",
-    "立交桥",
-    "塔科夫街区",
-    "实验室",
-    "破冰船"
-   ],
-   "objectives": [
-    "任意地图击杀 PMC 20 名",
-    "击杀游荡者 30 名",
-    "以幸存状态撤离实验室",
-    "使用转移功能从塔科夫街区转移到立交桥",
-    "从立交桥幸存撤离",
-    "上交在战局中找到物品：任意 PMC 玩偶 3 个",
-    "上交在战局中找到物品：任意 Scav 玩偶 3 个",
-    "上交在战局中找到物品：任意 Boss 玩偶 3 个",
-    "上交在战局中找到物品：任意 商人 玩偶 3 个"
-   ],
-   "prerequisites": [],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6aad74057a336545ed065807.webp",
-   "locations": [],
-   "description": "每次看到你都很高兴！最近怎么样，没闲得发慌吧？什么，我又开始重复相同的话了？哎呀，得了吧，和你开个玩笑而已嘛！\n\n\n\n好了，现在谈正经事。任务清单又添加了新项目，这意味着我们哥俩在塔科夫的声望还是足够响的。你肯定也知道，在塔科夫地界，没点名望别说做点正经生意，那简直是寸步难行啊。所以我们得把这一票干得漂亮点，新的清单刚刚到我手上……\n\n\n\n什么？你已经办完几项了？不错啊，容易点总是好事。人生总得向前看嘛，兄弟！不然的话，我们一个个都活不长啦。去吧，向制定这份清单的大佬们展示展示你的身手！",
    "updated": "2026-10-29",
    "modes": [
     "pve"
@@ -17450,7 +16364,7 @@
    "cover": "https://www.eftarkov.com/uploads/task/669fa3a40c828825de06d6a1.webp",
    "locations": [],
    "description": "你来了，勇士！我专门为你留了个差事。\n\n\n\n我这刚有一批新枪到货，等着上架开卖。轻便敏捷，控枪舒服，开火的时候更是轻松惬意。但你也知道我们这行——不弄几支样枪试射一下怎么能说服别人来买呢。\n\n\n\n带上这把枪在整个塔科夫转一圈吧。在灯塔或者储备站之类的地方，试试它的成色如何。完事了之后回来告诉我你的体验。",
-   "updated": "2026-10-29",
+   "updated": "2026-11-24",
    "modes": [
     "pvp",
     "pve",
@@ -19602,53 +18516,6 @@
    ]
   },
   {
-   "id": "6a45208043b8d7604d00b8d5",
-   "source": "https://www.eftarkov.com/task/6a45208043b8d7604d00b8d5",
-   "name": "猎人之路 - 管理者",
-   "nameEn": "The Huntsman Path - Administrator",
-   "trader": "5c0647fdd443bc2504c2d371",
-   "traderName": "Jaeger",
-   "level": 17,
-   "maps": [
-    "灯塔",
-    "在互动地图上查看位置"
-   ],
-   "objectives": [
-    "在灯塔火车站发射一枚黄色信号弹（在同场战局中）",
-    "在灯塔火车站范围内消灭任意目标 6 名（在同场战局中）"
-   ],
-   "prerequisites": [],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/6a45208043b8d7604d00b8d5.webp",
-   "locations": [
-    {
-     "obj": 1,
-     "map": "5704e4dad2720bb55b8b4567",
-     "floor": "1",
-     "w": 1100.0,
-     "h": 1700.0,
-     "x": 556.968,
-     "y": 200.084
-    },
-    {
-     "obj": 2,
-     "map": "5704e4dad2720bb55b8b4567",
-     "floor": "1",
-     "w": 1100.0,
-     "h": 1700.0,
-     "x": 588.793,
-     "y": 186.601
-    }
-   ],
-   "description": "当然，你不属于这里，因此没法真正融入我们，但我能感觉到你身上有内在的特质……某种心意相通、能够理解我们对这片土地的感情的特质。在我们这一行，绝不能停下脚步。稍有松懈，邪恶就会卷土重来。所以，这是我交给你的下一个任务。\n\n\n\n有消息说，污水处理厂里最近一直有可疑的人在活动，主要集中在厂房后面的铁路装卸区。无论是什么邪恶势力在那里聚集，都有必要打探真相，把他们绳之以法。别忘了按照约定先发射信号弹，这样我就能知道你开始干活了。如果那些强盗打算逃跑，我会负责解决掉他们。",
-   "updated": "2026-10-29",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
    "id": "639136df4b15ca31f76bc31f",
    "source": "https://www.eftarkov.com/task/639136df4b15ca31f76bc31f",
    "name": "猎人之路 - 管理者",
@@ -19688,6 +18555,53 @@
     }
    ],
    "description": "干我们这一行可没有停下来休息的资格。邪恶并不会因为我们有所怜悯而消失。所以，这是我交给你的下一个任务。\n\n\n\n有消息说，储备基地的火车站仓库附近出现了一些相当可疑的动静。无论是什么邪恶势力在那里聚集，我们都有必要查出真相，把他们绳之以法。别忘了按照约定先发射信号弹，这样我就能知道你开始干活了。如果那些强盗打算逃跑，我会负责解决掉他们。",
+   "updated": "2026-10-29",
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ]
+  },
+  {
+   "id": "6a45208043b8d7604d00b8d5",
+   "source": "https://www.eftarkov.com/task/6a45208043b8d7604d00b8d5",
+   "name": "猎人之路 - 管理者",
+   "nameEn": "The Huntsman Path - Administrator",
+   "trader": "5c0647fdd443bc2504c2d371",
+   "traderName": "Jaeger",
+   "level": 17,
+   "maps": [
+    "灯塔",
+    "在互动地图上查看位置"
+   ],
+   "objectives": [
+    "在灯塔火车站发射一枚黄色信号弹（在同场战局中）",
+    "在灯塔火车站范围内消灭任意目标 6 名（在同场战局中）"
+   ],
+   "prerequisites": [],
+   "guideImages": [],
+   "cover": "https://www.eftarkov.com/uploads/task/6a45208043b8d7604d00b8d5.webp",
+   "locations": [
+    {
+     "obj": 1,
+     "map": "5704e4dad2720bb55b8b4567",
+     "floor": "1",
+     "w": 1100.0,
+     "h": 1700.0,
+     "x": 556.968,
+     "y": 200.084
+    },
+    {
+     "obj": 2,
+     "map": "5704e4dad2720bb55b8b4567",
+     "floor": "1",
+     "w": 1100.0,
+     "h": 1700.0,
+     "x": 588.793,
+     "y": 186.601
+    }
+   ],
+   "description": "当然，你不属于这里，因此没法真正融入我们，但我能感觉到你身上有内在的特质……某种心意相通、能够理解我们对这片土地的感情的特质。在我们这一行，绝不能停下脚步。稍有松懈，邪恶就会卷土重来。所以，这是我交给你的下一个任务。\n\n\n\n有消息说，污水处理厂里最近一直有可疑的人在活动，主要集中在厂房后面的铁路装卸区。无论是什么邪恶势力在那里聚集，都有必要打探真相，把他们绳之以法。别忘了按照约定先发射信号弹，这样我就能知道你开始干活了。如果那些强盗打算逃跑，我会负责解决掉他们。",
    "updated": "2026-10-29",
    "modes": [
     "pvp",
@@ -22474,38 +21388,6 @@
    ]
   },
   {
-   "id": "5e383a6386f77465910ce1f3",
-   "source": "https://www.eftarkov.com/task/5e383a6386f77465910ce1f3",
-   "name": "纺织业 - 1",
-   "nameEn": "Textile - Part 1",
-   "trader": "5ac3b934156ae10c4430e83c",
-   "traderName": "Ragman",
-   "level": 42,
-   "maps": [],
-   "objectives": [
-    "上交在战局中找到物品：芳纶纤维布料 5 个",
-    "上交在战局中找到物品：防撕布料 10 个",
-    "上交在战局中找到物品：尼龙绳索 3 个"
-   ],
-   "prerequisites": [
-    {
-     "id": "5e4d515e86f77438b2195244",
-     "name": "纺织业 - 2",
-     "status": "完成"
-    }
-   ],
-   "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/5e383a6386f77465910ce1f3.webp",
-   "locations": [],
-   "description": "进来吧，不用站在门口，我有个差事要给你。这几天订单多到我快忙不过来了，雪上加霜的是，就连面料库存也快见底了。你能帮我找一些我需要的面料来吗？作为回报，我会给你准备些新衣服，虽然不便宜就是了，毕竟原产地可是……呃，你大概也猜到这些衣服是哪产的了。是的，材料得你自己去找，不能从别人那里买。不管怎么样，在你找到面料之后，就第一时间带到我这里来，我急着用。至于上哪找，我不是很在乎这个问题，不过我的确记得 Ultra 商场里曾经有一大批存货，实在不行就自己动手在藏身处缝吧，我没意见。",
-   "updated": "2026-10-29",
-   "modes": [
-    "pvp",
-    "pve",
-    "season"
-   ]
-  },
-  {
    "id": "5e381b0286f77420e3417a74",
    "source": "https://www.eftarkov.com/task/5e381b0286f77420e3417a74",
    "name": "纺织业 - 1",
@@ -22538,30 +21420,30 @@
    ]
   },
   {
-   "id": "5e4d515e86f77438b2195244",
-   "source": "https://www.eftarkov.com/task/5e4d515e86f77438b2195244",
-   "name": "纺织业 - 2",
-   "nameEn": "Textile - Part 2",
+   "id": "5e383a6386f77465910ce1f3",
+   "source": "https://www.eftarkov.com/task/5e383a6386f77465910ce1f3",
+   "name": "纺织业 - 1",
+   "nameEn": "Textile - Part 1",
    "trader": "5ac3b934156ae10c4430e83c",
    "traderName": "Ragman",
    "level": 42,
    "maps": [],
    "objectives": [
-    "上交在战局中找到物品：绒布布料 10 个",
-    "上交在战局中找到物品：Cordura 聚酰胺面料 10 个",
-    "上交在战局中找到物品：KEKTAPE 管道胶带 5 个"
+    "上交在战局中找到物品：芳纶纤维布料 5 个",
+    "上交在战局中找到物品：防撕布料 10 个",
+    "上交在战局中找到物品：尼龙绳索 3 个"
    ],
    "prerequisites": [
     {
-     "id": "5e383a6386f77465910ce1f3",
-     "name": "纺织业 - 1",
+     "id": "5e4d515e86f77438b2195244",
+     "name": "纺织业 - 2",
      "status": "完成"
     }
    ],
    "guideImages": [],
-   "cover": "https://www.eftarkov.com/uploads/task/5e4d515e86f77438b2195244.webp",
+   "cover": "https://www.eftarkov.com/uploads/task/5e383a6386f77465910ce1f3.webp",
    "locations": [],
-   "description": "快进来，我刚刚还在想着你呢。那么，仔细听好喽，我还需要清单上的这些东西。当然，要全新的，不能从别人那买。别嘛，别现在就摆出这副样子！只要你能帮我弄来这些面料，我就能帮你搞一身炫酷的新衣服穿了，“堪萨斯精神”之类的，你们美国佬不就喜欢这个路数的吗？想象一下！这可是在国外的战场上，你却能买到这样的好货，穿得就像是在自家农场里一样舒服！反正我就等你帮我把清单上的东西带来了，报酬自然不会少了你的。",
+   "description": "进来吧，不用站在门口，我有个差事要给你。这几天订单多到我快忙不过来了，雪上加霜的是，就连面料库存也快见底了。你能帮我找一些我需要的面料来吗？作为回报，我会给你准备些新衣服，虽然不便宜就是了，毕竟原产地可是……呃，你大概也猜到这些衣服是哪产的了。是的，材料得你自己去找，不能从别人那里买。不管怎么样，在你找到面料之后，就第一时间带到我这里来，我急着用。至于上哪找，我不是很在乎这个问题，不过我的确记得 Ultra 商场里曾经有一大批存货，实在不行就自己动手在藏身处缝吧，我没意见。",
    "updated": "2026-10-29",
    "modes": [
     "pvp",
@@ -22594,6 +21476,38 @@
    "cover": "https://www.eftarkov.com/uploads/task/5e4d4ac186f774264f758336.webp",
    "locations": [],
    "description": "来吧，这是我需要的第二部分材料，东西都在清单上了。一旦你找到单子上的面料，就带到我这来。当然，你得确保面料都是全新的、高质量的好货，而不是从其他商人那买来的仿冒的玩意，规矩你也明白的。\n\n\n\n事情办成之后，我就能给你准备些新衣服了，不仅相当拉风、还能让你的俄罗斯之心为之一热的那种。我不清楚你和美国佬之间都发生了些什么，但这年头大家混得一样烂，所以谁也别羡慕谁了。世事难料啊，不管怎样，祝你好运。",
+   "updated": "2026-10-29",
+   "modes": [
+    "pvp",
+    "pve",
+    "season"
+   ]
+  },
+  {
+   "id": "5e4d515e86f77438b2195244",
+   "source": "https://www.eftarkov.com/task/5e4d515e86f77438b2195244",
+   "name": "纺织业 - 2",
+   "nameEn": "Textile - Part 2",
+   "trader": "5ac3b934156ae10c4430e83c",
+   "traderName": "Ragman",
+   "level": 42,
+   "maps": [],
+   "objectives": [
+    "上交在战局中找到物品：绒布布料 10 个",
+    "上交在战局中找到物品：Cordura 聚酰胺面料 10 个",
+    "上交在战局中找到物品：KEKTAPE 管道胶带 5 个"
+   ],
+   "prerequisites": [
+    {
+     "id": "5e383a6386f77465910ce1f3",
+     "name": "纺织业 - 1",
+     "status": "完成"
+    }
+   ],
+   "guideImages": [],
+   "cover": "https://www.eftarkov.com/uploads/task/5e4d515e86f77438b2195244.webp",
+   "locations": [],
+   "description": "快进来，我刚刚还在想着你呢。那么，仔细听好喽，我还需要清单上的这些东西。当然，要全新的，不能从别人那买。别嘛，别现在就摆出这副样子！只要你能帮我弄来这些面料，我就能帮你搞一身炫酷的新衣服穿了，“堪萨斯精神”之类的，你们美国佬不就喜欢这个路数的吗？想象一下！这可是在国外的战场上，你却能买到这样的好货，穿得就像是在自家农场里一样舒服！反正我就等你帮我把清单上的东西带来了，报酬自然不会少了你的。",
    "updated": "2026-10-29",
    "modes": [
     "pvp",
@@ -24285,6 +23199,36 @@
    ]
   },
   {
+   "id": "6afd7093a477a79f9d05e383",
+   "source": "https://www.eftarkov.com/task/6afd7093a477a79f9d05e383",
+   "name": "血债血偿",
+   "nameEn": "Keep Them in Line",
+   "trader": "5a7c2eca46aef81a7ca2145d",
+   "traderName": "Mechanic",
+   "level": 1,
+   "maps": [
+    "海关",
+    "森林",
+    "灯塔",
+    "海岸线"
+   ],
+   "objectives": [
+    "找到并消灭Knight （在同一战局中）",
+    "找到并消灭Big Pipe （在同一战局中）",
+    "找到并消灭Birdeye （在同一战局中）",
+    "以幸存状态撤离该区域 （在同一战局中）"
+   ],
+   "prerequisites": [],
+   "guideImages": [],
+   "cover": "https://www.eftarkov.com/uploads/task/6afd7093a477a79f9d05e383.webp",
+   "locations": [],
+   "description": "你好啊，雇佣兵。我收到了一个需要处理的委托单。你应该能猜到背后的金主是谁。\n\n你最近和游荡者的那几个头头有来往吗？\n\n\n\n看起来他们和黑色军团的那些人干得不可开交，或者说他们是真的不想在灯塔混了... 有人看到他们穿着黑色军团的装备，把它们当作战利品。\n\n\n\n发生这样的事情，遭报应是早晚的事儿。这不，现在有人“请”我找一个合适的家伙，来给这件事划上句号。我第一个想到的就是你了。\n\n\n\n如果你没把握搞定这件差事，现在就告诉我。这次多半会耗掉我跟Lightkeeper的几个单子。我可不想因为选了一个不靠谱的雇佣兵，害得我前功尽弃。",
+   "updated": "2026-11-20",
+   "modes": [
+    "season"
+   ]
+  },
+  {
    "id": "66aba85403e0ee3101042877",
    "source": "https://www.eftarkov.com/task/66aba85403e0ee3101042877",
    "name": "街区之下",
@@ -24480,7 +23424,7 @@
     }
    ],
    "description": "嘿，兄弟！最近过得怎么样，还顺当吧？我这儿正发愁呢，有一桩买卖悬在那好久了，正好需要你帮个忙。不过我先给你打个预防针，这活儿可不容易，别半路就给累趴下了。\n\n\n\n情况是这样的：我想办法联系上那些走私者了，虽然眼下我和他们也谈不上什么合作，不过这帮家伙在我这开的第一单确实不赖。只要把一批防弹插板送过去就行了——东西都已经打包好，放在指定的取货点嗷嗷待取，现在就差把它们送到买家手里了。怎么样，干不干？\n\n\n\n两箱防弹插板现在都在 Priozersk 自然保护区。一箱在地堡里，另一箱放在了废弃的 USEC 检查站。你的任务是把其中一箱送到储备基地外围的警卫营房那儿。记住，是靠着通往森林小路的那一间。\n\n\n\n第二箱插板必须得送到污水处理厂附近火车站的一节车厢里，据买家说是拉着 Ural 卡车的那一节。等你把两箱东西都送到指定位置后，记得坐装甲列车撤离，好顺利通知火车司机货已经到位了。",
-   "updated": "2026-10-29",
+   "updated": "2026-11-22",
    "modes": [
     "pvp",
     "pve",
@@ -25887,8 +24831,8 @@
      "floor": "-1",
      "w": 1600.0,
      "h": 1600.0,
-     "x": 589.823,
-     "y": 893.934
+     "x": 691.81,
+     "y": 646.195
     },
     {
      "obj": 20,
