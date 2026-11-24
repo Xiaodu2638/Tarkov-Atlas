@@ -115,7 +115,7 @@ jobs:
       - name: Open pull request
         if: success()
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.DATA_PR_TOKEN || secrets.GITHUB_TOKEN }}
         shell: pwsh
         run: |
           git config user.name 'Xiaodu'
@@ -144,11 +144,19 @@ jobs:
           }
 
   # ---------------------------------------------------------------- 构建发布
-  # 只在 main 收到数据变更（即 PR 已合并）或手动触发时执行。
   release:
-    # 只在 main 收到数据变更（PR 已合并）时发布。workflow_dispatch 不触发它：
-    # 手动触发时 release 与 refresh 并行，会在数据 PR 还没合并时就把未审阅数据发出去。
-    if: github.event_name == 'push'
+    # 只在「数据 PR 合并进 main」时发布。
+    #
+    # 不能只写 event_name == 'push' + paths: research/**, TarkovAtlas/Assets/**：
+    # 任何直接改这两个目录的修复提交都会触发一次发布，实际已经发生过
+    # （v1.0.1/2/3 全来自 fix 提交而不是数据 PR）。这里额外要求提交信息是
+    # refresh 作业用的那条 data: 前缀，那只可能来自数据 PR 的 merge。
+    # 三种合并方式都要认：squash / rebase 的提交信息是 PR 标题（data: 每月数据刷新 …），
+    # merge commit 则是 "Merge pull request #N from …/data/monthly-…"，两种前缀都覆盖。
+    if: >-
+      github.event_name == 'push' &&
+      (contains(github.event.head_commit.message, 'data: 每月数据刷新') ||
+       contains(github.event.head_commit.message, 'data/monthly-'))
     runs-on: windows-latest
     timeout-minutes: 180
     steps:
