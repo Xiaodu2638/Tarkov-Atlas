@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import datetime
+import http.client
 import json
 import re
 import shutil
@@ -83,7 +84,11 @@ def fetch(url: str, *, cache_name: str | None = None, refresh: bool = False,
                 CACHE.mkdir(parents=True, exist_ok=True)
                 (CACHE / cache_name).write_text(html, encoding="utf-8")
             return html
-        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+        # http.client.HTTPException is NOT an OSError: a chunked response that
+        # dies mid-body raises IncompleteRead, which used to escape the retry
+        # loop entirely and abort the whole refresh after ~50 tasks.
+        except (urllib.error.URLError, TimeoutError, OSError,
+                http.client.HTTPException) as exc:
             last = exc
             wait = 3 * (attempt + 1)
             log(f"  {url} 失败（{str(exc)[:80]}），{wait}s 后重试 ...")
@@ -466,9 +471,20 @@ def fetch_guides(refresh: bool, prune: bool = False) -> int:
         target = GUIDES / qid / f"{n}.webp"
         if target.is_file() and not refresh:
             return 0
-        data = urllib.request.urlopen(
-            urllib.request.Request(url, headers={**HEADERS, "Referer": BASE + "/"}),
-            timeout=90).read()
+        data = None
+        last: Exception | None = None
+        for attempt in range(4):
+            try:
+                data = urllib.request.urlopen(
+                    urllib.request.Request(url, headers={**HEADERS, "Referer": BASE + "/"}),
+                    timeout=90).read()
+                break
+            except (urllib.error.URLError, TimeoutError, OSError,
+                    http.client.HTTPException, ValueError) as exc:
+                last = exc
+                time.sleep(3 * (attempt + 1))
+        if data is None:
+            die(f"攻略图下载失败: {url} ({last})")
         im = Image.open(io.BytesIO(data)).convert("RGB")
         if im.width > 1600:
             im = im.resize((1600, round(im.height * 1600 / im.width)), Image.LANCZOS)
