@@ -1348,28 +1348,6 @@
        "z": -441.79
       }
      ]
-    },
-    {
-     "text": "将碳纤维手提箱藏匿在塔科夫街区 Pinewood 酒店餐厅三楼阳台处（在同场战局中完成）",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -113.95,
-       "z": 131.88
-      }
-     ]
-    },
-    {
-     "text": "在塔科夫街区坠入污水河的有轨电车处发射一枚黄色信号弹（在同场战局中完成）",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -247.92,
-       "z": 214.11
-      }
-     ]
     }
    ]
   },
@@ -2601,19 +2579,7 @@
     "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在塔科夫街区幸存，并通过 Klimov 大街信号弹撤离点撤离",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -180.61,
-       "z": 42.45
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "6a7aef2360157cb5e3029a5f",
@@ -3557,8 +3523,8 @@
      "zones": [
       {
        "map": "streets-of-tarkov",
-       "x": -149.05,
-       "z": 271.24
+       "x": -148.79,
+       "z": 269.11
       }
      ]
     }
@@ -6527,49 +6493,7 @@
     "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在塔科夫街区消灭狙击 Scav 8 名",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 43.25,
-       "z": -15.67
-      },
-      {
-       "map": "streets-of-tarkov",
-       "x": -110.43,
-       "z": -8.17
-      },
-      {
-       "map": "streets-of-tarkov",
-       "x": 83.71,
-       "z": 104.06
-      },
-      {
-       "map": "streets-of-tarkov",
-       "x": -17.33,
-       "z": 222.93
-      },
-      {
-       "map": "streets-of-tarkov",
-       "x": -156.47,
-       "z": 384.55
-      },
-      {
-       "map": "streets-of-tarkov",
-       "x": 57.0,
-       "z": 293.73
-      },
-      {
-       "map": "streets-of-tarkov",
-       "x": 93.58,
-       "z": 293.66
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "63a9b36cc31b00242d28a99f",
@@ -7507,17 +7431,6 @@
        "z": 369.44104
       }
      ]
-    },
-    {
-     "text": "通过Primorsky大道出租车载具撤离点撤离\n需要携带手机做黑车撤离才行",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -8.39,
-       "z": 459.11
-      }
-     ]
     }
    ]
   },
@@ -7678,10 +7591,10 @@
     "woods",
     "customs",
     "interchange",
-    "streets-of-tarkov",
     "ground-zero",
     "lighthouse",
-    "shoreline"
+    "shoreline",
+    "streets-of-tarkov"
    ],
    "modes": [
     "pvp",
@@ -7720,17 +7633,6 @@
        "map": "interchange",
        "x": -309.99,
        "z": -371.1
-      }
-     ]
-    },
-    {
-     "text": "在塔科夫街区幸存，并通过Primorsky大道出租车载具撤离点撤离",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -8.39,
-       "z": 459.11
       }
      ]
     },
@@ -10221,19 +10123,7 @@
     "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "在塔科夫街区 Fence 的藏匿点找到并获取笔记本电脑",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -88.62,
-       "z": 239.9
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "63a9ae24009ffc6a551631a5",
@@ -10949,8 +10839,8 @@
    "level": 27,
    "wiki": "https://www.eftarkov.com/task/66aa61663aa37705c5024277",
    "maps": [
-    "streets-of-tarkov",
-    "interchange"
+    "interchange",
+    "streets-of-tarkov"
    ],
    "modes": [
     "pvp",
@@ -10958,19 +10848,7 @@
     "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "使用转移功能从街区转移到立交桥（在单次战局中）",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 292.71,
-       "z": 496.06
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "63a5cf262964a7488f5243ce",
@@ -12292,24 +12170,13 @@
    "prerequisites": [],
    "objectives": [
     {
-     "text": "找到并消灭Kollontay 1 次",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -253.71,
-       "z": 140.01
-      }
-     ]
-    },
-    {
      "text": "上交战局中找到的物品：PR-Taran警棍 1 个\n这个近战武器他百分百会携带",
      "type": "",
      "zones": [
       {
        "map": "streets-of-tarkov",
-       "x": -141.63,
-       "z": -17.75
+       "x": -142.85,
+       "z": -20.21
       }
      ]
     }
@@ -12331,19 +12198,7 @@
     "season"
    ],
    "prerequisites": [],
-   "objectives": [
-    {
-     "text": "找到并消灭Kaban 1 次",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 74.02,
-       "z": 296.06
-      }
-     ]
-    }
-   ]
+   "objectives": []
   },
   {
    "id": "60c0c018f7afb4354815096a",
@@ -15772,8 +15627,8 @@
    "level": 37,
    "wiki": "https://www.eftarkov.com/task/66aba85403e0ee3101042877",
    "maps": [
-    "streets-of-tarkov",
-    "the-lab"
+    "the-lab",
+    "streets-of-tarkov"
    ],
    "modes": [
     "pvp",
@@ -15782,17 +15637,6 @@
    ],
    "prerequisites": [],
    "objectives": [
-    {
-     "text": "使用转移功能从塔科夫街区转移到实验室（在单次战局中）",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": 211.91,
-       "z": 84.68
-      }
-     ]
-    },
     {
      "text": "在同场战局中侦查实验室的服务器机房",
      "type": "visit",
@@ -17142,9 +16986,9 @@
    "level": 1,
    "wiki": "https://www.eftarkov.com/task/6a88255e8636c03a2d09ba37",
    "maps": [
-    "streets-of-tarkov",
     "customs",
-    "reserve"
+    "reserve",
+    "streets-of-tarkov"
    ],
    "modes": [
     "pvp",
@@ -17153,22 +16997,6 @@
    ],
    "prerequisites": [],
    "objectives": [
-    {
-     "text": "在塔科夫街区将 TerraGroup“蓝色文件夹”材料藏匿在任意一个神秘符号房间内",
-     "type": "",
-     "zones": [
-      {
-       "map": "streets-of-tarkov",
-       "x": -133.8,
-       "z": 273.03
-      },
-      {
-       "map": "streets-of-tarkov",
-       "x": 184.86,
-       "z": 228.11
-      }
-     ]
-    },
     {
      "text": "在海关将 TerraGroup“蓝色文件夹”材料藏匿在宿舍 314 神秘符号房间内",
      "type": "",

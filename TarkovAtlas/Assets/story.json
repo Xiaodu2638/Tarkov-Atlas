@@ -551,9 +551,117 @@
      "x": 0.0,
      "z": 0.0,
      "hasCoordinates": false
+    },
+    {
+     "id": "6aea5f5be53ca10802b1c002",
+     "text": "将钥匙卡插入对讲机读卡器",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea5f5b7fc5bcf192780e03",
+     "text": "到达港口终点站",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea5f5b990b5db4dfffe904",
+     "text": "通过安检",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a28fcfae9356c451b02",
+     "text": "找到装有罚没装备的军械库",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a284a281257dc0d6703",
+     "text": "找到钥匙卡以开启检修通道",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a282426423cc4b22504",
+     "text": "打开港口大楼内检修通道的门锁",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a282d5d81975fa43505",
+     "text": "找到进入港口油库的路线",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a28fbc46c5b3c808906",
+     "text": "设法恢复泵站的供电",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a287a0fa690c1f8f307",
+     "text": "排干泵站内的积水",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a28881856b90758fd08",
+     "text": "获得前往码头区域大门的钥匙",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a28b25fdd5a46681909",
+     "text": "找到通往码头的出口",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
+    },
+    {
+     "id": "6aea6a28cce1ce20ecdff20a",
+     "text": "逃离塔科夫",
+     "map": "",
+     "mapName": "",
+     "x": 0.0,
+     "z": 0.0,
+     "hasCoordinates": false
     }
    ],
-   "objectiveCount": 11
+   "objectiveCount": 23
   },
   {
    "id": "story-batya",
