@@ -279,6 +279,8 @@ internal static class DataChecks
             var missingLayerImages = new List<string>();
             var badLayerSizes = new List<string>();
             var badLayerOrder = new List<string>();
+            var badExtents = new List<string>();
+            var mapsWithFootprints = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var pair in layerIndex)
             {
@@ -300,11 +302,22 @@ internal static class DataChecks
                         break;
                     }
                 }
+                // The map's own bounds, used to catch an upstream coordinate
+                // change that would silently put every footprint somewhere else.
+                var (mapMinX, mapMinZ, mapMaxX, mapMaxZ) =
+                    (owner.MinX, owner.MinZ, owner.MaxX, owner.MaxZ);
+                var boundsKnown = owner.Bounds.Length >= 4;
+
                 foreach (var layer in layers)
                 {
                     // An empty image is the map's own artwork: the ground/base
                     // level needs no extra PNG, so nothing to verify on disk.
-                    if (string.IsNullOrWhiteSpace(layer.Image)) continue;
+                    var isBase = string.IsNullOrWhiteSpace(layer.Image);
+
+                    CheckExtents(mapKey, layer, isBase, boundsKnown,
+                        mapMinX, mapMinZ, mapMaxX, mapMaxZ, badExtents, mapsWithFootprints);
+
+                    if (isBase) continue;
                     var path = Path.Combine(assets, "maps", layer.Image.Replace('/', Path.DirectorySeparatorChar));
                     if (!File.Exists(path)) { missingLayerImages.Add(layer.Image); continue; }
                     var size = ReadPngSize(path);
@@ -319,6 +332,18 @@ internal static class DataChecks
             Check("floor layer images exist", missingLayerImages.Count == 0, string.Join(",", missingLayerImages));
             Check("floor layer images match base grid", badLayerSizes.Count == 0, string.Join("; ", badLayerSizes));
             Check("floor layer order sane", badLayerOrder.Count == 0, string.Join(",", badLayerOrder));
+            Check("floor layer extents sane", badExtents.Count == 0, string.Join("; ", badExtents.Take(6)));
+
+            // Auto-layer needs real footprints on the maps rebuilt from upstream.
+            // A regression here means the picker silently falls back to height
+            // bands, i.e. the Customs hill / Reserve bunker bugs come back.
+            foreach (var key in new[]
+                     {
+                         "customs", "reserve", "interchange", "ground-zero", "the-lab", "shoreline",
+                     })
+            {
+                Check($"floor extents present {key}", mapsWithFootprints.Contains(key));
+            }
         }
 
         // ---- hazards -------------------------------------------------------
@@ -731,6 +756,86 @@ internal static class DataChecks
         if (!known) { Check(name, false, detail); return; }
         _known++;
         Console.WriteLine($"[KNOWN] {name}  ({detail})");
+    }
+
+    /// <summary>
+    /// Validate one layer's per-footprint extents: bands ordered, rectangles
+    /// well-formed and normalized, envelope consistent with the bands, and every
+    /// rectangle inside the map's own bounds. The envelope check is what stops
+    /// build_layers.py's two emitters from drifting apart; the bounds check is
+    /// the early warning for an upstream coordinate-frame change, which would
+    /// otherwise silently park every footprint somewhere off the map.
+    /// </summary>
+    private static void CheckExtents(
+        string mapKey, MapLayer layer, bool isBase, bool boundsKnown,
+        double mapMinX, double mapMinZ, double mapMaxX, double mapMaxZ,
+        List<string> bad, HashSet<string> mapsWithFootprints)
+    {
+        var label = mapKey + "/" + layer.Name;
+
+        if (layer.Extents.Count == 0)
+        {
+            // The synthetic base level is baked artwork with no upstream
+            // extents. A non-base layer without any means the picker has no
+            // footprint to test and would fall back to raw height.
+            if (!isBase) bad.Add(label + ": no extents");
+            if (isBase && layer.MinHeight is null && layer.MaxHeight is null)
+                bad.Add(label + ": base level without height band");
+            return;
+        }
+
+        var lowest = double.MaxValue;
+        var highest = double.MinValue;
+
+        foreach (var extent in layer.Extents)
+        {
+            if (extent.MinHeight is null || extent.MaxHeight is null)
+            {
+                bad.Add(label + ": extent without height band");
+                continue;
+            }
+            if (extent.MinHeight > extent.MaxHeight + 1e-6)
+            {
+                bad.Add($"{label}: extent {extent.MinHeight}..{extent.MaxHeight}");
+                continue;
+            }
+            lowest = Math.Min(lowest, extent.MinHeight.Value);
+            highest = Math.Max(highest, extent.MaxHeight.Value);
+
+            foreach (var rect in extent.Bounds)
+            {
+                if (rect.Length != 4)
+                {
+                    bad.Add($"{label}: rect of {rect.Length} numbers");
+                    continue;
+                }
+                if (!rect.All(double.IsFinite))
+                {
+                    bad.Add(label + ": non-finite rect");
+                    continue;
+                }
+                if (rect[0] > rect[2] || rect[1] > rect[3])
+                {
+                    bad.Add($"{label}: rect not normalized [{rect[0]},{rect[1]},{rect[2]},{rect[3]}]");
+                    continue;
+                }
+                if (boundsKnown &&
+                    (rect[2] < mapMinX || rect[0] > mapMaxX || rect[3] < mapMinZ || rect[1] > mapMaxZ))
+                {
+                    bad.Add($"{label}: rect outside map bounds");
+                }
+                mapsWithFootprints.Add(mapKey);
+            }
+        }
+
+        if (lowest == double.MaxValue) return;
+
+        // The envelope (old field, still the degradation path) must be exactly
+        // the union of the bands. Divergence means one emitter was edited alone.
+        if (layer.MinHeight is null || Math.Abs(layer.MinHeight.Value - lowest) > 1e-6)
+            bad.Add($"{label}: envelope min {layer.MinHeight} vs {lowest}");
+        if (layer.MaxHeight is null || Math.Abs(layer.MaxHeight.Value - highest) > 1e-6)
+            bad.Add($"{label}: envelope max {layer.MaxHeight} vs {highest}");
     }
 
     /// <summary>Read width/height straight from the PNG IHDR chunk (no decoder needed).</summary>

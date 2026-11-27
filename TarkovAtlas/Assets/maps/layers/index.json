@@ -12,21 +12,67 @@
    "image": "layers/ground-zero/0_2nd-floor.png",
    "order": 1,
    "minHeight": 26,
-   "maxHeight": 32.3
+   "maxHeight": 32.3,
+   "extents": [
+    {
+     "minHeight": 28.0,
+     "maxHeight": 32.3,
+     "bounds": []
+    },
+    {
+     "minHeight": 26.0,
+     "maxHeight": 31.0,
+     "bounds": [
+      [
+       91.0,
+       216.0,
+       98.0,
+       228.0
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "3rd Floor",
    "image": "layers/ground-zero/1_3rd-floor.png",
    "order": 2,
    "minHeight": 32.3,
-   "maxHeight": 1000
+   "maxHeight": 1000,
+   "extents": [
+    {
+     "minHeight": 32.3,
+     "maxHeight": 1000.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Garage",
    "image": "layers/ground-zero/2_garage.png",
    "order": 3,
    "minHeight": -1000,
-   "maxHeight": 21
+   "maxHeight": 21,
+   "extents": [
+    {
+     "minHeight": -1000.0,
+     "maxHeight": 21.0,
+     "bounds": [
+      [
+       43.0,
+       -100.0,
+       117.0,
+       190.0
+      ],
+      [
+       117.0,
+       49.0,
+       143.0,
+       80.0
+      ]
+     ]
+    }
+   ]
   }
  ],
  "customs": [
@@ -42,28 +88,276 @@
    "image": "layers/customs/0_2nd-floor.png",
    "order": 1,
    "minHeight": 2.7,
-   "maxHeight": 1000
+   "maxHeight": 1000,
+   "extents": [
+    {
+     "minHeight": 2.7,
+     "maxHeight": 6.5,
+     "bounds": [
+      [
+       165.0,
+       125.0,
+       243.0,
+       190.0
+      ],
+      [
+       72.0,
+       -170.0,
+       116.0,
+       -83.0
+      ],
+      [
+       341.0,
+       -84.0,
+       356.0,
+       -30.0
+      ],
+      [
+       321.0,
+       -59.0,
+       334.0,
+       -52.0
+      ],
+      [
+       577.0,
+       -1.0,
+       589.0,
+       10.0
+      ],
+      [
+       532.0,
+       -134.0,
+       580.0,
+       -104.0
+      ],
+      [
+       599.0,
+       -139.0,
+       625.0,
+       -120.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 5.7,
+     "maxHeight": 1000.0,
+     "bounds": [
+      [
+       532.0,
+       -134.0,
+       580.0,
+       -104.0
+      ],
+      [
+       -223.0,
+       -131.0,
+       -199.0,
+       -90.0
+      ],
+      [
+       169.0,
+       -160.0,
+       239.0,
+       3.0
+      ],
+      [
+       316.0,
+       -95.0,
+       336.0,
+       -56.0
+      ],
+      [
+       556.0,
+       -92.0,
+       584.0,
+       -46.0
+      ],
+      [
+       65.0,
+       -22.0,
+       93.0,
+       0.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 14.0,
+     "maxHeight": 15.0,
+     "bounds": [
+      [
+       450.0,
+       -90.0,
+       497.0,
+       -44.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 3.9,
+     "maxHeight": 7.6,
+     "bounds": [
+      [
+       22.0,
+       -38.0,
+       73.0,
+       57.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 4.4,
+     "maxHeight": 6.5,
+     "bounds": [
+      [
+       100.0,
+       -57.0,
+       119.0,
+       -42.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 4.6,
+     "maxHeight": 7.9,
+     "bounds": [
+      [
+       246.0,
+       -79.0,
+       279.0,
+       -1.4
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "3rd Floor",
    "image": "layers/customs/1_3rd-floor.png",
    "order": 2,
    "minHeight": 5.7,
-   "maxHeight": 1000
+   "maxHeight": 1000,
+   "extents": [
+    {
+     "minHeight": 5.7,
+     "maxHeight": 1000.0,
+     "bounds": [
+      [
+       165.0,
+       125.0,
+       243.0,
+       190.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 7.7,
+     "maxHeight": 11.3,
+     "bounds": [
+      [
+       22.0,
+       -73.0,
+       73.0,
+       -38.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 6.7,
+     "maxHeight": 11.6,
+     "bounds": [
+      [
+       88.0,
+       -64.0,
+       126.0,
+       -35.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 8.0,
+     "maxHeight": 11.1,
+     "bounds": [
+      [
+       246.0,
+       -79.0,
+       279.0,
+       -1.4
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "4th Floor",
    "image": "layers/customs/2_4th-floor.png",
    "order": 3,
    "minHeight": 11.2,
-   "maxHeight": 54.7
+   "maxHeight": 54.7,
+   "extents": [
+    {
+     "minHeight": 11.2,
+     "maxHeight": 54.7,
+     "bounds": [
+      [
+       246.0,
+       -79.0,
+       279.0,
+       -1.4
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "Underground",
    "image": "layers/customs/3_underground.png",
    "order": 4,
    "minHeight": -1000,
-   "maxHeight": 0.5
+   "maxHeight": 0.5,
+   "extents": [
+    {
+     "minHeight": -1000.0,
+     "maxHeight": 0.5,
+     "bounds": [
+      [
+       620.0,
+       -137.0,
+       635.0,
+       -125.0
+      ],
+      [
+       458.0,
+       -122.0,
+       473.0,
+       -110.0
+      ],
+      [
+       308.0,
+       -184.0,
+       314.0,
+       -173.0
+      ],
+      [
+       323.0,
+       -88.0,
+       349.0,
+       -32.0
+      ],
+      [
+       193.0,
+       -158.0,
+       219.0,
+       -137.0
+      ],
+      [
+       88.0,
+       -61.0,
+       122.0,
+       -40.0
+      ]
+     ]
+    }
+   ]
   }
  ],
  "factory": [
@@ -79,21 +373,42 @@
    "image": "layers/factory/0_2nd-floor.png",
    "order": 1,
    "minHeight": 3,
-   "maxHeight": 6
+   "maxHeight": 6,
+   "extents": [
+    {
+     "minHeight": 3.0,
+     "maxHeight": 6.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "3rd Floor",
    "image": "layers/factory/1_3rd-floor.png",
    "order": 2,
    "minHeight": 6,
-   "maxHeight": 10000
+   "maxHeight": 10000,
+   "extents": [
+    {
+     "minHeight": 6.0,
+     "maxHeight": 10000.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Tunnels",
    "image": "layers/factory/2_tunnels.png",
    "order": 3,
    "minHeight": -10000,
-   "maxHeight": -1
+   "maxHeight": -1,
+   "extents": [
+    {
+     "minHeight": -10000.0,
+     "maxHeight": -1.0,
+     "bounds": []
+    }
+   ]
   }
  ],
  "interchange": [
@@ -109,14 +424,42 @@
    "image": "layers/interchange/0_2nd-floor.png",
    "order": 1,
    "minHeight": 25,
-   "maxHeight": 34
+   "maxHeight": 34,
+   "extents": [
+    {
+     "minHeight": 25.0,
+     "maxHeight": 34.0,
+     "bounds": [
+      [
+       -222.0,
+       -327.0,
+       120.0,
+       218.0
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "3rd Floor",
    "image": "layers/interchange/1_3rd-floor.png",
    "order": 2,
    "minHeight": 34,
-   "maxHeight": 1000
+   "maxHeight": 1000,
+   "extents": [
+    {
+     "minHeight": 34.0,
+     "maxHeight": 1000.0,
+     "bounds": [
+      [
+       -222.0,
+       -327.0,
+       120.0,
+       218.0
+      ]
+     ]
+    }
+   ]
   }
  ],
  "shoreline": [
@@ -132,21 +475,55 @@
    "image": "layers/shoreline/0_2nd-floor.png",
    "order": 1,
    "minHeight": -1,
-   "maxHeight": 2
+   "maxHeight": 2,
+   "extents": [
+    {
+     "minHeight": -1.0,
+     "maxHeight": 2.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "3rd Floor",
    "image": "layers/shoreline/1_3rd-floor.png",
    "order": 2,
    "minHeight": 2,
-   "maxHeight": 1000
+   "maxHeight": 1000,
+   "extents": [
+    {
+     "minHeight": 2.0,
+     "maxHeight": 1000.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Underground",
    "image": "layers/shoreline/2_underground.png",
    "order": 3,
    "minHeight": -1000,
-   "maxHeight": -5
+   "maxHeight": -5,
+   "extents": [
+    {
+     "minHeight": -1000.0,
+     "maxHeight": -5.0,
+     "bounds": [
+      [
+       -237.0,
+       -104.0,
+       -137.0,
+       -68.0
+      ],
+      [
+       -268.0,
+       -163.0,
+       -234.0,
+       -134.0
+      ]
+     ]
+    }
+   ]
   }
  ],
  "reserve": [
@@ -162,35 +539,387 @@
    "image": "layers/reserve/0_2nd-floor.png",
    "order": 1,
    "minHeight": -4.3,
-   "maxHeight": 25.7
+   "maxHeight": 25.7,
+   "extents": [
+    {
+     "minHeight": 22.1,
+     "maxHeight": 25.7,
+     "bounds": [
+      [
+       -17.0,
+       164.0,
+       1.0,
+       199.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -3.5,
+     "maxHeight": -0.64,
+     "bounds": [
+      [
+       -177.0,
+       26.0,
+       -77.0,
+       106.0
+      ],
+      [
+       51.0,
+       59.0,
+       62.0,
+       108.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -3.5,
+     "maxHeight": -0.64,
+     "bounds": [
+      [
+       -177.0,
+       -37.0,
+       -104.0,
+       5.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -3.9,
+     "maxHeight": -0.6,
+     "bounds": [
+      [
+       -85.0,
+       -47.0,
+       -47.0,
+       -18.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -4.3,
+     "maxHeight": -2.2,
+     "bounds": [
+      [
+       -78.0,
+       -13.0,
+       -19.91,
+       39.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -3.8,
+     "maxHeight": -1.1,
+     "bounds": [
+      [
+       -2.0,
+       -50.0,
+       99.0,
+       7.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -1.9,
+     "maxHeight": 11.3,
+     "bounds": [
+      [
+       137.0,
+       -175.0,
+       191.0,
+       -120.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 1.0,
+     "maxHeight": 8.0,
+     "bounds": [
+      [
+       -119.0,
+       -156.0,
+       -109.0,
+       -147.0
+      ],
+      [
+       289.0,
+       -92.0,
+       299.0,
+       -82.0
+      ],
+      [
+       -7.0,
+       -210.0,
+       3.0,
+       -200.0
+      ],
+      [
+       185.0,
+       -260.0,
+       195.0,
+       -250.0
+      ],
+      [
+       266.0,
+       17.0,
+       276.0,
+       27.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -4.1,
+     "maxHeight": -1.2,
+     "bounds": [
+      [
+       -146.0,
+       -139.0,
+       -128.0,
+       -120.0
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "3rd Floor",
    "image": "layers/reserve/1_3rd-floor.png",
    "order": 2,
    "minHeight": -2.2,
-   "maxHeight": 29.3
+   "maxHeight": 29.3,
+   "extents": [
+    {
+     "minHeight": 25.7,
+     "maxHeight": 29.3,
+     "bounds": [
+      [
+       -17.0,
+       164.0,
+       1.0,
+       199.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -0.64,
+     "maxHeight": 2.23,
+     "bounds": [
+      [
+       -177.0,
+       26.0,
+       -77.0,
+       106.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -0.64,
+     "maxHeight": 2.23,
+     "bounds": [
+      [
+       -177.0,
+       -37.0,
+       -104.0,
+       5.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -0.6,
+     "maxHeight": 10.0,
+     "bounds": [
+      [
+       -85.0,
+       -47.0,
+       -47.0,
+       -18.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -2.2,
+     "maxHeight": 2.14,
+     "bounds": [
+      [
+       -78.0,
+       -13.0,
+       -19.91,
+       39.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -1.1,
+     "maxHeight": 1.6,
+     "bounds": [
+      [
+       -2.0,
+       -50.0,
+       99.0,
+       7.0
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "4th Floor",
    "image": "layers/reserve/2_4th-floor.png",
    "order": 3,
    "minHeight": 1.6,
-   "maxHeight": 36
+   "maxHeight": 36,
+   "extents": [
+    {
+     "minHeight": 29.3,
+     "maxHeight": 36.0,
+     "bounds": [
+      [
+       -17.0,
+       164.0,
+       1.0,
+       199.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 2.23,
+     "maxHeight": 5.0,
+     "bounds": [
+      [
+       -177.0,
+       26.0,
+       -77.0,
+       106.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 2.15,
+     "maxHeight": 6.6,
+     "bounds": [
+      [
+       -78.0,
+       -13.0,
+       -19.91,
+       39.0
+      ]
+     ]
+    },
+    {
+     "minHeight": 1.6,
+     "maxHeight": 4.7,
+     "bounds": [
+      [
+       -2.0,
+       -50.0,
+       99.0,
+       7.0
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "5th Floor",
    "image": "layers/reserve/3_5th-floor.png",
    "order": 4,
    "minHeight": 5,
-   "maxHeight": 9.5
+   "maxHeight": 9.5,
+   "extents": [
+    {
+     "minHeight": 5.0,
+     "maxHeight": 9.5,
+     "bounds": [
+      [
+       -177.0,
+       26.0,
+       -77.0,
+       106.0
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "Bunkers",
    "image": "layers/reserve/4_bunkers.png",
    "order": 5,
    "minHeight": -10000,
-   "maxHeight": 18
+   "maxHeight": 18,
+   "extents": [
+    {
+     "minHeight": -10000.0,
+     "maxHeight": -7.27,
+     "bounds": [
+      [
+       18.0,
+       -208.0,
+       128.0,
+       -33.0
+      ],
+      [
+       -176.0,
+       -42.0,
+       -46.0,
+       127.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -10000.0,
+     "maxHeight": -12.0,
+     "bounds": [
+      [
+       -124.0,
+       124.0,
+       -40.0,
+       189.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -10000.0,
+     "maxHeight": 18.0,
+     "bounds": [
+      [
+       -65.0,
+       173.0,
+       23.0,
+       189.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -7.27,
+     "maxHeight": -3.2,
+     "bounds": [
+      [
+       19.0,
+       -196.0,
+       74.0,
+       -149.0
+      ]
+     ]
+    },
+    {
+     "minHeight": -11.0,
+     "maxHeight": -4.6,
+     "bounds": [
+      [
+       -274.0,
+       -79.0,
+       -246.0,
+       -53.0
+      ],
+      [
+       126.0,
+       -26.0,
+       238.0,
+       45.0
+      ]
+     ]
+    }
+   ]
   }
  ],
  "the-lab": [
@@ -206,14 +935,35 @@
    "image": "layers/the-lab/0_second-level.png",
    "order": 1,
    "minHeight": 3,
-   "maxHeight": 10000
+   "maxHeight": 10000,
+   "extents": [
+    {
+     "minHeight": 3.0,
+     "maxHeight": 10000.0,
+     "bounds": [
+      [
+       -271.0,
+       -422.0,
+       -101.0,
+       -270.0
+      ]
+     ]
+    }
+   ]
   },
   {
    "name": "Technical",
    "image": "layers/the-lab/1_technical.png",
    "order": 2,
    "minHeight": -10000,
-   "maxHeight": -0.9
+   "maxHeight": -0.9,
+   "extents": [
+    {
+     "minHeight": -10000.0,
+     "maxHeight": -0.9,
+     "bounds": []
+    }
+   ]
   }
  ],
  "streets-of-tarkov": [
@@ -229,35 +979,70 @@
    "image": "layers/streets-of-tarkov/0_2nd-floor.png",
    "order": 1,
    "minHeight": 10,
-   "maxHeight": 15
+   "maxHeight": 15,
+   "extents": [
+    {
+     "minHeight": 10.0,
+     "maxHeight": 15.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "3rd Floor",
    "image": "layers/streets-of-tarkov/1_3rd-floor.png",
    "order": 2,
    "minHeight": 15,
-   "maxHeight": 20
+   "maxHeight": 20,
+   "extents": [
+    {
+     "minHeight": 15.0,
+     "maxHeight": 20.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "4th Floor",
    "image": "layers/streets-of-tarkov/2_4th-floor.png",
    "order": 3,
    "minHeight": 20,
-   "maxHeight": 25
+   "maxHeight": 25,
+   "extents": [
+    {
+     "minHeight": 20.0,
+     "maxHeight": 25.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "5th Floor",
    "image": "layers/streets-of-tarkov/3_5th-floor.png",
    "order": 4,
    "minHeight": 25,
-   "maxHeight": 10000
+   "maxHeight": 10000,
+   "extents": [
+    {
+     "minHeight": 25.0,
+     "maxHeight": 10000.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Underground",
    "image": "layers/streets-of-tarkov/4_underground.png",
    "order": 5,
    "minHeight": -10000,
-   "maxHeight": -6
+   "maxHeight": -6,
+   "extents": [
+    {
+     "minHeight": -10000.0,
+     "maxHeight": -6.0,
+     "bounds": []
+    }
+   ]
   }
  ],
  "icebreaker": [
@@ -273,112 +1058,224 @@
    "image": "layers/icebreaker/0_infirmary.png",
    "order": 1,
    "minHeight": 18.92,
-   "maxHeight": 19.56
+   "maxHeight": 19.56,
+   "extents": [
+    {
+     "minHeight": 18.92,
+     "maxHeight": 19.56,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Helipad",
    "image": "layers/icebreaker/1_helipad.png",
    "order": 2,
    "minHeight": 19.57,
-   "maxHeight": 22.1
+   "maxHeight": 22.1,
+   "extents": [
+    {
+     "minHeight": 19.57,
+     "maxHeight": 22.1,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Gym/Canteen",
    "image": "layers/icebreaker/2_gym-canteen.png",
    "order": 3,
    "minHeight": 22.2,
-   "maxHeight": 25.2
+   "maxHeight": 25.2,
+   "extents": [
+    {
+     "minHeight": 22.2,
+     "maxHeight": 25.2,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Accommodation (lower)",
    "image": "layers/icebreaker/3_accommodation-lower.png",
    "order": 4,
    "minHeight": 25.3,
-   "maxHeight": 28.2
+   "maxHeight": 28.2,
+   "extents": [
+    {
+     "minHeight": 25.3,
+     "maxHeight": 28.2,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Accommodation (mid)",
    "image": "layers/icebreaker/4_accommodation-mid.png",
    "order": 5,
    "minHeight": 28.3,
-   "maxHeight": 31.3
+   "maxHeight": 31.3,
+   "extents": [
+    {
+     "minHeight": 28.3,
+     "maxHeight": 31.3,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Accommodation (upper)",
    "image": "layers/icebreaker/5_accommodation-upper.png",
    "order": 6,
    "minHeight": 31.4,
-   "maxHeight": 34.4
+   "maxHeight": 34.4,
+   "extents": [
+    {
+     "minHeight": 31.4,
+     "maxHeight": 34.4,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Officers' Deck",
    "image": "layers/icebreaker/6_officers-deck.png",
    "order": 7,
    "minHeight": 34.5,
-   "maxHeight": 37.5
+   "maxHeight": 37.5,
+   "extents": [
+    {
+     "minHeight": 34.5,
+     "maxHeight": 37.5,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Stairs (blocked)",
    "image": "layers/icebreaker/7_stairs-blocked.png",
    "order": 8,
    "minHeight": 37.6,
-   "maxHeight": 40.6
+   "maxHeight": 40.6,
+   "extents": [
+    {
+     "minHeight": 37.6,
+     "maxHeight": 40.6,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Bridge",
    "image": "layers/icebreaker/8_bridge.png",
    "order": 9,
    "minHeight": 40.7,
-   "maxHeight": 43.7
+   "maxHeight": 43.7,
+   "extents": [
+    {
+     "minHeight": 40.7,
+     "maxHeight": 43.7,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Bridge Roof",
    "image": "layers/icebreaker/9_bridge-roof.png",
    "order": 10,
    "minHeight": 43.8,
-   "maxHeight": 10000
+   "maxHeight": 10000,
+   "extents": [
+    {
+     "minHeight": 43.8,
+     "maxHeight": 10000.0,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Control Room",
    "image": "layers/icebreaker/10_control-room.png",
    "order": 11,
    "minHeight": -10000,
-   "maxHeight": 3.5
+   "maxHeight": 3.5,
+   "extents": [
+    {
+     "minHeight": -10000.0,
+     "maxHeight": 3.5,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Engine Room",
    "image": "layers/icebreaker/11_engine-room.png",
    "order": 12,
    "minHeight": 3.6,
-   "maxHeight": 5.6
+   "maxHeight": 5.6,
+   "extents": [
+    {
+     "minHeight": 3.6,
+     "maxHeight": 5.6,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Engine Room (upper)",
    "image": "layers/icebreaker/12_engine-room-upper.png",
    "order": 13,
    "minHeight": 5.7,
-   "maxHeight": 8.7
+   "maxHeight": 8.7,
+   "extents": [
+    {
+     "minHeight": 5.7,
+     "maxHeight": 8.7,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Fuel Pumps (lower)",
    "image": "layers/icebreaker/13_fuel-pumps-lower.png",
    "order": 14,
    "minHeight": 8.8,
-   "maxHeight": 11.8
+   "maxHeight": 11.8,
+   "extents": [
+    {
+     "minHeight": 8.8,
+     "maxHeight": 11.8,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Fuel Pumps",
    "image": "layers/icebreaker/14_fuel-pumps.png",
    "order": 15,
    "minHeight": 11.9,
-   "maxHeight": 14.9
+   "maxHeight": 14.9,
+   "extents": [
+    {
+     "minHeight": 11.9,
+     "maxHeight": 14.9,
+     "bounds": []
+    }
+   ]
   },
   {
    "name": "Storage/Security",
    "image": "layers/icebreaker/15_storage-security.png",
    "order": 16,
    "minHeight": 15,
-   "maxHeight": 18.93
+   "maxHeight": 18.93,
+   "extents": [
+    {
+     "minHeight": 15.0,
+     "maxHeight": 18.93,
+     "bounds": []
+    }
+   ]
   }
  ]
 }

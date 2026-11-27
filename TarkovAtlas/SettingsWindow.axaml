@@ -130,7 +130,7 @@
             <CheckBox x:Name="TransitsCheck" Content="显示转移点" />
             <CheckBox x:Name="QuestMarkersCheck" Content="显示已追踪任务的地点标记（商人头像）" />
             <CheckBox x:Name="HazardsCheck" Content="显示危险区（雷区 / 狙击区 / 其他）" />
-            <CheckBox x:Name="AutoLayerCheck" Content="按玩家高度自动切换楼层" />
+            <CheckBox x:Name="AutoLayerCheck" Content="按玩家位置自动切换楼层" />
             <CheckBox x:Name="QuestFollowMapCheck" Content="任务列表只显示当前地图可做的任务" />
           </StackPanel>
         </Border>

@@ -19,6 +19,7 @@
     <Compile Include="..\..\TarkovAtlas\Models\MapNames.cs" Link="Models\MapNames.cs" />
     <Compile Include="..\..\TarkovAtlas\AppJsonContext.cs" Link="AppJsonContext.cs" />
     <Compile Include="..\..\TarkovAtlas\Services\SettingsService.cs" Link="Services\SettingsService.cs" />
+    <Compile Include="..\..\TarkovAtlas\Services\FloorPicker.cs" Link="Services\FloorPicker.cs" />
     <Compile Include="..\..\TarkovAtlas\Services\QuestService.cs" Link="Services\QuestService.cs" />
     <Compile Include="..\..\TarkovAtlas\Services\GameLogParsing.cs" Link="Services\GameLogParsing.cs" />
     <Compile Include="..\..\TarkovAtlas\Services\MapRepository.cs" Link="Services\MapRepository.cs" />

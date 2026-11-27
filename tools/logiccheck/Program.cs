@@ -600,8 +600,176 @@ internal static class LogicChecks
         Check("clearing hide-done restores objectives",
             syncChapter.Objectives.All(o => o.IsVisible));
 
+        // 12. Floor picking from a capture's world position. Height alone used
+        //     to decide, which read a Customs hillside as "2nd Floor" and kept
+        //     the whole Reserve underground on "Ground" (its band overlaps the
+        //     synthetic ground entry, and that entry sorts first).
+        CheckFloorPicking(assets, maps);
+
         Console.WriteLine(_failures == 0 ? "\nALL LOGIC CHECKS PASSED" : $"\n{_failures} LOGIC CHECK(S) FAILED");
         return _failures == 0 ? 0 : 1;
+    }
+
+    /// <summary>
+    /// Table-driven floor-selection checks against the real baked index, plus a
+    /// structural sweep that every layer can actually be reached by the picker
+    /// (that is what would silently regress into "always Ground").
+    /// </summary>
+    private static void CheckFloorPicking(string assets, IReadOnlyDictionary<string, MapDefinition> maps)
+    {
+        Dictionary<string, List<MapLayer>>? index = null;
+        try
+        {
+            index = JsonSerializer.Deserialize(
+                File.ReadAllText(Path.Combine(assets, "maps", "layers", "index.json")),
+                AppJsonContext.Default.DictionaryStringListMapLayer);
+        }
+        catch (Exception ex)
+        {
+            Check("floor index parses for picker checks", false, ex.Message);
+            return;
+        }
+
+        Check("floor index parses for picker checks", index is not null);
+        if (index is null) return;
+
+        // (map, x, z, y, expected layer) -- every entry is a bug this change
+        // fixes or behaviour it must not break.
+        var cases = new (string Map, double X, double Z, double Y, string Expect)[]
+        {
+            // Reserve: the reported bug. The bunkers hand out -10000..18 which
+            // overlaps the surface band, so only the footprint can separate them.
+            ("reserve", -82, 156.5, -13.5, "Bunkers"),
+            ("reserve", 73, -120, -8, "Bunkers"),
+            ("reserve", 0, 0, 5, "Ground"),
+            ("reserve", 12, 12, 12, "Ground"),
+            ("reserve", -8, 181.5, 23.9, "2nd Floor"),
+            ("reserve", -8, 181.5, 27.0, "3rd Floor"),
+            ("reserve", -127, 66, 2.0, "3rd Floor"),
+            ("reserve", -127, 66, -2.0, "2nd Floor"),
+
+            // Customs: an outdoor hill at building height must stay on Ground.
+            ("customs", 0, 0, 5, "Ground"),
+            ("customs", -300, -200, 8, "Ground"),
+            ("customs", 204, 157.5, 4.5, "2nd Floor"),
+            ("customs", 204, 157.5, 7.0, "3rd Floor"),
+            ("customs", 262.5, -40, 12.0, "4th Floor"),
+            ("customs", 627, -131, -1.0, "Underground"),
+
+            // Ground Zero: the garage band used to lose to the surface.
+            ("ground-zero", 80, 45, 19.5, "Garage"),
+            ("ground-zero", 94.5, 222, 28.5, "2nd Floor"),
+            ("ground-zero", 0, 0, 25, "Ground"),
+
+            // No footprints upstream: pure height bands must keep working.
+            ("factory", 0, 0, 1, "Ground Floor"),
+            ("factory", 0, 0, 4, "2nd Floor"),
+            ("factory", 0, 0, 7, "3rd Floor"),
+            ("factory", 0, 0, -2, "Tunnels"),
+
+            ("the-lab", -180, -300, 1, "First Level"),
+            ("the-lab", -186, -346, 4.5, "Second Level"),
+            ("the-lab", -180, -300, -2, "Technical"),
+
+            ("interchange", -51, -54, 23, "Ground Floor"),
+            ("interchange", -51, -54, 29, "2nd Floor"),
+            ("interchange", -51, -54, 35, "3rd Floor"),
+
+            ("streets-of-tarkov", 0, 0, 12, "2nd Floor"),
+            ("streets-of-tarkov", 0, 0, 17, "3rd Floor"),
+            ("streets-of-tarkov", 0, 0, 22, "4th Floor"),
+            ("streets-of-tarkov", 0, 0, 27, "5th Floor"),
+            ("streets-of-tarkov", 0, 0, -7, "Underground"),
+
+            ("icebreaker", 0, 0, 1, "Control Room"),
+            ("icebreaker", 0, 0, 10, "Fuel Pumps (lower)"),
+            ("icebreaker", 0, 0, 18.5, "Storage/Security"),
+            ("icebreaker", 0, 0, 20, "Helipad"),
+        };
+
+        foreach (var c in cases)
+        {
+            if (!index.TryGetValue(c.Map, out var layers))
+            {
+                Check($"floor pick {c.Map} layers present", false);
+                continue;
+            }
+            var got = FloorPicker.Select(layers, c.X, c.Z, c.Y)?.Name;
+            Check($"floor pick {c.Map} ({c.X:0.#},{c.Z:0.#}) y={c.Y:0.#}",
+                got == c.Expect, $"expected {c.Expect}, got {got ?? "<null>"}");
+        }
+
+        // Shoreline's 2nd/3rd floor carry no footprint and only implausible
+        // absolute heights (2..1000), so the picker deliberately keeps the
+        // surface. Documented limitation -- assert it stays *stable* rather
+        // than silently flipping to a bogus deck.
+        if (index.TryGetValue("shoreline", out var shoreline))
+        {
+            var got = FloorPicker.Select(shoreline, 0, 0, 5)?.Name;
+            Check("floor pick shoreline surface stays ground", got == "Ground", got ?? "<null>");
+        }
+
+        // Structural sweep: every layer of every map must be reachable at the
+        // centre of one of its own extents (at a height inside that extent).
+        // This is the guard against "one layer can never be auto-selected".
+        var unreachable = new List<string>();
+        foreach (var (mapKey, layers) in index)
+        {
+            if (layers.Count < 2) continue;
+            foreach (var layer in layers)
+            {
+                // Base artwork is reached by falling back, not by a footprint,
+                // so it has nothing to prove here.
+                if (string.IsNullOrWhiteSpace(layer.Image)) continue;
+
+                var reachable = false;
+                foreach (var extent in layer.Extents)
+                {
+                    if (extent.MinHeight is null || extent.MaxHeight is null) continue;
+                    var y = (extent.MinHeight.Value + extent.MaxHeight.Value) / 2;
+                    if (extent.MaxHeight >= 1000) y = extent.MinHeight.Value + 1.5;
+                    if (extent.MinHeight <= -1000) y = extent.MaxHeight.Value - 1.5;
+
+                    var probes = extent.IsWholeMap
+                        ? new (double, double)[] { (0, 0) }
+                        : extent.Bounds.Select(r => ((r[0] + r[2]) / 2, (r[1] + r[3]) / 2)).ToArray();
+
+                    foreach (var (px, pz) in probes)
+                    {
+                        if (FloorPicker.Select(layers, px, pz, y)?.Name == layer.Name)
+                        {
+                            reachable = true;
+                            break;
+                        }
+                    }
+                    if (reachable) break;
+                }
+
+                // Shoreline's 2nd/3rd Floor are known-unreachable by design.
+                if (!reachable && !(mapKey == "shoreline" && layer.Name is "2nd Floor" or "3rd Floor"))
+                    unreachable.Add($"{mapKey}/{layer.Name}");
+            }
+        }
+        Check("every floor layer is reachable", unreachable.Count == 0, string.Join(", ", unreachable));
+
+        // Degradation path: data written before extents must still pick floors
+        // instead of sticking to the base artwork forever.
+        var legacyLayers = new List<MapLayer>
+        {
+            new() { Name = "Ground", Image = "", Order = 0, MinHeight = -1, MaxHeight = 3 },
+            new() { Name = "2nd Floor", Image = "x.png", Order = 1, MinHeight = 3, MaxHeight = 6 },
+        };
+        var legacy = FloorPicker.Select(legacyLayers, 0, 0, 4)?.Name;
+        Check("legacy height-only data still switches floors", legacy == "2nd Floor", legacy ?? "<null>");
+
+        var noBase = new List<MapLayer>
+        {
+            new() { Name = "Only", Image = "x.png", Order = 0, MinHeight = -1, MaxHeight = 1 },
+        };
+        Check("picker tolerates a map with no base layer",
+            FloorPicker.Select(noBase, 0, 0, 0)?.Name == "Only");
+        Check("picker returns null for an empty layer list",
+            FloorPicker.Select(Array.Empty<MapLayer>(), 0, 0, 0) is null);
     }
 
     private static void Check(string name, bool ok, string? detail = null)

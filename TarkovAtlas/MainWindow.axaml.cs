@@ -35,9 +35,15 @@ public partial class MainWindow : Window
     // re-import is keyed by FileTime, not path alone.
     private readonly ScreenshotImportLedger _knownShots = new();
     private List<FloorLayerView> _floorLayers = new();
+    // World position of the newest capture. X/Z are needed as well as Y: the
+    // floor picker tests the player against each level's footprints, because a
+    // Customs hill at Y 5 is not "2nd Floor" and a Reserve bunker at Y -8 is not
+    // "Ground".
+    private double _lastPlayerX;
+    private double _lastPlayerZ;
     private double _lastPlayerY;
     private bool _suppressLayerSelection;
-    private bool _hasPlayerHeight;
+    private bool _hasPlayerPosition;
     private bool _manualLayerPick;
 
     private AppSettings _settings = new();
@@ -220,7 +226,7 @@ public partial class MainWindow : Window
             {
                 _manualLayerPick = false;
                 var latest = GetLatestPin(e.MapKey);
-                if (latest is not null) AutoSelectLayerForHeight(latest.Y);
+                if (latest is not null) AutoSelectLayerForPosition(latest.X, latest.Z, latest.Y);
             }
         });
     }
@@ -269,11 +275,14 @@ public partial class MainWindow : Window
         var mapChanged = _currentMap?.Key != map.Key;
         _currentMap = map;
 
-        // The screenshot height is only meaningful for the map it was captured
-        // on; carrying it across maps could pick a floor from another building.
+        // The screenshot position is only meaningful for the map it was
+        // captured on; carrying it across maps could pick a floor from another
+        // building.
         if (mapChanged)
         {
-            _hasPlayerHeight = false;
+            _hasPlayerPosition = false;
+            _lastPlayerX = 0;
+            _lastPlayerZ = 0;
             _lastPlayerY = 0;
             _manualLayerPick = false;
         }
@@ -366,8 +375,12 @@ public partial class MainWindow : Window
             // Auto-layer (on by default) wins over a remembered pick, so a fresh
             // screenshot immediately shows the floor the player is actually on.
             FloorLayerView? preferred = null;
-            if (_settings.AutoLayer && _hasPlayerHeight)
-                preferred = views.FirstOrDefault(v => v.MatchesHeight(_lastPlayerY));
+            if (_settings.AutoLayer && _hasPlayerPosition)
+            {
+                var picked = FloorPicker.Select(map.Layers, _lastPlayerX, _lastPlayerZ, _lastPlayerY);
+                if (picked is not null)
+                    preferred = views.FirstOrDefault(v => ReferenceEquals(v.Source, picked));
+            }
 
             if (preferred is null && _settings.SelectedLayer.TryGetValue(map.Key, out var saved))
             {
@@ -418,18 +431,25 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Pick the floor that matches a fresh player height (auto layer mode).
-    /// Only engages when the map actually has layered artwork.
+    /// Pick the floor that matches a fresh player position (auto layer mode).
+    /// Only engages when the map actually has layered artwork. X/Z matter
+    /// because height alone cannot tell a hillside from a building: the picker
+    /// tests the player against each level's real footprint.
     /// </summary>
-    private void AutoSelectLayerForHeight(double y)
+    private void AutoSelectLayerForPosition(double x, double z, double y)
     {
+        _lastPlayerX = x;
+        _lastPlayerZ = z;
         _lastPlayerY = y;
-        _hasPlayerHeight = true;
+        _hasPlayerPosition = true;
 
         if (!_settings.AutoLayer || _manualLayerPick || _currentMap is null || _floorLayers.Count < 2) return;
         if (LayerComboBox is null) return;
 
-        var match = _floorLayers.FirstOrDefault(l => l.MatchesHeight(y));
+        var picked = FloorPicker.Select(_currentMap.Layers, x, z, y);
+        if (picked is null) return;
+
+        var match = _floorLayers.FirstOrDefault(v => ReferenceEquals(v.Source, picked));
         if (match is null) return;
 
         var index = _floorLayers.IndexOf(match);
@@ -1152,7 +1172,8 @@ public partial class MainWindow : Window
             await SelectMapAsync(latestMap, remember: true);
         }
 
-        if (latestInfo is not null && latestMap?.Key == _currentMap?.Key) AutoSelectLayerForHeight(latestInfo.Y);
+        if (latestInfo is not null && latestMap?.Key == _currentMap?.Key)
+            AutoSelectLayerForPosition(latestInfo.X, latestInfo.Z, latestInfo.Y);
         SyncOverlayPlayer();
     }
 
@@ -1218,7 +1239,7 @@ public partial class MainWindow : Window
             UpdatePinsForCurrentMap();
         }
 
-        AutoSelectLayerForHeight(info.Y);
+        AutoSelectLayerForPosition(info.X, info.Z, info.Y);
 
         SyncOverlayPlayer();
         ShowToast($"新截图已定位: X {info.X:0.0}  Z {info.Z:0.0}");

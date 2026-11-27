@@ -268,6 +268,43 @@ def bake_svg_layer(key: str, index: int, layer: dict,
     return _layer_meta(key, index, name, file_name, layer)
 
 
+def _extents_meta(layer: dict) -> list[dict]:
+    """Per-extent height band + its XZ footprints, for the runtime floor picker.
+
+    Upstream stores a bound as ``[[x1, z1], [x2, z2], "label"]``: two opposite
+    corners of an axis-aligned rectangle plus a human label. The label carries no
+    geometry, so only the normalized rectangle survives here. ``bounds`` stays
+    empty when the extent covers the whole map -- the picker treats those as
+    "anywhere on the map" bands and only trusts the ones that sit clearly above
+    or below the base layer (see FloorPicker).
+    """
+    out: list[dict] = []
+    for extent in layer.get("extents") or []:
+        height = extent.get("height")
+        if not (isinstance(height, (list, tuple)) and len(height) >= 2):
+            continue
+        try:
+            lo, hi = float(height[0]), float(height[1])
+        except (TypeError, ValueError):
+            continue
+        rects: list[list[float]] = []
+        for bound in extent.get("bounds") or []:
+            if not (isinstance(bound, (list, tuple)) and len(bound) >= 2):
+                continue
+            a, b = bound[0], bound[1]
+            if not (isinstance(a, (list, tuple)) and len(a) >= 2
+                    and isinstance(b, (list, tuple)) and len(b) >= 2):
+                continue
+            try:
+                x1, z1 = float(a[0]), float(a[1])
+                x2, z2 = float(b[0]), float(b[1])
+            except (TypeError, ValueError):
+                continue
+            rects.append([min(x1, x2), min(z1, z2), max(x1, x2), max(z1, z2)])
+        out.append({"minHeight": lo, "maxHeight": hi, "bounds": rects})
+    return out
+
+
 def _layer_meta(key: str, index: int, name: str, file_name: str,
                 layer: dict) -> dict:
     lo = hi = None
@@ -281,8 +318,11 @@ def _layer_meta(key: str, index: int, name: str, file_name: str,
         "name": name,
         "image": f"layers/{key}/{file_name}",
         "order": index,
+        # The envelope stays: it is the compatibility/degradation path when a
+        # consumer predates `extents`, and datacheck cross-checks the two.
         "minHeight": lo,
         "maxHeight": hi,
+        "extents": _extents_meta(layer),
     }
 
 
